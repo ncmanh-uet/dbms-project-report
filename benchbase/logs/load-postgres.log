@@ -1,0 +1,28 @@
+ Container dbms-lab-benchbase-postgres-run-1431ea0cffcb Creating 
+ Container dbms-lab-benchbase-postgres-run-1431ea0cffcb Created 
+INFO: Using environment variable BENCHBASE_PROFILE=postgres with args: -b tpcc -c /benchbase/lab-config/tpcc-postgres.xml --create=true --load=true --execute=false
+[INFO ] 2026-10-23 16:11:38,404 [main]  com.oltpbenchmark.DBWorkload main - ======================================================================
+
+Benchmark:                       TPCC {com.oltpbenchmark.benchmarks.tpcc.TPCCBenchmark}
+Configuration:                   /benchbase/lab-config/tpcc-postgres.xml
+Type:                            POSTGRES
+Driver:                          org.postgresql.Driver
+URL:                             jdbc:postgresql://postgres:5432/tpcc?sslmode=disable&ApplicationName=tpcc&reWriteBatchedInserts=true
+Isolation:                       TRANSACTION_READ_COMMITTED
+Batch Size:                      128
+DDL Path:                        null
+Loader Threads:                  1
+Session Setup File:              null
+Scale Factor:                    1.0
+Terminals:                       1
+New Connection Per Txn:          false
+Reconnect on Connection Failure: false
+
+[INFO ] 2026-10-23 16:11:38,405 [main]  com.oltpbenchmark.DBWorkload main - ======================================================================
+[INFO ] 2026-10-23 16:11:38,457 [main]  com.oltpbenchmark.DBWorkload main - Creating new TPCC database...
+[INFO ] 2026-10-23 16:11:38,800 [main]  com.oltpbenchmark.DBWorkload main - Finished creating new TPCC database...
+[INFO ] 2026-10-23 16:11:39,024 [main]  com.oltpbenchmark.DBWorkload main - Loading data into TPCC database...
+[INFO ] 2026-10-23 16:11:39,029 [main]  com.oltpbenchmark.util.ThreadUtil runLoaderThreads - Creating a Thread Pool with a size of 1 to run 2 Loader Threads.  1 threads will be queued.
+[INFO ] 2026-10-23 16:12:23,951 [main]  com.oltpbenchmark.util.ThreadUtil runLoaderThreads - Finished executing 2 Loader Threads [time=44.92s]
+[INFO ] 2026-10-23 16:12:23,952 [main]  com.oltpbenchmark.DBWorkload main - Finished loading data into TPCC database...
+[INFO ] 2026-10-23 16:12:23,953 [main]  com.oltpbenchmark.DBWorkload main - Skipping benchmark workload execution

@@ -1,0 +1,2 @@
+001 [postgres/T1] ERROR {"message": "connection timeout expired", "sqlstate": null}
+002 [postgres/RESULT] FAIL {"summary": {"dbms": "postgres", "isolation": "READ COMMITTED", "warehouse_id": 1, "status": "FAIL", "error": "connection timeout expired", "schedule_verified": false}}

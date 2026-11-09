@@ -1,0 +1,49 @@
+name: dbms-lab
+
+services:
+  postgres:
+    image: postgres:17
+    environment:
+      POSTGRES_DB: tpcc
+      POSTGRES_USER: labuser
+      POSTGRES_PASSWORD: lab_password
+    ports:
+      - "127.0.0.1:5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  mysql:
+    image: mysql:8.4
+    environment:
+      MYSQL_DATABASE: tpcc
+      MYSQL_USER: labuser
+      MYSQL_PASSWORD: lab_password
+      MYSQL_ROOT_PASSWORD: root_password
+    ports:
+      - "127.0.0.1:3307:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+  benchbase-postgres:
+    image: benchbase.azurecr.io/benchbase-postgres@sha256:1b1584c87ce11f87f151add677d15a9f18893a3bca910a4967434cb1a9be6eb7
+    profiles: ["tools"]
+    environment:
+      BENCHBASE_PROFILE: postgres
+    volumes:
+      - ./benchbase/config:/benchbase/lab-config:ro
+      - ./benchbase/results/postgres:/benchbase/results
+    command: ["--help"]
+
+  benchbase-mysql:
+    image: benchbase.azurecr.io/benchbase-mysql@sha256:0fd2ad16787b7684bc3c946329f55f69902a50e1aac2e1da2cff74d617c0ea48
+    profiles: ["tools"]
+    environment:
+      BENCHBASE_PROFILE: mysql
+    volumes:
+      - ./benchbase/config:/benchbase/lab-config:ro
+      - ./benchbase/results/mysql:/benchbase/results
+    command: ["--help"]
+
+volumes:
+  postgres_data:
+  mysql_data:

@@ -1,0 +1,106 @@
+001 [postgres/T1] SQL_START {"sql": "SET SESSION CHARACTERISTICS AS TRANSACTION ISOLATION LEVEL READ COMMITTED", "params": null}
+002 [postgres/T1] SQL_DONE {"result": -1, "duration_ms": 4.989}
+003 [postgres/T1] SQL_START {"sql": "SET statement_timeout = '5s'", "params": null}
+004 [postgres/T1] SQL_DONE {"result": -1, "duration_ms": 1.103}
+005 [postgres/T1] SQL_START {"sql": "SET lock_timeout = '5s'", "params": null}
+006 [postgres/T1] SQL_DONE {"result": -1, "duration_ms": 0.563}
+007 [postgres/T1] SQL_START {"sql": "SELECT pg_backend_pid(), current_setting('transaction_isolation'), version()", "params": null}
+008 [postgres/T1] SQL_DONE {"result": [[33, "read committed", "PostgreSQL 17.11 (Debian 17.11-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit"]], "duration_ms": 7.173}
+009 [postgres/T1] SESSION {"connection_id": 33, "isolation": "read committed", "version": "PostgreSQL 17.11 (Debian 17.11-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit"}
+010 [postgres/T1] SQL_START {"sql": "BEGIN", "params": null}
+011 [postgres/T1] SQL_DONE {"result": -1, "duration_ms": 0.921}
+012 [postgres/T1] SQL_START {"sql": "SELECT w_ytd FROM warehouse WHERE w_id = %s FOR UPDATE", "params": [1]}
+013 [postgres/T1] SQL_DONE {"result": [["300000.00"]], "duration_ms": 7.33}
+014 [postgres/T1] SQL_START {"sql": "UPDATE warehouse SET w_ytd = w_ytd + %s WHERE w_id = %s", "params": ["100.00", 1]}
+015 [postgres/T1] SQL_DONE {"result": 1, "duration_ms": 3.233}
+016 [postgres/T1] UPDATE_UNCOMMITTED {"old": "300000.00", "new": "300100.00"}
+017 [postgres/T2] SQL_START {"sql": "SET SESSION CHARACTERISTICS AS TRANSACTION ISOLATION LEVEL READ COMMITTED", "params": null}
+018 [postgres/T2] SQL_DONE {"result": -1, "duration_ms": 0.712}
+019 [postgres/T2] SQL_START {"sql": "SET statement_timeout = '5s'", "params": null}
+020 [postgres/T2] SQL_DONE {"result": -1, "duration_ms": 0.574}
+021 [postgres/T2] SQL_START {"sql": "SET lock_timeout = '5s'", "params": null}
+022 [postgres/T2] SQL_DONE {"result": -1, "duration_ms": 0.837}
+023 [postgres/T2] SQL_START {"sql": "SELECT pg_backend_pid(), current_setting('transaction_isolation'), version()", "params": null}
+024 [postgres/T2] SQL_DONE {"result": [[34, "read committed", "PostgreSQL 17.11 (Debian 17.11-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit"]], "duration_ms": 2.008}
+025 [postgres/T2] SESSION {"connection_id": 34, "isolation": "read committed", "version": "PostgreSQL 17.11 (Debian 17.11-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit"}
+026 [postgres/T2] SQL_START {"sql": "BEGIN READ ONLY", "params": null}
+027 [postgres/T2] SQL_DONE {"result": -1, "duration_ms": 1.044}
+028 [postgres/T2] SQL_START {"sql": "SELECT w_ytd FROM warehouse WHERE w_id = %s", "params": [1]}
+029 [postgres/T2] SQL_DONE {"result": [["300000.00"]], "duration_ms": 2.199}
+030 [postgres/T2] READ_BEFORE_COMMIT {"value": "300000.00"}
+031 [postgres/T1] COMMIT_START {}
+032 [postgres/T1] SQL_START {"sql": "COMMIT", "params": null}
+033 [postgres/T1] SQL_DONE {"result": -1, "duration_ms": 1.906}
+034 [postgres/T1] COMMIT_DONE {}
+035 [postgres/T2] SQL_START {"sql": "SELECT w_ytd FROM warehouse WHERE w_id = %s", "params": [1]}
+036 [postgres/T2] SQL_DONE {"result": [["300100.00"]], "duration_ms": 1.009}
+037 [postgres/T2] READ_AFTER_COMMIT {"value": "300100.00"}
+038 [postgres/T2] SQL_START {"sql": "COMMIT", "params": null}
+039 [postgres/T2] SQL_DONE {"result": -1, "duration_ms": 0.739}
+040 [postgres/CLEANUP] SQL_START {"sql": "BEGIN", "params": null}
+041 [postgres/CLEANUP] SQL_DONE {"result": -1, "duration_ms": 0.731}
+042 [postgres/CLEANUP] SQL_START {"sql": "SELECT w_ytd FROM warehouse WHERE w_id = %s FOR UPDATE", "params": [1]}
+043 [postgres/CLEANUP] SQL_DONE {"result": [["300100.00"]], "duration_ms": 0.94}
+044 [postgres/CLEANUP] SQL_START {"sql": "UPDATE warehouse SET w_ytd = %s WHERE w_id = %s AND w_ytd = %s", "params": ["300000.00", 1, "300100.00"]}
+045 [postgres/CLEANUP] SQL_DONE {"result": 1, "duration_ms": 1.289}
+046 [postgres/CLEANUP] SQL_START {"sql": "COMMIT", "params": null}
+047 [postgres/CLEANUP] SQL_DONE {"result": -1, "duration_ms": 1.154}
+048 [postgres/CLEANUP] SQL_START {"sql": "SELECT w_ytd FROM warehouse WHERE w_id = %s", "params": [1]}
+049 [postgres/CLEANUP] SQL_DONE {"result": [["300000.00"]], "duration_ms": 0.65}
+050 [postgres/CLEANUP] RESTORED {"value": "300000.00"}
+051 [postgres/RESULT] PASS {"summary": {"dbms": "postgres", "isolation": "READ COMMITTED", "warehouse_id": 1, "writer_connection_id": 33, "baseline": "300000.00", "reader": {"connection_id": 34, "before": "300000.00", "after": "300100.00", "before_select_ms": 2.199, "after_select_ms": 1.009}, "status": "PASS", "restored_value": "300000.00", "restored": true, "schedule_verified": true}}
+052 [mysql/T1] SQL_START {"sql": "SET SESSION TRANSACTION ISOLATION LEVEL READ COMMITTED", "params": null}
+053 [mysql/T1] SQL_DONE {"result": 0, "duration_ms": 3.425}
+054 [mysql/T1] SQL_START {"sql": "SET SESSION max_execution_time = 5000", "params": null}
+055 [mysql/T1] SQL_DONE {"result": 0, "duration_ms": 1.942}
+056 [mysql/T1] SQL_START {"sql": "SET SESSION innodb_lock_wait_timeout = 5", "params": null}
+057 [mysql/T1] SQL_DONE {"result": 0, "duration_ms": 1.793}
+058 [mysql/T1] SQL_START {"sql": "SET SESSION lock_wait_timeout = 5", "params": null}
+059 [mysql/T1] SQL_DONE {"result": 0, "duration_ms": 1.566}
+060 [mysql/T1] SQL_START {"sql": "SELECT CONNECTION_ID(), @@session.transaction_isolation, VERSION()", "params": null}
+061 [mysql/T1] SQL_DONE {"result": [[8, "READ-COMMITTED", "8.4.13"]], "duration_ms": 3.041}
+062 [mysql/T1] SESSION {"connection_id": 8, "isolation": "READ-COMMITTED", "version": "8.4.13"}
+063 [mysql/T1] SQL_START {"sql": "START TRANSACTION", "params": null}
+064 [mysql/T1] SQL_DONE {"result": 0, "duration_ms": 1.742}
+065 [mysql/T1] SQL_START {"sql": "SELECT w_ytd FROM warehouse WHERE w_id = %s FOR UPDATE", "params": [1]}
+066 [mysql/T1] SQL_DONE {"result": [["300000.00"]], "duration_ms": 14.658}
+067 [mysql/T1] SQL_START {"sql": "UPDATE warehouse SET w_ytd = w_ytd + %s WHERE w_id = %s", "params": ["100.00", 1]}
+068 [mysql/T1] SQL_DONE {"result": 1, "duration_ms": 3.893}
+069 [mysql/T1] UPDATE_UNCOMMITTED {"old": "300000.00", "new": "300100.00"}
+070 [mysql/T2] SQL_START {"sql": "SET SESSION TRANSACTION ISOLATION LEVEL READ COMMITTED", "params": null}
+071 [mysql/T2] SQL_DONE {"result": 0, "duration_ms": 1.036}
+072 [mysql/T2] SQL_START {"sql": "SET SESSION max_execution_time = 5000", "params": null}
+073 [mysql/T2] SQL_DONE {"result": 0, "duration_ms": 1.208}
+074 [mysql/T2] SQL_START {"sql": "SET SESSION innodb_lock_wait_timeout = 5", "params": null}
+075 [mysql/T2] SQL_DONE {"result": 0, "duration_ms": 1.073}
+076 [mysql/T2] SQL_START {"sql": "SET SESSION lock_wait_timeout = 5", "params": null}
+077 [mysql/T2] SQL_DONE {"result": 0, "duration_ms": 1.064}
+078 [mysql/T2] SQL_START {"sql": "SELECT CONNECTION_ID(), @@session.transaction_isolation, VERSION()", "params": null}
+079 [mysql/T2] SQL_DONE {"result": [[9, "READ-COMMITTED", "8.4.13"]], "duration_ms": 1.136}
+080 [mysql/T2] SESSION {"connection_id": 9, "isolation": "READ-COMMITTED", "version": "8.4.13"}
+081 [mysql/T2] SQL_START {"sql": "START TRANSACTION READ ONLY", "params": null}
+082 [mysql/T2] SQL_DONE {"result": 0, "duration_ms": 1.92}
+083 [mysql/T2] SQL_START {"sql": "SELECT w_ytd FROM warehouse WHERE w_id = %s", "params": [1]}
+084 [mysql/T2] SQL_DONE {"result": [["300000.00"]], "duration_ms": 1.894}
+085 [mysql/T2] READ_BEFORE_COMMIT {"value": "300000.00"}
+086 [mysql/T1] COMMIT_START {}
+087 [mysql/T1] SQL_START {"sql": "COMMIT", "params": null}
+088 [mysql/T1] SQL_DONE {"result": 0, "duration_ms": 3.862}
+089 [mysql/T1] COMMIT_DONE {}
+090 [mysql/T2] SQL_START {"sql": "SELECT w_ytd FROM warehouse WHERE w_id = %s", "params": [1]}
+091 [mysql/T2] SQL_DONE {"result": [["300100.00"]], "duration_ms": 1.608}
+092 [mysql/T2] READ_AFTER_COMMIT {"value": "300100.00"}
+093 [mysql/T2] SQL_START {"sql": "COMMIT", "params": null}
+094 [mysql/T2] SQL_DONE {"result": 0, "duration_ms": 1.104}
+095 [mysql/CLEANUP] SQL_START {"sql": "START TRANSACTION", "params": null}
+096 [mysql/CLEANUP] SQL_DONE {"result": 0, "duration_ms": 1.212}
+097 [mysql/CLEANUP] SQL_START {"sql": "SELECT w_ytd FROM warehouse WHERE w_id = %s FOR UPDATE", "params": [1]}
+098 [mysql/CLEANUP] SQL_DONE {"result": [["300100.00"]], "duration_ms": 1.092}
+099 [mysql/CLEANUP] SQL_START {"sql": "UPDATE warehouse SET w_ytd = %s WHERE w_id = %s AND w_ytd = %s", "params": ["300000.00", 1, "300100.00"]}
+100 [mysql/CLEANUP] SQL_DONE {"result": 1, "duration_ms": 2.222}
+101 [mysql/CLEANUP] SQL_START {"sql": "COMMIT", "params": null}
+102 [mysql/CLEANUP] SQL_DONE {"result": 0, "duration_ms": 3.811}
+103 [mysql/CLEANUP] SQL_START {"sql": "SELECT w_ytd FROM warehouse WHERE w_id = %s", "params": [1]}
+104 [mysql/CLEANUP] SQL_DONE {"result": [["300000.00"]], "duration_ms": 1.562}
+105 [mysql/CLEANUP] RESTORED {"value": "300000.00"}
+106 [mysql/RESULT] PASS {"summary": {"dbms": "mysql", "isolation": "READ COMMITTED", "warehouse_id": 1, "writer_connection_id": 8, "baseline": "300000.00", "reader": {"connection_id": 9, "before": "300000.00", "after": "300100.00", "before_select_ms": 1.894, "after_select_ms": 1.608}, "status": "PASS", "restored_value": "300000.00", "restored": true, "schedule_verified": true}}

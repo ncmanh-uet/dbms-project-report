@@ -1,0 +1,106 @@
+{"sequence": 1, "utc": "2026-10-24T03:47:59.355894+00:00", "elapsed_ms": 42.22, "dbms": "postgres", "actor": "T1", "action": "SQL_START", "sql": "SET SESSION CHARACTERISTICS AS TRANSACTION ISOLATION LEVEL READ COMMITTED", "params": null}
+{"sequence": 2, "utc": "2026-10-24T03:47:59.361425+00:00", "elapsed_ms": 47.75, "dbms": "postgres", "actor": "T1", "action": "SQL_DONE", "result": -1, "duration_ms": 4.989}
+{"sequence": 3, "utc": "2026-10-24T03:47:59.361564+00:00", "elapsed_ms": 47.885, "dbms": "postgres", "actor": "T1", "action": "SQL_START", "sql": "SET statement_timeout = '5s'", "params": null}
+{"sequence": 4, "utc": "2026-10-24T03:47:59.362797+00:00", "elapsed_ms": 49.118, "dbms": "postgres", "actor": "T1", "action": "SQL_DONE", "result": -1, "duration_ms": 1.103}
+{"sequence": 5, "utc": "2026-10-24T03:47:59.362889+00:00", "elapsed_ms": 49.208, "dbms": "postgres", "actor": "T1", "action": "SQL_START", "sql": "SET lock_timeout = '5s'", "params": null}
+{"sequence": 6, "utc": "2026-10-24T03:47:59.363491+00:00", "elapsed_ms": 49.811, "dbms": "postgres", "actor": "T1", "action": "SQL_DONE", "result": -1, "duration_ms": 0.563}
+{"sequence": 7, "utc": "2026-10-24T03:47:59.363561+00:00", "elapsed_ms": 49.879, "dbms": "postgres", "actor": "T1", "action": "SQL_START", "sql": "SELECT pg_backend_pid(), current_setting('transaction_isolation'), version()", "params": null}
+{"sequence": 8, "utc": "2026-10-24T03:47:59.370785+00:00", "elapsed_ms": 57.11, "dbms": "postgres", "actor": "T1", "action": "SQL_DONE", "result": [[33, "read committed", "PostgreSQL 17.11 (Debian 17.11-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit"]], "duration_ms": 7.173}
+{"sequence": 9, "utc": "2026-10-24T03:47:59.371062+00:00", "elapsed_ms": 57.383, "dbms": "postgres", "actor": "T1", "action": "SESSION", "connection_id": 33, "isolation": "read committed", "version": "PostgreSQL 17.11 (Debian 17.11-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit"}
+{"sequence": 10, "utc": "2026-10-24T03:47:59.371111+00:00", "elapsed_ms": 57.428, "dbms": "postgres", "actor": "T1", "action": "SQL_START", "sql": "BEGIN", "params": null}
+{"sequence": 11, "utc": "2026-10-24T03:47:59.372059+00:00", "elapsed_ms": 58.381, "dbms": "postgres", "actor": "T1", "action": "SQL_DONE", "result": -1, "duration_ms": 0.921}
+{"sequence": 12, "utc": "2026-10-24T03:47:59.372134+00:00", "elapsed_ms": 58.452, "dbms": "postgres", "actor": "T1", "action": "SQL_START", "sql": "SELECT w_ytd FROM warehouse WHERE w_id = %s FOR UPDATE", "params": [1]}
+{"sequence": 13, "utc": "2026-10-24T03:47:59.379503+00:00", "elapsed_ms": 65.826, "dbms": "postgres", "actor": "T1", "action": "SQL_DONE", "result": [["300000.00"]], "duration_ms": 7.33}
+{"sequence": 14, "utc": "2026-10-24T03:47:59.379628+00:00", "elapsed_ms": 65.947, "dbms": "postgres", "actor": "T1", "action": "SQL_START", "sql": "UPDATE warehouse SET w_ytd = w_ytd + %s WHERE w_id = %s", "params": ["100.00", 1]}
+{"sequence": 15, "utc": "2026-10-24T03:47:59.382902+00:00", "elapsed_ms": 69.225, "dbms": "postgres", "actor": "T1", "action": "SQL_DONE", "result": 1, "duration_ms": 3.233}
+{"sequence": 16, "utc": "2026-10-24T03:47:59.383004+00:00", "elapsed_ms": 69.324, "dbms": "postgres", "actor": "T1", "action": "UPDATE_UNCOMMITTED", "old": "300000.00", "new": "300100.00"}
+{"sequence": 17, "utc": "2026-10-24T03:47:59.393805+00:00", "elapsed_ms": 80.142, "dbms": "postgres", "actor": "T2", "action": "SQL_START", "sql": "SET SESSION CHARACTERISTICS AS TRANSACTION ISOLATION LEVEL READ COMMITTED", "params": null}
+{"sequence": 18, "utc": "2026-10-24T03:47:59.394625+00:00", "elapsed_ms": 80.947, "dbms": "postgres", "actor": "T2", "action": "SQL_DONE", "result": -1, "duration_ms": 0.712}
+{"sequence": 19, "utc": "2026-10-24T03:47:59.394697+00:00", "elapsed_ms": 81.015, "dbms": "postgres", "actor": "T2", "action": "SQL_START", "sql": "SET statement_timeout = '5s'", "params": null}
+{"sequence": 20, "utc": "2026-10-24T03:47:59.395297+00:00", "elapsed_ms": 81.618, "dbms": "postgres", "actor": "T2", "action": "SQL_DONE", "result": -1, "duration_ms": 0.574}
+{"sequence": 21, "utc": "2026-10-24T03:47:59.395408+00:00", "elapsed_ms": 81.727, "dbms": "postgres", "actor": "T2", "action": "SQL_START", "sql": "SET lock_timeout = '5s'", "params": null}
+{"sequence": 22, "utc": "2026-10-24T03:47:59.396285+00:00", "elapsed_ms": 82.606, "dbms": "postgres", "actor": "T2", "action": "SQL_DONE", "result": -1, "duration_ms": 0.837}
+{"sequence": 23, "utc": "2026-10-24T03:47:59.396341+00:00", "elapsed_ms": 82.659, "dbms": "postgres", "actor": "T2", "action": "SQL_START", "sql": "SELECT pg_backend_pid(), current_setting('transaction_isolation'), version()", "params": null}
+{"sequence": 24, "utc": "2026-10-24T03:47:59.398381+00:00", "elapsed_ms": 84.704, "dbms": "postgres", "actor": "T2", "action": "SQL_DONE", "result": [[34, "read committed", "PostgreSQL 17.11 (Debian 17.11-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit"]], "duration_ms": 2.008}
+{"sequence": 25, "utc": "2026-10-24T03:47:59.398481+00:00", "elapsed_ms": 84.8, "dbms": "postgres", "actor": "T2", "action": "SESSION", "connection_id": 34, "isolation": "read committed", "version": "PostgreSQL 17.11 (Debian 17.11-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit"}
+{"sequence": 26, "utc": "2026-10-24T03:47:59.398518+00:00", "elapsed_ms": 84.836, "dbms": "postgres", "actor": "T2", "action": "SQL_START", "sql": "BEGIN READ ONLY", "params": null}
+{"sequence": 27, "utc": "2026-10-24T03:47:59.399593+00:00", "elapsed_ms": 85.918, "dbms": "postgres", "actor": "T2", "action": "SQL_DONE", "result": -1, "duration_ms": 1.044}
+{"sequence": 28, "utc": "2026-10-24T03:47:59.399721+00:00", "elapsed_ms": 86.042, "dbms": "postgres", "actor": "T2", "action": "SQL_START", "sql": "SELECT w_ytd FROM warehouse WHERE w_id = %s", "params": [1]}
+{"sequence": 29, "utc": "2026-10-24T03:47:59.401965+00:00", "elapsed_ms": 88.289, "dbms": "postgres", "actor": "T2", "action": "SQL_DONE", "result": [["300000.00"]], "duration_ms": 2.199}
+{"sequence": 30, "utc": "2026-10-24T03:47:59.402077+00:00", "elapsed_ms": 88.397, "dbms": "postgres", "actor": "T2", "action": "READ_BEFORE_COMMIT", "value": "300000.00"}
+{"sequence": 31, "utc": "2026-10-24T03:47:59.402301+00:00", "elapsed_ms": 88.624, "dbms": "postgres", "actor": "T1", "action": "COMMIT_START"}
+{"sequence": 32, "utc": "2026-10-24T03:47:59.402368+00:00", "elapsed_ms": 88.687, "dbms": "postgres", "actor": "T1", "action": "SQL_START", "sql": "COMMIT", "params": null}
+{"sequence": 33, "utc": "2026-10-24T03:47:59.404305+00:00", "elapsed_ms": 90.627, "dbms": "postgres", "actor": "T1", "action": "SQL_DONE", "result": -1, "duration_ms": 1.906}
+{"sequence": 34, "utc": "2026-10-24T03:47:59.404378+00:00", "elapsed_ms": 90.696, "dbms": "postgres", "actor": "T1", "action": "COMMIT_DONE"}
+{"sequence": 35, "utc": "2026-10-24T03:47:59.404432+00:00", "elapsed_ms": 90.754, "dbms": "postgres", "actor": "T2", "action": "SQL_START", "sql": "SELECT w_ytd FROM warehouse WHERE w_id = %s", "params": [1]}
+{"sequence": 36, "utc": "2026-10-24T03:47:59.405500+00:00", "elapsed_ms": 91.82, "dbms": "postgres", "actor": "T2", "action": "SQL_DONE", "result": [["300100.00"]], "duration_ms": 1.009}
+{"sequence": 37, "utc": "2026-10-24T03:47:59.405559+00:00", "elapsed_ms": 91.877, "dbms": "postgres", "actor": "T2", "action": "READ_AFTER_COMMIT", "value": "300100.00"}
+{"sequence": 38, "utc": "2026-10-24T03:47:59.405585+00:00", "elapsed_ms": 91.902, "dbms": "postgres", "actor": "T2", "action": "SQL_START", "sql": "COMMIT", "params": null}
+{"sequence": 39, "utc": "2026-10-24T03:47:59.406344+00:00", "elapsed_ms": 92.664, "dbms": "postgres", "actor": "T2", "action": "SQL_DONE", "result": -1, "duration_ms": 0.739}
+{"sequence": 40, "utc": "2026-10-24T03:47:59.407094+00:00", "elapsed_ms": 93.428, "dbms": "postgres", "actor": "CLEANUP", "action": "SQL_START", "sql": "BEGIN", "params": null}
+{"sequence": 41, "utc": "2026-10-24T03:47:59.407898+00:00", "elapsed_ms": 94.218, "dbms": "postgres", "actor": "CLEANUP", "action": "SQL_DONE", "result": -1, "duration_ms": 0.731}
+{"sequence": 42, "utc": "2026-10-24T03:47:59.407993+00:00", "elapsed_ms": 94.312, "dbms": "postgres", "actor": "CLEANUP", "action": "SQL_START", "sql": "SELECT w_ytd FROM warehouse WHERE w_id = %s FOR UPDATE", "params": [1]}
+{"sequence": 43, "utc": "2026-10-24T03:47:59.409061+00:00", "elapsed_ms": 95.382, "dbms": "postgres", "actor": "CLEANUP", "action": "SQL_DONE", "result": [["300100.00"]], "duration_ms": 0.94}
+{"sequence": 44, "utc": "2026-10-24T03:47:59.409192+00:00", "elapsed_ms": 95.513, "dbms": "postgres", "actor": "CLEANUP", "action": "SQL_START", "sql": "UPDATE warehouse SET w_ytd = %s WHERE w_id = %s AND w_ytd = %s", "params": ["300000.00", 1, "300100.00"]}
+{"sequence": 45, "utc": "2026-10-24T03:47:59.410540+00:00", "elapsed_ms": 96.861, "dbms": "postgres", "actor": "CLEANUP", "action": "SQL_DONE", "result": 1, "duration_ms": 1.289}
+{"sequence": 46, "utc": "2026-10-24T03:47:59.410649+00:00", "elapsed_ms": 96.967, "dbms": "postgres", "actor": "CLEANUP", "action": "SQL_START", "sql": "COMMIT", "params": null}
+{"sequence": 47, "utc": "2026-10-24T03:47:59.411835+00:00", "elapsed_ms": 98.156, "dbms": "postgres", "actor": "CLEANUP", "action": "SQL_DONE", "result": -1, "duration_ms": 1.154}
+{"sequence": 48, "utc": "2026-10-24T03:47:59.411899+00:00", "elapsed_ms": 98.217, "dbms": "postgres", "actor": "CLEANUP", "action": "SQL_START", "sql": "SELECT w_ytd FROM warehouse WHERE w_id = %s", "params": [1]}
+{"sequence": 49, "utc": "2026-10-24T03:47:59.412575+00:00", "elapsed_ms": 98.895, "dbms": "postgres", "actor": "CLEANUP", "action": "SQL_DONE", "result": [["300000.00"]], "duration_ms": 0.65}
+{"sequence": 50, "utc": "2026-10-24T03:47:59.412635+00:00", "elapsed_ms": 98.953, "dbms": "postgres", "actor": "CLEANUP", "action": "RESTORED", "value": "300000.00"}
+{"sequence": 51, "utc": "2026-10-24T03:47:59.412802+00:00", "elapsed_ms": 99.124, "dbms": "postgres", "actor": "RESULT", "action": "PASS", "summary": {"dbms": "postgres", "isolation": "READ COMMITTED", "warehouse_id": 1, "writer_connection_id": 33, "baseline": "300000.00", "reader": {"connection_id": 34, "before": "300000.00", "after": "300100.00", "before_select_ms": 2.199, "after_select_ms": 1.009}, "status": "PASS", "restored_value": "300000.00", "restored": true, "schedule_verified": true}}
+{"sequence": 52, "utc": "2026-10-24T03:47:59.576349+00:00", "elapsed_ms": 262.683, "dbms": "mysql", "actor": "T1", "action": "SQL_START", "sql": "SET SESSION TRANSACTION ISOLATION LEVEL READ COMMITTED", "params": null}
+{"sequence": 53, "utc": "2026-10-24T03:47:59.579945+00:00", "elapsed_ms": 266.27, "dbms": "mysql", "actor": "T1", "action": "SQL_DONE", "result": 0, "duration_ms": 3.425}
+{"sequence": 54, "utc": "2026-10-24T03:47:59.580043+00:00", "elapsed_ms": 266.362, "dbms": "mysql", "actor": "T1", "action": "SQL_START", "sql": "SET SESSION max_execution_time = 5000", "params": null}
+{"sequence": 55, "utc": "2026-10-24T03:47:59.582023+00:00", "elapsed_ms": 268.347, "dbms": "mysql", "actor": "T1", "action": "SQL_DONE", "result": 0, "duration_ms": 1.942}
+{"sequence": 56, "utc": "2026-10-24T03:47:59.582113+00:00", "elapsed_ms": 268.432, "dbms": "mysql", "actor": "T1", "action": "SQL_START", "sql": "SET SESSION innodb_lock_wait_timeout = 5", "params": null}
+{"sequence": 57, "utc": "2026-10-24T03:47:59.583941+00:00", "elapsed_ms": 270.266, "dbms": "mysql", "actor": "T1", "action": "SQL_DONE", "result": 0, "duration_ms": 1.793}
+{"sequence": 58, "utc": "2026-10-24T03:47:59.584027+00:00", "elapsed_ms": 270.346, "dbms": "mysql", "actor": "T1", "action": "SQL_START", "sql": "SET SESSION lock_wait_timeout = 5", "params": null}
+{"sequence": 59, "utc": "2026-10-24T03:47:59.585625+00:00", "elapsed_ms": 271.948, "dbms": "mysql", "actor": "T1", "action": "SQL_DONE", "result": 0, "duration_ms": 1.566}
+{"sequence": 60, "utc": "2026-10-24T03:47:59.585703+00:00", "elapsed_ms": 272.021, "dbms": "mysql", "actor": "T1", "action": "SQL_START", "sql": "SELECT CONNECTION_ID(), @@session.transaction_isolation, VERSION()", "params": null}
+{"sequence": 61, "utc": "2026-10-24T03:47:59.588783+00:00", "elapsed_ms": 275.107, "dbms": "mysql", "actor": "T1", "action": "SQL_DONE", "result": [[8, "READ-COMMITTED", "8.4.13"]], "duration_ms": 3.041}
+{"sequence": 62, "utc": "2026-10-24T03:47:59.588883+00:00", "elapsed_ms": 275.202, "dbms": "mysql", "actor": "T1", "action": "SESSION", "connection_id": 8, "isolation": "READ-COMMITTED", "version": "8.4.13"}
+{"sequence": 63, "utc": "2026-10-24T03:47:59.588913+00:00", "elapsed_ms": 275.231, "dbms": "mysql", "actor": "T1", "action": "SQL_START", "sql": "START TRANSACTION", "params": null}
+{"sequence": 64, "utc": "2026-10-24T03:47:59.590686+00:00", "elapsed_ms": 277.01, "dbms": "mysql", "actor": "T1", "action": "SQL_DONE", "result": 0, "duration_ms": 1.742}
+{"sequence": 65, "utc": "2026-10-24T03:47:59.590764+00:00", "elapsed_ms": 277.082, "dbms": "mysql", "actor": "T1", "action": "SQL_START", "sql": "SELECT w_ytd FROM warehouse WHERE w_id = %s FOR UPDATE", "params": [1]}
+{"sequence": 66, "utc": "2026-10-24T03:47:59.605463+00:00", "elapsed_ms": 291.786, "dbms": "mysql", "actor": "T1", "action": "SQL_DONE", "result": [["300000.00"]], "duration_ms": 14.658}
+{"sequence": 67, "utc": "2026-10-24T03:47:59.605563+00:00", "elapsed_ms": 291.881, "dbms": "mysql", "actor": "T1", "action": "SQL_START", "sql": "UPDATE warehouse SET w_ytd = w_ytd + %s WHERE w_id = %s", "params": ["100.00", 1]}
+{"sequence": 68, "utc": "2026-10-24T03:47:59.609492+00:00", "elapsed_ms": 295.816, "dbms": "mysql", "actor": "T1", "action": "SQL_DONE", "result": 1, "duration_ms": 3.893}
+{"sequence": 69, "utc": "2026-10-24T03:47:59.609583+00:00", "elapsed_ms": 295.902, "dbms": "mysql", "actor": "T1", "action": "UPDATE_UNCOMMITTED", "old": "300000.00", "new": "300100.00"}
+{"sequence": 70, "utc": "2026-10-24T03:47:59.618652+00:00", "elapsed_ms": 304.979, "dbms": "mysql", "actor": "T2", "action": "SQL_START", "sql": "SET SESSION TRANSACTION ISOLATION LEVEL READ COMMITTED", "params": null}
+{"sequence": 71, "utc": "2026-10-24T03:47:59.619788+00:00", "elapsed_ms": 306.11, "dbms": "mysql", "actor": "T2", "action": "SQL_DONE", "result": 0, "duration_ms": 1.036}
+{"sequence": 72, "utc": "2026-10-24T03:47:59.619858+00:00", "elapsed_ms": 306.176, "dbms": "mysql", "actor": "T2", "action": "SQL_START", "sql": "SET SESSION max_execution_time = 5000", "params": null}
+{"sequence": 73, "utc": "2026-10-24T03:47:59.621095+00:00", "elapsed_ms": 307.418, "dbms": "mysql", "actor": "T2", "action": "SQL_DONE", "result": 0, "duration_ms": 1.208}
+{"sequence": 74, "utc": "2026-10-24T03:47:59.621166+00:00", "elapsed_ms": 307.484, "dbms": "mysql", "actor": "T2", "action": "SQL_START", "sql": "SET SESSION innodb_lock_wait_timeout = 5", "params": null}
+{"sequence": 75, "utc": "2026-10-24T03:47:59.622270+00:00", "elapsed_ms": 308.591, "dbms": "mysql", "actor": "T2", "action": "SQL_DONE", "result": 0, "duration_ms": 1.073}
+{"sequence": 76, "utc": "2026-10-24T03:47:59.622331+00:00", "elapsed_ms": 308.649, "dbms": "mysql", "actor": "T2", "action": "SQL_START", "sql": "SET SESSION lock_wait_timeout = 5", "params": null}
+{"sequence": 77, "utc": "2026-10-24T03:47:59.623423+00:00", "elapsed_ms": 309.744, "dbms": "mysql", "actor": "T2", "action": "SQL_DONE", "result": 0, "duration_ms": 1.064}
+{"sequence": 78, "utc": "2026-10-24T03:47:59.623495+00:00", "elapsed_ms": 309.813, "dbms": "mysql", "actor": "T2", "action": "SQL_START", "sql": "SELECT CONNECTION_ID(), @@session.transaction_isolation, VERSION()", "params": null}
+{"sequence": 79, "utc": "2026-10-24T03:47:59.624661+00:00", "elapsed_ms": 310.982, "dbms": "mysql", "actor": "T2", "action": "SQL_DONE", "result": [[9, "READ-COMMITTED", "8.4.13"]], "duration_ms": 1.136}
+{"sequence": 80, "utc": "2026-10-24T03:47:59.624730+00:00", "elapsed_ms": 311.049, "dbms": "mysql", "actor": "T2", "action": "SESSION", "connection_id": 9, "isolation": "READ-COMMITTED", "version": "8.4.13"}
+{"sequence": 81, "utc": "2026-10-24T03:47:59.624757+00:00", "elapsed_ms": 311.074, "dbms": "mysql", "actor": "T2", "action": "SQL_START", "sql": "START TRANSACTION READ ONLY", "params": null}
+{"sequence": 82, "utc": "2026-10-24T03:47:59.626752+00:00", "elapsed_ms": 313.075, "dbms": "mysql", "actor": "T2", "action": "SQL_DONE", "result": 0, "duration_ms": 1.92}
+{"sequence": 83, "utc": "2026-10-24T03:47:59.626829+00:00", "elapsed_ms": 313.147, "dbms": "mysql", "actor": "T2", "action": "SQL_START", "sql": "SELECT w_ytd FROM warehouse WHERE w_id = %s", "params": [1]}
+{"sequence": 84, "utc": "2026-10-24T03:47:59.628754+00:00", "elapsed_ms": 315.079, "dbms": "mysql", "actor": "T2", "action": "SQL_DONE", "result": [["300000.00"]], "duration_ms": 1.894}
+{"sequence": 85, "utc": "2026-10-24T03:47:59.628845+00:00", "elapsed_ms": 315.165, "dbms": "mysql", "actor": "T2", "action": "READ_BEFORE_COMMIT", "value": "300000.00"}
+{"sequence": 86, "utc": "2026-10-24T03:47:59.628901+00:00", "elapsed_ms": 315.225, "dbms": "mysql", "actor": "T1", "action": "COMMIT_START"}
+{"sequence": 87, "utc": "2026-10-24T03:47:59.628965+00:00", "elapsed_ms": 315.283, "dbms": "mysql", "actor": "T1", "action": "SQL_START", "sql": "COMMIT", "params": null}
+{"sequence": 88, "utc": "2026-10-24T03:47:59.632882+00:00", "elapsed_ms": 319.209, "dbms": "mysql", "actor": "T1", "action": "SQL_DONE", "result": 0, "duration_ms": 3.862}
+{"sequence": 89, "utc": "2026-10-24T03:47:59.632990+00:00", "elapsed_ms": 319.31, "dbms": "mysql", "actor": "T1", "action": "COMMIT_DONE"}
+{"sequence": 90, "utc": "2026-10-24T03:47:59.633056+00:00", "elapsed_ms": 319.373, "dbms": "mysql", "actor": "T2", "action": "SQL_START", "sql": "SELECT w_ytd FROM warehouse WHERE w_id = %s", "params": [1]}
+{"sequence": 91, "utc": "2026-10-24T03:47:59.634743+00:00", "elapsed_ms": 321.064, "dbms": "mysql", "actor": "T2", "action": "SQL_DONE", "result": [["300100.00"]], "duration_ms": 1.608}
+{"sequence": 92, "utc": "2026-10-24T03:47:59.634818+00:00", "elapsed_ms": 321.137, "dbms": "mysql", "actor": "T2", "action": "READ_AFTER_COMMIT", "value": "300100.00"}
+{"sequence": 93, "utc": "2026-10-24T03:47:59.634845+00:00", "elapsed_ms": 321.162, "dbms": "mysql", "actor": "T2", "action": "SQL_START", "sql": "COMMIT", "params": null}
+{"sequence": 94, "utc": "2026-10-24T03:47:59.636011+00:00", "elapsed_ms": 322.333, "dbms": "mysql", "actor": "T2", "action": "SQL_DONE", "result": 0, "duration_ms": 1.104}
+{"sequence": 95, "utc": "2026-10-24T03:47:59.637979+00:00", "elapsed_ms": 324.306, "dbms": "mysql", "actor": "CLEANUP", "action": "SQL_START", "sql": "START TRANSACTION", "params": null}
+{"sequence": 96, "utc": "2026-10-24T03:47:59.639293+00:00", "elapsed_ms": 325.616, "dbms": "mysql", "actor": "CLEANUP", "action": "SQL_DONE", "result": 0, "duration_ms": 1.212}
+{"sequence": 97, "utc": "2026-10-24T03:47:59.639363+00:00", "elapsed_ms": 325.681, "dbms": "mysql", "actor": "CLEANUP", "action": "SQL_START", "sql": "SELECT w_ytd FROM warehouse WHERE w_id = %s FOR UPDATE", "params": [1]}
+{"sequence": 98, "utc": "2026-10-24T03:47:59.640484+00:00", "elapsed_ms": 326.806, "dbms": "mysql", "actor": "CLEANUP", "action": "SQL_DONE", "result": [["300100.00"]], "duration_ms": 1.092}
+{"sequence": 99, "utc": "2026-10-24T03:47:59.640553+00:00", "elapsed_ms": 326.872, "dbms": "mysql", "actor": "CLEANUP", "action": "SQL_START", "sql": "UPDATE warehouse SET w_ytd = %s WHERE w_id = %s AND w_ytd = %s", "params": ["300000.00", 1, "300100.00"]}
+{"sequence": 100, "utc": "2026-10-24T03:47:59.642817+00:00", "elapsed_ms": 329.145, "dbms": "mysql", "actor": "CLEANUP", "action": "SQL_DONE", "result": 1, "duration_ms": 2.222}
+{"sequence": 101, "utc": "2026-10-24T03:47:59.642911+00:00", "elapsed_ms": 329.23, "dbms": "mysql", "actor": "CLEANUP", "action": "SQL_START", "sql": "COMMIT", "params": null}
+{"sequence": 102, "utc": "2026-10-24T03:47:59.646758+00:00", "elapsed_ms": 333.084, "dbms": "mysql", "actor": "CLEANUP", "action": "SQL_DONE", "result": 0, "duration_ms": 3.811}
+{"sequence": 103, "utc": "2026-10-24T03:47:59.646855+00:00", "elapsed_ms": 333.174, "dbms": "mysql", "actor": "CLEANUP", "action": "SQL_START", "sql": "SELECT w_ytd FROM warehouse WHERE w_id = %s", "params": [1]}
+{"sequence": 104, "utc": "2026-10-24T03:47:59.648457+00:00", "elapsed_ms": 334.782, "dbms": "mysql", "actor": "CLEANUP", "action": "SQL_DONE", "result": [["300000.00"]], "duration_ms": 1.562}
+{"sequence": 105, "utc": "2026-10-24T03:47:59.648554+00:00", "elapsed_ms": 334.873, "dbms": "mysql", "actor": "CLEANUP", "action": "RESTORED", "value": "300000.00"}
+{"sequence": 106, "utc": "2026-10-24T03:47:59.649459+00:00", "elapsed_ms": 335.784, "dbms": "mysql", "actor": "RESULT", "action": "PASS", "summary": {"dbms": "mysql", "isolation": "READ COMMITTED", "warehouse_id": 1, "writer_connection_id": 8, "baseline": "300000.00", "reader": {"connection_id": 9, "before": "300000.00", "after": "300100.00", "before_select_ms": 1.894, "after_select_ms": 1.608}, "status": "PASS", "restored_value": "300000.00", "restored": true, "schedule_verified": true}}

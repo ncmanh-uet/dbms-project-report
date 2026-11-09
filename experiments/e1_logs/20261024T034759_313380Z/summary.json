@@ -1,0 +1,41 @@
+{
+  "run_id": "20261024T034759_313380Z",
+  "results": [
+    {
+      "dbms": "postgres",
+      "isolation": "READ COMMITTED",
+      "warehouse_id": 1,
+      "writer_connection_id": 33,
+      "baseline": "300000.00",
+      "reader": {
+        "connection_id": 34,
+        "before": "300000.00",
+        "after": "300100.00",
+        "before_select_ms": 2.199,
+        "after_select_ms": 1.009
+      },
+      "status": "PASS",
+      "restored_value": "300000.00",
+      "restored": true,
+      "schedule_verified": true
+    },
+    {
+      "dbms": "mysql",
+      "isolation": "READ COMMITTED",
+      "warehouse_id": 1,
+      "writer_connection_id": 8,
+      "baseline": "300000.00",
+      "reader": {
+        "connection_id": 9,
+        "before": "300000.00",
+        "after": "300100.00",
+        "before_select_ms": 1.894,
+        "after_select_ms": 1.608
+      },
+      "status": "PASS",
+      "restored_value": "300000.00",
+      "restored": true,
+      "schedule_verified": true
+    }
+  ]
+}

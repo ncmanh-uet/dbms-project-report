@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<parameters>
+    <type>POSTGRES</type>
+    <driver>org.postgresql.Driver</driver>
+    <url>jdbc:postgresql://postgres:5432/tpcc?sslmode=disable&amp;ApplicationName=tpcc&amp;reWriteBatchedInserts=true</url>
+    <username>labuser</username>
+    <password>lab_password</password>
+    <reconnectOnConnectionFailure>false</reconnectOnConnectionFailure>
+    <isolation>TRANSACTION_READ_COMMITTED</isolation>
+    <batchsize>128</batchsize>
+    <randomSeed>20261023</randomSeed>
+    <loaderThreads>1</loaderThreads>
+
+    <!-- For TPC-C, scalefactor is the number of warehouses. -->
+    <scalefactor>1</scalefactor>
+    <terminals>1</terminals>
+
+    <!-- Required configuration; inactive during data loading only. -->
+    <works>
+        <work>
+            <time>60</time>
+            <rate>1000</rate>
+            <weights>45,43,4,4,4</weights>
+        </work>
+    </works>
+
+    <transactiontypes>
+        <transactiontype><name>NewOrder</name></transactiontype>
+        <transactiontype><name>Payment</name></transactiontype>
+        <transactiontype><name>OrderStatus</name></transactiontype>
+        <transactiontype><name>Delivery</name></transactiontype>
+        <transactiontype><name>StockLevel</name></transactiontype>
+    </transactiontypes>
+</parameters>

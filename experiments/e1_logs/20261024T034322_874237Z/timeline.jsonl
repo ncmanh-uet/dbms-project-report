@@ -1,0 +1,2 @@
+{"sequence": 1, "utc": "2026-10-24T03:43:27.889680+00:00", "elapsed_ms": 5015.018, "dbms": "postgres", "actor": "T1", "action": "ERROR", "message": "connection timeout expired", "sqlstate": null}
+{"sequence": 2, "utc": "2026-10-24T03:43:27.890107+00:00", "elapsed_ms": 5015.437, "dbms": "postgres", "actor": "RESULT", "action": "FAIL", "summary": {"dbms": "postgres", "isolation": "READ COMMITTED", "warehouse_id": 1, "status": "FAIL", "error": "connection timeout expired", "schedule_verified": false}}

@@ -1,0 +1,13 @@
+{
+  "run_id": "20261024T034322_874237Z",
+  "results": [
+    {
+      "dbms": "postgres",
+      "isolation": "READ COMMITTED",
+      "warehouse_id": 1,
+      "status": "FAIL",
+      "error": "connection timeout expired",
+      "schedule_verified": false
+    }
+  ]
+}
