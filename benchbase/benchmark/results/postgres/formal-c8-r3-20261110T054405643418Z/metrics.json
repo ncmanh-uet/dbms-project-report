@@ -1,0 +1,41 @@
+{
+  "validation": "PASS",
+  "elapsed_measure_seconds": 60.999869487,
+  "measured_requests": 39259,
+  "native_count_matches": true,
+  "status_counts": {
+    "SUCCESS": 38721,
+    "USER_ABORTED": 538
+  },
+  "last_sql_error_counts": {
+    "40P01/0": 1
+  },
+  "successful_tps": 634.771849934073,
+  "completed_requests_per_second": 643.5915409354554,
+  "latency_success_ms": {
+    "p50": 8.601613,
+    "p95": 36.84228,
+    "p99": 59.21478240000001
+  },
+  "latency_all_completed_ms": {
+    "p50": 8.565124,
+    "p95": 36.76777419999999,
+    "p99": 59.14288861999994
+  },
+  "requests_with_retry": 1,
+  "reexecutions_started": 1,
+  "retry_events": 1,
+  "failed_requests": 0,
+  "expected_user_aborts": 538,
+  "max_observed_sessions": 8,
+  "max_sampled_lock_waiters": 8,
+  "native_goodput_is_not_used": 764.6245867778475,
+  "retry_request_rate": 2.5471866323645532e-05,
+  "failure_rate": 0.0,
+  "consistency_checks": {
+    "warehouse_equals_district_ytd": true,
+    "district_next_order_id": true,
+    "order_line_total": true,
+    "stock_quantity_range": true
+  }
+}

@@ -1,0 +1,77 @@
+{
+  "dbms": "postgres",
+  "mode": "ordered",
+  "round": 1,
+  "isolation": "READ COMMITTED",
+  "status": "PASS",
+  "detector_settings": {
+    "deadlock_timeout_ms": 1000.0,
+    "session_lock_timeout_seconds": 5
+  },
+  "initial_transactions": [
+    {
+      "actor": "T1",
+      "request_order": [
+        1,
+        2
+      ],
+      "lock_order": [
+        1,
+        2
+      ],
+      "committed": true,
+      "deadlock": false,
+      "rollback_done": false,
+      "connection_id": 334,
+      "update_1_ms": 12.229,
+      "update_2_ms": 3.375,
+      "execution_ms": 27.026399970054626
+    },
+    {
+      "actor": "T2",
+      "request_order": [
+        2,
+        1
+      ],
+      "lock_order": [
+        1,
+        2
+      ],
+      "committed": true,
+      "deadlock": false,
+      "rollback_done": false,
+      "connection_id": 335,
+      "update_1_ms": 4.734,
+      "update_2_ms": 2.958,
+      "execution_ms": 16.32160000735894
+    }
+  ],
+  "initial_commits": 2,
+  "deadlocks": 0,
+  "lock_timeouts": 0,
+  "initial_pair_ms": 28.56980002252385,
+  "schedule_verified": true,
+  "after_completed_requests": {
+    "1": "2.00",
+    "2": "2.00"
+  },
+  "logical_successes": 2,
+  "retry_attempts": 0,
+  "data_check": {
+    "counter_check": true,
+    "restored": true,
+    "confirmed_transactions": 2,
+    "before": {
+      "1": "0.00",
+      "2": "0.00"
+    },
+    "after_transactions": {
+      "1": "2.00",
+      "2": "2.00"
+    },
+    "after_restore": {
+      "1": "0.00",
+      "2": "0.00"
+    }
+  }
+}

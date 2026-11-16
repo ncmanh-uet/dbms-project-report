@@ -1,0 +1,750 @@
+001 [postgres/opposite/1] PAIR_START {}
+002 [postgres/CONTROLLER] SESSION {"connection_id": 338, "isolation": "read committed", "version": "PostgreSQL 17.11 (Debian 17.11-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit"}
+003 [postgres/opposite/1/T2] SESSION {"connection_id": 340, "isolation": "read committed", "version": "PostgreSQL 17.11 (Debian 17.11-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit"}
+004 [postgres/opposite/1/T1] SESSION {"connection_id": 339, "isolation": "read committed", "version": "PostgreSQL 17.11 (Debian 17.11-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit"}
+005 [postgres/T1] SQL_START {"sql": "BEGIN", "params": null}
+006 [postgres/T2] SQL_START {"sql": "BEGIN", "params": null}
+007 [postgres/T1] SQL_DONE {"result": -1, "duration_ms": 4.212}
+008 [postgres/T2] SQL_DONE {"result": -1, "duration_ms": 4.246}
+009 [postgres/T2] LOCK_ORDER {"case": "opposite/1", "request_order": [2, 1], "lock_order": [2, 1]}
+010 [postgres/T2] REQUEST_ROW {"case": "opposite/1", "item": 2, "position": 1}
+011 [postgres/T2] SQL_START {"sql": "UPDATE stock SET s_ytd = s_ytd + 1 WHERE s_w_id = 1 AND s_i_id = %s", "params": [2]}
+012 [postgres/T1] LOCK_ORDER {"case": "opposite/1", "request_order": [1, 2], "lock_order": [1, 2]}
+013 [postgres/T1] REQUEST_ROW {"case": "opposite/1", "item": 1, "position": 1}
+014 [postgres/T1] SQL_START {"sql": "UPDATE stock SET s_ytd = s_ytd + 1 WHERE s_w_id = 1 AND s_i_id = %s", "params": [1]}
+015 [postgres/T2] SQL_DONE {"result": 1, "duration_ms": 7.771}
+016 [postgres/T2] FIRST_ROW_LOCKED {"case": "opposite/1", "item": 2}
+017 [postgres/T1] SQL_DONE {"result": 1, "duration_ms": 7.363}
+018 [postgres/T1] FIRST_ROW_LOCKED {"case": "opposite/1", "item": 1}
+019 [postgres/T1] REQUEST_ROW {"case": "opposite/1", "item": 2, "position": 2}
+020 [postgres/T1] SQL_START {"sql": "UPDATE stock SET s_ytd = s_ytd + 1 WHERE s_w_id = 1 AND s_i_id = %s", "params": [2]}
+021 [postgres/T2] REQUEST_ROW {"case": "opposite/1", "item": 1, "position": 2}
+022 [postgres/T2] SQL_START {"sql": "UPDATE stock SET s_ytd = s_ytd + 1 WHERE s_w_id = 1 AND s_i_id = %s", "params": [1]}
+023 [postgres/T1] TRANSACTION_ERROR {"case": "opposite/1", "error": "deadlock detected\nDETAIL:  Process 339 waits for ShareLock on transaction 105481; blocked by process 340.\nProcess 340 waits for ShareLock on transaction 105482; blocked by process 339.\nHINT:  See server log for query details.\nCONTEXT:  while updating tuple (4531,24) in relation \"stock\"", "error_kind": "deadlock", "sqlstate": "40P01", "errno": null, "server_detail": "Process 339 waits for ShareLock on transaction 105481; blocked by process 340.\nProcess 340 waits for ShareLock on transaction 105482; blocked by process 339."}
+024 [postgres/T1] SQL_START {"sql": "ROLLBACK", "params": null}
+025 [postgres/T2] SQL_DONE {"result": 1, "duration_ms": 1109.16}
+026 [postgres/T2] SQL_START {"sql": "COMMIT", "params": null}
+027 [postgres/T1] SQL_DONE {"result": -1, "duration_ms": 5.414}
+028 [postgres/T2] SQL_DONE {"result": -1, "duration_ms": 8.788}
+029 [postgres/T2] TRANSACTION_COMMIT {"case": "opposite/1"}
+030 [postgres/opposite/1] VICTIM_ROLLBACK_VERIFIED {"counters": {"1": "1.00", "2": "1.00"}}
+031 [postgres/opposite/1/RETRY_T1] SESSION {"connection_id": 341, "isolation": "read committed", "version": "PostgreSQL 17.11 (Debian 17.11-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit"}
+032 [postgres/opposite/1] RETRY_BEGIN {"victim": "T1", "order": [1, 2]}
+033 [postgres/RETRY_T1] SQL_START {"sql": "BEGIN", "params": null}
+034 [postgres/RETRY_T1] SQL_DONE {"result": -1, "duration_ms": 4.444}
+035 [postgres/RETRY_T1] SQL_START {"sql": "UPDATE stock SET s_ytd = s_ytd + 1 WHERE s_w_id = 1 AND s_i_id = %s", "params": [1]}
+036 [postgres/RETRY_T1] SQL_DONE {"result": 1, "duration_ms": 8.028}
+037 [postgres/RETRY_T1] SQL_START {"sql": "UPDATE stock SET s_ytd = s_ytd + 1 WHERE s_w_id = 1 AND s_i_id = %s", "params": [2]}
+038 [postgres/RETRY_T1] SQL_DONE {"result": 1, "duration_ms": 5.593}
+039 [postgres/RETRY_T1] SQL_START {"sql": "COMMIT", "params": null}
+040 [postgres/RETRY_T1] SQL_DONE {"result": -1, "duration_ms": 8.878}
+041 [postgres/opposite/1] RETRY_COMMIT {"victim": "T1"}
+042 [postgres/opposite/1] RESTORED {"confirmed_transactions": 2, "confirmed_row_increments": 4}
+043 [postgres/opposite/1] PASS {"deadlocks": 1, "initial_commits": 1, "retry_attempts": 1, "restored": true}
+044 [postgres/opposite/2] PAIR_START {}
+045 [postgres/CONTROLLER] SESSION {"connection_id": 342, "isolation": "read committed", "version": "PostgreSQL 17.11 (Debian 17.11-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit"}
+046 [postgres/opposite/2/T1] SESSION {"connection_id": 343, "isolation": "read committed", "version": "PostgreSQL 17.11 (Debian 17.11-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit"}
+047 [postgres/T1] SQL_START {"sql": "BEGIN", "params": null}
+048 [postgres/opposite/2/T2] SESSION {"connection_id": 344, "isolation": "read committed", "version": "PostgreSQL 17.11 (Debian 17.11-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit"}
+049 [postgres/T2] SQL_START {"sql": "BEGIN", "params": null}
+050 [postgres/T1] SQL_DONE {"result": -1, "duration_ms": 4.685}
+051 [postgres/T2] SQL_DONE {"result": -1, "duration_ms": 4.566}
+052 [postgres/T2] LOCK_ORDER {"case": "opposite/2", "request_order": [2, 1], "lock_order": [2, 1]}
+053 [postgres/T2] REQUEST_ROW {"case": "opposite/2", "item": 2, "position": 1}
+054 [postgres/T2] SQL_START {"sql": "UPDATE stock SET s_ytd = s_ytd + 1 WHERE s_w_id = 1 AND s_i_id = %s", "params": [2]}
+055 [postgres/T1] LOCK_ORDER {"case": "opposite/2", "request_order": [1, 2], "lock_order": [1, 2]}
+056 [postgres/T1] REQUEST_ROW {"case": "opposite/2", "item": 1, "position": 1}
+057 [postgres/T1] SQL_START {"sql": "UPDATE stock SET s_ytd = s_ytd + 1 WHERE s_w_id = 1 AND s_i_id = %s", "params": [1]}
+058 [postgres/T2] SQL_DONE {"result": 1, "duration_ms": 8.477}
+059 [postgres/T2] FIRST_ROW_LOCKED {"case": "opposite/2", "item": 2}
+060 [postgres/T1] SQL_DONE {"result": 1, "duration_ms": 7.933}
+061 [postgres/T1] FIRST_ROW_LOCKED {"case": "opposite/2", "item": 1}
+062 [postgres/T1] REQUEST_ROW {"case": "opposite/2", "item": 2, "position": 2}
+063 [postgres/T1] SQL_START {"sql": "UPDATE stock SET s_ytd = s_ytd + 1 WHERE s_w_id = 1 AND s_i_id = %s", "params": [2]}
+064 [postgres/T2] REQUEST_ROW {"case": "opposite/2", "item": 1, "position": 2}
+065 [postgres/T2] SQL_START {"sql": "UPDATE stock SET s_ytd = s_ytd + 1 WHERE s_w_id = 1 AND s_i_id = %s", "params": [1]}
+066 [postgres/T2] SQL_DONE {"result": 1, "duration_ms": 1110.885}
+067 [postgres/T2] SQL_START {"sql": "COMMIT", "params": null}
+068 [postgres/T1] TRANSACTION_ERROR {"case": "opposite/2", "error": "deadlock detected\nDETAIL:  Process 343 waits for ShareLock on transaction 105486; blocked by process 344.\nProcess 344 waits for ShareLock on transaction 105487; blocked by process 343.\nHINT:  See server log for query details.\nCONTEXT:  while updating tuple (4531,8) in relation \"stock\"", "error_kind": "deadlock", "sqlstate": "40P01", "errno": null, "server_detail": "Process 343 waits for ShareLock on transaction 105486; blocked by process 344.\nProcess 344 waits for ShareLock on transaction 105487; blocked by process 343."}
+069 [postgres/T1] SQL_START {"sql": "ROLLBACK", "params": null}
+070 [postgres/T1] SQL_DONE {"result": -1, "duration_ms": 7.961}
+071 [postgres/T2] SQL_DONE {"result": -1, "duration_ms": 29.292}
+072 [postgres/T2] TRANSACTION_COMMIT {"case": "opposite/2"}
+073 [postgres/opposite/2] VICTIM_ROLLBACK_VERIFIED {"counters": {"1": "1.00", "2": "1.00"}}
+074 [postgres/opposite/2/RETRY_T1] SESSION {"connection_id": 345, "isolation": "read committed", "version": "PostgreSQL 17.11 (Debian 17.11-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit"}
+075 [postgres/opposite/2] RETRY_BEGIN {"victim": "T1", "order": [1, 2]}
+076 [postgres/RETRY_T1] SQL_START {"sql": "BEGIN", "params": null}
+077 [postgres/RETRY_T1] SQL_DONE {"result": -1, "duration_ms": 4.382}
+078 [postgres/RETRY_T1] SQL_START {"sql": "UPDATE stock SET s_ytd = s_ytd + 1 WHERE s_w_id = 1 AND s_i_id = %s", "params": [1]}
+079 [postgres/RETRY_T1] SQL_DONE {"result": 1, "duration_ms": 7.642}
+080 [postgres/RETRY_T1] SQL_START {"sql": "UPDATE stock SET s_ytd = s_ytd + 1 WHERE s_w_id = 1 AND s_i_id = %s", "params": [2]}
+081 [postgres/RETRY_T1] SQL_DONE {"result": 1, "duration_ms": 5.561}
+082 [postgres/RETRY_T1] SQL_START {"sql": "COMMIT", "params": null}
+083 [postgres/RETRY_T1] SQL_DONE {"result": -1, "duration_ms": 6.545}
+084 [postgres/opposite/2] RETRY_COMMIT {"victim": "T1"}
+085 [postgres/opposite/2] RESTORED {"confirmed_transactions": 2, "confirmed_row_increments": 4}
+086 [postgres/opposite/2] PASS {"deadlocks": 1, "initial_commits": 1, "retry_attempts": 1, "restored": true}
+087 [postgres/opposite/3] PAIR_START {}
+088 [postgres/CONTROLLER] SESSION {"connection_id": 346, "isolation": "read committed", "version": "PostgreSQL 17.11 (Debian 17.11-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit"}
+089 [postgres/opposite/3/T2] SESSION {"connection_id": 348, "isolation": "read committed", "version": "PostgreSQL 17.11 (Debian 17.11-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit"}
+090 [postgres/T2] SQL_START {"sql": "BEGIN", "params": null}
+091 [postgres/opposite/3/T1] SESSION {"connection_id": 347, "isolation": "read committed", "version": "PostgreSQL 17.11 (Debian 17.11-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit"}
+092 [postgres/T1] SQL_START {"sql": "BEGIN", "params": null}
+093 [postgres/T2] SQL_DONE {"result": -1, "duration_ms": 5.702}
+094 [postgres/T1] SQL_DONE {"result": -1, "duration_ms": 5.57}
+095 [postgres/T2] LOCK_ORDER {"case": "opposite/3", "request_order": [2, 1], "lock_order": [2, 1]}
+096 [postgres/T2] REQUEST_ROW {"case": "opposite/3", "item": 2, "position": 1}
+097 [postgres/T2] SQL_START {"sql": "UPDATE stock SET s_ytd = s_ytd + 1 WHERE s_w_id = 1 AND s_i_id = %s", "params": [2]}
+098 [postgres/T1] LOCK_ORDER {"case": "opposite/3", "request_order": [1, 2], "lock_order": [1, 2]}
+099 [postgres/T1] REQUEST_ROW {"case": "opposite/3", "item": 1, "position": 1}
+100 [postgres/T1] SQL_START {"sql": "UPDATE stock SET s_ytd = s_ytd + 1 WHERE s_w_id = 1 AND s_i_id = %s", "params": [1]}
+101 [postgres/T2] SQL_DONE {"result": 1, "duration_ms": 9.751}
+102 [postgres/T2] FIRST_ROW_LOCKED {"case": "opposite/3", "item": 2}
+103 [postgres/T1] SQL_DONE {"result": 1, "duration_ms": 8.608}
+104 [postgres/T1] FIRST_ROW_LOCKED {"case": "opposite/3", "item": 1}
+105 [postgres/T1] REQUEST_ROW {"case": "opposite/3", "item": 2, "position": 2}
+106 [postgres/T1] SQL_START {"sql": "UPDATE stock SET s_ytd = s_ytd + 1 WHERE s_w_id = 1 AND s_i_id = %s", "params": [2]}
+107 [postgres/T2] REQUEST_ROW {"case": "opposite/3", "item": 1, "position": 2}
+108 [postgres/T2] SQL_START {"sql": "UPDATE stock SET s_ytd = s_ytd + 1 WHERE s_w_id = 1 AND s_i_id = %s", "params": [1]}
+109 [postgres/T2] SQL_DONE {"result": 1, "duration_ms": 1109.513}
+110 [postgres/T2] SQL_START {"sql": "COMMIT", "params": null}
+111 [postgres/T1] TRANSACTION_ERROR {"case": "opposite/3", "error": "deadlock detected\nDETAIL:  Process 347 waits for ShareLock on transaction 105491; blocked by process 348.\nProcess 348 waits for ShareLock on transaction 105492; blocked by process 347.\nHINT:  See server log for query details.\nCONTEXT:  while updating tuple (4531,11) in relation \"stock\"", "error_kind": "deadlock", "sqlstate": "40P01", "errno": null, "server_detail": "Process 347 waits for ShareLock on transaction 105491; blocked by process 348.\nProcess 348 waits for ShareLock on transaction 105492; blocked by process 347."}
+112 [postgres/T1] SQL_START {"sql": "ROLLBACK", "params": null}
+113 [postgres/T1] SQL_DONE {"result": -1, "duration_ms": 4.288}
+114 [postgres/T2] SQL_DONE {"result": -1, "duration_ms": 7.485}
+115 [postgres/T2] TRANSACTION_COMMIT {"case": "opposite/3"}
+116 [postgres/opposite/3] VICTIM_ROLLBACK_VERIFIED {"counters": {"1": "1.00", "2": "1.00"}}
+117 [postgres/opposite/3/RETRY_T1] SESSION {"connection_id": 349, "isolation": "read committed", "version": "PostgreSQL 17.11 (Debian 17.11-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit"}
+118 [postgres/opposite/3] RETRY_BEGIN {"victim": "T1", "order": [1, 2]}
+119 [postgres/RETRY_T1] SQL_START {"sql": "BEGIN", "params": null}
+120 [postgres/RETRY_T1] SQL_DONE {"result": -1, "duration_ms": 3.461}
+121 [postgres/RETRY_T1] SQL_START {"sql": "UPDATE stock SET s_ytd = s_ytd + 1 WHERE s_w_id = 1 AND s_i_id = %s", "params": [1]}
+122 [postgres/RETRY_T1] SQL_DONE {"result": 1, "duration_ms": 7.932}
+123 [postgres/RETRY_T1] SQL_START {"sql": "UPDATE stock SET s_ytd = s_ytd + 1 WHERE s_w_id = 1 AND s_i_id = %s", "params": [2]}
+124 [postgres/RETRY_T1] SQL_DONE {"result": 1, "duration_ms": 5.287}
+125 [postgres/RETRY_T1] SQL_START {"sql": "COMMIT", "params": null}
+126 [postgres/RETRY_T1] SQL_DONE {"result": -1, "duration_ms": 6.244}
+127 [postgres/opposite/3] RETRY_COMMIT {"victim": "T1"}
+128 [postgres/opposite/3] RESTORED {"confirmed_transactions": 2, "confirmed_row_increments": 4}
+129 [postgres/opposite/3] PASS {"deadlocks": 1, "initial_commits": 1, "retry_attempts": 1, "restored": true}
+130 [postgres/opposite/4] PAIR_START {}
+131 [postgres/CONTROLLER] SESSION {"connection_id": 350, "isolation": "read committed", "version": "PostgreSQL 17.11 (Debian 17.11-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit"}
+132 [postgres/opposite/4/T1] SESSION {"connection_id": 351, "isolation": "read committed", "version": "PostgreSQL 17.11 (Debian 17.11-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit"}
+133 [postgres/T1] SQL_START {"sql": "BEGIN", "params": null}
+134 [postgres/T1] SQL_DONE {"result": -1, "duration_ms": 4.676}
+135 [postgres/opposite/4/T2] SESSION {"connection_id": 352, "isolation": "read committed", "version": "PostgreSQL 17.11 (Debian 17.11-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit"}
+136 [postgres/T2] SQL_START {"sql": "BEGIN", "params": null}
+137 [postgres/T2] SQL_DONE {"result": -1, "duration_ms": 5.464}
+138 [postgres/T2] LOCK_ORDER {"case": "opposite/4", "request_order": [2, 1], "lock_order": [2, 1]}
+139 [postgres/T2] REQUEST_ROW {"case": "opposite/4", "item": 2, "position": 1}
+140 [postgres/T2] SQL_START {"sql": "UPDATE stock SET s_ytd = s_ytd + 1 WHERE s_w_id = 1 AND s_i_id = %s", "params": [2]}
+141 [postgres/T1] LOCK_ORDER {"case": "opposite/4", "request_order": [1, 2], "lock_order": [1, 2]}
+142 [postgres/T1] REQUEST_ROW {"case": "opposite/4", "item": 1, "position": 1}
+143 [postgres/T1] SQL_START {"sql": "UPDATE stock SET s_ytd = s_ytd + 1 WHERE s_w_id = 1 AND s_i_id = %s", "params": [1]}
+144 [postgres/T2] SQL_DONE {"result": 1, "duration_ms": 8.727}
+145 [postgres/T2] FIRST_ROW_LOCKED {"case": "opposite/4", "item": 2}
+146 [postgres/T1] SQL_DONE {"result": 1, "duration_ms": 8.491}
+147 [postgres/T1] FIRST_ROW_LOCKED {"case": "opposite/4", "item": 1}
+148 [postgres/T1] REQUEST_ROW {"case": "opposite/4", "item": 2, "position": 2}
+149 [postgres/T1] SQL_START {"sql": "UPDATE stock SET s_ytd = s_ytd + 1 WHERE s_w_id = 1 AND s_i_id = %s", "params": [2]}
+150 [postgres/T2] REQUEST_ROW {"case": "opposite/4", "item": 1, "position": 2}
+151 [postgres/T2] SQL_START {"sql": "UPDATE stock SET s_ytd = s_ytd + 1 WHERE s_w_id = 1 AND s_i_id = %s", "params": [1]}
+152 [postgres/T2] SQL_DONE {"result": 1, "duration_ms": 1109.699}
+153 [postgres/T2] SQL_START {"sql": "COMMIT", "params": null}
+154 [postgres/T1] TRANSACTION_ERROR {"case": "opposite/4", "error": "deadlock detected\nDETAIL:  Process 351 waits for ShareLock on transaction 105496; blocked by process 352.\nProcess 352 waits for ShareLock on transaction 105497; blocked by process 351.\nHINT:  See server log for query details.\nCONTEXT:  while updating tuple (4531,14) in relation \"stock\"", "error_kind": "deadlock", "sqlstate": "40P01", "errno": null, "server_detail": "Process 351 waits for ShareLock on transaction 105496; blocked by process 352.\nProcess 352 waits for ShareLock on transaction 105497; blocked by process 351."}
+155 [postgres/T1] SQL_START {"sql": "ROLLBACK", "params": null}
+156 [postgres/T1] SQL_DONE {"result": -1, "duration_ms": 3.702}
+157 [postgres/T2] SQL_DONE {"result": -1, "duration_ms": 7.183}
+158 [postgres/T2] TRANSACTION_COMMIT {"case": "opposite/4"}
+159 [postgres/opposite/4] VICTIM_ROLLBACK_VERIFIED {"counters": {"1": "1.00", "2": "1.00"}}
+160 [postgres/opposite/4/RETRY_T1] SESSION {"connection_id": 353, "isolation": "read committed", "version": "PostgreSQL 17.11 (Debian 17.11-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit"}
+161 [postgres/opposite/4] RETRY_BEGIN {"victim": "T1", "order": [1, 2]}
+162 [postgres/RETRY_T1] SQL_START {"sql": "BEGIN", "params": null}
+163 [postgres/RETRY_T1] SQL_DONE {"result": -1, "duration_ms": 3.584}
+164 [postgres/RETRY_T1] SQL_START {"sql": "UPDATE stock SET s_ytd = s_ytd + 1 WHERE s_w_id = 1 AND s_i_id = %s", "params": [1]}
+165 [postgres/RETRY_T1] SQL_DONE {"result": 1, "duration_ms": 5.321}
+166 [postgres/RETRY_T1] SQL_START {"sql": "UPDATE stock SET s_ytd = s_ytd + 1 WHERE s_w_id = 1 AND s_i_id = %s", "params": [2]}
+167 [postgres/RETRY_T1] SQL_DONE {"result": 1, "duration_ms": 4.316}
+168 [postgres/RETRY_T1] SQL_START {"sql": "COMMIT", "params": null}
+169 [postgres/RETRY_T1] SQL_DONE {"result": -1, "duration_ms": 5.507}
+170 [postgres/opposite/4] RETRY_COMMIT {"victim": "T1"}
+171 [postgres/opposite/4] RESTORED {"confirmed_transactions": 2, "confirmed_row_increments": 4}
+172 [postgres/opposite/4] PASS {"deadlocks": 1, "initial_commits": 1, "retry_attempts": 1, "restored": true}
+173 [postgres/opposite/5] PAIR_START {}
+174 [postgres/CONTROLLER] SESSION {"connection_id": 354, "isolation": "read committed", "version": "PostgreSQL 17.11 (Debian 17.11-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit"}
+175 [postgres/opposite/5/T1] SESSION {"connection_id": 355, "isolation": "read committed", "version": "PostgreSQL 17.11 (Debian 17.11-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit"}
+176 [postgres/T1] SQL_START {"sql": "BEGIN", "params": null}
+177 [postgres/opposite/5/T2] SESSION {"connection_id": 356, "isolation": "read committed", "version": "PostgreSQL 17.11 (Debian 17.11-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit"}
+178 [postgres/T2] SQL_START {"sql": "BEGIN", "params": null}
+179 [postgres/T1] SQL_DONE {"result": -1, "duration_ms": 4.493}
+180 [postgres/T2] SQL_DONE {"result": -1, "duration_ms": 3.781}
+181 [postgres/T2] LOCK_ORDER {"case": "opposite/5", "request_order": [2, 1], "lock_order": [2, 1]}
+182 [postgres/T2] REQUEST_ROW {"case": "opposite/5", "item": 2, "position": 1}
+183 [postgres/T1] LOCK_ORDER {"case": "opposite/5", "request_order": [1, 2], "lock_order": [1, 2]}
+184 [postgres/T1] REQUEST_ROW {"case": "opposite/5", "item": 1, "position": 1}
+185 [postgres/T1] SQL_START {"sql": "UPDATE stock SET s_ytd = s_ytd + 1 WHERE s_w_id = 1 AND s_i_id = %s", "params": [1]}
+186 [postgres/T2] SQL_START {"sql": "UPDATE stock SET s_ytd = s_ytd + 1 WHERE s_w_id = 1 AND s_i_id = %s", "params": [2]}
+187 [postgres/T1] SQL_DONE {"result": 1, "duration_ms": 8.61}
+188 [postgres/T1] FIRST_ROW_LOCKED {"case": "opposite/5", "item": 1}
+189 [postgres/T2] SQL_DONE {"result": 1, "duration_ms": 8.429}
+190 [postgres/T2] FIRST_ROW_LOCKED {"case": "opposite/5", "item": 2}
+191 [postgres/T2] REQUEST_ROW {"case": "opposite/5", "item": 1, "position": 2}
+192 [postgres/T2] SQL_START {"sql": "UPDATE stock SET s_ytd = s_ytd + 1 WHERE s_w_id = 1 AND s_i_id = %s", "params": [1]}
+193 [postgres/T1] REQUEST_ROW {"case": "opposite/5", "item": 2, "position": 2}
+194 [postgres/T1] SQL_START {"sql": "UPDATE stock SET s_ytd = s_ytd + 1 WHERE s_w_id = 1 AND s_i_id = %s", "params": [2]}
+195 [postgres/T1] SQL_DONE {"result": 1, "duration_ms": 1110.263}
+196 [postgres/T1] SQL_START {"sql": "COMMIT", "params": null}
+197 [postgres/T2] TRANSACTION_ERROR {"case": "opposite/5", "error": "deadlock detected\nDETAIL:  Process 356 waits for ShareLock on transaction 105502; blocked by process 355.\nProcess 355 waits for ShareLock on transaction 105501; blocked by process 356.\nHINT:  See server log for query details.\nCONTEXT:  while updating tuple (4651,19) in relation \"stock\"", "error_kind": "deadlock", "sqlstate": "40P01", "errno": null, "server_detail": "Process 356 waits for ShareLock on transaction 105502; blocked by process 355.\nProcess 355 waits for ShareLock on transaction 105501; blocked by process 356."}
+198 [postgres/T2] SQL_START {"sql": "ROLLBACK", "params": null}
+199 [postgres/T2] SQL_DONE {"result": -1, "duration_ms": 3.897}
+200 [postgres/T1] SQL_DONE {"result": -1, "duration_ms": 7.292}
+201 [postgres/T1] TRANSACTION_COMMIT {"case": "opposite/5"}
+202 [postgres/opposite/5] VICTIM_ROLLBACK_VERIFIED {"counters": {"1": "1.00", "2": "1.00"}}
+203 [postgres/opposite/5/RETRY_T2] SESSION {"connection_id": 357, "isolation": "read committed", "version": "PostgreSQL 17.11 (Debian 17.11-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit"}
+204 [postgres/opposite/5] RETRY_BEGIN {"victim": "T2", "order": [2, 1]}
+205 [postgres/RETRY_T2] SQL_START {"sql": "BEGIN", "params": null}
+206 [postgres/RETRY_T2] SQL_DONE {"result": -1, "duration_ms": 4.847}
+207 [postgres/RETRY_T2] SQL_START {"sql": "UPDATE stock SET s_ytd = s_ytd + 1 WHERE s_w_id = 1 AND s_i_id = %s", "params": [2]}
+208 [postgres/RETRY_T2] SQL_DONE {"result": 1, "duration_ms": 8.71}
+209 [postgres/RETRY_T2] SQL_START {"sql": "UPDATE stock SET s_ytd = s_ytd + 1 WHERE s_w_id = 1 AND s_i_id = %s", "params": [1]}
+210 [postgres/RETRY_T2] SQL_DONE {"result": 1, "duration_ms": 4.86}
+211 [postgres/RETRY_T2] SQL_START {"sql": "COMMIT", "params": null}
+212 [postgres/RETRY_T2] SQL_DONE {"result": -1, "duration_ms": 13.159}
+213 [postgres/opposite/5] RETRY_COMMIT {"victim": "T2"}
+214 [postgres/opposite/5] RESTORED {"confirmed_transactions": 2, "confirmed_row_increments": 4}
+215 [postgres/opposite/5] PASS {"deadlocks": 1, "initial_commits": 1, "retry_attempts": 1, "restored": true}
+216 [postgres/ordered/1] PAIR_START {}
+217 [postgres/CONTROLLER] SESSION {"connection_id": 358, "isolation": "read committed", "version": "PostgreSQL 17.11 (Debian 17.11-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit"}
+218 [postgres/ordered/1/T1] SESSION {"connection_id": 359, "isolation": "read committed", "version": "PostgreSQL 17.11 (Debian 17.11-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit"}
+219 [postgres/T1] SQL_START {"sql": "BEGIN", "params": null}
+220 [postgres/ordered/1/T2] SESSION {"connection_id": 360, "isolation": "read committed", "version": "PostgreSQL 17.11 (Debian 17.11-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit"}
+221 [postgres/T2] SQL_START {"sql": "BEGIN", "params": null}
+222 [postgres/T1] SQL_DONE {"result": -1, "duration_ms": 5.328}
+223 [postgres/T2] SQL_DONE {"result": -1, "duration_ms": 4.476}
+224 [postgres/T1] LOCK_ORDER {"case": "ordered/1", "request_order": [1, 2], "lock_order": [1, 2]}
+225 [postgres/T1] REQUEST_ROW {"case": "ordered/1", "item": 1, "position": 1}
+226 [postgres/T1] SQL_START {"sql": "UPDATE stock SET s_ytd = s_ytd + 1 WHERE s_w_id = 1 AND s_i_id = %s", "params": [1]}
+227 [postgres/T2] LOCK_ORDER {"case": "ordered/1", "request_order": [2, 1], "lock_order": [1, 2]}
+228 [postgres/T2] REQUEST_ROW {"case": "ordered/1", "item": 1, "position": 1}
+229 [postgres/T2] SQL_START {"sql": "UPDATE stock SET s_ytd = s_ytd + 1 WHERE s_w_id = 1 AND s_i_id = %s", "params": [1]}
+230 [postgres/T1] SQL_DONE {"result": 1, "duration_ms": 10.91}
+231 [postgres/T1] FIRST_ROW_LOCKED {"case": "ordered/1", "item": 1}
+232 [postgres/T1] REQUEST_ROW {"case": "ordered/1", "item": 2, "position": 2}
+233 [postgres/T1] SQL_START {"sql": "UPDATE stock SET s_ytd = s_ytd + 1 WHERE s_w_id = 1 AND s_i_id = %s", "params": [2]}
+234 [postgres/T1] SQL_DONE {"result": 1, "duration_ms": 5.839}
+235 [postgres/T1] SQL_START {"sql": "COMMIT", "params": null}
+236 [postgres/T2] SQL_DONE {"result": 1, "duration_ms": 25.822}
+237 [postgres/T2] FIRST_ROW_LOCKED {"case": "ordered/1", "item": 1}
+238 [postgres/T2] REQUEST_ROW {"case": "ordered/1", "item": 2, "position": 2}
+239 [postgres/T2] SQL_START {"sql": "UPDATE stock SET s_ytd = s_ytd + 1 WHERE s_w_id = 1 AND s_i_id = %s", "params": [2]}
+240 [postgres/T1] SQL_DONE {"result": -1, "duration_ms": 9.491}
+241 [postgres/T1] TRANSACTION_COMMIT {"case": "ordered/1"}
+242 [postgres/T2] SQL_DONE {"result": 1, "duration_ms": 5.852}
+243 [postgres/T2] SQL_START {"sql": "COMMIT", "params": null}
+244 [postgres/T2] SQL_DONE {"result": -1, "duration_ms": 7.075}
+245 [postgres/T2] TRANSACTION_COMMIT {"case": "ordered/1"}
+246 [postgres/ordered/1] RESTORED {"confirmed_transactions": 2, "confirmed_row_increments": 4}
+247 [postgres/ordered/1] PASS {"deadlocks": 0, "initial_commits": 2, "retry_attempts": 0, "restored": true}
+248 [postgres/ordered/2] PAIR_START {}
+249 [postgres/CONTROLLER] SESSION {"connection_id": 361, "isolation": "read committed", "version": "PostgreSQL 17.11 (Debian 17.11-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit"}
+250 [postgres/ordered/2/T1] SESSION {"connection_id": 362, "isolation": "read committed", "version": "PostgreSQL 17.11 (Debian 17.11-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit"}
+251 [postgres/T1] SQL_START {"sql": "BEGIN", "params": null}
+252 [postgres/T1] SQL_DONE {"result": -1, "duration_ms": 4.48}
+253 [postgres/ordered/2/T2] SESSION {"connection_id": 363, "isolation": "read committed", "version": "PostgreSQL 17.11 (Debian 17.11-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit"}
+254 [postgres/T2] SQL_START {"sql": "BEGIN", "params": null}
+255 [postgres/T2] SQL_DONE {"result": -1, "duration_ms": 3.537}
+256 [postgres/T1] LOCK_ORDER {"case": "ordered/2", "request_order": [1, 2], "lock_order": [1, 2]}
+257 [postgres/T1] REQUEST_ROW {"case": "ordered/2", "item": 1, "position": 1}
+258 [postgres/T1] SQL_START {"sql": "UPDATE stock SET s_ytd = s_ytd + 1 WHERE s_w_id = 1 AND s_i_id = %s", "params": [1]}
+259 [postgres/T2] LOCK_ORDER {"case": "ordered/2", "request_order": [2, 1], "lock_order": [1, 2]}
+260 [postgres/T2] REQUEST_ROW {"case": "ordered/2", "item": 1, "position": 1}
+261 [postgres/T2] SQL_START {"sql": "UPDATE stock SET s_ytd = s_ytd + 1 WHERE s_w_id = 1 AND s_i_id = %s", "params": [1]}
+262 [postgres/T1] SQL_DONE {"result": 1, "duration_ms": 9.027}
+263 [postgres/T1] FIRST_ROW_LOCKED {"case": "ordered/2", "item": 1}
+264 [postgres/T1] REQUEST_ROW {"case": "ordered/2", "item": 2, "position": 2}
+265 [postgres/T1] SQL_START {"sql": "UPDATE stock SET s_ytd = s_ytd + 1 WHERE s_w_id = 1 AND s_i_id = %s", "params": [2]}
+266 [postgres/T1] SQL_DONE {"result": 1, "duration_ms": 5.025}
+267 [postgres/T1] SQL_START {"sql": "COMMIT", "params": null}
+268 [postgres/T1] SQL_DONE {"result": -1, "duration_ms": 8.173}
+269 [postgres/T1] TRANSACTION_COMMIT {"case": "ordered/2"}
+270 [postgres/T2] SQL_DONE {"result": 1, "duration_ms": 22.842}
+271 [postgres/T2] FIRST_ROW_LOCKED {"case": "ordered/2", "item": 1}
+272 [postgres/T2] REQUEST_ROW {"case": "ordered/2", "item": 2, "position": 2}
+273 [postgres/T2] SQL_START {"sql": "UPDATE stock SET s_ytd = s_ytd + 1 WHERE s_w_id = 1 AND s_i_id = %s", "params": [2]}
+274 [postgres/T2] SQL_DONE {"result": 1, "duration_ms": 5.52}
+275 [postgres/T2] SQL_START {"sql": "COMMIT", "params": null}
+276 [postgres/T2] SQL_DONE {"result": -1, "duration_ms": 7.264}
+277 [postgres/T2] TRANSACTION_COMMIT {"case": "ordered/2"}
+278 [postgres/ordered/2] RESTORED {"confirmed_transactions": 2, "confirmed_row_increments": 4}
+279 [postgres/ordered/2] PASS {"deadlocks": 0, "initial_commits": 2, "retry_attempts": 0, "restored": true}
+280 [postgres/ordered/3] PAIR_START {}
+281 [postgres/CONTROLLER] SESSION {"connection_id": 364, "isolation": "read committed", "version": "PostgreSQL 17.11 (Debian 17.11-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit"}
+282 [postgres/ordered/3/T1] SESSION {"connection_id": 365, "isolation": "read committed", "version": "PostgreSQL 17.11 (Debian 17.11-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit"}
+283 [postgres/T1] SQL_START {"sql": "BEGIN", "params": null}
+284 [postgres/ordered/3/T2] SESSION {"connection_id": 366, "isolation": "read committed", "version": "PostgreSQL 17.11 (Debian 17.11-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit"}
+285 [postgres/T2] SQL_START {"sql": "BEGIN", "params": null}
+286 [postgres/T1] SQL_DONE {"result": -1, "duration_ms": 4.299}
+287 [postgres/T2] SQL_DONE {"result": -1, "duration_ms": 4.373}
+288 [postgres/T1] LOCK_ORDER {"case": "ordered/3", "request_order": [1, 2], "lock_order": [1, 2]}
+289 [postgres/T1] REQUEST_ROW {"case": "ordered/3", "item": 1, "position": 1}
+290 [postgres/T1] SQL_START {"sql": "UPDATE stock SET s_ytd = s_ytd + 1 WHERE s_w_id = 1 AND s_i_id = %s", "params": [1]}
+291 [postgres/T2] LOCK_ORDER {"case": "ordered/3", "request_order": [2, 1], "lock_order": [1, 2]}
+292 [postgres/T2] REQUEST_ROW {"case": "ordered/3", "item": 1, "position": 1}
+293 [postgres/T2] SQL_START {"sql": "UPDATE stock SET s_ytd = s_ytd + 1 WHERE s_w_id = 1 AND s_i_id = %s", "params": [1]}
+294 [postgres/T1] SQL_DONE {"result": 1, "duration_ms": 6.94}
+295 [postgres/T1] FIRST_ROW_LOCKED {"case": "ordered/3", "item": 1}
+296 [postgres/T1] REQUEST_ROW {"case": "ordered/3", "item": 2, "position": 2}
+297 [postgres/T1] SQL_START {"sql": "UPDATE stock SET s_ytd = s_ytd + 1 WHERE s_w_id = 1 AND s_i_id = %s", "params": [2]}
+298 [postgres/T1] SQL_DONE {"result": 1, "duration_ms": 6.202}
+299 [postgres/T1] SQL_START {"sql": "COMMIT", "params": null}
+300 [postgres/T1] SQL_DONE {"result": -1, "duration_ms": 14.432}
+301 [postgres/T1] TRANSACTION_COMMIT {"case": "ordered/3"}
+302 [postgres/T2] SQL_DONE {"result": 1, "duration_ms": 29.896}
+303 [postgres/T2] FIRST_ROW_LOCKED {"case": "ordered/3", "item": 1}
+304 [postgres/T2] REQUEST_ROW {"case": "ordered/3", "item": 2, "position": 2}
+305 [postgres/T2] SQL_START {"sql": "UPDATE stock SET s_ytd = s_ytd + 1 WHERE s_w_id = 1 AND s_i_id = %s", "params": [2]}
+306 [postgres/T2] SQL_DONE {"result": 1, "duration_ms": 6.355}
+307 [postgres/T2] SQL_START {"sql": "COMMIT", "params": null}
+308 [postgres/T2] SQL_DONE {"result": -1, "duration_ms": 8.117}
+309 [postgres/T2] TRANSACTION_COMMIT {"case": "ordered/3"}
+310 [postgres/ordered/3] RESTORED {"confirmed_transactions": 2, "confirmed_row_increments": 4}
+311 [postgres/ordered/3] PASS {"deadlocks": 0, "initial_commits": 2, "retry_attempts": 0, "restored": true}
+312 [postgres/ordered/4] PAIR_START {}
+313 [postgres/CONTROLLER] SESSION {"connection_id": 367, "isolation": "read committed", "version": "PostgreSQL 17.11 (Debian 17.11-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit"}
+314 [postgres/ordered/4/T2] SESSION {"connection_id": 369, "isolation": "read committed", "version": "PostgreSQL 17.11 (Debian 17.11-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit"}
+315 [postgres/T2] SQL_START {"sql": "BEGIN", "params": null}
+316 [postgres/T2] SQL_DONE {"result": -1, "duration_ms": 4.501}
+317 [postgres/ordered/4/T1] SESSION {"connection_id": 368, "isolation": "read committed", "version": "PostgreSQL 17.11 (Debian 17.11-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit"}
+318 [postgres/T1] SQL_START {"sql": "BEGIN", "params": null}
+319 [postgres/T1] SQL_DONE {"result": -1, "duration_ms": 4.263}
+320 [postgres/T1] LOCK_ORDER {"case": "ordered/4", "request_order": [1, 2], "lock_order": [1, 2]}
+321 [postgres/T1] REQUEST_ROW {"case": "ordered/4", "item": 1, "position": 1}
+322 [postgres/T1] SQL_START {"sql": "UPDATE stock SET s_ytd = s_ytd + 1 WHERE s_w_id = 1 AND s_i_id = %s", "params": [1]}
+323 [postgres/T2] LOCK_ORDER {"case": "ordered/4", "request_order": [2, 1], "lock_order": [1, 2]}
+324 [postgres/T2] REQUEST_ROW {"case": "ordered/4", "item": 1, "position": 1}
+325 [postgres/T2] SQL_START {"sql": "UPDATE stock SET s_ytd = s_ytd + 1 WHERE s_w_id = 1 AND s_i_id = %s", "params": [1]}
+326 [postgres/T1] SQL_DONE {"result": 1, "duration_ms": 9.294}
+327 [postgres/T1] FIRST_ROW_LOCKED {"case": "ordered/4", "item": 1}
+328 [postgres/T1] REQUEST_ROW {"case": "ordered/4", "item": 2, "position": 2}
+329 [postgres/T1] SQL_START {"sql": "UPDATE stock SET s_ytd = s_ytd + 1 WHERE s_w_id = 1 AND s_i_id = %s", "params": [2]}
+330 [postgres/T1] SQL_DONE {"result": 1, "duration_ms": 4.641}
+331 [postgres/T1] SQL_START {"sql": "COMMIT", "params": null}
+332 [postgres/T1] SQL_DONE {"result": -1, "duration_ms": 10.333}
+333 [postgres/T1] TRANSACTION_COMMIT {"case": "ordered/4"}
+334 [postgres/T2] SQL_DONE {"result": 1, "duration_ms": 25.54}
+335 [postgres/T2] FIRST_ROW_LOCKED {"case": "ordered/4", "item": 1}
+336 [postgres/T2] REQUEST_ROW {"case": "ordered/4", "item": 2, "position": 2}
+337 [postgres/T2] SQL_START {"sql": "UPDATE stock SET s_ytd = s_ytd + 1 WHERE s_w_id = 1 AND s_i_id = %s", "params": [2]}
+338 [postgres/T2] SQL_DONE {"result": 1, "duration_ms": 5.875}
+339 [postgres/T2] SQL_START {"sql": "COMMIT", "params": null}
+340 [postgres/T2] SQL_DONE {"result": -1, "duration_ms": 8.477}
+341 [postgres/T2] TRANSACTION_COMMIT {"case": "ordered/4"}
+342 [postgres/ordered/4] RESTORED {"confirmed_transactions": 2, "confirmed_row_increments": 4}
+343 [postgres/ordered/4] PASS {"deadlocks": 0, "initial_commits": 2, "retry_attempts": 0, "restored": true}
+344 [postgres/ordered/5] PAIR_START {}
+345 [postgres/CONTROLLER] SESSION {"connection_id": 370, "isolation": "read committed", "version": "PostgreSQL 17.11 (Debian 17.11-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit"}
+346 [postgres/ordered/5/T1] SESSION {"connection_id": 371, "isolation": "read committed", "version": "PostgreSQL 17.11 (Debian 17.11-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit"}
+347 [postgres/T1] SQL_START {"sql": "BEGIN", "params": null}
+348 [postgres/ordered/5/T2] SESSION {"connection_id": 372, "isolation": "read committed", "version": "PostgreSQL 17.11 (Debian 17.11-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit"}
+349 [postgres/T2] SQL_START {"sql": "BEGIN", "params": null}
+350 [postgres/T1] SQL_DONE {"result": -1, "duration_ms": 4.981}
+351 [postgres/T2] SQL_DONE {"result": -1, "duration_ms": 4.001}
+352 [postgres/T1] LOCK_ORDER {"case": "ordered/5", "request_order": [1, 2], "lock_order": [1, 2]}
+353 [postgres/T1] REQUEST_ROW {"case": "ordered/5", "item": 1, "position": 1}
+354 [postgres/T1] SQL_START {"sql": "UPDATE stock SET s_ytd = s_ytd + 1 WHERE s_w_id = 1 AND s_i_id = %s", "params": [1]}
+355 [postgres/T2] LOCK_ORDER {"case": "ordered/5", "request_order": [2, 1], "lock_order": [1, 2]}
+356 [postgres/T2] REQUEST_ROW {"case": "ordered/5", "item": 1, "position": 1}
+357 [postgres/T2] SQL_START {"sql": "UPDATE stock SET s_ytd = s_ytd + 1 WHERE s_w_id = 1 AND s_i_id = %s", "params": [1]}
+358 [postgres/T1] SQL_DONE {"result": 1, "duration_ms": 8.52}
+359 [postgres/T1] FIRST_ROW_LOCKED {"case": "ordered/5", "item": 1}
+360 [postgres/T1] REQUEST_ROW {"case": "ordered/5", "item": 2, "position": 2}
+361 [postgres/T1] SQL_START {"sql": "UPDATE stock SET s_ytd = s_ytd + 1 WHERE s_w_id = 1 AND s_i_id = %s", "params": [2]}
+362 [postgres/T1] SQL_DONE {"result": 1, "duration_ms": 5.239}
+363 [postgres/T1] SQL_START {"sql": "COMMIT", "params": null}
+364 [postgres/T2] SQL_DONE {"result": 1, "duration_ms": 22.757}
+365 [postgres/T2] FIRST_ROW_LOCKED {"case": "ordered/5", "item": 1}
+366 [postgres/T2] REQUEST_ROW {"case": "ordered/5", "item": 2, "position": 2}
+367 [postgres/T1] SQL_DONE {"result": -1, "duration_ms": 8.936}
+368 [postgres/T1] TRANSACTION_COMMIT {"case": "ordered/5"}
+369 [postgres/T2] SQL_START {"sql": "UPDATE stock SET s_ytd = s_ytd + 1 WHERE s_w_id = 1 AND s_i_id = %s", "params": [2]}
+370 [postgres/T2] SQL_DONE {"result": 1, "duration_ms": 4.995}
+371 [postgres/T2] SQL_START {"sql": "COMMIT", "params": null}
+372 [postgres/T2] SQL_DONE {"result": -1, "duration_ms": 6.607}
+373 [postgres/T2] TRANSACTION_COMMIT {"case": "ordered/5"}
+374 [postgres/ordered/5] RESTORED {"confirmed_transactions": 2, "confirmed_row_increments": 4}
+375 [postgres/ordered/5] PASS {"deadlocks": 0, "initial_commits": 2, "retry_attempts": 0, "restored": true}
+376 [mysql/opposite/1] PAIR_START {}
+377 [mysql/CONTROLLER] SESSION {"connection_id": 238, "isolation": "READ-COMMITTED", "version": "8.4.13"}
+378 [mysql/opposite/1/T1] SESSION {"connection_id": 239, "isolation": "READ-COMMITTED", "version": "8.4.13"}
+379 [mysql/T1] SQL_START {"sql": "START TRANSACTION", "params": null}
+380 [mysql/T1] SQL_DONE {"result": 0, "duration_ms": 8.582}
+381 [mysql/opposite/1/T2] SESSION {"connection_id": 240, "isolation": "READ-COMMITTED", "version": "8.4.13"}
+382 [mysql/T2] SQL_START {"sql": "START TRANSACTION", "params": null}
+383 [mysql/T2] SQL_DONE {"result": 0, "duration_ms": 7.065}
+384 [mysql/T1] LOCK_ORDER {"case": "opposite/1", "request_order": [1, 2], "lock_order": [1, 2]}
+385 [mysql/T1] REQUEST_ROW {"case": "opposite/1", "item": 1, "position": 1}
+386 [mysql/T1] SQL_START {"sql": "UPDATE stock SET s_ytd = s_ytd + 1 WHERE s_w_id = 1 AND s_i_id = %s", "params": [1]}
+387 [mysql/T2] LOCK_ORDER {"case": "opposite/1", "request_order": [2, 1], "lock_order": [2, 1]}
+388 [mysql/T2] REQUEST_ROW {"case": "opposite/1", "item": 2, "position": 1}
+389 [mysql/T2] SQL_START {"sql": "UPDATE stock SET s_ytd = s_ytd + 1 WHERE s_w_id = 1 AND s_i_id = %s", "params": [2]}
+390 [mysql/T1] SQL_DONE {"result": 1, "duration_ms": 4.374}
+391 [mysql/T1] FIRST_ROW_LOCKED {"case": "opposite/1", "item": 1}
+392 [mysql/T2] SQL_DONE {"result": 1, "duration_ms": 4.024}
+393 [mysql/T2] FIRST_ROW_LOCKED {"case": "opposite/1", "item": 2}
+394 [mysql/T2] REQUEST_ROW {"case": "opposite/1", "item": 1, "position": 2}
+395 [mysql/T2] SQL_START {"sql": "UPDATE stock SET s_ytd = s_ytd + 1 WHERE s_w_id = 1 AND s_i_id = %s", "params": [1]}
+396 [mysql/T1] REQUEST_ROW {"case": "opposite/1", "item": 2, "position": 2}
+397 [mysql/T1] SQL_START {"sql": "UPDATE stock SET s_ytd = s_ytd + 1 WHERE s_w_id = 1 AND s_i_id = %s", "params": [2]}
+398 [mysql/T1] SQL_DONE {"result": 1, "duration_ms": 4.625}
+399 [mysql/T1] SQL_START {"sql": "COMMIT", "params": null}
+400 [mysql/T2] TRANSACTION_ERROR {"case": "opposite/1", "error": "1213 (40001): Deadlock found when trying to get lock; try restarting transaction", "error_kind": "deadlock", "sqlstate": "40001", "errno": 1213, "server_detail": null}
+401 [mysql/T2] SQL_START {"sql": "ROLLBACK", "params": null}
+402 [mysql/T2] SQL_DONE {"result": 0, "duration_ms": 4.429}
+403 [mysql/T1] SQL_DONE {"result": 0, "duration_ms": 11.498}
+404 [mysql/T1] TRANSACTION_COMMIT {"case": "opposite/1"}
+405 [mysql/opposite/1] VICTIM_ROLLBACK_VERIFIED {"counters": {"1": "1.00", "2": "1.00"}}
+406 [mysql/opposite/1/RETRY_T2] SESSION {"connection_id": 241, "isolation": "READ-COMMITTED", "version": "8.4.13"}
+407 [mysql/opposite/1] RETRY_BEGIN {"victim": "T2", "order": [2, 1]}
+408 [mysql/RETRY_T2] SQL_START {"sql": "START TRANSACTION", "params": null}
+409 [mysql/RETRY_T2] SQL_DONE {"result": 0, "duration_ms": 9.442}
+410 [mysql/RETRY_T2] SQL_START {"sql": "UPDATE stock SET s_ytd = s_ytd + 1 WHERE s_w_id = 1 AND s_i_id = %s", "params": [2]}
+411 [mysql/RETRY_T2] SQL_DONE {"result": 1, "duration_ms": 9.225}
+412 [mysql/RETRY_T2] SQL_START {"sql": "UPDATE stock SET s_ytd = s_ytd + 1 WHERE s_w_id = 1 AND s_i_id = %s", "params": [1]}
+413 [mysql/RETRY_T2] SQL_DONE {"result": 1, "duration_ms": 10.597}
+414 [mysql/RETRY_T2] SQL_START {"sql": "COMMIT", "params": null}
+415 [mysql/RETRY_T2] SQL_DONE {"result": 0, "duration_ms": 20.101}
+416 [mysql/opposite/1] RETRY_COMMIT {"victim": "T2"}
+417 [mysql/opposite/1] RESTORED {"confirmed_transactions": 2, "confirmed_row_increments": 4}
+418 [mysql/opposite/1] PASS {"deadlocks": 1, "initial_commits": 1, "retry_attempts": 1, "restored": true}
+419 [mysql/opposite/2] PAIR_START {}
+420 [mysql/CONTROLLER] SESSION {"connection_id": 242, "isolation": "READ-COMMITTED", "version": "8.4.13"}
+421 [mysql/opposite/2/T2] SESSION {"connection_id": 244, "isolation": "READ-COMMITTED", "version": "8.4.13"}
+422 [mysql/T2] SQL_START {"sql": "START TRANSACTION", "params": null}
+423 [mysql/opposite/2/T1] SESSION {"connection_id": 243, "isolation": "READ-COMMITTED", "version": "8.4.13"}
+424 [mysql/T1] SQL_START {"sql": "START TRANSACTION", "params": null}
+425 [mysql/T2] SQL_DONE {"result": 0, "duration_ms": 7.007}
+426 [mysql/T1] SQL_DONE {"result": 0, "duration_ms": 6.402}
+427 [mysql/T1] LOCK_ORDER {"case": "opposite/2", "request_order": [1, 2], "lock_order": [1, 2]}
+428 [mysql/T1] REQUEST_ROW {"case": "opposite/2", "item": 1, "position": 1}
+429 [mysql/T1] SQL_START {"sql": "UPDATE stock SET s_ytd = s_ytd + 1 WHERE s_w_id = 1 AND s_i_id = %s", "params": [1]}
+430 [mysql/T2] LOCK_ORDER {"case": "opposite/2", "request_order": [2, 1], "lock_order": [2, 1]}
+431 [mysql/T2] REQUEST_ROW {"case": "opposite/2", "item": 2, "position": 1}
+432 [mysql/T2] SQL_START {"sql": "UPDATE stock SET s_ytd = s_ytd + 1 WHERE s_w_id = 1 AND s_i_id = %s", "params": [2]}
+433 [mysql/T2] SQL_DONE {"result": 1, "duration_ms": 4.353}
+434 [mysql/T2] FIRST_ROW_LOCKED {"case": "opposite/2", "item": 2}
+435 [mysql/T1] SQL_DONE {"result": 1, "duration_ms": 5.345}
+436 [mysql/T1] FIRST_ROW_LOCKED {"case": "opposite/2", "item": 1}
+437 [mysql/T1] REQUEST_ROW {"case": "opposite/2", "item": 2, "position": 2}
+438 [mysql/T1] SQL_START {"sql": "UPDATE stock SET s_ytd = s_ytd + 1 WHERE s_w_id = 1 AND s_i_id = %s", "params": [2]}
+439 [mysql/T2] REQUEST_ROW {"case": "opposite/2", "item": 1, "position": 2}
+440 [mysql/T2] SQL_START {"sql": "UPDATE stock SET s_ytd = s_ytd + 1 WHERE s_w_id = 1 AND s_i_id = %s", "params": [1]}
+441 [mysql/T2] SQL_DONE {"result": 1, "duration_ms": 6.731}
+442 [mysql/T2] SQL_START {"sql": "COMMIT", "params": null}
+443 [mysql/T1] TRANSACTION_ERROR {"case": "opposite/2", "error": "1213 (40001): Deadlock found when trying to get lock; try restarting transaction", "error_kind": "deadlock", "sqlstate": "40001", "errno": 1213, "server_detail": null}
+444 [mysql/T1] SQL_START {"sql": "ROLLBACK", "params": null}
+445 [mysql/T1] SQL_DONE {"result": 0, "duration_ms": 3.632}
+446 [mysql/T2] SQL_DONE {"result": 0, "duration_ms": 8.697}
+447 [mysql/T2] TRANSACTION_COMMIT {"case": "opposite/2"}
+448 [mysql/opposite/2] VICTIM_ROLLBACK_VERIFIED {"counters": {"1": "1.00", "2": "1.00"}}
+449 [mysql/opposite/2/RETRY_T1] SESSION {"connection_id": 245, "isolation": "READ-COMMITTED", "version": "8.4.13"}
+450 [mysql/opposite/2] RETRY_BEGIN {"victim": "T1", "order": [1, 2]}
+451 [mysql/RETRY_T1] SQL_START {"sql": "START TRANSACTION", "params": null}
+452 [mysql/RETRY_T1] SQL_DONE {"result": 0, "duration_ms": 9.399}
+453 [mysql/RETRY_T1] SQL_START {"sql": "UPDATE stock SET s_ytd = s_ytd + 1 WHERE s_w_id = 1 AND s_i_id = %s", "params": [1]}
+454 [mysql/RETRY_T1] SQL_DONE {"result": 1, "duration_ms": 11.666}
+455 [mysql/RETRY_T1] SQL_START {"sql": "UPDATE stock SET s_ytd = s_ytd + 1 WHERE s_w_id = 1 AND s_i_id = %s", "params": [2]}
+456 [mysql/RETRY_T1] SQL_DONE {"result": 1, "duration_ms": 10.92}
+457 [mysql/RETRY_T1] SQL_START {"sql": "COMMIT", "params": null}
+458 [mysql/RETRY_T1] SQL_DONE {"result": 0, "duration_ms": 20.045}
+459 [mysql/opposite/2] RETRY_COMMIT {"victim": "T1"}
+460 [mysql/opposite/2] RESTORED {"confirmed_transactions": 2, "confirmed_row_increments": 4}
+461 [mysql/opposite/2] PASS {"deadlocks": 1, "initial_commits": 1, "retry_attempts": 1, "restored": true}
+462 [mysql/opposite/3] PAIR_START {}
+463 [mysql/CONTROLLER] SESSION {"connection_id": 246, "isolation": "READ-COMMITTED", "version": "8.4.13"}
+464 [mysql/opposite/3/T2] SESSION {"connection_id": 248, "isolation": "READ-COMMITTED", "version": "8.4.13"}
+465 [mysql/T2] SQL_START {"sql": "START TRANSACTION", "params": null}
+466 [mysql/opposite/3/T1] SESSION {"connection_id": 247, "isolation": "READ-COMMITTED", "version": "8.4.13"}
+467 [mysql/T1] SQL_START {"sql": "START TRANSACTION", "params": null}
+468 [mysql/T2] SQL_DONE {"result": 0, "duration_ms": 11.422}
+469 [mysql/T1] SQL_DONE {"result": 0, "duration_ms": 10.872}
+470 [mysql/T2] LOCK_ORDER {"case": "opposite/3", "request_order": [2, 1], "lock_order": [2, 1]}
+471 [mysql/T2] REQUEST_ROW {"case": "opposite/3", "item": 2, "position": 1}
+472 [mysql/T2] SQL_START {"sql": "UPDATE stock SET s_ytd = s_ytd + 1 WHERE s_w_id = 1 AND s_i_id = %s", "params": [2]}
+473 [mysql/T1] LOCK_ORDER {"case": "opposite/3", "request_order": [1, 2], "lock_order": [1, 2]}
+474 [mysql/T1] REQUEST_ROW {"case": "opposite/3", "item": 1, "position": 1}
+475 [mysql/T1] SQL_START {"sql": "UPDATE stock SET s_ytd = s_ytd + 1 WHERE s_w_id = 1 AND s_i_id = %s", "params": [1]}
+476 [mysql/T1] SQL_DONE {"result": 1, "duration_ms": 10.77}
+477 [mysql/T1] FIRST_ROW_LOCKED {"case": "opposite/3", "item": 1}
+478 [mysql/T2] SQL_DONE {"result": 1, "duration_ms": 12.352}
+479 [mysql/T2] FIRST_ROW_LOCKED {"case": "opposite/3", "item": 2}
+480 [mysql/T2] REQUEST_ROW {"case": "opposite/3", "item": 1, "position": 2}
+481 [mysql/T2] SQL_START {"sql": "UPDATE stock SET s_ytd = s_ytd + 1 WHERE s_w_id = 1 AND s_i_id = %s", "params": [1]}
+482 [mysql/T1] REQUEST_ROW {"case": "opposite/3", "item": 2, "position": 2}
+483 [mysql/T1] SQL_START {"sql": "UPDATE stock SET s_ytd = s_ytd + 1 WHERE s_w_id = 1 AND s_i_id = %s", "params": [2]}
+484 [mysql/T1] SQL_DONE {"result": 1, "duration_ms": 11.91}
+485 [mysql/T1] SQL_START {"sql": "COMMIT", "params": null}
+486 [mysql/T2] TRANSACTION_ERROR {"case": "opposite/3", "error": "1213 (40001): Deadlock found when trying to get lock; try restarting transaction", "error_kind": "deadlock", "sqlstate": "40001", "errno": 1213, "server_detail": null}
+487 [mysql/T2] SQL_START {"sql": "ROLLBACK", "params": null}
+488 [mysql/T2] SQL_DONE {"result": 0, "duration_ms": 10.325}
+489 [mysql/T1] SQL_DONE {"result": 0, "duration_ms": 19.808}
+490 [mysql/T1] TRANSACTION_COMMIT {"case": "opposite/3"}
+491 [mysql/opposite/3] VICTIM_ROLLBACK_VERIFIED {"counters": {"1": "1.00", "2": "1.00"}}
+492 [mysql/opposite/3/RETRY_T2] SESSION {"connection_id": 249, "isolation": "READ-COMMITTED", "version": "8.4.13"}
+493 [mysql/opposite/3] RETRY_BEGIN {"victim": "T2", "order": [2, 1]}
+494 [mysql/RETRY_T2] SQL_START {"sql": "START TRANSACTION", "params": null}
+495 [mysql/RETRY_T2] SQL_DONE {"result": 0, "duration_ms": 7.548}
+496 [mysql/RETRY_T2] SQL_START {"sql": "UPDATE stock SET s_ytd = s_ytd + 1 WHERE s_w_id = 1 AND s_i_id = %s", "params": [2]}
+497 [mysql/RETRY_T2] SQL_DONE {"result": 1, "duration_ms": 9.84}
+498 [mysql/RETRY_T2] SQL_START {"sql": "UPDATE stock SET s_ytd = s_ytd + 1 WHERE s_w_id = 1 AND s_i_id = %s", "params": [1]}
+499 [mysql/RETRY_T2] SQL_DONE {"result": 1, "duration_ms": 9.857}
+500 [mysql/RETRY_T2] SQL_START {"sql": "COMMIT", "params": null}
+501 [mysql/RETRY_T2] SQL_DONE {"result": 0, "duration_ms": 20.414}
+502 [mysql/opposite/3] RETRY_COMMIT {"victim": "T2"}
+503 [mysql/opposite/3] RESTORED {"confirmed_transactions": 2, "confirmed_row_increments": 4}
+504 [mysql/opposite/3] PASS {"deadlocks": 1, "initial_commits": 1, "retry_attempts": 1, "restored": true}
+505 [mysql/opposite/4] PAIR_START {}
+506 [mysql/CONTROLLER] SESSION {"connection_id": 250, "isolation": "READ-COMMITTED", "version": "8.4.13"}
+507 [mysql/opposite/4/T1] SESSION {"connection_id": 251, "isolation": "READ-COMMITTED", "version": "8.4.13"}
+508 [mysql/T1] SQL_START {"sql": "START TRANSACTION", "params": null}
+509 [mysql/opposite/4/T2] SESSION {"connection_id": 252, "isolation": "READ-COMMITTED", "version": "8.4.13"}
+510 [mysql/T2] SQL_START {"sql": "START TRANSACTION", "params": null}
+511 [mysql/T2] SQL_DONE {"result": 0, "duration_ms": 3.331}
+512 [mysql/T1] SQL_DONE {"result": 0, "duration_ms": 4.04}
+513 [mysql/T2] LOCK_ORDER {"case": "opposite/4", "request_order": [2, 1], "lock_order": [2, 1]}
+514 [mysql/T2] REQUEST_ROW {"case": "opposite/4", "item": 2, "position": 1}
+515 [mysql/T2] SQL_START {"sql": "UPDATE stock SET s_ytd = s_ytd + 1 WHERE s_w_id = 1 AND s_i_id = %s", "params": [2]}
+516 [mysql/T1] LOCK_ORDER {"case": "opposite/4", "request_order": [1, 2], "lock_order": [1, 2]}
+517 [mysql/T1] REQUEST_ROW {"case": "opposite/4", "item": 1, "position": 1}
+518 [mysql/T1] SQL_START {"sql": "UPDATE stock SET s_ytd = s_ytd + 1 WHERE s_w_id = 1 AND s_i_id = %s", "params": [1]}
+519 [mysql/T1] SQL_DONE {"result": 1, "duration_ms": 4.71}
+520 [mysql/T1] FIRST_ROW_LOCKED {"case": "opposite/4", "item": 1}
+521 [mysql/T2] SQL_DONE {"result": 1, "duration_ms": 5.519}
+522 [mysql/T2] FIRST_ROW_LOCKED {"case": "opposite/4", "item": 2}
+523 [mysql/T2] REQUEST_ROW {"case": "opposite/4", "item": 1, "position": 2}
+524 [mysql/T2] SQL_START {"sql": "UPDATE stock SET s_ytd = s_ytd + 1 WHERE s_w_id = 1 AND s_i_id = %s", "params": [1]}
+525 [mysql/T1] REQUEST_ROW {"case": "opposite/4", "item": 2, "position": 2}
+526 [mysql/T1] SQL_START {"sql": "UPDATE stock SET s_ytd = s_ytd + 1 WHERE s_w_id = 1 AND s_i_id = %s", "params": [2]}
+527 [mysql/T1] SQL_DONE {"result": 1, "duration_ms": 6.536}
+528 [mysql/T1] SQL_START {"sql": "COMMIT", "params": null}
+529 [mysql/T2] TRANSACTION_ERROR {"case": "opposite/4", "error": "1213 (40001): Deadlock found when trying to get lock; try restarting transaction", "error_kind": "deadlock", "sqlstate": "40001", "errno": 1213, "server_detail": null}
+530 [mysql/T2] SQL_START {"sql": "ROLLBACK", "params": null}
+531 [mysql/T2] SQL_DONE {"result": 0, "duration_ms": 4.101}
+532 [mysql/T1] SQL_DONE {"result": 0, "duration_ms": 8.551}
+533 [mysql/T1] TRANSACTION_COMMIT {"case": "opposite/4"}
+534 [mysql/opposite/4] VICTIM_ROLLBACK_VERIFIED {"counters": {"1": "1.00", "2": "1.00"}}
+535 [mysql/opposite/4/RETRY_T2] SESSION {"connection_id": 253, "isolation": "READ-COMMITTED", "version": "8.4.13"}
+536 [mysql/opposite/4] RETRY_BEGIN {"victim": "T2", "order": [2, 1]}
+537 [mysql/RETRY_T2] SQL_START {"sql": "START TRANSACTION", "params": null}
+538 [mysql/RETRY_T2] SQL_DONE {"result": 0, "duration_ms": 5.063}
+539 [mysql/RETRY_T2] SQL_START {"sql": "UPDATE stock SET s_ytd = s_ytd + 1 WHERE s_w_id = 1 AND s_i_id = %s", "params": [2]}
+540 [mysql/RETRY_T2] SQL_DONE {"result": 1, "duration_ms": 6.425}
+541 [mysql/RETRY_T2] SQL_START {"sql": "UPDATE stock SET s_ytd = s_ytd + 1 WHERE s_w_id = 1 AND s_i_id = %s", "params": [1]}
+542 [mysql/RETRY_T2] SQL_DONE {"result": 1, "duration_ms": 6.345}
+543 [mysql/RETRY_T2] SQL_START {"sql": "COMMIT", "params": null}
+544 [mysql/RETRY_T2] SQL_DONE {"result": 0, "duration_ms": 13.584}
+545 [mysql/opposite/4] RETRY_COMMIT {"victim": "T2"}
+546 [mysql/opposite/4] RESTORED {"confirmed_transactions": 2, "confirmed_row_increments": 4}
+547 [mysql/opposite/4] PASS {"deadlocks": 1, "initial_commits": 1, "retry_attempts": 1, "restored": true}
+548 [mysql/opposite/5] PAIR_START {}
+549 [mysql/CONTROLLER] SESSION {"connection_id": 254, "isolation": "READ-COMMITTED", "version": "8.4.13"}
+550 [mysql/opposite/5/T2] SESSION {"connection_id": 256, "isolation": "READ-COMMITTED", "version": "8.4.13"}
+551 [mysql/T2] SQL_START {"sql": "START TRANSACTION", "params": null}
+552 [mysql/opposite/5/T1] SESSION {"connection_id": 255, "isolation": "READ-COMMITTED", "version": "8.4.13"}
+553 [mysql/T1] SQL_START {"sql": "START TRANSACTION", "params": null}
+554 [mysql/T2] SQL_DONE {"result": 0, "duration_ms": 6.093}
+555 [mysql/T1] SQL_DONE {"result": 0, "duration_ms": 5.436}
+556 [mysql/T1] LOCK_ORDER {"case": "opposite/5", "request_order": [1, 2], "lock_order": [1, 2]}
+557 [mysql/T1] REQUEST_ROW {"case": "opposite/5", "item": 1, "position": 1}
+558 [mysql/T1] SQL_START {"sql": "UPDATE stock SET s_ytd = s_ytd + 1 WHERE s_w_id = 1 AND s_i_id = %s", "params": [1]}
+559 [mysql/T2] LOCK_ORDER {"case": "opposite/5", "request_order": [2, 1], "lock_order": [2, 1]}
+560 [mysql/T2] REQUEST_ROW {"case": "opposite/5", "item": 2, "position": 1}
+561 [mysql/T2] SQL_START {"sql": "UPDATE stock SET s_ytd = s_ytd + 1 WHERE s_w_id = 1 AND s_i_id = %s", "params": [2]}
+562 [mysql/T2] SQL_DONE {"result": 1, "duration_ms": 5.478}
+563 [mysql/T2] FIRST_ROW_LOCKED {"case": "opposite/5", "item": 2}
+564 [mysql/T1] SQL_DONE {"result": 1, "duration_ms": 6.529}
+565 [mysql/T1] FIRST_ROW_LOCKED {"case": "opposite/5", "item": 1}
+566 [mysql/T1] REQUEST_ROW {"case": "opposite/5", "item": 2, "position": 2}
+567 [mysql/T1] SQL_START {"sql": "UPDATE stock SET s_ytd = s_ytd + 1 WHERE s_w_id = 1 AND s_i_id = %s", "params": [2]}
+568 [mysql/T2] REQUEST_ROW {"case": "opposite/5", "item": 1, "position": 2}
+569 [mysql/T2] SQL_START {"sql": "UPDATE stock SET s_ytd = s_ytd + 1 WHERE s_w_id = 1 AND s_i_id = %s", "params": [1]}
+570 [mysql/T2] SQL_DONE {"result": 1, "duration_ms": 9.622}
+571 [mysql/T2] SQL_START {"sql": "COMMIT", "params": null}
+572 [mysql/T1] TRANSACTION_ERROR {"case": "opposite/5", "error": "1213 (40001): Deadlock found when trying to get lock; try restarting transaction", "error_kind": "deadlock", "sqlstate": "40001", "errno": 1213, "server_detail": null}
+573 [mysql/T1] SQL_START {"sql": "ROLLBACK", "params": null}
+574 [mysql/T1] SQL_DONE {"result": 0, "duration_ms": 4.988}
+575 [mysql/T2] SQL_DONE {"result": 0, "duration_ms": 13.908}
+576 [mysql/T2] TRANSACTION_COMMIT {"case": "opposite/5"}
+577 [mysql/opposite/5] VICTIM_ROLLBACK_VERIFIED {"counters": {"1": "1.00", "2": "1.00"}}
+578 [mysql/opposite/5/RETRY_T1] SESSION {"connection_id": 257, "isolation": "READ-COMMITTED", "version": "8.4.13"}
+579 [mysql/opposite/5] RETRY_BEGIN {"victim": "T1", "order": [1, 2]}
+580 [mysql/RETRY_T1] SQL_START {"sql": "START TRANSACTION", "params": null}
+581 [mysql/RETRY_T1] SQL_DONE {"result": 0, "duration_ms": 8.074}
+582 [mysql/RETRY_T1] SQL_START {"sql": "UPDATE stock SET s_ytd = s_ytd + 1 WHERE s_w_id = 1 AND s_i_id = %s", "params": [1]}
+583 [mysql/RETRY_T1] SQL_DONE {"result": 1, "duration_ms": 9.444}
+584 [mysql/RETRY_T1] SQL_START {"sql": "UPDATE stock SET s_ytd = s_ytd + 1 WHERE s_w_id = 1 AND s_i_id = %s", "params": [2]}
+585 [mysql/RETRY_T1] SQL_DONE {"result": 1, "duration_ms": 8.074}
+586 [mysql/RETRY_T1] SQL_START {"sql": "COMMIT", "params": null}
+587 [mysql/RETRY_T1] SQL_DONE {"result": 0, "duration_ms": 13.622}
+588 [mysql/opposite/5] RETRY_COMMIT {"victim": "T1"}
+589 [mysql/opposite/5] RESTORED {"confirmed_transactions": 2, "confirmed_row_increments": 4}
+590 [mysql/opposite/5] PASS {"deadlocks": 1, "initial_commits": 1, "retry_attempts": 1, "restored": true}
+591 [mysql/ordered/1] PAIR_START {}
+592 [mysql/CONTROLLER] SESSION {"connection_id": 258, "isolation": "READ-COMMITTED", "version": "8.4.13"}
+593 [mysql/ordered/1/T2] SESSION {"connection_id": 260, "isolation": "READ-COMMITTED", "version": "8.4.13"}
+594 [mysql/T2] SQL_START {"sql": "START TRANSACTION", "params": null}
+595 [mysql/ordered/1/T1] SESSION {"connection_id": 259, "isolation": "READ-COMMITTED", "version": "8.4.13"}
+596 [mysql/T1] SQL_START {"sql": "START TRANSACTION", "params": null}
+597 [mysql/T2] SQL_DONE {"result": 0, "duration_ms": 7.231}
+598 [mysql/T1] SQL_DONE {"result": 0, "duration_ms": 5.32}
+599 [mysql/T2] LOCK_ORDER {"case": "ordered/1", "request_order": [2, 1], "lock_order": [1, 2]}
+600 [mysql/T2] REQUEST_ROW {"case": "ordered/1", "item": 1, "position": 1}
+601 [mysql/T2] SQL_START {"sql": "UPDATE stock SET s_ytd = s_ytd + 1 WHERE s_w_id = 1 AND s_i_id = %s", "params": [1]}
+602 [mysql/T1] LOCK_ORDER {"case": "ordered/1", "request_order": [1, 2], "lock_order": [1, 2]}
+603 [mysql/T1] REQUEST_ROW {"case": "ordered/1", "item": 1, "position": 1}
+604 [mysql/T1] SQL_START {"sql": "UPDATE stock SET s_ytd = s_ytd + 1 WHERE s_w_id = 1 AND s_i_id = %s", "params": [1]}
+605 [mysql/T1] SQL_DONE {"result": 1, "duration_ms": 8.177}
+606 [mysql/T1] FIRST_ROW_LOCKED {"case": "ordered/1", "item": 1}
+607 [mysql/T1] REQUEST_ROW {"case": "ordered/1", "item": 2, "position": 2}
+608 [mysql/T1] SQL_START {"sql": "UPDATE stock SET s_ytd = s_ytd + 1 WHERE s_w_id = 1 AND s_i_id = %s", "params": [2]}
+609 [mysql/T1] SQL_DONE {"result": 1, "duration_ms": 6.479}
+610 [mysql/T1] SQL_START {"sql": "COMMIT", "params": null}
+611 [mysql/T1] SQL_DONE {"result": 0, "duration_ms": 16.404}
+612 [mysql/T1] TRANSACTION_COMMIT {"case": "ordered/1"}
+613 [mysql/T2] SQL_DONE {"result": 1, "duration_ms": 36.012}
+614 [mysql/T2] FIRST_ROW_LOCKED {"case": "ordered/1", "item": 1}
+615 [mysql/T2] REQUEST_ROW {"case": "ordered/1", "item": 2, "position": 2}
+616 [mysql/T2] SQL_START {"sql": "UPDATE stock SET s_ytd = s_ytd + 1 WHERE s_w_id = 1 AND s_i_id = %s", "params": [2]}
+617 [mysql/T2] SQL_DONE {"result": 1, "duration_ms": 7.931}
+618 [mysql/T2] SQL_START {"sql": "COMMIT", "params": null}
+619 [mysql/T2] SQL_DONE {"result": 0, "duration_ms": 22.498}
+620 [mysql/T2] TRANSACTION_COMMIT {"case": "ordered/1"}
+621 [mysql/ordered/1] RESTORED {"confirmed_transactions": 2, "confirmed_row_increments": 4}
+622 [mysql/ordered/1] PASS {"deadlocks": 0, "initial_commits": 2, "retry_attempts": 0, "restored": true}
+623 [mysql/ordered/2] PAIR_START {}
+624 [mysql/CONTROLLER] SESSION {"connection_id": 261, "isolation": "READ-COMMITTED", "version": "8.4.13"}
+625 [mysql/ordered/2/T1] SESSION {"connection_id": 262, "isolation": "READ-COMMITTED", "version": "8.4.13"}
+626 [mysql/T1] SQL_START {"sql": "START TRANSACTION", "params": null}
+627 [mysql/ordered/2/T2] SESSION {"connection_id": 263, "isolation": "READ-COMMITTED", "version": "8.4.13"}
+628 [mysql/T2] SQL_START {"sql": "START TRANSACTION", "params": null}
+629 [mysql/T1] SQL_DONE {"result": 0, "duration_ms": 7.215}
+630 [mysql/T2] SQL_DONE {"result": 0, "duration_ms": 6.972}
+631 [mysql/T1] LOCK_ORDER {"case": "ordered/2", "request_order": [1, 2], "lock_order": [1, 2]}
+632 [mysql/T1] REQUEST_ROW {"case": "ordered/2", "item": 1, "position": 1}
+633 [mysql/T1] SQL_START {"sql": "UPDATE stock SET s_ytd = s_ytd + 1 WHERE s_w_id = 1 AND s_i_id = %s", "params": [1]}
+634 [mysql/T2] LOCK_ORDER {"case": "ordered/2", "request_order": [2, 1], "lock_order": [1, 2]}
+635 [mysql/T2] REQUEST_ROW {"case": "ordered/2", "item": 1, "position": 1}
+636 [mysql/T2] SQL_START {"sql": "UPDATE stock SET s_ytd = s_ytd + 1 WHERE s_w_id = 1 AND s_i_id = %s", "params": [1]}
+637 [mysql/T1] SQL_DONE {"result": 1, "duration_ms": 8.779}
+638 [mysql/T1] FIRST_ROW_LOCKED {"case": "ordered/2", "item": 1}
+639 [mysql/T1] REQUEST_ROW {"case": "ordered/2", "item": 2, "position": 2}
+640 [mysql/T1] SQL_START {"sql": "UPDATE stock SET s_ytd = s_ytd + 1 WHERE s_w_id = 1 AND s_i_id = %s", "params": [2]}
+641 [mysql/T1] SQL_DONE {"result": 1, "duration_ms": 6.953}
+642 [mysql/T1] SQL_START {"sql": "COMMIT", "params": null}
+643 [mysql/T2] SQL_DONE {"result": 1, "duration_ms": 35.128}
+644 [mysql/T2] FIRST_ROW_LOCKED {"case": "ordered/2", "item": 1}
+645 [mysql/T2] REQUEST_ROW {"case": "ordered/2", "item": 2, "position": 2}
+646 [mysql/T2] SQL_START {"sql": "UPDATE stock SET s_ytd = s_ytd + 1 WHERE s_w_id = 1 AND s_i_id = %s", "params": [2]}
+647 [mysql/T1] SQL_DONE {"result": 0, "duration_ms": 18.669}
+648 [mysql/T1] TRANSACTION_COMMIT {"case": "ordered/2"}
+649 [mysql/T2] SQL_DONE {"result": 1, "duration_ms": 11.443}
+650 [mysql/T2] SQL_START {"sql": "COMMIT", "params": null}
+651 [mysql/T2] SQL_DONE {"result": 0, "duration_ms": 28.366}
+652 [mysql/T2] TRANSACTION_COMMIT {"case": "ordered/2"}
+653 [mysql/ordered/2] RESTORED {"confirmed_transactions": 2, "confirmed_row_increments": 4}
+654 [mysql/ordered/2] PASS {"deadlocks": 0, "initial_commits": 2, "retry_attempts": 0, "restored": true}
+655 [mysql/ordered/3] PAIR_START {}
+656 [mysql/CONTROLLER] SESSION {"connection_id": 264, "isolation": "READ-COMMITTED", "version": "8.4.13"}
+657 [mysql/ordered/3/T1] SESSION {"connection_id": 265, "isolation": "READ-COMMITTED", "version": "8.4.13"}
+658 [mysql/T1] SQL_START {"sql": "START TRANSACTION", "params": null}
+659 [mysql/ordered/3/T2] SESSION {"connection_id": 266, "isolation": "READ-COMMITTED", "version": "8.4.13"}
+660 [mysql/T2] SQL_START {"sql": "START TRANSACTION", "params": null}
+661 [mysql/T1] SQL_DONE {"result": 0, "duration_ms": 9.648}
+662 [mysql/T2] SQL_DONE {"result": 0, "duration_ms": 9.16}
+663 [mysql/T2] LOCK_ORDER {"case": "ordered/3", "request_order": [2, 1], "lock_order": [1, 2]}
+664 [mysql/T2] REQUEST_ROW {"case": "ordered/3", "item": 1, "position": 1}
+665 [mysql/T2] SQL_START {"sql": "UPDATE stock SET s_ytd = s_ytd + 1 WHERE s_w_id = 1 AND s_i_id = %s", "params": [1]}
+666 [mysql/T1] LOCK_ORDER {"case": "ordered/3", "request_order": [1, 2], "lock_order": [1, 2]}
+667 [mysql/T1] REQUEST_ROW {"case": "ordered/3", "item": 1, "position": 1}
+668 [mysql/T1] SQL_START {"sql": "UPDATE stock SET s_ytd = s_ytd + 1 WHERE s_w_id = 1 AND s_i_id = %s", "params": [1]}
+669 [mysql/T2] SQL_DONE {"result": 1, "duration_ms": 8.899}
+670 [mysql/T2] FIRST_ROW_LOCKED {"case": "ordered/3", "item": 1}
+671 [mysql/T2] REQUEST_ROW {"case": "ordered/3", "item": 2, "position": 2}
+672 [mysql/T2] SQL_START {"sql": "UPDATE stock SET s_ytd = s_ytd + 1 WHERE s_w_id = 1 AND s_i_id = %s", "params": [2]}
+673 [mysql/T2] SQL_DONE {"result": 1, "duration_ms": 8.078}
+674 [mysql/T2] SQL_START {"sql": "COMMIT", "params": null}
+675 [mysql/T2] SQL_DONE {"result": 0, "duration_ms": 12.742}
+676 [mysql/T2] TRANSACTION_COMMIT {"case": "ordered/3"}
+677 [mysql/T1] SQL_DONE {"result": 1, "duration_ms": 31.318}
+678 [mysql/T1] FIRST_ROW_LOCKED {"case": "ordered/3", "item": 1}
+679 [mysql/T1] REQUEST_ROW {"case": "ordered/3", "item": 2, "position": 2}
+680 [mysql/T1] SQL_START {"sql": "UPDATE stock SET s_ytd = s_ytd + 1 WHERE s_w_id = 1 AND s_i_id = %s", "params": [2]}
+681 [mysql/T1] SQL_DONE {"result": 1, "duration_ms": 12.509}
+682 [mysql/T1] SQL_START {"sql": "COMMIT", "params": null}
+683 [mysql/T1] SQL_DONE {"result": 0, "duration_ms": 16.157}
+684 [mysql/T1] TRANSACTION_COMMIT {"case": "ordered/3"}
+685 [mysql/ordered/3] RESTORED {"confirmed_transactions": 2, "confirmed_row_increments": 4}
+686 [mysql/ordered/3] PASS {"deadlocks": 0, "initial_commits": 2, "retry_attempts": 0, "restored": true}
+687 [mysql/ordered/4] PAIR_START {}
+688 [mysql/CONTROLLER] SESSION {"connection_id": 267, "isolation": "READ-COMMITTED", "version": "8.4.13"}
+689 [mysql/ordered/4/T2] SESSION {"connection_id": 269, "isolation": "READ-COMMITTED", "version": "8.4.13"}
+690 [mysql/T2] SQL_START {"sql": "START TRANSACTION", "params": null}
+691 [mysql/T2] SQL_DONE {"result": 0, "duration_ms": 6.595}
+692 [mysql/ordered/4/T1] SESSION {"connection_id": 268, "isolation": "READ-COMMITTED", "version": "8.4.13"}
+693 [mysql/T1] SQL_START {"sql": "START TRANSACTION", "params": null}
+694 [mysql/T1] SQL_DONE {"result": 0, "duration_ms": 7.855}
+695 [mysql/T2] LOCK_ORDER {"case": "ordered/4", "request_order": [2, 1], "lock_order": [1, 2]}
+696 [mysql/T2] REQUEST_ROW {"case": "ordered/4", "item": 1, "position": 1}
+697 [mysql/T2] SQL_START {"sql": "UPDATE stock SET s_ytd = s_ytd + 1 WHERE s_w_id = 1 AND s_i_id = %s", "params": [1]}
+698 [mysql/T1] LOCK_ORDER {"case": "ordered/4", "request_order": [1, 2], "lock_order": [1, 2]}
+699 [mysql/T1] REQUEST_ROW {"case": "ordered/4", "item": 1, "position": 1}
+700 [mysql/T1] SQL_START {"sql": "UPDATE stock SET s_ytd = s_ytd + 1 WHERE s_w_id = 1 AND s_i_id = %s", "params": [1]}
+701 [mysql/T2] SQL_DONE {"result": 1, "duration_ms": 10.971}
+702 [mysql/T2] FIRST_ROW_LOCKED {"case": "ordered/4", "item": 1}
+703 [mysql/T2] REQUEST_ROW {"case": "ordered/4", "item": 2, "position": 2}
+704 [mysql/T2] SQL_START {"sql": "UPDATE stock SET s_ytd = s_ytd + 1 WHERE s_w_id = 1 AND s_i_id = %s", "params": [2]}
+705 [mysql/T2] SQL_DONE {"result": 1, "duration_ms": 8.371}
+706 [mysql/T2] SQL_START {"sql": "COMMIT", "params": null}
+707 [mysql/T2] SQL_DONE {"result": 0, "duration_ms": 19.797}
+708 [mysql/T2] TRANSACTION_COMMIT {"case": "ordered/4"}
+709 [mysql/T1] SQL_DONE {"result": 1, "duration_ms": 41.187}
+710 [mysql/T1] FIRST_ROW_LOCKED {"case": "ordered/4", "item": 1}
+711 [mysql/T1] REQUEST_ROW {"case": "ordered/4", "item": 2, "position": 2}
+712 [mysql/T1] SQL_START {"sql": "UPDATE stock SET s_ytd = s_ytd + 1 WHERE s_w_id = 1 AND s_i_id = %s", "params": [2]}
+713 [mysql/T1] SQL_DONE {"result": 1, "duration_ms": 8.348}
+714 [mysql/T1] SQL_START {"sql": "COMMIT", "params": null}
+715 [mysql/T1] SQL_DONE {"result": 0, "duration_ms": 18.085}
+716 [mysql/T1] TRANSACTION_COMMIT {"case": "ordered/4"}
+717 [mysql/ordered/4] RESTORED {"confirmed_transactions": 2, "confirmed_row_increments": 4}
+718 [mysql/ordered/4] PASS {"deadlocks": 0, "initial_commits": 2, "retry_attempts": 0, "restored": true}
+719 [mysql/ordered/5] PAIR_START {}
+720 [mysql/CONTROLLER] SESSION {"connection_id": 270, "isolation": "READ-COMMITTED", "version": "8.4.13"}
+721 [mysql/ordered/5/T1] SESSION {"connection_id": 271, "isolation": "READ-COMMITTED", "version": "8.4.13"}
+722 [mysql/T1] SQL_START {"sql": "START TRANSACTION", "params": null}
+723 [mysql/ordered/5/T2] SESSION {"connection_id": 272, "isolation": "READ-COMMITTED", "version": "8.4.13"}
+724 [mysql/T2] SQL_START {"sql": "START TRANSACTION", "params": null}
+725 [mysql/T1] SQL_DONE {"result": 0, "duration_ms": 9.203}
+726 [mysql/T2] SQL_DONE {"result": 0, "duration_ms": 8.767}
+727 [mysql/T2] LOCK_ORDER {"case": "ordered/5", "request_order": [2, 1], "lock_order": [1, 2]}
+728 [mysql/T2] REQUEST_ROW {"case": "ordered/5", "item": 1, "position": 1}
+729 [mysql/T2] SQL_START {"sql": "UPDATE stock SET s_ytd = s_ytd + 1 WHERE s_w_id = 1 AND s_i_id = %s", "params": [1]}
+730 [mysql/T1] LOCK_ORDER {"case": "ordered/5", "request_order": [1, 2], "lock_order": [1, 2]}
+731 [mysql/T1] REQUEST_ROW {"case": "ordered/5", "item": 1, "position": 1}
+732 [mysql/T1] SQL_START {"sql": "UPDATE stock SET s_ytd = s_ytd + 1 WHERE s_w_id = 1 AND s_i_id = %s", "params": [1]}
+733 [mysql/T2] SQL_DONE {"result": 1, "duration_ms": 10.338}
+734 [mysql/T2] FIRST_ROW_LOCKED {"case": "ordered/5", "item": 1}
+735 [mysql/T2] REQUEST_ROW {"case": "ordered/5", "item": 2, "position": 2}
+736 [mysql/T2] SQL_START {"sql": "UPDATE stock SET s_ytd = s_ytd + 1 WHERE s_w_id = 1 AND s_i_id = %s", "params": [2]}
+737 [mysql/T2] SQL_DONE {"result": 1, "duration_ms": 10.252}
+738 [mysql/T2] SQL_START {"sql": "COMMIT", "params": null}
+739 [mysql/T1] SQL_DONE {"result": 1, "duration_ms": 42.483}
+740 [mysql/T1] FIRST_ROW_LOCKED {"case": "ordered/5", "item": 1}
+741 [mysql/T1] REQUEST_ROW {"case": "ordered/5", "item": 2, "position": 2}
+742 [mysql/T2] SQL_DONE {"result": 0, "duration_ms": 20.957}
+743 [mysql/T2] TRANSACTION_COMMIT {"case": "ordered/5"}
+744 [mysql/T1] SQL_START {"sql": "UPDATE stock SET s_ytd = s_ytd + 1 WHERE s_w_id = 1 AND s_i_id = %s", "params": [2]}
+745 [mysql/T1] SQL_DONE {"result": 1, "duration_ms": 10.057}
+746 [mysql/T1] SQL_START {"sql": "COMMIT", "params": null}
+747 [mysql/T1] SQL_DONE {"result": 0, "duration_ms": 18.602}
+748 [mysql/T1] TRANSACTION_COMMIT {"case": "ordered/5"}
+749 [mysql/ordered/5] RESTORED {"confirmed_transactions": 2, "confirmed_row_increments": 4}
+750 [mysql/ordered/5] PASS {"deadlocks": 0, "initial_commits": 2, "retry_attempts": 0, "restored": true}

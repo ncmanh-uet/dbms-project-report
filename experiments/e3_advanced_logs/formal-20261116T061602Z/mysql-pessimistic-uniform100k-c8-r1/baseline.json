@@ -1,0 +1,22 @@
+{
+  "source_hash": {
+    "rows": 100000,
+    "sha256_ordered_values": "d7bab4e88bcbbe2809035b805ab143813be54b4f238cfd5263abe87a699b389f"
+  },
+  "source_schema": {
+    "ddl": [
+      [
+        "stock",
+        "CREATE TABLE `stock` (\n  `s_w_id` int NOT NULL,\n  `s_i_id` int NOT NULL,\n  `s_quantity` int NOT NULL,\n  `s_ytd` decimal(8,2) NOT NULL,\n  `s_order_cnt` int NOT NULL,\n  `s_remote_cnt` int NOT NULL,\n  `s_data` varchar(50) NOT NULL,\n  `s_dist_01` char(24) NOT NULL,\n  `s_dist_02` char(24) NOT NULL,\n  `s_dist_03` char(24) NOT NULL,\n  `s_dist_04` char(24) NOT NULL,\n  `s_dist_05` char(24) NOT NULL,\n  `s_dist_06` char(24) NOT NULL,\n  `s_dist_07` char(24) NOT NULL,\n  `s_dist_08` char(24) NOT NULL,\n  `s_dist_09` char(24) NOT NULL,\n  `s_dist_10` char(24) NOT NULL,\n  PRIMARY KEY (`s_w_id`,`s_i_id`),\n  KEY `s_i_id` (`s_i_id`),\n  CONSTRAINT `stock_ibfk_1` FOREIGN KEY (`s_w_id`) REFERENCES `warehouse` (`w_id`) ON DELETE CASCADE,\n  CONSTRAINT `stock_ibfk_2` FOREIGN KEY (`s_i_id`) REFERENCES `item` (`i_id`) ON DELETE CASCADE\n) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci"
+      ]
+    ]
+  },
+  "fixture_schema": {
+    "ddl": [
+      [
+        "e3adv_ad3a28486a7a465f",
+        "CREATE TABLE `e3adv_ad3a28486a7a465f` (\n  `s_w_id` int NOT NULL,\n  `s_i_id` int NOT NULL,\n  `s_quantity` int NOT NULL,\n  `s_ytd` decimal(8,2) NOT NULL,\n  `s_order_cnt` int NOT NULL,\n  `s_remote_cnt` int NOT NULL,\n  `s_data` varchar(50) NOT NULL,\n  `s_dist_01` char(24) NOT NULL,\n  `s_dist_02` char(24) NOT NULL,\n  `s_dist_03` char(24) NOT NULL,\n  `s_dist_04` char(24) NOT NULL,\n  `s_dist_05` char(24) NOT NULL,\n  `s_dist_06` char(24) NOT NULL,\n  `s_dist_07` char(24) NOT NULL,\n  `s_dist_08` char(24) NOT NULL,\n  `s_dist_09` char(24) NOT NULL,\n  `s_dist_10` char(24) NOT NULL,\n  `version` bigint NOT NULL DEFAULT '1',\n  PRIMARY KEY (`s_w_id`,`s_i_id`),\n  KEY `s_i_id` (`s_i_id`)\n) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci"
+      ]
+    ]
+  }
+}

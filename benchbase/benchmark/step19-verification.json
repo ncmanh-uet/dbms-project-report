@@ -1,0 +1,241 @@
+{
+  "status": "PASS",
+  "verified_utc": "2026-11-10T11:17:10.025442+00:00",
+  "report": "Experimental_Results_and_Discussion.md",
+  "report_sha256": "b9b8c5e0b442a9d4cdfc756bba17be117ca2c95ab07939805f1fc36ab2932f2d",
+  "selected_benchmark_numeric_claims_checked": 37,
+  "claims": [
+    {
+      "dbms": "postgres",
+      "clients": 1,
+      "metric": "successful_tps_mean",
+      "formatted": "430,19"
+    },
+    {
+      "dbms": "postgres",
+      "clients": 1,
+      "metric": "latency_p95_success_ms_mean",
+      "formatted": "5,54"
+    },
+    {
+      "dbms": "postgres",
+      "clients": 4,
+      "metric": "successful_tps_mean",
+      "formatted": "660,95"
+    },
+    {
+      "dbms": "postgres",
+      "clients": 4,
+      "metric": "successful_tps_min",
+      "formatted": "641,77"
+    },
+    {
+      "dbms": "postgres",
+      "clients": 4,
+      "metric": "successful_tps_max",
+      "formatted": "697,81"
+    },
+    {
+      "dbms": "postgres",
+      "clients": 8,
+      "metric": "successful_tps_mean",
+      "formatted": "621,37"
+    },
+    {
+      "dbms": "postgres",
+      "clients": 16,
+      "metric": "successful_tps_mean",
+      "formatted": "446,19"
+    },
+    {
+      "dbms": "postgres",
+      "clients": 16,
+      "metric": "successful_tps_min",
+      "formatted": "314,62"
+    },
+    {
+      "dbms": "postgres",
+      "clients": 16,
+      "metric": "successful_tps_max",
+      "formatted": "542,17"
+    },
+    {
+      "dbms": "postgres",
+      "clients": 32,
+      "metric": "latency_p95_success_ms_mean",
+      "formatted": "329,51"
+    },
+    {
+      "dbms": "postgres",
+      "clients": 32,
+      "metric": "mean_waiting_session_pct_mean",
+      "formatted": "70,65"
+    },
+    {
+      "dbms": "postgres",
+      "clients": 64,
+      "metric": "latency_p95_success_ms_mean",
+      "formatted": "955,85"
+    },
+    {
+      "dbms": "postgres",
+      "clients": 128,
+      "metric": "successful_tps_mean",
+      "formatted": "235,23"
+    },
+    {
+      "dbms": "postgres",
+      "clients": 128,
+      "metric": "successful_tps_min",
+      "formatted": "214,23"
+    },
+    {
+      "dbms": "postgres",
+      "clients": 128,
+      "metric": "successful_tps_max",
+      "formatted": "251,98"
+    },
+    {
+      "dbms": "postgres",
+      "clients": 128,
+      "metric": "latency_p95_success_ms_mean",
+      "formatted": "2.545,62"
+    },
+    {
+      "dbms": "postgres",
+      "clients": 128,
+      "metric": "latency_p95_success_ms_min",
+      "formatted": "2.401,06"
+    },
+    {
+      "dbms": "postgres",
+      "clients": 128,
+      "metric": "latency_p95_success_ms_max",
+      "formatted": "2.727,11"
+    },
+    {
+      "dbms": "postgres",
+      "clients": 128,
+      "metric": "mean_waiting_session_pct_mean",
+      "formatted": "47,12"
+    },
+    {
+      "dbms": "mysql",
+      "clients": 1,
+      "metric": "successful_tps_mean",
+      "formatted": "137,20"
+    },
+    {
+      "dbms": "mysql",
+      "clients": 1,
+      "metric": "latency_p95_success_ms_mean",
+      "formatted": "17,81"
+    },
+    {
+      "dbms": "mysql",
+      "clients": 4,
+      "metric": "successful_tps_mean",
+      "formatted": "236,60"
+    },
+    {
+      "dbms": "mysql",
+      "clients": 8,
+      "metric": "successful_tps_mean",
+      "formatted": "238,95"
+    },
+    {
+      "dbms": "mysql",
+      "clients": 8,
+      "metric": "successful_tps_min",
+      "formatted": "230,57"
+    },
+    {
+      "dbms": "mysql",
+      "clients": 8,
+      "metric": "successful_tps_max",
+      "formatted": "250,64"
+    },
+    {
+      "dbms": "mysql",
+      "clients": 16,
+      "metric": "successful_tps_mean",
+      "formatted": "197,08"
+    },
+    {
+      "dbms": "mysql",
+      "clients": 16,
+      "metric": "successful_tps_min",
+      "formatted": "140,74"
+    },
+    {
+      "dbms": "mysql",
+      "clients": 16,
+      "metric": "successful_tps_max",
+      "formatted": "234,10"
+    },
+    {
+      "dbms": "mysql",
+      "clients": 32,
+      "metric": "latency_p95_success_ms_mean",
+      "formatted": "392,48"
+    },
+    {
+      "dbms": "mysql",
+      "clients": 64,
+      "metric": "latency_p95_success_ms_mean",
+      "formatted": "819,02"
+    },
+    {
+      "dbms": "mysql",
+      "clients": 128,
+      "metric": "successful_tps_min",
+      "formatted": "193,00"
+    },
+    {
+      "dbms": "mysql",
+      "clients": 128,
+      "metric": "successful_tps_max",
+      "formatted": "236,23"
+    },
+    {
+      "dbms": "mysql",
+      "clients": 128,
+      "metric": "latency_p95_success_ms_mean",
+      "formatted": "1.526,48"
+    },
+    {
+      "dbms": "mysql",
+      "clients": 128,
+      "metric": "latency_p95_success_ms_min",
+      "formatted": "1.403,00"
+    },
+    {
+      "dbms": "mysql",
+      "clients": 128,
+      "metric": "latency_p95_success_ms_max",
+      "formatted": "1.712,69"
+    },
+    {
+      "dbms": "mysql",
+      "clients": 128,
+      "metric": "mean_waiting_session_pct_mean",
+      "formatted": "97,37"
+    },
+    {
+      "dbms": "mysql",
+      "clients": 128,
+      "metric": "db_cpu_quota_pct_mean_mean",
+      "formatted": "79,91"
+    }
+  ],
+  "demo_source_files": {
+    "experiments/e1_logs/20261024T034759_313380Z/summary.json": "14bd805c209ba6bee683b32e90e82cb99ba2793c268fbe03d205f7b0255a696b",
+    "experiments/e2_logs/20261109T152250_363110Z/summary.json": "4233c8c6d3d45385c067a4a480ac25f4dbc78957e4dcec74477642f52717bfe3",
+    "experiments/e3_logs/20261109T161429_704849Z/summary.json": "e5479180c9d597d555e748b2d3cd93bab98369af1f80ba4169686718f8262bb7",
+    "experiments/e4_logs/20261109T163251_991835Z/summary.json": "b0b4c40602086f86b376b27c0cbd1122cff94e1107c2bd5aaf52ef162a61c4c7"
+  },
+  "local_links_checked": 21,
+  "schedule_seconds": 900,
+  "analysis_input_files_unchanged": 1775,
+  "scope": "Offline document and saved-evidence validation; no new workload or DB calls."
+}

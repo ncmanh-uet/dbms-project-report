@@ -1,0 +1,85 @@
+{
+  "kind": "short_trial",
+  "dbms": "mysql",
+  "scenario": "distinct",
+  "clients": 8,
+  "target_items": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8
+  ],
+  "requested_seconds": 10.0,
+  "status": "PASS",
+  "isolation": "READ COMMITTED",
+  "retries": 0,
+  "update_sql": "UPDATE stock SET s_ytd = s_ytd + 1 WHERE s_w_id = 1 AND s_i_id = %s",
+  "connection_ids": [
+    51,
+    53,
+    55,
+    54,
+    57,
+    58,
+    56,
+    52
+  ],
+  "data_check": {
+    "counter_check": true,
+    "restored": true,
+    "before": {
+      "1": "0.00",
+      "2": "0.00",
+      "3": "0.00",
+      "4": "0.00",
+      "5": "0.00",
+      "6": "0.00",
+      "7": "0.00",
+      "8": "0.00"
+    },
+    "after_transactions": {
+      "1": "345.00",
+      "2": "347.00",
+      "3": "343.00",
+      "4": "346.00",
+      "5": "348.00",
+      "6": "347.00",
+      "7": "348.00",
+      "8": "346.00"
+    },
+    "after_restore": {
+      "1": "0.00",
+      "2": "0.00",
+      "3": "0.00",
+      "4": "0.00",
+      "5": "0.00",
+      "6": "0.00",
+      "7": "0.00",
+      "8": "0.00"
+    },
+    "confirmed_commits": 2770
+  },
+  "successful_transactions": 2770,
+  "failed_attempts": 0,
+  "actual_seconds": 10.012753900024109,
+  "successful_tps": 276.64716696905236,
+  "abort_rate": 0.0,
+  "success_latency_ms": {
+    "mean": 28.89986368232837,
+    "p50": 21.632599993608892,
+    "p95": 76.02392997650895,
+    "p99": 169.7156589786755
+  },
+  "lock_observation": {
+    "requested_poll_interval_ms": 50,
+    "samples": 153,
+    "samples_with_waits": 0,
+    "max_observed_blocked_sessions": 0
+  },
+  "fatal_errors": [],
+  "unknown_commit": false
+}

@@ -1,0 +1,19 @@
+{
+  "kind": "demo",
+  "dbms": "mysql",
+  "phase": "occ_detect",
+  "requested_operations": 2,
+  "status": "PASS",
+  "t1_connection_id": 150,
+  "t2_connection_id": 151,
+  "successful_operations": 1,
+  "version_conflicts": 1,
+  "retry_attempts": 0,
+  "actual": {
+    "counter": "1.00",
+    "version": 2
+  },
+  "integrity_ok": true,
+  "schedule_verified": true,
+  "fixture_reset": true
+}

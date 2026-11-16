@@ -1,0 +1,2 @@
+{"sequence": 1, "utc": "2026-11-10T05:01:28.399476+00:00", "elapsed_ms": 443.484, "dbms": "mysql", "actor": "ADMIN", "action": "TEMPORARY_OBSERVER_ACCESS", "tables": ["data_lock_waits", "data_locks", "threads"]}
+{"sequence": 2, "utc": "2026-11-10T05:02:56.354232+00:00", "elapsed_ms": 88398.23, "dbms": "mysql", "actor": "ADMIN", "action": "OBSERVER_ACCESS_RESTORED", "tables": ["data_lock_waits", "data_locks", "threads"], "errors": []}

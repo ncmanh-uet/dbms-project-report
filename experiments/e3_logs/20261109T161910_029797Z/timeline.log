@@ -1,0 +1,7 @@
+001 [postgres/FIXTURE] SESSION {"connection_id": 313, "isolation": "read committed", "version": "PostgreSQL 17.11 (Debian 17.11-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit"}
+002 [postgres/FIXTURE] CREATED {"table": "e3_occ_f87ff0d9fc444094", "rows": 16}
+003 [postgres/distinct/1] TRIAL_START {"seconds": 0.2, "max_retries": 8}
+004 [postgres/OCC_CLIENT_0] SESSION {"connection_id": 314, "isolation": "read committed", "version": "PostgreSQL 17.11 (Debian 17.11-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit"}
+005 [postgres/distinct/1] FAIL {"successful_operations": 0, "conflicts": 0, "retries": 0, "exhausted": 0}
+006 [postgres/FIXTURE] CLEANUP {"demo_table_dropped": true, "source_unchanged": true, "original_table_set_restored": true}
+007 [RUN/MAIN] ERROR {"message": "postgres/distinct/1 failed validation"}

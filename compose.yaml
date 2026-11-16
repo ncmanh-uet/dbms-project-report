@@ -2,7 +2,7 @@ name: dbms-lab
 
 services:
   postgres:
-    image: postgres:17
+    image: postgres@sha256:b8faeff7712663c2773a190181e1246e37e364b887611c04658c28b44e2408fe
     environment:
       POSTGRES_DB: tpcc
       POSTGRES_USER: labuser
@@ -13,7 +13,7 @@ services:
       - postgres_data:/var/lib/postgresql/data
 
   mysql:
-    image: mysql:8.4
+    image: mysql@sha256:76f0358884cb92d9a086d24e5671c38048d3fef40f2588703d73eb55392d6b69
     environment:
       MYSQL_DATABASE: tpcc
       MYSQL_USER: labuser

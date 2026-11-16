@@ -1,0 +1,4 @@
+client_id,operation_id,item_id,attempt,expected_version,value_read,affected_rows,status,latency_ms,sqlstate,error_code,error
+0,0,1,1,1,0.00,,ERROR,12.445200001820922,42703,,"column ""e3_deliberate_missing_column"" of relation ""e3_occ_f87ff0d9fc444094"" does not exist
+LINE 1: UPDATE e3_occ_f87ff0d9fc444094 SET e3_deliberate_missing_col...
+                                           ^"

@@ -1,0 +1,53 @@
+{
+  "database": "tpcc_bench",
+  "service": "mysql",
+  "created_utc": "2026-11-10T02:05:15.491763+00:00",
+  "volumes": [
+    "dbms-lab_mysql_data"
+  ],
+  "fingerprint": {
+    "counts": {
+      "warehouse": 1,
+      "district": 10,
+      "customer": 30000,
+      "history": 30000,
+      "item": 100000,
+      "stock": 100000,
+      "oorder": 30000,
+      "new_order": 9000,
+      "order_line": 300040
+    },
+    "warehouse": [
+      "300000.00",
+      "0.1353"
+    ],
+    "district": [
+      "300000.00",
+      "30010",
+      "0.8986"
+    ],
+    "stock": [
+      "5504393",
+      "0.00",
+      "0",
+      "0"
+    ],
+    "customer": [
+      "-300000.00",
+      "300000.0",
+      "30000",
+      "0"
+    ],
+    "orders": [
+      "300040",
+      "45015000",
+      "45015000"
+    ],
+    "order_lines": [
+      "451070784.49",
+      "1500200"
+    ]
+  },
+  "archive_sha256": "15715149d9c77c97a688af167916440b6cd5e62a84f09b3fffafe4f3a3e7897c",
+  "archive_bytes": 82611219
+}

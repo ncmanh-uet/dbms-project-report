@@ -1,0 +1,124 @@
+{
+  "kind": "formal",
+  "dbms": "postgres",
+  "clients": 16,
+  "warmup_seconds": 15,
+  "measure_seconds": 60,
+  "repetition": 1,
+  "protocol": {
+    "protocol_version": 1,
+    "database": "tpcc_bench",
+    "warehouses": 1,
+    "isolation": "TRANSACTION_READ_COMMITTED",
+    "weights": [
+      45,
+      43,
+      4,
+      4,
+      4
+    ],
+    "transaction_types": [
+      "NewOrder",
+      "Payment",
+      "OrderStatus",
+      "Delivery",
+      "StockLevel"
+    ],
+    "clients": [
+      1,
+      4,
+      8,
+      16,
+      32,
+      64,
+      128
+    ],
+    "warmup_seconds": 15,
+    "measure_seconds": 60,
+    "repetitions": 3,
+    "rate": "unlimited",
+    "total_attempt_limit": 3,
+    "random_seed": 20261023,
+    "db_cpu_limit": 2,
+    "db_memory_gib": 2,
+    "generator_cpu_limit": 4,
+    "generator_memory_gib": 1,
+    "java_heap_mib": 512,
+    "minimum_free_disk_gib": 2,
+    "note": "Single-warehouse contention workload; no TPC-C compliance claim. Step 16 performs short smoke tests only. Every measured run has its own restore and in-process warmup."
+  },
+  "baseline_sha256": "f1062be5ddb43306b6133ccdbd2953cef28594f9af688ad11040cabfb419fb91",
+  "image": "postgres@sha256:b8faeff7712663c2773a190181e1246e37e364b887611c04658c28b44e2408fe",
+  "image_id": "sha256:b8faeff7712663c2773a190181e1246e37e364b887611c04658c28b44e2408fe",
+  "free_disk_bytes": 5296812032,
+  "workload_sha256": "def5cf5e60dee99d1494040dfe8d139c5f39d81a8d9617ec8db1c4dbad3a4b05",
+  "instrumentation": {
+    "upstream_commit": "33c00473807ebd49304d114a6d769d2d2b2bbb34",
+    "source_url": "https://raw.githubusercontent.com/cmu-db/benchbase/33c00473807ebd49304d114a6d769d2d2b2bbb34/src/main/java/com/oltpbenchmark/api/Worker.java",
+    "source_sha256": "4463226c5cbf0fb544325b1dc8250fd4ebdcde7fe18d29e589a42272e880a61d",
+    "patched_source_sha256": "fc8c25af2125fa02cccf1e4c71fba4a5c8307f3e66177d2d8b3da037ea2d8bbf",
+    "patch_sha256": "fd0dd6dc64ce071f59de731042da383d90292f269758c9b2be8bce0c43e4e76e",
+    "helper_sha256": "310dfd5ce7ab7209f77f6f218558ca6597243e02cb4a99849a93cecc9c8855c8",
+    "profiles": {
+      "postgres": {
+        "original_jar_sha256": "8948beb84382a65311d6e297c6804d9690511fa2955e2bbae8c20b58a4904a12",
+        "instrumented_jar_sha256": "dd90aae8a27d01f2b74c1fc86c920044fda76716164ae37800533ecaa5acbb4c"
+      },
+      "mysql": {
+        "original_jar_sha256": "59e5bc51b76db32c236aabd1032732aa26ebbe5a2f78bed02906dee1f6fa59a1",
+        "instrumented_jar_sha256": "e6a0bfaa857a31d8ccdcb11d31d1bf9ccda50b1e87f68f414eb4d39af5ba5bc2"
+      }
+    },
+    "original_worker_class_sha256": "9a3726cd478bae0e5da5eb0c81cc737707839b682fbe78ffbe22e96f788883f2"
+  },
+  "jar_sha256": "dd90aae8a27d01f2b74c1fc86c920044fda76716164ae37800533ecaa5acbb4c",
+  "status": "PASS",
+  "started_utc": "2026-11-10T04:59:42.616624+00:00",
+  "generator": {
+    "image": "benchbase.azurecr.io/benchbase-postgres@sha256:1b1584c87ce11f87f151add677d15a9f18893a3bca910a4967434cb1a9be6eb7",
+    "image_id": "sha256:1b1584c87ce11f87f151add677d15a9f18893a3bca910a4967434cb1a9be6eb7",
+    "nano_cpus": 4000000000,
+    "memory_bytes": 1073741824
+  },
+  "result": {
+    "validation": "PASS",
+    "elapsed_measure_seconds": 60.999846393,
+    "measured_requests": 29722,
+    "native_count_matches": true,
+    "status_counts": {
+      "SUCCESS": 29388,
+      "USER_ABORTED": 334
+    },
+    "last_sql_error_counts": {
+      "40P01/0": 2
+    },
+    "successful_tps": 481.7717049755129,
+    "completed_requests_per_second": 487.247128599503,
+    "latency_success_ms": {
+      "p50": 13.226715,
+      "p95": 123.67453994999995,
+      "p99": 228.8567384900001
+    },
+    "latency_all_completed_ms": {
+      "p50": 13.087077,
+      "p95": 123.1552574999999,
+      "p99": 226.75453420000022
+    },
+    "requests_with_retry": 2,
+    "reexecutions_started": 2,
+    "retry_events": 2,
+    "failed_requests": 0,
+    "expected_user_aborts": 334,
+    "max_observed_sessions": 16,
+    "max_sampled_lock_waiters": 16,
+    "native_goodput_is_not_used": 598.0834732755422,
+    "retry_request_rate": 6.729022273063724e-05,
+    "failure_rate": 0.0,
+    "consistency_checks": {
+      "warehouse_equals_district_ytd": true,
+      "district_next_order_id": true,
+      "order_line_total": true,
+      "stock_quantity_range": true
+    }
+  }
+}

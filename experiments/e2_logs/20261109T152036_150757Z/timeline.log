@@ -1,0 +1,130 @@
+001 [postgres/DEMO_T1] SESSION {"connection_id": 43, "isolation": "read committed", "version": "PostgreSQL 17.11 (Debian 17.11-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit"}
+002 [postgres/OBSERVER] SESSION {"connection_id": 44, "isolation": "read committed", "version": "PostgreSQL 17.11 (Debian 17.11-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit"}
+003 [postgres/DEMO_T1] SQL_START {"sql": "BEGIN", "params": null}
+004 [postgres/DEMO_T1] SQL_DONE {"result": -1, "duration_ms": 1.456}
+005 [postgres/DEMO_T1] SQL_START {"sql": "UPDATE stock SET s_ytd = s_ytd + 1 WHERE s_w_id = 1 AND s_i_id = %s", "params": [1]}
+006 [postgres/DEMO_T1] SQL_DONE {"result": 1, "duration_ms": 5.703}
+007 [postgres/DEMO_T1] T1_UPDATE_UNCOMMITTED {"baseline": "0.00"}
+008 [postgres/DEMO_T2] SESSION {"connection_id": 45, "isolation": "read committed", "version": "PostgreSQL 17.11 (Debian 17.11-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit"}
+009 [postgres/DEMO_T2] SQL_START {"sql": "BEGIN", "params": null}
+010 [postgres/DEMO_T2] SQL_DONE {"result": -1, "duration_ms": 0.946}
+011 [postgres/DEMO_T2] SQL_START {"sql": "UPDATE stock SET s_ytd = s_ytd + 1 WHERE s_w_id = 1 AND s_i_id = %s", "params": [1]}
+012 [postgres/OBSERVER] BLOCKING_OBSERVED {"edges": [{"waiting_pid": 45, "blocking_pid": 43, "state": "active", "wait_event_type": "Lock", "wait_event": "transactionid"}]}
+013 [postgres/OBSERVER] BLOCKING_CONFIRMED {"edges": [{"waiting_pid": 45, "blocking_pid": 43, "state": "active", "wait_event_type": "Lock", "wait_event": "transactionid"}]}
+014 [postgres/DEMO_T1] T1_COMMIT_START {}
+015 [postgres/DEMO_T1] SQL_START {"sql": "COMMIT", "params": null}
+016 [postgres/DEMO_T1] SQL_DONE {"result": -1, "duration_ms": 2.875}
+017 [postgres/DEMO_T1] T1_COMMIT_DONE {}
+018 [postgres/DEMO_T2] SQL_DONE {"result": 1, "duration_ms": 109.375}
+019 [postgres/DEMO_T2] T2_UPDATE_DONE {"update_roundtrip_ms": 109.375}
+020 [postgres/DEMO_T2] SQL_START {"sql": "COMMIT", "params": null}
+021 [postgres/DEMO_T2] SQL_DONE {"result": -1, "duration_ms": 1.592}
+022 [postgres/DEMO_T2] T2_COMMIT_DONE {}
+023 [postgres/DEMO_CLEANUP] RESTORED {"confirmed_commits": 2, "rows": 1}
+024 [postgres/DEMO] PASS {"evidence": "C:\\DBMS\\Project Report\\experiments\\e2_logs\\20261109T152036_150757Z\\postgres-demo"}
+025 [postgres/distinct/1] TRIAL_START {"seconds": 0.4, "target_items": [1]}
+026 [postgres/TRIAL_OBSERVER] SESSION {"connection_id": 46, "isolation": "read committed", "version": "PostgreSQL 17.11 (Debian 17.11-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit"}
+027 [postgres/CLIENT_0] SESSION {"connection_id": 47, "isolation": "read committed", "version": "PostgreSQL 17.11 (Debian 17.11-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit"}
+028 [postgres/distinct/1] RESTORED {"confirmed_commits": 151, "rows": 1}
+029 [postgres/distinct/1] PASS {"successful_transactions": 151, "successful_tps": 375.793, "p95_ms": 4.412700014654547, "max_observed_blocked_sessions": 0}
+030 [postgres/distinct/4] TRIAL_START {"seconds": 0.4, "target_items": [1, 2, 3, 4]}
+031 [postgres/TRIAL_OBSERVER] SESSION {"connection_id": 48, "isolation": "read committed", "version": "PostgreSQL 17.11 (Debian 17.11-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit"}
+032 [postgres/CLIENT_1] SESSION {"connection_id": 50, "isolation": "read committed", "version": "PostgreSQL 17.11 (Debian 17.11-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit"}
+033 [postgres/CLIENT_3] SESSION {"connection_id": 52, "isolation": "read committed", "version": "PostgreSQL 17.11 (Debian 17.11-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit"}
+034 [postgres/CLIENT_2] SESSION {"connection_id": 51, "isolation": "read committed", "version": "PostgreSQL 17.11 (Debian 17.11-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit"}
+035 [postgres/CLIENT_0] SESSION {"connection_id": 49, "isolation": "read committed", "version": "PostgreSQL 17.11 (Debian 17.11-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit"}
+036 [postgres/distinct/4] RESTORED {"confirmed_commits": 419, "rows": 4}
+037 [postgres/distinct/4] PASS {"successful_transactions": 419, "successful_tps": 1037.825, "p95_ms": 5.882860027486458, "max_observed_blocked_sessions": 0}
+038 [postgres/shared4/1] TRIAL_START {"seconds": 0.4, "target_items": [1, 2, 3, 4]}
+039 [postgres/TRIAL_OBSERVER] SESSION {"connection_id": 53, "isolation": "read committed", "version": "PostgreSQL 17.11 (Debian 17.11-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit"}
+040 [postgres/CLIENT_0] SESSION {"connection_id": 54, "isolation": "read committed", "version": "PostgreSQL 17.11 (Debian 17.11-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit"}
+041 [postgres/shared4/1] RESTORED {"confirmed_commits": 93, "rows": 4}
+042 [postgres/shared4/1] PASS {"successful_transactions": 93, "successful_tps": 229.724, "p95_ms": 8.698300016112626, "max_observed_blocked_sessions": 0}
+043 [postgres/shared4/4] TRIAL_START {"seconds": 0.4, "target_items": [1, 2, 3, 4]}
+044 [postgres/TRIAL_OBSERVER] SESSION {"connection_id": 55, "isolation": "read committed", "version": "PostgreSQL 17.11 (Debian 17.11-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit"}
+045 [postgres/CLIENT_1] SESSION {"connection_id": 57, "isolation": "read committed", "version": "PostgreSQL 17.11 (Debian 17.11-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit"}
+046 [postgres/CLIENT_2] SESSION {"connection_id": 58, "isolation": "read committed", "version": "PostgreSQL 17.11 (Debian 17.11-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit"}
+047 [postgres/CLIENT_0] SESSION {"connection_id": 56, "isolation": "read committed", "version": "PostgreSQL 17.11 (Debian 17.11-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit"}
+048 [postgres/CLIENT_3] SESSION {"connection_id": 59, "isolation": "read committed", "version": "PostgreSQL 17.11 (Debian 17.11-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit"}
+049 [postgres/shared4/4] RESTORED {"confirmed_commits": 486, "rows": 4}
+050 [postgres/shared4/4] PASS {"successful_transactions": 486, "successful_tps": 1207.801, "p95_ms": 4.768374987179413, "max_observed_blocked_sessions": 0}
+051 [postgres/hot1/1] TRIAL_START {"seconds": 0.4, "target_items": [1]}
+052 [postgres/TRIAL_OBSERVER] SESSION {"connection_id": 60, "isolation": "read committed", "version": "PostgreSQL 17.11 (Debian 17.11-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit"}
+053 [postgres/CLIENT_0] SESSION {"connection_id": 61, "isolation": "read committed", "version": "PostgreSQL 17.11 (Debian 17.11-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit"}
+054 [postgres/hot1/1] RESTORED {"confirmed_commits": 110, "rows": 1}
+055 [postgres/hot1/1] PASS {"successful_transactions": 110, "successful_tps": 272.2, "p95_ms": 6.8627749860752365, "max_observed_blocked_sessions": 0}
+056 [postgres/hot1/4] TRIAL_START {"seconds": 0.4, "target_items": [1]}
+057 [postgres/TRIAL_OBSERVER] SESSION {"connection_id": 62, "isolation": "read committed", "version": "PostgreSQL 17.11 (Debian 17.11-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit"}
+058 [postgres/CLIENT_0] SESSION {"connection_id": 63, "isolation": "read committed", "version": "PostgreSQL 17.11 (Debian 17.11-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit"}
+059 [postgres/CLIENT_1] SESSION {"connection_id": 64, "isolation": "read committed", "version": "PostgreSQL 17.11 (Debian 17.11-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit"}
+060 [postgres/CLIENT_2] SESSION {"connection_id": 65, "isolation": "read committed", "version": "PostgreSQL 17.11 (Debian 17.11-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit"}
+061 [postgres/CLIENT_3] SESSION {"connection_id": 66, "isolation": "read committed", "version": "PostgreSQL 17.11 (Debian 17.11-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit"}
+062 [postgres/hot1/4] WAIT_SAMPLE {"blocked_sessions": 2, "edges": [{"waiting_pid": 64, "blocking_pid": 63, "state": "active", "wait_event_type": "Lock", "wait_event": "transactionid"}, {"waiting_pid": 66, "blocking_pid": 63, "state": "active", "wait_event_type": "Lock", "wait_event": "transactionid"}]}
+063 [postgres/hot1/4] RESTORED {"confirmed_commits": 181, "rows": 1}
+064 [postgres/hot1/4] PASS {"successful_transactions": 181, "successful_tps": 446.166, "p95_ms": 19.958399992901832, "max_observed_blocked_sessions": 2}
+065 [mysql/ADMIN] TEMPORARY_OBSERVER_ACCESS {"tables": ["data_lock_waits", "data_locks", "threads"]}
+066 [mysql/DEMO_T1] SESSION {"connection_id": 11, "isolation": "READ-COMMITTED", "version": "8.4.13"}
+067 [mysql/OBSERVER] SESSION {"connection_id": 12, "isolation": "READ-COMMITTED", "version": "8.4.13"}
+068 [mysql/DEMO_T1] SQL_START {"sql": "START TRANSACTION", "params": null}
+069 [mysql/DEMO_T1] SQL_DONE {"result": 0, "duration_ms": 5.575}
+070 [mysql/DEMO_T1] SQL_START {"sql": "UPDATE stock SET s_ytd = s_ytd + 1 WHERE s_w_id = 1 AND s_i_id = %s", "params": [1]}
+071 [mysql/DEMO_T1] SQL_DONE {"result": 1, "duration_ms": 7.516}
+072 [mysql/DEMO_T1] T1_UPDATE_UNCOMMITTED {"baseline": "0.00"}
+073 [mysql/DEMO_T2] SESSION {"connection_id": 13, "isolation": "READ-COMMITTED", "version": "8.4.13"}
+074 [mysql/DEMO_T2] SQL_START {"sql": "START TRANSACTION", "params": null}
+075 [mysql/DEMO_T2] SQL_DONE {"result": 0, "duration_ms": 3.174}
+076 [mysql/DEMO_T2] SQL_START {"sql": "UPDATE stock SET s_ytd = s_ytd + 1 WHERE s_w_id = 1 AND s_i_id = %s", "params": [1]}
+077 [mysql/OBSERVER] BLOCKING_OBSERVED {"edges": [{"waiting_pid": 13, "blocking_pid": 11, "table": "stock", "index": "PRIMARY", "lock_type": "RECORD", "lock_mode": "X,REC_NOT_GAP", "lock_status": "WAITING", "lock_data": "1, 1"}]}
+078 [mysql/OBSERVER] BLOCKING_CONFIRMED {"edges": [{"waiting_pid": 13, "blocking_pid": 11, "table": "stock", "index": "PRIMARY", "lock_type": "RECORD", "lock_mode": "X,REC_NOT_GAP", "lock_status": "WAITING", "lock_data": "1, 1"}]}
+079 [mysql/DEMO_T1] T1_COMMIT_START {}
+080 [mysql/DEMO_T1] SQL_START {"sql": "COMMIT", "params": null}
+081 [mysql/DEMO_T1] SQL_DONE {"result": 0, "duration_ms": 4.595}
+082 [mysql/DEMO_T1] T1_COMMIT_DONE {}
+083 [mysql/DEMO_T2] SQL_DONE {"result": 1, "duration_ms": 153.19}
+084 [mysql/DEMO_T2] T2_UPDATE_DONE {"update_roundtrip_ms": 153.19}
+085 [mysql/DEMO_T2] SQL_START {"sql": "COMMIT", "params": null}
+086 [mysql/DEMO_T2] SQL_DONE {"result": 0, "duration_ms": 5.742}
+087 [mysql/DEMO_T2] T2_COMMIT_DONE {}
+088 [mysql/DEMO_CLEANUP] RESTORED {"confirmed_commits": 2, "rows": 1}
+089 [mysql/DEMO] PASS {"evidence": "C:\\DBMS\\Project Report\\experiments\\e2_logs\\20261109T152036_150757Z\\mysql-demo"}
+090 [mysql/distinct/1] TRIAL_START {"seconds": 0.4, "target_items": [1]}
+091 [mysql/TRIAL_OBSERVER] SESSION {"connection_id": 14, "isolation": "READ-COMMITTED", "version": "8.4.13"}
+092 [mysql/CLIENT_0] SESSION {"connection_id": 15, "isolation": "READ-COMMITTED", "version": "8.4.13"}
+093 [mysql/distinct/1] RESTORED {"confirmed_commits": 29, "rows": 1}
+094 [mysql/distinct/1] PASS {"successful_transactions": 29, "successful_tps": 68.996, "p95_ms": 29.38969996757804, "max_observed_blocked_sessions": 0}
+095 [mysql/distinct/4] TRIAL_START {"seconds": 0.4, "target_items": [1, 2, 3, 4]}
+096 [mysql/TRIAL_OBSERVER] SESSION {"connection_id": 16, "isolation": "READ-COMMITTED", "version": "8.4.13"}
+097 [mysql/CLIENT_2] SESSION {"connection_id": 19, "isolation": "READ-COMMITTED", "version": "8.4.13"}
+098 [mysql/CLIENT_0] SESSION {"connection_id": 17, "isolation": "READ-COMMITTED", "version": "8.4.13"}
+099 [mysql/CLIENT_1] SESSION {"connection_id": 18, "isolation": "READ-COMMITTED", "version": "8.4.13"}
+100 [mysql/CLIENT_3] SESSION {"connection_id": 20, "isolation": "READ-COMMITTED", "version": "8.4.13"}
+101 [mysql/distinct/4] RESTORED {"confirmed_commits": 98, "rows": 4}
+102 [mysql/distinct/4] PASS {"successful_transactions": 98, "successful_tps": 241.425, "p95_ms": 37.078949974966235, "max_observed_blocked_sessions": 0}
+103 [mysql/shared4/1] TRIAL_START {"seconds": 0.4, "target_items": [1, 2, 3, 4]}
+104 [mysql/TRIAL_OBSERVER] SESSION {"connection_id": 21, "isolation": "READ-COMMITTED", "version": "8.4.13"}
+105 [mysql/CLIENT_0] SESSION {"connection_id": 22, "isolation": "READ-COMMITTED", "version": "8.4.13"}
+106 [mysql/shared4/1] RESTORED {"confirmed_commits": 30, "rows": 4}
+107 [mysql/shared4/1] PASS {"successful_transactions": 30, "successful_tps": 69.401, "p95_ms": 32.33328500064089, "max_observed_blocked_sessions": 0}
+108 [mysql/shared4/4] TRIAL_START {"seconds": 0.4, "target_items": [1, 2, 3, 4]}
+109 [mysql/TRIAL_OBSERVER] SESSION {"connection_id": 23, "isolation": "READ-COMMITTED", "version": "8.4.13"}
+110 [mysql/CLIENT_0] SESSION {"connection_id": 25, "isolation": "READ-COMMITTED", "version": "8.4.13"}
+111 [mysql/CLIENT_2] SESSION {"connection_id": 26, "isolation": "READ-COMMITTED", "version": "8.4.13"}
+112 [mysql/CLIENT_3] SESSION {"connection_id": 27, "isolation": "READ-COMMITTED", "version": "8.4.13"}
+113 [mysql/CLIENT_1] SESSION {"connection_id": 24, "isolation": "READ-COMMITTED", "version": "8.4.13"}
+114 [mysql/shared4/4] RESTORED {"confirmed_commits": 84, "rows": 4}
+115 [mysql/shared4/4] PASS {"successful_transactions": 84, "successful_tps": 204.548, "p95_ms": 45.74759497772902, "max_observed_blocked_sessions": 0}
+116 [mysql/hot1/1] TRIAL_START {"seconds": 0.4, "target_items": [1]}
+117 [mysql/TRIAL_OBSERVER] SESSION {"connection_id": 28, "isolation": "READ-COMMITTED", "version": "8.4.13"}
+118 [mysql/CLIENT_0] SESSION {"connection_id": 29, "isolation": "READ-COMMITTED", "version": "8.4.13"}
+119 [mysql/hot1/1] RESTORED {"confirmed_commits": 28, "rows": 1}
+120 [mysql/hot1/1] PASS {"successful_transactions": 28, "successful_tps": 69.147, "p95_ms": 27.16964501305483, "max_observed_blocked_sessions": 0}
+121 [mysql/hot1/4] TRIAL_START {"seconds": 0.4, "target_items": [1]}
+122 [mysql/TRIAL_OBSERVER] SESSION {"connection_id": 30, "isolation": "READ-COMMITTED", "version": "8.4.13"}
+123 [mysql/CLIENT_2] SESSION {"connection_id": 33, "isolation": "READ-COMMITTED", "version": "8.4.13"}
+124 [mysql/CLIENT_0] SESSION {"connection_id": 31, "isolation": "READ-COMMITTED", "version": "8.4.13"}
+125 [mysql/CLIENT_1] SESSION {"connection_id": 34, "isolation": "READ-COMMITTED", "version": "8.4.13"}
+126 [mysql/CLIENT_3] SESSION {"connection_id": 32, "isolation": "READ-COMMITTED", "version": "8.4.13"}
+127 [mysql/hot1/4] WAIT_SAMPLE {"blocked_sessions": 3, "edges": [{"waiting_pid": 31, "blocking_pid": 34, "table": "stock", "index": "PRIMARY", "lock_type": "RECORD", "lock_mode": "X,REC_NOT_GAP", "lock_status": "WAITING", "lock_data": "1, 1"}, {"waiting_pid": 32, "blocking_pid": 34, "table": "stock", "index": "PRIMARY", "lock_type": "RECORD", "lock_mode": "X,REC_NOT_GAP", "lock_status": "WAITING", "lock_data": "1, 1"}, {"waiting_pid": 32, "blocking_pid": 31, "table": "stock", "index": "PRIMARY", "lock_type": "RECORD", "lock_mode": "X,REC_NOT_GAP", "lock_status": "WAITING", "lock_data": "1, 1"}, {"waiting_pid": 33, "blocking_pid": 34, "table": "stock", "index": "PRIMARY", "lock_type": "RECORD", "lock_mode": "X,REC_NOT_GAP", "lock_status": "WAITING", "lock_data": "1, 1"}, {"waiting_pid": 33, "blocking_pid": 31, "table": "stock", "index": "PRIMARY", "lock_type": "RECORD", "lock_mode": "X,REC_NOT_GAP", "lock_status": "WAITING", "lock_data": "1, 1"}, {"waiting_pid": 33, "blocking_pid": 32, "table": "stock", "index": "PRIMARY", "lock_type": "RECORD", "lock_mode": "X,REC_NOT_GAP", "lock_status": "WAITING", "lock_data": "1, 1"}]}
+128 [mysql/hot1/4] RESTORED {"confirmed_commits": 26, "rows": 1}
+129 [mysql/hot1/4] PASS {"successful_transactions": 26, "successful_tps": 48.552, "p95_ms": 181.7209250148153, "max_observed_blocked_sessions": 3}
+130 [mysql/ADMIN] OBSERVER_ACCESS_RESTORED {"tables": ["data_lock_waits", "data_locks", "threads"], "errors": []}

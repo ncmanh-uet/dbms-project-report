@@ -1,0 +1,8 @@
+elapsed_ms,blocked_sessions,waiting_pids,blocking_pids,edges_json
+5.280699988361448,0,,,[]
+66.23039999976754,2,64;66,63,"[{""waiting_pid"": 64, ""blocking_pid"": 63, ""state"": ""active"", ""wait_event_type"": ""Lock"", ""wait_event"": ""transactionid""}, {""waiting_pid"": 66, ""blocking_pid"": 63, ""state"": ""active"", ""wait_event_type"": ""Lock"", ""wait_event"": ""transactionid""}]"
+128.70549998478964,2,64;66,63;66,"[{""waiting_pid"": 64, ""blocking_pid"": 66, ""state"": ""active"", ""wait_event_type"": ""Lock"", ""wait_event"": ""tuple""}, {""waiting_pid"": 66, ""blocking_pid"": 63, ""state"": ""active"", ""wait_event_type"": ""Lock"", ""wait_event"": ""transactionid""}]"
+186.75150000490248,2,64;66,63;66,"[{""waiting_pid"": 64, ""blocking_pid"": 66, ""state"": ""active"", ""wait_event_type"": ""Lock"", ""wait_event"": ""tuple""}, {""waiting_pid"": 66, ""blocking_pid"": 63, ""state"": ""active"", ""wait_event_type"": ""Lock"", ""wait_event"": ""transactionid""}]"
+248.79979999968782,2,65;66,64;65,"[{""waiting_pid"": 65, ""blocking_pid"": 64, ""state"": ""active"", ""wait_event_type"": ""Lock"", ""wait_event"": ""transactionid""}, {""waiting_pid"": 66, ""blocking_pid"": 65, ""state"": ""active"", ""wait_event_type"": ""Lock"", ""wait_event"": ""tuple""}]"
+309.4062000163831,0,,,[]
+370.6034999922849,2,63;64,66,"[{""waiting_pid"": 63, ""blocking_pid"": 66, ""state"": ""active"", ""wait_event_type"": ""Lock"", ""wait_event"": ""transactionid""}, {""waiting_pid"": 64, ""blocking_pid"": 66, ""state"": ""active"", ""wait_event_type"": ""Lock"", ""wait_event"": ""transactionid""}]"

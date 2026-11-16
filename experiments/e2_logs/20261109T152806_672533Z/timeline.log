@@ -1,0 +1,7 @@
+001 [postgres/distinct/1] TRIAL_START {"seconds": 0.5, "target_items": [1]}
+002 [postgres/TRIAL_OBSERVER] SESSION {"connection_id": 176, "isolation": "read committed", "version": "PostgreSQL 17.11 (Debian 17.11-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit"}
+003 [postgres/CLIENT_0] SESSION {"connection_id": 177, "isolation": "read committed", "version": "PostgreSQL 17.11 (Debian 17.11-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit"}
+004 [postgres/distinct/1] ERROR {"message": "RuntimeError"}
+005 [postgres/distinct/1] RESTORED {"confirmed_commits": 29, "rows": 1}
+006 [postgres/distinct/1] FAIL {"successful_transactions": 29, "successful_tps": 233.037, "p95_ms": 5.941920005716383, "max_observed_blocked_sessions": 0}
+007 [RUN/MAIN] ERROR {"message": "postgres/distinct/1 failed; inspect its summary"}

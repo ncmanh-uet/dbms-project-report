@@ -1,0 +1,109 @@
+{
+  "kind": "occ_trial",
+  "dbms": "postgres",
+  "scenario": "hot1",
+  "clients": 8,
+  "requested_seconds": 10.0,
+  "max_retries": 8,
+  "status": "PASS",
+  "connection_ids": [
+    285,
+    286,
+    287,
+    288,
+    289,
+    290,
+    291,
+    292
+  ],
+  "final_rows": {
+    "1": {
+      "counter": "558.00",
+      "version": 559
+    },
+    "2": {
+      "counter": "0.00",
+      "version": 1
+    },
+    "3": {
+      "counter": "0.00",
+      "version": 1
+    },
+    "4": {
+      "counter": "0.00",
+      "version": 1
+    },
+    "5": {
+      "counter": "0.00",
+      "version": 1
+    },
+    "6": {
+      "counter": "0.00",
+      "version": 1
+    },
+    "7": {
+      "counter": "0.00",
+      "version": 1
+    },
+    "8": {
+      "counter": "0.00",
+      "version": 1
+    },
+    "9": {
+      "counter": "0.00",
+      "version": 1
+    },
+    "10": {
+      "counter": "0.00",
+      "version": 1
+    },
+    "11": {
+      "counter": "0.00",
+      "version": 1
+    },
+    "12": {
+      "counter": "0.00",
+      "version": 1
+    },
+    "13": {
+      "counter": "0.00",
+      "version": 1
+    },
+    "14": {
+      "counter": "0.00",
+      "version": 1
+    },
+    "15": {
+      "counter": "0.00",
+      "version": 1
+    },
+    "16": {
+      "counter": "0.00",
+      "version": 1
+    }
+  },
+  "integrity_ok": true,
+  "fixture_reset": true,
+  "logical_operations": 628,
+  "successful_operations": 558,
+  "exhausted_operations": 70,
+  "cancelled_operations": 0,
+  "attempts": 2241,
+  "version_conflicts": 1683,
+  "retries_started": 1613,
+  "conflict_rate": 0.751004016064257,
+  "operations_with_retry": 393,
+  "retry_operation_rate": 0.6257961783439491,
+  "retries_per_operation": 2.5684713375796178,
+  "db_error_operations": 0,
+  "actual_seconds": 10.13911490002647,
+  "successful_tps": 55.0343896387389,
+  "success_latency_ms": {
+    "mean": 95.44414677500714,
+    "p50": 60.296950017800555,
+    "p95": 318.3757800317834,
+    "p99": 413.3227789652296
+  },
+  "fatal_errors": [],
+  "unknown_commit": false
+}

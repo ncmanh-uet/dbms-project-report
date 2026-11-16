@@ -1,0 +1,466 @@
+{
+  "started_utc": "2026-11-10T14:10:11.090024+07:00",
+  "source_path": "C:\\Users\\ADMIN\\AppData\\Local\\Docker\\wsl\\disk\\docker_data.vhdx",
+  "backup_directory": "D:\\DBMS-VHDX-Backup-20261110T071011Z",
+  "backup_path": "D:\\DBMS-VHDX-Backup-20261110T071011Z\\docker_data.vhdx",
+  "source_bytes_before": 21153972224,
+  "windows_free_bytes_before": 9533923328,
+  "database_fingerprints_before": {
+    "postgres": {
+      "tpcc": {
+        "counts": {
+          "warehouse": 1,
+          "district": 10,
+          "customer": 30000,
+          "history": 30000,
+          "item": 100000,
+          "stock": 100000,
+          "oorder": 30000,
+          "new_order": 9000,
+          "order_line": 300040
+        },
+        "warehouse": [
+          "300000.00",
+          "0.1353"
+        ],
+        "district": [
+          "300000.00",
+          "30010",
+          "0.8986"
+        ],
+        "stock": [
+          "5504393",
+          "0.00",
+          "0",
+          "0"
+        ],
+        "customer": [
+          "-300000.00",
+          "300000.0",
+          "30000",
+          "0"
+        ],
+        "orders": [
+          "300040",
+          "45015000",
+          "45015000"
+        ],
+        "order_lines": [
+          "451070784.49",
+          "1500200.00"
+        ]
+      },
+      "tpcc_bench": {
+        "counts": {
+          "warehouse": 1,
+          "district": 10,
+          "customer": 30000,
+          "history": 30000,
+          "item": 100000,
+          "stock": 100000,
+          "oorder": 30000,
+          "new_order": 9000,
+          "order_line": 300040
+        },
+        "warehouse": [
+          "300000.00",
+          "0.1353"
+        ],
+        "district": [
+          "300000.00",
+          "30010",
+          "0.8986"
+        ],
+        "stock": [
+          "5504393",
+          "0.00",
+          "0",
+          "0"
+        ],
+        "customer": [
+          "-300000.00",
+          "300000.0",
+          "30000",
+          "0"
+        ],
+        "orders": [
+          "300040",
+          "45015000",
+          "45015000"
+        ],
+        "order_lines": [
+          "451070784.49",
+          "1500200.00"
+        ]
+      }
+    },
+    "mysql": {
+      "tpcc": {
+        "counts": {
+          "warehouse": 1,
+          "district": 10,
+          "customer": 30000,
+          "history": 30000,
+          "item": 100000,
+          "stock": 100000,
+          "oorder": 30000,
+          "new_order": 9000,
+          "order_line": 300040
+        },
+        "warehouse": [
+          "300000.00",
+          "0.1353"
+        ],
+        "district": [
+          "300000.00",
+          "30010",
+          "0.8986"
+        ],
+        "stock": [
+          "5504393",
+          "0.00",
+          "0",
+          "0"
+        ],
+        "customer": [
+          "-300000.00",
+          "300000.0",
+          "30000",
+          "0"
+        ],
+        "orders": [
+          "300040",
+          "45015000",
+          "45015000"
+        ],
+        "order_lines": [
+          "451070784.49",
+          "1500200"
+        ]
+      },
+      "tpcc_bench": {
+        "counts": {
+          "warehouse": 1,
+          "district": 10,
+          "customer": 30000,
+          "history": 30000,
+          "item": 100000,
+          "stock": 100000,
+          "oorder": 30000,
+          "new_order": 9000,
+          "order_line": 300040
+        },
+        "warehouse": [
+          "300000.00",
+          "0.1353"
+        ],
+        "district": [
+          "300000.00",
+          "30010",
+          "0.8986"
+        ],
+        "stock": [
+          "5504393",
+          "0.00",
+          "0",
+          "0"
+        ],
+        "customer": [
+          "-300000.00",
+          "300000.0",
+          "30000",
+          "0"
+        ],
+        "orders": [
+          "300040",
+          "45015000",
+          "45015000"
+        ],
+        "order_lines": [
+          "451070784.49",
+          "1500200"
+        ]
+      }
+    }
+  },
+  "evidence_before": {
+    "files": 3192,
+    "sha256": "325d1f3c2078dca73359e5288bd14857c1f8a99e4bc024b25ab454d824b50d1f"
+  },
+  "running_containers_before": [
+    "dbms-lab-postgres-1",
+    "dbms-lab-mysql-1"
+  ],
+  "images_before": [
+    "sha256:0fd2ad16787b7684bc3c946329f55f69902a50e1aac2e1da2cff74d617c0ea48",
+    "sha256:17bd8217c79f8394e8db9b48a192962bf1ca0790c6a69afc032ab5e2e499f60b",
+    "sha256:1b1584c87ce11f87f151add677d15a9f18893a3bca910a4967434cb1a9be6eb7",
+    "sha256:290be2befe90d939f90a03f03aa36a12cd70ac7b40b758c5cf35775d8cc525ed",
+    "sha256:38e0600c3a66d1b07648e26867ff3a48bfc1c20ddaff3dc4fb844c7ecb83a258",
+    "sha256:3d04ffb7e2bd6a47309a673a4a8f7b0f9aac10603fd0178ad108a78b8342d4dd",
+    "sha256:4332937b1d936ce2997ba541c79f3d5cacdac3e85d82d5e4ff3eb9557c2e3d0f",
+    "sha256:69e3951d9798d390d608882b1bd58d378f284d96e312c6f2dcb559fd07ad001a",
+    "sha256:76f0358884cb92d9a086d24e5671c38048d3fef40f2588703d73eb55392d6b69",
+    "sha256:7828b5f78e9baa76af12ac3461753cb71e48425df9924221401d3a3ee2ea3990",
+    "sha256:970364228b1e4f932abc22d321932816782cca8a20b85a77552a7cfe9acfb3b5",
+    "sha256:a7fd22f75be20b7e4eb61ae7dfbe0a869a85f96297769fdbc9c7bfd8a9e73899",
+    "sha256:b0f9560a2de083e2cc7382e75f808c7381a32852a7ec49117deedb300e552b24",
+    "sha256:b8faeff7712663c2773a190181e1246e37e364b887611c04658c28b44e2408fe",
+    "sha256:dd5ecdc551ab68b92ca232de7c10ac359119cc64478bf441d81753ca54426ae9"
+  ],
+  "volumes_before": [
+    "3560d4cfc594d096c85c0bad95deb775b980c81a513967a154b50a15be71ae35",
+    "6735dbc84992123e2d8b2f229fdad516a0f531107e21dd3e8b4eb6bacf168f77",
+    "92cbe320a6b46bcf9148e2c9d25fa029f5b038b7ade620e2948969e78d96dddf",
+    "btvn-ktpm_minio-data",
+    "dbms-lab_mysql_data",
+    "dbms-lab_postgres_data",
+    "streamora-t01-stage_stage-postgres",
+    "streamora_postgres-data"
+  ],
+  "status": "PASS",
+  "backup_sha256": "1C70BF9610B7F71D366671C945193E204083FC6A9707C56F5785280025C2B8F0",
+  "admin_compaction": {
+    "state": "compact_finished",
+    "diskpart_exit": 0,
+    "source_bytes_before": 21153972224,
+    "source_bytes_after": 11428429824,
+    "windows_free_bytes_before": 9569013760,
+    "windows_free_bytes_after": 19276644352,
+    "backup_path": "D:\\DBMS-VHDX-Backup-20261110T071011Z\\docker_data.vhdx",
+    "utc": "2026-11-10T07:16:09.7875992Z"
+  },
+  "backup_verification": {
+    "source_path": "C:\\Users\\ADMIN\\AppData\\Local\\Docker\\wsl\\disk\\docker_data.vhdx",
+    "source_bytes": 21153972224,
+    "source_sha256": "1C70BF9610B7F71D366671C945193E204083FC6A9707C56F5785280025C2B8F0",
+    "backup_path": "D:\\DBMS-VHDX-Backup-20261110T071011Z\\docker_data.vhdx",
+    "backup_sha256": "1C70BF9610B7F71D366671C945193E204083FC6A9707C56F5785280025C2B8F0",
+    "backup_verified": true
+  },
+  "diskpart_output": "\nMicrosoft DiskPart version 10.0.26100.1150\n\nCopyright (C) Microsoft Corporation.\nOn computer: DUKE-LONG\n\nDiskPart successfully selected the virtual disk file.\n\n\n   10 percent completed\n   10 percent completed\n   10 percent completed\n   10 percent completed\n   10 percent completed\n   10 percent completed\n   10 percent completed\n   19 percent completed\n   19 percent completed\n   19 percent completed\n   19 percent completed\n   19 percent completed\n   19 percent completed\n   19 percent completed\n   19 percent completed\n   19 percent completed\n   19 percent completed\n   19 percent completed\n   19 percent completed\n   19 percent completed\n   19 percent completed\n   20 percent completed\n   20 percent completed\n   29 percent completed\n   29 percent completed\n   29 percent completed\n   29 percent completed\n   68 percent completed\n   68 percent completed\n   68 percent completed\n   68 percent completed\n   94 percent completed\n   94 percent completed\n   94 percent completed\n   94 percent completed\n   94 percent completed\n   94 percent completed\n   94 percent completed\n   94 percent completed\n   94 percent completed\n   94 percent completed\n   94 percent completed\n   95 percent completed\n   95 percent completed\n   95 percent completed\n   95 percent completed\n   95 percent completed\n   95 percent completed\n   95 percent completed\n   95 percent completed\n   95 percent completed\n   95 percent completed\n   95 percent completed\n   95 percent completed\n   95 percent completed\n   95 percent completed\n   95 percent completed\n   95 percent completed\n   95 percent completed\n   95 percent completed\n   95 percent completed\n   95 percent completed\n   95 percent completed\n   95 percent completed\n   95 percent completed\n   95 percent completed\n   95 percent completed\n   95 percent completed\n   95 percent completed\n   95 percent completed\n   95 percent completed\n   95 percent completed\n   95 percent completed\n   95 percent completed\n   95 percent completed\n   95 percent completed\n   95 percent completed\n   95 percent completed\n  100 percent completed\n\n\nDiskPart successfully compacted the virtual disk file.\n\nLeaving DiskPart...\n",
+  "database_fingerprints_after": {
+    "postgres": {
+      "tpcc": {
+        "counts": {
+          "warehouse": 1,
+          "district": 10,
+          "customer": 30000,
+          "history": 30000,
+          "item": 100000,
+          "stock": 100000,
+          "oorder": 30000,
+          "new_order": 9000,
+          "order_line": 300040
+        },
+        "warehouse": [
+          "300000.00",
+          "0.1353"
+        ],
+        "district": [
+          "300000.00",
+          "30010",
+          "0.8986"
+        ],
+        "stock": [
+          "5504393",
+          "0.00",
+          "0",
+          "0"
+        ],
+        "customer": [
+          "-300000.00",
+          "300000.0",
+          "30000",
+          "0"
+        ],
+        "orders": [
+          "300040",
+          "45015000",
+          "45015000"
+        ],
+        "order_lines": [
+          "451070784.49",
+          "1500200.00"
+        ]
+      },
+      "tpcc_bench": {
+        "counts": {
+          "warehouse": 1,
+          "district": 10,
+          "customer": 30000,
+          "history": 30000,
+          "item": 100000,
+          "stock": 100000,
+          "oorder": 30000,
+          "new_order": 9000,
+          "order_line": 300040
+        },
+        "warehouse": [
+          "300000.00",
+          "0.1353"
+        ],
+        "district": [
+          "300000.00",
+          "30010",
+          "0.8986"
+        ],
+        "stock": [
+          "5504393",
+          "0.00",
+          "0",
+          "0"
+        ],
+        "customer": [
+          "-300000.00",
+          "300000.0",
+          "30000",
+          "0"
+        ],
+        "orders": [
+          "300040",
+          "45015000",
+          "45015000"
+        ],
+        "order_lines": [
+          "451070784.49",
+          "1500200.00"
+        ]
+      }
+    },
+    "mysql": {
+      "tpcc": {
+        "counts": {
+          "warehouse": 1,
+          "district": 10,
+          "customer": 30000,
+          "history": 30000,
+          "item": 100000,
+          "stock": 100000,
+          "oorder": 30000,
+          "new_order": 9000,
+          "order_line": 300040
+        },
+        "warehouse": [
+          "300000.00",
+          "0.1353"
+        ],
+        "district": [
+          "300000.00",
+          "30010",
+          "0.8986"
+        ],
+        "stock": [
+          "5504393",
+          "0.00",
+          "0",
+          "0"
+        ],
+        "customer": [
+          "-300000.00",
+          "300000.0",
+          "30000",
+          "0"
+        ],
+        "orders": [
+          "300040",
+          "45015000",
+          "45015000"
+        ],
+        "order_lines": [
+          "451070784.49",
+          "1500200"
+        ]
+      },
+      "tpcc_bench": {
+        "counts": {
+          "warehouse": 1,
+          "district": 10,
+          "customer": 30000,
+          "history": 30000,
+          "item": 100000,
+          "stock": 100000,
+          "oorder": 30000,
+          "new_order": 9000,
+          "order_line": 300040
+        },
+        "warehouse": [
+          "300000.00",
+          "0.1353"
+        ],
+        "district": [
+          "300000.00",
+          "30010",
+          "0.8986"
+        ],
+        "stock": [
+          "5504393",
+          "0.00",
+          "0",
+          "0"
+        ],
+        "customer": [
+          "-300000.00",
+          "300000.0",
+          "30000",
+          "0"
+        ],
+        "orders": [
+          "300040",
+          "45015000",
+          "45015000"
+        ],
+        "order_lines": [
+          "451070784.49",
+          "1500200"
+        ]
+      }
+    }
+  },
+  "evidence_after": {
+    "files": 3192,
+    "sha256": "325d1f3c2078dca73359e5288bd14857c1f8a99e4bc024b25ab454d824b50d1f"
+  },
+  "images_after": [
+    "sha256:0fd2ad16787b7684bc3c946329f55f69902a50e1aac2e1da2cff74d617c0ea48",
+    "sha256:17bd8217c79f8394e8db9b48a192962bf1ca0790c6a69afc032ab5e2e499f60b",
+    "sha256:1b1584c87ce11f87f151add677d15a9f18893a3bca910a4967434cb1a9be6eb7",
+    "sha256:290be2befe90d939f90a03f03aa36a12cd70ac7b40b758c5cf35775d8cc525ed",
+    "sha256:38e0600c3a66d1b07648e26867ff3a48bfc1c20ddaff3dc4fb844c7ecb83a258",
+    "sha256:3d04ffb7e2bd6a47309a673a4a8f7b0f9aac10603fd0178ad108a78b8342d4dd",
+    "sha256:4332937b1d936ce2997ba541c79f3d5cacdac3e85d82d5e4ff3eb9557c2e3d0f",
+    "sha256:69e3951d9798d390d608882b1bd58d378f284d96e312c6f2dcb559fd07ad001a",
+    "sha256:76f0358884cb92d9a086d24e5671c38048d3fef40f2588703d73eb55392d6b69",
+    "sha256:7828b5f78e9baa76af12ac3461753cb71e48425df9924221401d3a3ee2ea3990",
+    "sha256:970364228b1e4f932abc22d321932816782cca8a20b85a77552a7cfe9acfb3b5",
+    "sha256:a7fd22f75be20b7e4eb61ae7dfbe0a869a85f96297769fdbc9c7bfd8a9e73899",
+    "sha256:b0f9560a2de083e2cc7382e75f808c7381a32852a7ec49117deedb300e552b24",
+    "sha256:b8faeff7712663c2773a190181e1246e37e364b887611c04658c28b44e2408fe",
+    "sha256:dd5ecdc551ab68b92ca232de7c10ac359119cc64478bf441d81753ca54426ae9"
+  ],
+  "volumes_after": [
+    "3560d4cfc594d096c85c0bad95deb775b980c81a513967a154b50a15be71ae35",
+    "6735dbc84992123e2d8b2f229fdad516a0f531107e21dd3e8b4eb6bacf168f77",
+    "92cbe320a6b46bcf9148e2c9d25fa029f5b038b7ade620e2948969e78d96dddf",
+    "btvn-ktpm_minio-data",
+    "dbms-lab_mysql_data",
+    "dbms-lab_postgres_data",
+    "streamora-t01-stage_stage-postgres",
+    "streamora_postgres-data"
+  ],
+  "running_containers_after": [
+    "dbms-lab-postgres-1",
+    "dbms-lab-mysql-1"
+  ],
+  "source_bytes_after": 11461984256,
+  "vhdx_bytes_reduced": 9691987968,
+  "windows_free_bytes_after": 19223990272,
+  "windows_free_bytes_increase": 9690066944,
+  "validated_utc": "2026-11-10T14:20:19.424448+07:00",
+  "admin_helper_source": "# Elevated helper: compact only the existing Docker data disk after a verified backup.\n$ErrorActionPreference = 'Stop'\n$ProgressPreference = 'SilentlyContinue'\n$diskPath = 'C:\\Users\\ADMIN\\AppData\\Local\\Docker\\wsl\\disk\\docker_data.vhdx'\n$readyPath = Join-Path $PSScriptRoot 'compact-vhdx-ready.json'\n$statusPath = Join-Path $PSScriptRoot 'compact-vhdx-status.json'\n$diskpartPath = Join-Path $PSScriptRoot 'compact-vhdx-diskpart.txt'\n$logPath = Join-Path $PSScriptRoot 'compact-vhdx-diskpart.log'\nfunction Save-Status($value) {\n    $value | ConvertTo-Json -Depth 6 | Set-Content -LiteralPath $statusPath -Encoding utf8\n}\ntry {\n    $principal = [Security.Principal.WindowsPrincipal]::new([Security.Principal.WindowsIdentity]::GetCurrent())\n    if (-not $principal.IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)) {\n        throw 'Windows Administrator permission is required.'\n    }\n    Save-Status ([ordered]@{state='waiting_for_verified_backup';administrator=$true;utc=[DateTime]::UtcNow.ToString('o')})\n    $deadline = [DateTime]::UtcNow.AddMinutes(20)\n    while (-not (Test-Path -LiteralPath $readyPath)) {\n        if ([DateTime]::UtcNow -gt $deadline) { throw 'Timed out waiting for verified offline backup.' }\n        Start-Sleep -Milliseconds 500\n    }\n    $ready = Get-Content -LiteralPath $readyPath -Raw | ConvertFrom-Json\n    if ($ready.source_path -ne $diskPath -or -not $ready.backup_verified) { throw 'Invalid backup authorization record.' }\n    if ($ready.source_sha256 -ne $ready.backup_sha256) { throw 'Backup checksum mismatch.' }\n    $backupResolved = (Resolve-Path -LiteralPath $ready.backup_path).ProviderPath\n    if (-not $backupResolved.StartsWith('D:\\DBMS-VHDX-Backup-', [StringComparison]::OrdinalIgnoreCase)) {\n        throw 'Unexpected backup location.'\n    }\n    if ((Get-Item -LiteralPath $backupResolved).Length -ne $ready.source_bytes) { throw 'Backup length mismatch.' }\n    if ((Resolve-Path -LiteralPath $diskPath).ProviderPath -ne $diskPath) { throw 'Unexpected Docker disk path.' }\n    $before = (Get-Item -LiteralPath $diskPath).Length\n    if ($before -ne $ready.source_bytes) { throw 'Docker disk changed after backup.' }\n    $handle = [IO.File]::Open($diskPath,[IO.FileMode]::Open,[IO.FileAccess]::ReadWrite,[IO.FileShare]::None)\n    $handle.Dispose()\n    $freeBefore = (Get-PSDrive C).Free\n    @(\"select vdisk file=`\"$diskPath`\"\", 'compact vdisk', 'exit') | Set-Content -LiteralPath $diskpartPath -Encoding ascii\n    Save-Status ([ordered]@{state='compacting';source_bytes_before=$before;utc=[DateTime]::UtcNow.ToString('o')})\n    $output = & \"$env:SystemRoot\\System32\\diskpart.exe\" /s $diskpartPath 2>&1\n    $diskpartExit = $LASTEXITCODE\n    $output | Set-Content -LiteralPath $logPath -Encoding utf8\n    $after = (Get-Item -LiteralPath $diskPath).Length\n    if ($diskpartExit -ne 0 -or ($output -join \"`n\") -match '(?i)encountered an error|failed to|Virtual Disk Service error') {\n        throw \"DiskPart failed; inspect $logPath\"\n    }\n    Save-Status ([ordered]@{state='compact_finished';diskpart_exit=$diskpartExit;source_bytes_before=$before;\n        source_bytes_after=$after;windows_free_bytes_before=$freeBefore;windows_free_bytes_after=(Get-PSDrive C).Free;\n        backup_path=$backupResolved;utc=[DateTime]::UtcNow.ToString('o')})\n} catch {\n    Save-Status ([ordered]@{state='failed';error=$_.Exception.Message;utc=[DateTime]::UtcNow.ToString('o')})\n    exit 1\n}\n",
+  "diskpart_script": "select vdisk file=\"C:\\Users\\ADMIN\\AppData\\Local\\Docker\\wsl\\disk\\docker_data.vhdx\"\r\ncompact vdisk\r\nexit\r\n",
+  "temporary_backup_removed": true,
+  "finished_utc": "2026-11-10T07:21:51.4960552Z",
+  "windows_free_bytes_final": 19226951680,
+  "d_drive_free_bytes_final": 185200226304
+}

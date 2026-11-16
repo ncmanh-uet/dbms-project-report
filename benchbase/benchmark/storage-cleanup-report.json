@@ -1,0 +1,812 @@
+{
+  "started_utc": "2026-11-10T06:26:06.423807+00:00",
+  "windows_free_bytes_before": 9542332416,
+  "binary_logs_before": [
+    [
+      "binlog.000001",
+      "2982258",
+      "No"
+    ],
+    [
+      "binlog.000002",
+      "75917646",
+      "No"
+    ],
+    [
+      "binlog.000003",
+      "1104",
+      "No"
+    ],
+    [
+      "binlog.000004",
+      "22843432",
+      "No"
+    ],
+    [
+      "binlog.000005",
+      "181",
+      "No"
+    ],
+    [
+      "binlog.000006",
+      "2395",
+      "No"
+    ],
+    [
+      "binlog.000007",
+      "8702745",
+      "No"
+    ],
+    [
+      "binlog.000008",
+      "8397919",
+      "No"
+    ],
+    [
+      "binlog.000009",
+      "10809842",
+      "No"
+    ],
+    [
+      "binlog.000010",
+      "12690424",
+      "No"
+    ],
+    [
+      "binlog.000011",
+      "9850662",
+      "No"
+    ],
+    [
+      "binlog.000012",
+      "61686787",
+      "No"
+    ],
+    [
+      "binlog.000013",
+      "99226815",
+      "No"
+    ],
+    [
+      "binlog.000014",
+      "97998222",
+      "No"
+    ],
+    [
+      "binlog.000015",
+      "89626371",
+      "No"
+    ],
+    [
+      "binlog.000016",
+      "93281464",
+      "No"
+    ],
+    [
+      "binlog.000017",
+      "90977531",
+      "No"
+    ],
+    [
+      "binlog.000018",
+      "156427088",
+      "No"
+    ],
+    [
+      "binlog.000019",
+      "105401874",
+      "No"
+    ],
+    [
+      "binlog.000020",
+      "105349851",
+      "No"
+    ],
+    [
+      "binlog.000021",
+      "100249776",
+      "No"
+    ],
+    [
+      "binlog.000022",
+      "99245487",
+      "No"
+    ],
+    [
+      "binlog.000023",
+      "95533894",
+      "No"
+    ],
+    [
+      "binlog.000024",
+      "84853718",
+      "No"
+    ],
+    [
+      "binlog.000025",
+      "59743874",
+      "No"
+    ],
+    [
+      "binlog.000026",
+      "99917993",
+      "No"
+    ],
+    [
+      "binlog.000027",
+      "100582868",
+      "No"
+    ],
+    [
+      "binlog.000028",
+      "57594488",
+      "No"
+    ],
+    [
+      "binlog.000029",
+      "96938297",
+      "No"
+    ],
+    [
+      "binlog.000030",
+      "83257116",
+      "No"
+    ],
+    [
+      "binlog.000031",
+      "99398373",
+      "No"
+    ]
+  ],
+  "binary_log_bytes_before": 2029490495,
+  "evidence_before": {
+    "files": 3195,
+    "sha256": "dd28735212cf7522f57d6187f8dcfc6591e17882623209e80ea0b68acbe2e716"
+  },
+  "database_fingerprints_before": {
+    "postgres": {
+      "tpcc": {
+        "counts": {
+          "warehouse": 1,
+          "district": 10,
+          "customer": 30000,
+          "history": 30000,
+          "item": 100000,
+          "stock": 100000,
+          "oorder": 30000,
+          "new_order": 9000,
+          "order_line": 300040
+        },
+        "warehouse": [
+          "300000.00",
+          "0.1353"
+        ],
+        "district": [
+          "300000.00",
+          "30010",
+          "0.8986"
+        ],
+        "stock": [
+          "5504393",
+          "0.00",
+          "0",
+          "0"
+        ],
+        "customer": [
+          "-300000.00",
+          "300000.0",
+          "30000",
+          "0"
+        ],
+        "orders": [
+          "300040",
+          "45015000",
+          "45015000"
+        ],
+        "order_lines": [
+          "451070784.49",
+          "1500200.00"
+        ]
+      },
+      "tpcc_bench": {
+        "counts": {
+          "warehouse": 1,
+          "district": 10,
+          "customer": 30000,
+          "history": 30000,
+          "item": 100000,
+          "stock": 100000,
+          "oorder": 30000,
+          "new_order": 9000,
+          "order_line": 300040
+        },
+        "warehouse": [
+          "300000.00",
+          "0.1353"
+        ],
+        "district": [
+          "300000.00",
+          "30010",
+          "0.8986"
+        ],
+        "stock": [
+          "5504393",
+          "0.00",
+          "0",
+          "0"
+        ],
+        "customer": [
+          "-300000.00",
+          "300000.0",
+          "30000",
+          "0"
+        ],
+        "orders": [
+          "300040",
+          "45015000",
+          "45015000"
+        ],
+        "order_lines": [
+          "451070784.49",
+          "1500200.00"
+        ]
+      }
+    },
+    "mysql": {
+      "tpcc": {
+        "counts": {
+          "warehouse": 1,
+          "district": 10,
+          "customer": 30000,
+          "history": 30000,
+          "item": 100000,
+          "stock": 100000,
+          "oorder": 30000,
+          "new_order": 9000,
+          "order_line": 300040
+        },
+        "warehouse": [
+          "300000.00",
+          "0.1353"
+        ],
+        "district": [
+          "300000.00",
+          "30010",
+          "0.8986"
+        ],
+        "stock": [
+          "5504393",
+          "0.00",
+          "0",
+          "0"
+        ],
+        "customer": [
+          "-300000.00",
+          "300000.0",
+          "30000",
+          "0"
+        ],
+        "orders": [
+          "300040",
+          "45015000",
+          "45015000"
+        ],
+        "order_lines": [
+          "451070784.49",
+          "1500200"
+        ]
+      },
+      "tpcc_bench": {
+        "counts": {
+          "warehouse": 1,
+          "district": 10,
+          "customer": 30000,
+          "history": 30000,
+          "item": 100000,
+          "stock": 100000,
+          "oorder": 30000,
+          "new_order": 9000,
+          "order_line": 300040
+        },
+        "warehouse": [
+          "300000.00",
+          "0.1353"
+        ],
+        "district": [
+          "300000.00",
+          "30010",
+          "0.8986"
+        ],
+        "stock": [
+          "5504393",
+          "0.00",
+          "0",
+          "0"
+        ],
+        "customer": [
+          "-300000.00",
+          "300000.0",
+          "30000",
+          "0"
+        ],
+        "orders": [
+          "300040",
+          "45015000",
+          "45015000"
+        ],
+        "order_lines": [
+          "451070784.49",
+          "1500200"
+        ]
+      }
+    }
+  },
+  "actions": [
+    {
+      "operation": "flush_then_purge_old_mysql_binary_logs",
+      "kept_current_log": "binlog.000032"
+    },
+    {
+      "operation": "prune_unused_docker_build_cache",
+      "reported_total_approx_gb": 8.654
+    },
+    {
+      "operation": "remove_local_python_and_java_intermediate_caches"
+    },
+    {
+      "operation": "trim_free_docker_filesystem_blocks"
+    }
+  ],
+  "binary_logs_after": [
+    [
+      "binlog.000032",
+      "158",
+      "No"
+    ]
+  ],
+  "binary_log_bytes_after": 158,
+  "binary_log_bytes_removed": 2029490337,
+  "database_fingerprints_after_binlog_purge": {
+    "postgres": {
+      "tpcc": {
+        "counts": {
+          "warehouse": 1,
+          "district": 10,
+          "customer": 30000,
+          "history": 30000,
+          "item": 100000,
+          "stock": 100000,
+          "oorder": 30000,
+          "new_order": 9000,
+          "order_line": 300040
+        },
+        "warehouse": [
+          "300000.00",
+          "0.1353"
+        ],
+        "district": [
+          "300000.00",
+          "30010",
+          "0.8986"
+        ],
+        "stock": [
+          "5504393",
+          "0.00",
+          "0",
+          "0"
+        ],
+        "customer": [
+          "-300000.00",
+          "300000.0",
+          "30000",
+          "0"
+        ],
+        "orders": [
+          "300040",
+          "45015000",
+          "45015000"
+        ],
+        "order_lines": [
+          "451070784.49",
+          "1500200.00"
+        ]
+      },
+      "tpcc_bench": {
+        "counts": {
+          "warehouse": 1,
+          "district": 10,
+          "customer": 30000,
+          "history": 30000,
+          "item": 100000,
+          "stock": 100000,
+          "oorder": 30000,
+          "new_order": 9000,
+          "order_line": 300040
+        },
+        "warehouse": [
+          "300000.00",
+          "0.1353"
+        ],
+        "district": [
+          "300000.00",
+          "30010",
+          "0.8986"
+        ],
+        "stock": [
+          "5504393",
+          "0.00",
+          "0",
+          "0"
+        ],
+        "customer": [
+          "-300000.00",
+          "300000.0",
+          "30000",
+          "0"
+        ],
+        "orders": [
+          "300040",
+          "45015000",
+          "45015000"
+        ],
+        "order_lines": [
+          "451070784.49",
+          "1500200.00"
+        ]
+      }
+    },
+    "mysql": {
+      "tpcc": {
+        "counts": {
+          "warehouse": 1,
+          "district": 10,
+          "customer": 30000,
+          "history": 30000,
+          "item": 100000,
+          "stock": 100000,
+          "oorder": 30000,
+          "new_order": 9000,
+          "order_line": 300040
+        },
+        "warehouse": [
+          "300000.00",
+          "0.1353"
+        ],
+        "district": [
+          "300000.00",
+          "30010",
+          "0.8986"
+        ],
+        "stock": [
+          "5504393",
+          "0.00",
+          "0",
+          "0"
+        ],
+        "customer": [
+          "-300000.00",
+          "300000.0",
+          "30000",
+          "0"
+        ],
+        "orders": [
+          "300040",
+          "45015000",
+          "45015000"
+        ],
+        "order_lines": [
+          "451070784.49",
+          "1500200"
+        ]
+      },
+      "tpcc_bench": {
+        "counts": {
+          "warehouse": 1,
+          "district": 10,
+          "customer": 30000,
+          "history": 30000,
+          "item": 100000,
+          "stock": 100000,
+          "oorder": 30000,
+          "new_order": 9000,
+          "order_line": 300040
+        },
+        "warehouse": [
+          "300000.00",
+          "0.1353"
+        ],
+        "district": [
+          "300000.00",
+          "30010",
+          "0.8986"
+        ],
+        "stock": [
+          "5504393",
+          "0.00",
+          "0",
+          "0"
+        ],
+        "customer": [
+          "-300000.00",
+          "300000.0",
+          "30000",
+          "0"
+        ],
+        "orders": [
+          "300040",
+          "45015000",
+          "45015000"
+        ],
+        "order_lines": [
+          "451070784.49",
+          "1500200"
+        ]
+      }
+    }
+  },
+  "evidence_after_binlog_purge": {
+    "files": 3195,
+    "sha256": "dd28735212cf7522f57d6187f8dcfc6591e17882623209e80ea0b68acbe2e716"
+  },
+  "evidence_after": {
+    "files": 3195,
+    "sha256": "dd28735212cf7522f57d6187f8dcfc6591e17882623209e80ea0b68acbe2e716"
+  },
+  "database_fingerprints_after": {
+    "postgres": {
+      "tpcc": {
+        "counts": {
+          "warehouse": 1,
+          "district": 10,
+          "customer": 30000,
+          "history": 30000,
+          "item": 100000,
+          "stock": 100000,
+          "oorder": 30000,
+          "new_order": 9000,
+          "order_line": 300040
+        },
+        "warehouse": [
+          "300000.00",
+          "0.1353"
+        ],
+        "district": [
+          "300000.00",
+          "30010",
+          "0.8986"
+        ],
+        "stock": [
+          "5504393",
+          "0.00",
+          "0",
+          "0"
+        ],
+        "customer": [
+          "-300000.00",
+          "300000.0",
+          "30000",
+          "0"
+        ],
+        "orders": [
+          "300040",
+          "45015000",
+          "45015000"
+        ],
+        "order_lines": [
+          "451070784.49",
+          "1500200.00"
+        ]
+      },
+      "tpcc_bench": {
+        "counts": {
+          "warehouse": 1,
+          "district": 10,
+          "customer": 30000,
+          "history": 30000,
+          "item": 100000,
+          "stock": 100000,
+          "oorder": 30000,
+          "new_order": 9000,
+          "order_line": 300040
+        },
+        "warehouse": [
+          "300000.00",
+          "0.1353"
+        ],
+        "district": [
+          "300000.00",
+          "30010",
+          "0.8986"
+        ],
+        "stock": [
+          "5504393",
+          "0.00",
+          "0",
+          "0"
+        ],
+        "customer": [
+          "-300000.00",
+          "300000.0",
+          "30000",
+          "0"
+        ],
+        "orders": [
+          "300040",
+          "45015000",
+          "45015000"
+        ],
+        "order_lines": [
+          "451070784.49",
+          "1500200.00"
+        ]
+      }
+    },
+    "mysql": {
+      "tpcc": {
+        "counts": {
+          "warehouse": 1,
+          "district": 10,
+          "customer": 30000,
+          "history": 30000,
+          "item": 100000,
+          "stock": 100000,
+          "oorder": 30000,
+          "new_order": 9000,
+          "order_line": 300040
+        },
+        "warehouse": [
+          "300000.00",
+          "0.1353"
+        ],
+        "district": [
+          "300000.00",
+          "30010",
+          "0.8986"
+        ],
+        "stock": [
+          "5504393",
+          "0.00",
+          "0",
+          "0"
+        ],
+        "customer": [
+          "-300000.00",
+          "300000.0",
+          "30000",
+          "0"
+        ],
+        "orders": [
+          "300040",
+          "45015000",
+          "45015000"
+        ],
+        "order_lines": [
+          "451070784.49",
+          "1500200"
+        ]
+      },
+      "tpcc_bench": {
+        "counts": {
+          "warehouse": 1,
+          "district": 10,
+          "customer": 30000,
+          "history": 30000,
+          "item": 100000,
+          "stock": 100000,
+          "oorder": 30000,
+          "new_order": 9000,
+          "order_line": 300040
+        },
+        "warehouse": [
+          "300000.00",
+          "0.1353"
+        ],
+        "district": [
+          "300000.00",
+          "30010",
+          "0.8986"
+        ],
+        "stock": [
+          "5504393",
+          "0.00",
+          "0",
+          "0"
+        ],
+        "customer": [
+          "-300000.00",
+          "300000.0",
+          "30000",
+          "0"
+        ],
+        "orders": [
+          "300040",
+          "45015000",
+          "45015000"
+        ],
+        "order_lines": [
+          "451070784.49",
+          "1500200"
+        ]
+      }
+    }
+  },
+  "local_intermediate_caches_removed": [
+    {
+      "path": "C:\\DBMS\\Project Report\\benchbase\\benchmark\\__pycache__",
+      "bytes": 78872.0
+    },
+    {
+      "path": "C:\\DBMS\\Project Report\\experiments\\__pycache__",
+      "bytes": 133770.0
+    },
+    {
+      "path": "C:\\DBMS\\Project Report\\benchbase\\benchmark\\runtime\\classes",
+      "bytes": 25418.0
+    }
+  ],
+  "docker_build_cache_removed_approximately_bytes": 8654000000,
+  "docker_storage_after": "TYPE            TOTAL     ACTIVE    SIZE      RECLAIMABLE\nImages          15        11        6.055GB   1.263GB (20%)\nContainers      14        2         6.484MB   6.423MB (99%)\nLocal Volumes   8         5         1.232GB   0B (0%)\nBuild Cache     0         0         0B        0B",
+  "images_after": [
+    "sha256:38e0600c3a66d1b07648e26867ff3a48bfc1c20ddaff3dc4fb844c7ecb83a258",
+    "sha256:3d04ffb7e2bd6a47309a673a4a8f7b0f9aac10603fd0178ad108a78b8342d4dd",
+    "sha256:7828b5f78e9baa76af12ac3461753cb71e48425df9924221401d3a3ee2ea3990",
+    "sha256:290be2befe90d939f90a03f03aa36a12cd70ac7b40b758c5cf35775d8cc525ed",
+    "sha256:17bd8217c79f8394e8db9b48a192962bf1ca0790c6a69afc032ab5e2e499f60b",
+    "sha256:dd5ecdc551ab68b92ca232de7c10ac359119cc64478bf441d81753ca54426ae9",
+    "sha256:76f0358884cb92d9a086d24e5671c38048d3fef40f2588703d73eb55392d6b69",
+    "sha256:b8faeff7712663c2773a190181e1246e37e364b887611c04658c28b44e2408fe",
+    "sha256:a7fd22f75be20b7e4eb61ae7dfbe0a869a85f96297769fdbc9c7bfd8a9e73899",
+    "sha256:69e3951d9798d390d608882b1bd58d378f284d96e312c6f2dcb559fd07ad001a",
+    "sha256:1b1584c87ce11f87f151add677d15a9f18893a3bca910a4967434cb1a9be6eb7",
+    "sha256:0fd2ad16787b7684bc3c946329f55f69902a50e1aac2e1da2cff74d617c0ea48",
+    "sha256:970364228b1e4f932abc22d321932816782cca8a20b85a77552a7cfe9acfb3b5",
+    "sha256:4332937b1d936ce2997ba541c79f3d5cacdac3e85d82d5e4ff3eb9557c2e3d0f",
+    "sha256:b0f9560a2de083e2cc7382e75f808c7381a32852a7ec49117deedb300e552b24"
+  ],
+  "container_ids_after": [
+    "6c3b77fed050",
+    "b707d4f16dd1",
+    "2f9f16b84de2",
+    "ed21c34caa28",
+    "4f7171e5607f",
+    "de0c206b5811",
+    "0d8e197e2f89",
+    "0cd92859d50e",
+    "f09462e24ac0",
+    "264adc3ddc8e",
+    "efe422794672",
+    "b08a36886fd2",
+    "328f87374471",
+    "14a717bea15f"
+  ],
+  "volume_names_after": [
+    "92cbe320a6b46bcf9148e2c9d25fa029f5b038b7ade620e2948969e78d96dddf",
+    "3560d4cfc594d096c85c0bad95deb775b980c81a513967a154b50a15be71ae35",
+    "6735dbc84992123e2d8b2f229fdad516a0f531107e21dd3e8b4eb6bacf168f77",
+    "btvn-ktpm_minio-data",
+    "dbms-lab_mysql_data",
+    "dbms-lab_postgres_data",
+    "streamora-t01-stage_stage-postgres",
+    "streamora_postgres-data"
+  ],
+  "mysql_binary_log_settings_after": "innodb_flush_log_at_trx_commit\t1\nlog_bin\tON\nsync_binlog\t1",
+  "trim": {
+    "mount": "/mnt/docker-desktop-disk",
+    "reported_discarded_bytes": 12182773760,
+    "services_stopped": false
+  },
+  "windows_free_bytes_after": 9549455360,
+  "windows_free_bytes_change": 7122944,
+  "finished_utc": "2026-11-10T06:31:50.965889+00:00",
+  "status": "PASS",
+  "docker_vhdx_logical_bytes_after": 21153972224,
+  "windows_free_bytes_final": 9536503808,
+  "windows_space_return_pending": false,
+  "note": "Obsolete binary logs and unused build cache removed. TRIM completed on the Docker filesystem. Windows free space has not increased by the reclaimed Docker size; offline VHDX compaction was not performed. Database services remain running.",
+  "resolved_by_compaction": {
+    "report": "vhdx-compaction-report.json",
+    "finished_utc": "2026-11-10T07:21:51.4960552Z",
+    "windows_free_bytes_after": 19226951680,
+    "vhdx_bytes_after": 11461984256
+  }
+}

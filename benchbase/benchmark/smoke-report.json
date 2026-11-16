@@ -1,0 +1,342 @@
+{
+  "kind": "smoke",
+  "complete": true,
+  "runs": [
+    {
+      "directory": "results\\postgres\\smoke-c1-r1-20261110T020848588473Z",
+      "dbms": "postgres",
+      "clients": 1,
+      "validation": "PASS",
+      "elapsed_measure_seconds": 6.000147959,
+      "measured_requests": 2076,
+      "native_count_matches": true,
+      "status_counts": {
+        "SUCCESS": 2061,
+        "USER_ABORTED": 15
+      },
+      "last_sql_error_counts": {},
+      "successful_tps": 343.4915295561297,
+      "completed_requests_per_second": 345.9914679080666,
+      "latency_success_ms": {
+        "p50": 2.071525,
+        "p95": 7.735086,
+        "p99": 13.30482260000001
+      },
+      "latency_all_completed_ms": {
+        "p50": 2.0688335,
+        "p95": 7.720253250000001,
+        "p99": 13.28734025
+      },
+      "requests_with_retry": 0,
+      "reexecutions_started": 0,
+      "retry_events": 0,
+      "failed_requests": 0,
+      "expected_user_aborts": 15,
+      "max_observed_sessions": 1,
+      "max_sampled_lock_waiters": 0,
+      "native_goodput_is_not_used": 512.8206872606556,
+      "retry_request_rate": 0.0,
+      "failure_rate": 0.0,
+      "consistency_checks": {
+        "warehouse_equals_district_ytd": true,
+        "district_next_order_id": true,
+        "order_line_total": true,
+        "stock_quantity_range": true
+      }
+    },
+    {
+      "directory": "results\\mysql\\smoke-c1-r1-20261110T020914631773Z",
+      "dbms": "mysql",
+      "clients": 1,
+      "validation": "PASS",
+      "elapsed_measure_seconds": 6.99995848,
+      "measured_requests": 1116,
+      "native_count_matches": true,
+      "status_counts": {
+        "SUCCESS": 1113,
+        "USER_ABORTED": 3
+      },
+      "last_sql_error_counts": {},
+      "successful_tps": 159.0009431027368,
+      "completed_requests_per_second": 159.42951707336414,
+      "latency_success_ms": {
+        "p50": 5.321741,
+        "p95": 14.682061799999994,
+        "p99": 21.764245839999916
+      },
+      "latency_all_completed_ms": {
+        "p50": 5.327814,
+        "p95": 14.6754675,
+        "p99": 21.743209299999936
+      },
+      "requests_with_retry": 0,
+      "reexecutions_started": 0,
+      "retry_events": 0,
+      "failed_requests": 0,
+      "expected_user_aborts": 3,
+      "max_observed_sessions": 1,
+      "max_sampled_lock_waiters": 0,
+      "native_goodput_is_not_used": 194.5725826648046,
+      "retry_request_rate": 0.0,
+      "failure_rate": 0.0,
+      "consistency_checks": {
+        "warehouse_equals_district_ytd": true,
+        "district_next_order_id": true,
+        "order_line_total": true,
+        "stock_quantity_range": true
+      }
+    },
+    {
+      "directory": "results\\postgres\\smoke-c32-r1-20261110T020939727452Z",
+      "dbms": "postgres",
+      "clients": 32,
+      "validation": "PASS",
+      "elapsed_measure_seconds": 7.000021047,
+      "measured_requests": 3580,
+      "native_count_matches": true,
+      "status_counts": {
+        "SUCCESS": 3538,
+        "USER_ABORTED": 42
+      },
+      "last_sql_error_counts": {},
+      "successful_tps": 505.4270517538346,
+      "completed_requests_per_second": 511.42703371360307,
+      "latency_success_ms": {
+        "p50": 12.678779500000001,
+        "p95": 275.5273744999997,
+        "p99": 445.4275646400004
+      },
+      "latency_all_completed_ms": {
+        "p50": 12.543186500000001,
+        "p95": 275.17206909999993,
+        "p99": 443.7731728800002
+      },
+      "requests_with_retry": 0,
+      "reexecutions_started": 0,
+      "retry_events": 0,
+      "failed_requests": 0,
+      "expected_user_aborts": 42,
+      "max_observed_sessions": 32,
+      "max_sampled_lock_waiters": 30,
+      "native_goodput_is_not_used": 679.8550987271053,
+      "retry_request_rate": 0.0,
+      "failure_rate": 0.0,
+      "consistency_checks": {
+        "warehouse_equals_district_ytd": true,
+        "district_next_order_id": true,
+        "order_line_total": true,
+        "stock_quantity_range": true
+      }
+    },
+    {
+      "directory": "results\\mysql\\smoke-c32-r1-20261110T021008864927Z",
+      "dbms": "mysql",
+      "clients": 32,
+      "validation": "PASS",
+      "elapsed_measure_seconds": 6.000008125,
+      "measured_requests": 1442,
+      "native_count_matches": true,
+      "status_counts": {
+        "SUCCESS": 1427,
+        "USER_ABORTED": 15
+      },
+      "last_sql_error_counts": {},
+      "successful_tps": 237.83301126779725,
+      "completed_requests_per_second": 240.33300788238517,
+      "latency_success_ms": {
+        "p50": 35.649491,
+        "p95": 324.3282156000001,
+        "p99": 458.9255348200001
+      },
+      "latency_all_completed_ms": {
+        "p50": 34.6506265,
+        "p95": 323.5236339,
+        "p99": 456.9232608699989
+      },
+      "requests_with_retry": 0,
+      "reexecutions_started": 0,
+      "retry_events": 0,
+      "failed_requests": 0,
+      "expected_user_aborts": 15,
+      "max_observed_sessions": 32,
+      "max_sampled_lock_waiters": 30,
+      "native_goodput_is_not_used": 326.49955786518206,
+      "retry_request_rate": 0.0,
+      "failure_rate": 0.0,
+      "consistency_checks": {
+        "warehouse_equals_district_ytd": true,
+        "district_next_order_id": true,
+        "order_line_total": true,
+        "stock_quantity_range": true
+      }
+    },
+    {
+      "directory": "results\\postgres\\smoke-c64-r1-20261110T021035276553Z",
+      "dbms": "postgres",
+      "clients": 64,
+      "validation": "PASS",
+      "elapsed_measure_seconds": 6.999888232,
+      "measured_requests": 2000,
+      "native_count_matches": true,
+      "status_counts": {
+        "SUCCESS": 1977,
+        "USER_ABORTED": 23
+      },
+      "last_sql_error_counts": {},
+      "successful_tps": 282.4330809972281,
+      "completed_requests_per_second": 285.7188477463107,
+      "latency_success_ms": {
+        "p50": 22.591661,
+        "p95": 953.2337619999997,
+        "p99": 1599.97506064
+      },
+      "latency_all_completed_ms": {
+        "p50": 21.808289000000002,
+        "p95": 952.99417425,
+        "p99": 1597.7880111099998
+      },
+      "requests_with_retry": 0,
+      "reexecutions_started": 0,
+      "retry_events": 0,
+      "failed_requests": 0,
+      "expected_user_aborts": 23,
+      "max_observed_sessions": 64,
+      "max_sampled_lock_waiters": 62,
+      "native_goodput_is_not_used": 393.1491344989235,
+      "retry_request_rate": 0.0,
+      "failure_rate": 0.0,
+      "consistency_checks": {
+        "warehouse_equals_district_ytd": true,
+        "district_next_order_id": true,
+        "order_line_total": true,
+        "stock_quantity_range": true
+      }
+    },
+    {
+      "directory": "results\\mysql\\smoke-c64-r1-20261110T021107040583Z",
+      "dbms": "mysql",
+      "clients": 64,
+      "validation": "PASS",
+      "elapsed_measure_seconds": 7.000000793,
+      "measured_requests": 1736,
+      "native_count_matches": true,
+      "status_counts": {
+        "SUCCESS": 1720,
+        "USER_ABORTED": 16
+      },
+      "last_sql_error_counts": {},
+      "successful_tps": 245.71425787837052,
+      "completed_requests_per_second": 247.99997190514605,
+      "latency_success_ms": {
+        "p50": 30.4882025,
+        "p95": 653.64676645,
+        "p99": 699.0698025199999
+      },
+      "latency_all_completed_ms": {
+        "p50": 30.260389,
+        "p95": 653.56331675,
+        "p99": 698.9302198
+      },
+      "requests_with_retry": 0,
+      "reexecutions_started": 0,
+      "retry_events": 0,
+      "failed_requests": 0,
+      "expected_user_aborts": 16,
+      "max_observed_sessions": 64,
+      "max_sampled_lock_waiters": 62,
+      "native_goodput_is_not_used": 329.5713912356981,
+      "retry_request_rate": 0.0,
+      "failure_rate": 0.0,
+      "consistency_checks": {
+        "warehouse_equals_district_ytd": true,
+        "district_next_order_id": true,
+        "order_line_total": true,
+        "stock_quantity_range": true
+      }
+    },
+    {
+      "directory": "results\\postgres\\smoke-c128-r1-20261110T021134734111Z",
+      "dbms": "postgres",
+      "clients": 128,
+      "validation": "PASS",
+      "elapsed_measure_seconds": 6.99985081,
+      "measured_requests": 1263,
+      "native_count_matches": true,
+      "status_counts": {
+        "SUCCESS": 1244,
+        "USER_ABORTED": 19
+      },
+      "last_sql_error_counts": {},
+      "successful_tps": 177.71807339419567,
+      "completed_requests_per_second": 180.43241695889802,
+      "latency_success_ms": {
+        "p50": 49.5616325,
+        "p95": 2297.478233749998,
+        "p99": 3670.1190778399996
+      },
+      "latency_all_completed_ms": {
+        "p50": 47.455533,
+        "p95": 2276.4744845999994,
+        "p99": 3668.2852525599988
+      },
+      "requests_with_retry": 0,
+      "reexecutions_started": 0,
+      "retry_events": 0,
+      "failed_requests": 0,
+      "expected_user_aborts": 19,
+      "max_observed_sessions": 128,
+      "max_sampled_lock_waiters": 126,
+      "native_goodput_is_not_used": 291.2919225488464,
+      "retry_request_rate": 0.0,
+      "failure_rate": 0.0,
+      "consistency_checks": {
+        "warehouse_equals_district_ytd": true,
+        "district_next_order_id": true,
+        "order_line_total": true,
+        "stock_quantity_range": true
+      }
+    },
+    {
+      "directory": "results\\mysql\\smoke-c128-r1-20261110T021203017508Z",
+      "dbms": "mysql",
+      "clients": 128,
+      "validation": "PASS",
+      "elapsed_measure_seconds": 6.000066408,
+      "measured_requests": 1155,
+      "native_count_matches": true,
+      "status_counts": {
+        "SUCCESS": 1148,
+        "USER_ABORTED": 7
+      },
+      "last_sql_error_counts": {},
+      "successful_tps": 191.33121567943817,
+      "completed_requests_per_second": 192.4978694335811,
+      "latency_success_ms": {
+        "p50": 36.3006415,
+        "p95": 1441.26696025,
+        "p99": 1511.7957016599998
+      },
+      "latency_all_completed_ms": {
+        "p50": 35.625533,
+        "p95": 1441.2580475,
+        "p99": 1511.71368112
+      },
+      "requests_with_retry": 0,
+      "reexecutions_started": 0,
+      "retry_events": 0,
+      "failed_requests": 0,
+      "expected_user_aborts": 7,
+      "max_observed_sessions": 128,
+      "max_sampled_lock_waiters": 128,
+      "native_goodput_is_not_used": 302.1633223230152,
+      "retry_request_rate": 0.0,
+      "failure_rate": 0.0,
+      "consistency_checks": {
+        "warehouse_equals_district_ytd": true,
+        "district_next_order_id": true,
+        "order_line_total": true,
+        "stock_quantity_range": true
+      }
+    }
+  ]
+}

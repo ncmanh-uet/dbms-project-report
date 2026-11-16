@@ -1,0 +1,2 @@
+dbms,scenario,clients,status,successful_transactions,failed_attempts,actual_seconds,successful_tps,p50_ms,p95_ms,p99_ms,max_observed_blocked_sessions,restored
+postgres,distinct,1,FAIL,29,0,0.12444399995729327,233.0365466390684,3.970900026615709,5.941920005716383,9.589032023213798,0,True

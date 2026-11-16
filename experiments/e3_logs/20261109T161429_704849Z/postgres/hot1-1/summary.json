@@ -1,0 +1,102 @@
+{
+  "kind": "occ_trial",
+  "dbms": "postgres",
+  "scenario": "hot1",
+  "clients": 1,
+  "requested_seconds": 10.0,
+  "max_retries": 8,
+  "status": "PASS",
+  "connection_ids": [
+    280
+  ],
+  "final_rows": {
+    "1": {
+      "counter": "869.00",
+      "version": 870
+    },
+    "2": {
+      "counter": "0.00",
+      "version": 1
+    },
+    "3": {
+      "counter": "0.00",
+      "version": 1
+    },
+    "4": {
+      "counter": "0.00",
+      "version": 1
+    },
+    "5": {
+      "counter": "0.00",
+      "version": 1
+    },
+    "6": {
+      "counter": "0.00",
+      "version": 1
+    },
+    "7": {
+      "counter": "0.00",
+      "version": 1
+    },
+    "8": {
+      "counter": "0.00",
+      "version": 1
+    },
+    "9": {
+      "counter": "0.00",
+      "version": 1
+    },
+    "10": {
+      "counter": "0.00",
+      "version": 1
+    },
+    "11": {
+      "counter": "0.00",
+      "version": 1
+    },
+    "12": {
+      "counter": "0.00",
+      "version": 1
+    },
+    "13": {
+      "counter": "0.00",
+      "version": 1
+    },
+    "14": {
+      "counter": "0.00",
+      "version": 1
+    },
+    "15": {
+      "counter": "0.00",
+      "version": 1
+    },
+    "16": {
+      "counter": "0.00",
+      "version": 1
+    }
+  },
+  "integrity_ok": true,
+  "fixture_reset": true,
+  "logical_operations": 869,
+  "successful_operations": 869,
+  "exhausted_operations": 0,
+  "cancelled_operations": 0,
+  "attempts": 869,
+  "version_conflicts": 0,
+  "retries_started": 0,
+  "conflict_rate": 0.0,
+  "operations_with_retry": 0,
+  "retry_operation_rate": 0.0,
+  "retries_per_operation": 0.0,
+  "db_error_operations": 0,
+  "actual_seconds": 10.015165899996646,
+  "successful_tps": 86.7684079002916,
+  "success_latency_ms": {
+    "mean": 11.519716110539175,
+    "p50": 10.604999959468842,
+    "p95": 22.570120019372553,
+    "p99": 26.16151997353881
+  },
+  "fatal_errors": [],
+  "unknown_commit": false
+}

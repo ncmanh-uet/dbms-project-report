@@ -1,0 +1,117 @@
+{
+  "kind": "occ_trial",
+  "dbms": "mysql",
+  "scenario": "distinct",
+  "clients": 16,
+  "requested_seconds": 10.0,
+  "max_retries": 8,
+  "status": "PASS",
+  "connection_ids": [
+    190,
+    186,
+    188,
+    189,
+    184,
+    185,
+    187,
+    192,
+    193,
+    191,
+    194,
+    197,
+    195,
+    196,
+    198,
+    199
+  ],
+  "final_rows": {
+    "1": {
+      "counter": "237.00",
+      "version": 238
+    },
+    "2": {
+      "counter": "234.00",
+      "version": 235
+    },
+    "3": {
+      "counter": "238.00",
+      "version": 239
+    },
+    "4": {
+      "counter": "236.00",
+      "version": 237
+    },
+    "5": {
+      "counter": "235.00",
+      "version": 236
+    },
+    "6": {
+      "counter": "243.00",
+      "version": 244
+    },
+    "7": {
+      "counter": "233.00",
+      "version": 234
+    },
+    "8": {
+      "counter": "240.00",
+      "version": 241
+    },
+    "9": {
+      "counter": "237.00",
+      "version": 238
+    },
+    "10": {
+      "counter": "233.00",
+      "version": 234
+    },
+    "11": {
+      "counter": "235.00",
+      "version": 236
+    },
+    "12": {
+      "counter": "233.00",
+      "version": 234
+    },
+    "13": {
+      "counter": "236.00",
+      "version": 237
+    },
+    "14": {
+      "counter": "233.00",
+      "version": 234
+    },
+    "15": {
+      "counter": "235.00",
+      "version": 236
+    },
+    "16": {
+      "counter": "237.00",
+      "version": 238
+    }
+  },
+  "integrity_ok": true,
+  "fixture_reset": true,
+  "logical_operations": 3775,
+  "successful_operations": 3775,
+  "exhausted_operations": 0,
+  "cancelled_operations": 0,
+  "attempts": 3775,
+  "version_conflicts": 0,
+  "retries_started": 0,
+  "conflict_rate": 0.0,
+  "operations_with_retry": 0,
+  "retry_operation_rate": 0.0,
+  "retries_per_operation": 0.0,
+  "db_error_operations": 0,
+  "actual_seconds": 10.036650399968494,
+  "successful_tps": 376.12149966007087,
+  "success_latency_ms": {
+    "mean": 42.4892128478822,
+    "p50": 41.073200001847,
+    "p95": 59.10937002045101,
+    "p99": 69.60097199655134
+  },
+  "fatal_errors": [],
+  "unknown_commit": false
+}

@@ -1,0 +1,349 @@
+{
+  "run_id": "20261109T163123_054886Z",
+  "controlled_schedule": true,
+  "performance_benchmark": false,
+  "rounds_per_mode": 1,
+  "results": [
+    {
+      "dbms": "postgres",
+      "mode": "opposite",
+      "round": 1,
+      "isolation": "READ COMMITTED",
+      "status": "PASS",
+      "detector_settings": {
+        "deadlock_timeout_ms": 1000.0,
+        "session_lock_timeout_seconds": 5
+      },
+      "initial_transactions": [
+        {
+          "actor": "T1",
+          "request_order": [
+            1,
+            2
+          ],
+          "lock_order": [
+            1,
+            2
+          ],
+          "committed": false,
+          "deadlock": true,
+          "rollback_done": true,
+          "connection_id": 330,
+          "update_1_ms": 11.156,
+          "error": "deadlock detected\nDETAIL:  Process 330 waits for ShareLock on transaction 105472; blocked by process 331.\nProcess 331 waits for ShareLock on transaction 105473; blocked by process 330.\nHINT:  See server log for query details.\nCONTEXT:  while updating tuple (4531,18) in relation \"stock\"",
+          "error_kind": "deadlock",
+          "sqlstate": "40P01",
+          "errno": null,
+          "server_detail": "Process 330 waits for ShareLock on transaction 105472; blocked by process 331.\nProcess 331 waits for ShareLock on transaction 105473; blocked by process 330.",
+          "execution_ms": 1045.303100021556
+        },
+        {
+          "actor": "T2",
+          "request_order": [
+            2,
+            1
+          ],
+          "lock_order": [
+            2,
+            1
+          ],
+          "committed": true,
+          "deadlock": false,
+          "rollback_done": false,
+          "connection_id": 331,
+          "update_1_ms": 9.033,
+          "update_2_ms": 1020.881,
+          "execution_ms": 1049.7295000241138
+        }
+      ],
+      "initial_commits": 1,
+      "deadlocks": 1,
+      "lock_timeouts": 0,
+      "initial_pair_ms": 1052.7559999609366,
+      "victim": "T1",
+      "after_detection": {
+        "1": "1.00",
+        "2": "1.00"
+      },
+      "rollback_verified": true,
+      "schedule_verified": true,
+      "retry": {
+        "actor": "T1",
+        "committed": true,
+        "connection_id": 332,
+        "execution_ms": 132.91700003901497
+      },
+      "after_completed_requests": {
+        "1": "2.00",
+        "2": "2.00"
+      },
+      "logical_successes": 2,
+      "retry_attempts": 1,
+      "data_check": {
+        "counter_check": true,
+        "restored": true,
+        "confirmed_transactions": 2,
+        "before": {
+          "1": "0.00",
+          "2": "0.00"
+        },
+        "after_transactions": {
+          "1": "2.00",
+          "2": "2.00"
+        },
+        "after_restore": {
+          "1": "0.00",
+          "2": "0.00"
+        }
+      }
+    },
+    {
+      "dbms": "postgres",
+      "mode": "ordered",
+      "round": 1,
+      "isolation": "READ COMMITTED",
+      "status": "PASS",
+      "detector_settings": {
+        "deadlock_timeout_ms": 1000.0,
+        "session_lock_timeout_seconds": 5
+      },
+      "initial_transactions": [
+        {
+          "actor": "T1",
+          "request_order": [
+            1,
+            2
+          ],
+          "lock_order": [
+            1,
+            2
+          ],
+          "committed": true,
+          "deadlock": false,
+          "rollback_done": false,
+          "connection_id": 334,
+          "update_1_ms": 12.229,
+          "update_2_ms": 3.375,
+          "execution_ms": 27.026399970054626
+        },
+        {
+          "actor": "T2",
+          "request_order": [
+            2,
+            1
+          ],
+          "lock_order": [
+            1,
+            2
+          ],
+          "committed": true,
+          "deadlock": false,
+          "rollback_done": false,
+          "connection_id": 335,
+          "update_1_ms": 4.734,
+          "update_2_ms": 2.958,
+          "execution_ms": 16.32160000735894
+        }
+      ],
+      "initial_commits": 2,
+      "deadlocks": 0,
+      "lock_timeouts": 0,
+      "initial_pair_ms": 28.56980002252385,
+      "schedule_verified": true,
+      "after_completed_requests": {
+        "1": "2.00",
+        "2": "2.00"
+      },
+      "logical_successes": 2,
+      "retry_attempts": 0,
+      "data_check": {
+        "counter_check": true,
+        "restored": true,
+        "confirmed_transactions": 2,
+        "before": {
+          "1": "0.00",
+          "2": "0.00"
+        },
+        "after_transactions": {
+          "1": "2.00",
+          "2": "2.00"
+        },
+        "after_restore": {
+          "1": "0.00",
+          "2": "0.00"
+        }
+      }
+    },
+    {
+      "dbms": "mysql",
+      "mode": "opposite",
+      "round": 1,
+      "isolation": "READ COMMITTED",
+      "status": "PASS",
+      "detector_settings": {
+        "innodb_deadlock_detect": true,
+        "session_lock_timeout_seconds": 5
+      },
+      "initial_transactions": [
+        {
+          "actor": "T1",
+          "request_order": [
+            1,
+            2
+          ],
+          "lock_order": [
+            1,
+            2
+          ],
+          "committed": false,
+          "deadlock": true,
+          "rollback_done": true,
+          "connection_id": 233,
+          "update_1_ms": 13.097,
+          "error": "1213 (40001): Deadlock found when trying to get lock; try restarting transaction",
+          "error_kind": "deadlock",
+          "sqlstate": "40001",
+          "errno": 1213,
+          "server_detail": null,
+          "execution_ms": 70.6108000013046
+        },
+        {
+          "actor": "T2",
+          "request_order": [
+            2,
+            1
+          ],
+          "lock_order": [
+            2,
+            1
+          ],
+          "committed": true,
+          "deadlock": false,
+          "rollback_done": false,
+          "connection_id": 232,
+          "update_1_ms": 14.109,
+          "update_2_ms": 34.617,
+          "execution_ms": 76.60319999558851
+        }
+      ],
+      "initial_commits": 1,
+      "deadlocks": 1,
+      "lock_timeouts": 0,
+      "initial_pair_ms": 82.94459996977821,
+      "victim": "T1",
+      "after_detection": {
+        "1": "1.00",
+        "2": "1.00"
+      },
+      "rollback_verified": true,
+      "schedule_verified": true,
+      "retry": {
+        "actor": "T1",
+        "committed": true,
+        "connection_id": 234,
+        "execution_ms": 171.10259999753907
+      },
+      "after_completed_requests": {
+        "1": "2.00",
+        "2": "2.00"
+      },
+      "logical_successes": 2,
+      "retry_attempts": 1,
+      "data_check": {
+        "counter_check": true,
+        "restored": true,
+        "confirmed_transactions": 2,
+        "before": {
+          "1": "0.00",
+          "2": "0.00"
+        },
+        "after_transactions": {
+          "1": "2.00",
+          "2": "2.00"
+        },
+        "after_restore": {
+          "1": "0.00",
+          "2": "0.00"
+        }
+      }
+    },
+    {
+      "dbms": "mysql",
+      "mode": "ordered",
+      "round": 1,
+      "isolation": "READ COMMITTED",
+      "status": "PASS",
+      "detector_settings": {
+        "innodb_deadlock_detect": true,
+        "session_lock_timeout_seconds": 5
+      },
+      "initial_transactions": [
+        {
+          "actor": "T1",
+          "request_order": [
+            1,
+            2
+          ],
+          "lock_order": [
+            1,
+            2
+          ],
+          "committed": true,
+          "deadlock": false,
+          "rollback_done": false,
+          "connection_id": 236,
+          "update_1_ms": 66.399,
+          "update_2_ms": 17.982,
+          "execution_ms": 116.08870001509786
+        },
+        {
+          "actor": "T2",
+          "request_order": [
+            2,
+            1
+          ],
+          "lock_order": [
+            1,
+            2
+          ],
+          "committed": true,
+          "deadlock": false,
+          "rollback_done": false,
+          "connection_id": 237,
+          "update_1_ms": 12.278,
+          "update_2_ms": 17.986,
+          "execution_ms": 70.18820004304871
+        }
+      ],
+      "initial_commits": 2,
+      "deadlocks": 0,
+      "lock_timeouts": 0,
+      "initial_pair_ms": 125.88410003809258,
+      "schedule_verified": true,
+      "after_completed_requests": {
+        "1": "2.00",
+        "2": "2.00"
+      },
+      "logical_successes": 2,
+      "retry_attempts": 0,
+      "data_check": {
+        "counter_check": true,
+        "restored": true,
+        "confirmed_transactions": 2,
+        "before": {
+          "1": "0.00",
+          "2": "0.00"
+        },
+        "after_transactions": {
+          "1": "2.00",
+          "2": "2.00"
+        },
+        "after_restore": {
+          "1": "0.00",
+          "2": "0.00"
+        }
+      }
+    }
+  ],
+  "status": "PASS"
+}

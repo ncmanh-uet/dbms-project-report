@@ -1,0 +1,194 @@
+001 [postgres/FIXTURE] SESSION {"connection_id": 225, "isolation": "read committed", "version": "PostgreSQL 17.11 (Debian 17.11-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit"}
+002 [postgres/FIXTURE] CREATED {"table": "e3_occ_9354ef83829e4066", "rows": 16}
+003 [postgres/lost_update/T1] SESSION {"connection_id": 226, "isolation": "read committed", "version": "PostgreSQL 17.11 (Debian 17.11-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit"}
+004 [postgres/T1] SQL_START {"sql": "BEGIN", "params": null}
+005 [postgres/T1] SQL_DONE {"result": -1, "duration_ms": 2.535}
+006 [postgres/lost_update/T2] SESSION {"connection_id": 227, "isolation": "read committed", "version": "PostgreSQL 17.11 (Debian 17.11-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit"}
+007 [postgres/T2] SQL_START {"sql": "BEGIN", "params": null}
+008 [postgres/T2] SQL_DONE {"result": -1, "duration_ms": 1.935}
+009 [postgres/T1] SQL_START {"sql": "SELECT counter_value,version FROM e3_occ_9354ef83829e4066 WHERE s_w_id=1 AND s_i_id=%s", "params": [1]}
+010 [postgres/T1] SQL_DONE {"result": [["0.00", 1]], "duration_ms": 2.958}
+011 [postgres/T2] SQL_START {"sql": "SELECT counter_value,version FROM e3_occ_9354ef83829e4066 WHERE s_w_id=1 AND s_i_id=%s", "params": [1]}
+012 [postgres/T2] SQL_DONE {"result": [["0.00", 1]], "duration_ms": 4.78}
+013 [postgres/lost_update] BOTH_READ_BASELINE {"counter": "0.00", "version": 1}
+014 [postgres/T1] SQL_START {"sql": "UPDATE e3_occ_9354ef83829e4066 SET counter_value=%s WHERE s_w_id=1 AND s_i_id=%s", "params": ["1.00", 1]}
+015 [postgres/T1] SQL_DONE {"result": 1, "duration_ms": 3.299}
+016 [postgres/T1] SQL_START {"sql": "COMMIT", "params": null}
+017 [postgres/T1] SQL_DONE {"result": -1, "duration_ms": 3.404}
+018 [postgres/lost_update] T1_COMMIT {}
+019 [postgres/T2] SQL_START {"sql": "UPDATE e3_occ_9354ef83829e4066 SET counter_value=%s WHERE s_w_id=1 AND s_i_id=%s", "params": ["1.00", 1]}
+020 [postgres/T2] SQL_DONE {"result": 1, "duration_ms": 1.98}
+021 [postgres/T2] SQL_START {"sql": "COMMIT", "params": null}
+022 [postgres/T2] SQL_DONE {"result": -1, "duration_ms": 3.697}
+023 [postgres/lost_update] LOST_UPDATE_CONFIRMED {"observed": {"counter": "1.00", "version": 1}, "correct_counter": "2.00"}
+024 [postgres/lost_update] PASS {"actual": {"counter": "1.00", "version": 1}}
+025 [postgres/occ_detect/T1] SESSION {"connection_id": 228, "isolation": "read committed", "version": "PostgreSQL 17.11 (Debian 17.11-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit"}
+026 [postgres/T1] SQL_START {"sql": "BEGIN", "params": null}
+027 [postgres/T1] SQL_DONE {"result": -1, "duration_ms": 1.896}
+028 [postgres/occ_detect/T2] SESSION {"connection_id": 229, "isolation": "read committed", "version": "PostgreSQL 17.11 (Debian 17.11-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit"}
+029 [postgres/T2] SQL_START {"sql": "BEGIN", "params": null}
+030 [postgres/T2] SQL_DONE {"result": -1, "duration_ms": 1.772}
+031 [postgres/T1] SQL_START {"sql": "SELECT counter_value,version FROM e3_occ_9354ef83829e4066 WHERE s_w_id=1 AND s_i_id=%s", "params": [1]}
+032 [postgres/T1] SQL_DONE {"result": [["0.00", 1]], "duration_ms": 3.375}
+033 [postgres/T2] SQL_START {"sql": "SELECT counter_value,version FROM e3_occ_9354ef83829e4066 WHERE s_w_id=1 AND s_i_id=%s", "params": [1]}
+034 [postgres/T2] SQL_DONE {"result": [["0.00", 1]], "duration_ms": 4.512}
+035 [postgres/occ_detect] BOTH_READ_BASELINE {"counter": "0.00", "version": 1}
+036 [postgres/T1] SQL_START {"sql": "UPDATE e3_occ_9354ef83829e4066 SET counter_value=%s,version=version+1 WHERE s_w_id=1 AND s_i_id=%s AND version=%s", "params": ["1.00", 1, 1]}
+037 [postgres/T1] SQL_DONE {"result": 1, "duration_ms": 13.449}
+038 [postgres/T1] SQL_START {"sql": "COMMIT", "params": null}
+039 [postgres/T1] SQL_DONE {"result": -1, "duration_ms": 4.976}
+040 [postgres/occ_detect] T1_COMMIT {}
+041 [postgres/T2] SQL_START {"sql": "UPDATE e3_occ_9354ef83829e4066 SET counter_value=%s,version=version+1 WHERE s_w_id=1 AND s_i_id=%s AND version=%s", "params": ["1.00", 1, 1]}
+042 [postgres/T2] SQL_DONE {"result": 0, "duration_ms": 3.666}
+043 [postgres/T2] SQL_START {"sql": "ROLLBACK", "params": null}
+044 [postgres/T2] SQL_DONE {"result": -1, "duration_ms": 1.927}
+045 [postgres/occ_detect] VERSION_CONFLICT {"affected_rows": 0, "stale_version": 1}
+046 [postgres/occ_detect] PASS {"actual": {"counter": "1.00", "version": 2}}
+047 [postgres/occ_retry/T1] SESSION {"connection_id": 230, "isolation": "read committed", "version": "PostgreSQL 17.11 (Debian 17.11-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit"}
+048 [postgres/T1] SQL_START {"sql": "BEGIN", "params": null}
+049 [postgres/T1] SQL_DONE {"result": -1, "duration_ms": 6.382}
+050 [postgres/occ_retry/T2] SESSION {"connection_id": 231, "isolation": "read committed", "version": "PostgreSQL 17.11 (Debian 17.11-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit"}
+051 [postgres/T2] SQL_START {"sql": "BEGIN", "params": null}
+052 [postgres/T2] SQL_DONE {"result": -1, "duration_ms": 1.188}
+053 [postgres/T1] SQL_START {"sql": "SELECT counter_value,version FROM e3_occ_9354ef83829e4066 WHERE s_w_id=1 AND s_i_id=%s", "params": [1]}
+054 [postgres/T1] SQL_DONE {"result": [["0.00", 1]], "duration_ms": 2.116}
+055 [postgres/T2] SQL_START {"sql": "SELECT counter_value,version FROM e3_occ_9354ef83829e4066 WHERE s_w_id=1 AND s_i_id=%s", "params": [1]}
+056 [postgres/T2] SQL_DONE {"result": [["0.00", 1]], "duration_ms": 4.129}
+057 [postgres/occ_retry] BOTH_READ_BASELINE {"counter": "0.00", "version": 1}
+058 [postgres/T1] SQL_START {"sql": "UPDATE e3_occ_9354ef83829e4066 SET counter_value=%s,version=version+1 WHERE s_w_id=1 AND s_i_id=%s AND version=%s", "params": ["1.00", 1, 1]}
+059 [postgres/T1] SQL_DONE {"result": 1, "duration_ms": 5.48}
+060 [postgres/T1] SQL_START {"sql": "COMMIT", "params": null}
+061 [postgres/T1] SQL_DONE {"result": -1, "duration_ms": 2.155}
+062 [postgres/occ_retry] T1_COMMIT {}
+063 [postgres/T2] SQL_START {"sql": "UPDATE e3_occ_9354ef83829e4066 SET counter_value=%s,version=version+1 WHERE s_w_id=1 AND s_i_id=%s AND version=%s", "params": ["1.00", 1, 1]}
+064 [postgres/T2] SQL_DONE {"result": 0, "duration_ms": 1.506}
+065 [postgres/T2] SQL_START {"sql": "ROLLBACK", "params": null}
+066 [postgres/T2] SQL_DONE {"result": -1, "duration_ms": 1.195}
+067 [postgres/occ_retry] VERSION_CONFLICT {"affected_rows": 0, "stale_version": 1}
+068 [postgres/T2] SQL_START {"sql": "BEGIN", "params": null}
+069 [postgres/T2] SQL_DONE {"result": -1, "duration_ms": 1.187}
+070 [postgres/T2] SQL_START {"sql": "SELECT counter_value,version FROM e3_occ_9354ef83829e4066 WHERE s_w_id=1 AND s_i_id=%s", "params": [1]}
+071 [postgres/T2] SQL_DONE {"result": [["1.00", 2]], "duration_ms": 6.117}
+072 [postgres/occ_retry] RETRY_READ {"counter": "1.00", "version": 2}
+073 [postgres/T2] SQL_START {"sql": "UPDATE e3_occ_9354ef83829e4066 SET counter_value=%s,version=version+1 WHERE s_w_id=1 AND s_i_id=%s AND version=%s", "params": ["2.00", 1, 2]}
+074 [postgres/T2] SQL_DONE {"result": 1, "duration_ms": 7.501}
+075 [postgres/T2] SQL_START {"sql": "COMMIT", "params": null}
+076 [postgres/T2] SQL_DONE {"result": -1, "duration_ms": 10.204}
+077 [postgres/occ_retry] RETRY_COMMIT {}
+078 [postgres/occ_retry] PASS {"actual": {"counter": "2.00", "version": 3}}
+079 [postgres/distinct/1] TRIAL_START {"seconds": 0.4, "max_retries": 8}
+080 [postgres/OCC_CLIENT_0] SESSION {"connection_id": 232, "isolation": "read committed", "version": "PostgreSQL 17.11 (Debian 17.11-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit"}
+081 [postgres/distinct/1] PASS {"successful_operations": 22, "conflicts": 0, "retries": 0, "exhausted": 0}
+082 [postgres/distinct/4] TRIAL_START {"seconds": 0.4, "max_retries": 8}
+083 [postgres/OCC_CLIENT_1] SESSION {"connection_id": 234, "isolation": "read committed", "version": "PostgreSQL 17.11 (Debian 17.11-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit"}
+084 [postgres/OCC_CLIENT_3] SESSION {"connection_id": 236, "isolation": "read committed", "version": "PostgreSQL 17.11 (Debian 17.11-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit"}
+085 [postgres/OCC_CLIENT_2] SESSION {"connection_id": 235, "isolation": "read committed", "version": "PostgreSQL 17.11 (Debian 17.11-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit"}
+086 [postgres/OCC_CLIENT_0] SESSION {"connection_id": 233, "isolation": "read committed", "version": "PostgreSQL 17.11 (Debian 17.11-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit"}
+087 [postgres/distinct/4] PASS {"successful_operations": 70, "conflicts": 0, "retries": 0, "exhausted": 0}
+088 [postgres/hot1/1] TRIAL_START {"seconds": 0.4, "max_retries": 8}
+089 [postgres/OCC_CLIENT_0] SESSION {"connection_id": 237, "isolation": "read committed", "version": "PostgreSQL 17.11 (Debian 17.11-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit"}
+090 [postgres/hot1/1] PASS {"successful_operations": 25, "conflicts": 0, "retries": 0, "exhausted": 0}
+091 [postgres/hot1/4] TRIAL_START {"seconds": 0.4, "max_retries": 8}
+092 [postgres/OCC_CLIENT_0] SESSION {"connection_id": 238, "isolation": "read committed", "version": "PostgreSQL 17.11 (Debian 17.11-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit"}
+093 [postgres/OCC_CLIENT_1] SESSION {"connection_id": 239, "isolation": "read committed", "version": "PostgreSQL 17.11 (Debian 17.11-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit"}
+094 [postgres/OCC_CLIENT_3] SESSION {"connection_id": 241, "isolation": "read committed", "version": "PostgreSQL 17.11 (Debian 17.11-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit"}
+095 [postgres/OCC_CLIENT_2] SESSION {"connection_id": 240, "isolation": "read committed", "version": "PostgreSQL 17.11 (Debian 17.11-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit"}
+096 [postgres/hot1/4] PASS {"successful_operations": 27, "conflicts": 33, "retries": 33, "exhausted": 0}
+097 [postgres/FIXTURE] CLEANUP {"demo_table_dropped": true, "source_unchanged": true, "original_table_set_restored": true}
+098 [mysql/FIXTURE] SESSION {"connection_id": 147, "isolation": "READ-COMMITTED", "version": "8.4.13"}
+099 [mysql/FIXTURE] CREATED {"table": "e3_occ_430ff425466341ba", "rows": 16}
+100 [mysql/lost_update/T1] SESSION {"connection_id": 148, "isolation": "READ-COMMITTED", "version": "8.4.13"}
+101 [mysql/T1] SQL_START {"sql": "START TRANSACTION", "params": null}
+102 [mysql/T1] SQL_DONE {"result": 0, "duration_ms": 6.883}
+103 [mysql/lost_update/T2] SESSION {"connection_id": 149, "isolation": "READ-COMMITTED", "version": "8.4.13"}
+104 [mysql/T2] SQL_START {"sql": "START TRANSACTION", "params": null}
+105 [mysql/T2] SQL_DONE {"result": 0, "duration_ms": 5.755}
+106 [mysql/T1] SQL_START {"sql": "SELECT counter_value,version FROM e3_occ_430ff425466341ba WHERE s_w_id=1 AND s_i_id=%s", "params": [1]}
+107 [mysql/T1] SQL_DONE {"result": [["0.00", 1]], "duration_ms": 10.006}
+108 [mysql/T2] SQL_START {"sql": "SELECT counter_value,version FROM e3_occ_430ff425466341ba WHERE s_w_id=1 AND s_i_id=%s", "params": [1]}
+109 [mysql/T2] SQL_DONE {"result": [["0.00", 1]], "duration_ms": 6.3}
+110 [mysql/lost_update] BOTH_READ_BASELINE {"counter": "0.00", "version": 1}
+111 [mysql/T1] SQL_START {"sql": "UPDATE e3_occ_430ff425466341ba SET counter_value=%s WHERE s_w_id=1 AND s_i_id=%s", "params": ["1.00", 1]}
+112 [mysql/T1] SQL_DONE {"result": 1, "duration_ms": 9.98}
+113 [mysql/T1] SQL_START {"sql": "COMMIT", "params": null}
+114 [mysql/T1] SQL_DONE {"result": 0, "duration_ms": 16.268}
+115 [mysql/lost_update] T1_COMMIT {}
+116 [mysql/T2] SQL_START {"sql": "UPDATE e3_occ_430ff425466341ba SET counter_value=%s WHERE s_w_id=1 AND s_i_id=%s", "params": ["1.00", 1]}
+117 [mysql/T2] SQL_DONE {"result": 0, "duration_ms": 7.331}
+118 [mysql/T2] SQL_START {"sql": "COMMIT", "params": null}
+119 [mysql/T2] SQL_DONE {"result": 0, "duration_ms": 7.827}
+120 [mysql/lost_update] LOST_UPDATE_CONFIRMED {"observed": {"counter": "1.00", "version": 1}, "correct_counter": "2.00"}
+121 [mysql/lost_update] PASS {"actual": {"counter": "1.00", "version": 1}}
+122 [mysql/occ_detect/T1] SESSION {"connection_id": 150, "isolation": "READ-COMMITTED", "version": "8.4.13"}
+123 [mysql/T1] SQL_START {"sql": "START TRANSACTION", "params": null}
+124 [mysql/T1] SQL_DONE {"result": 0, "duration_ms": 24.613}
+125 [mysql/occ_detect/T2] SESSION {"connection_id": 151, "isolation": "READ-COMMITTED", "version": "8.4.13"}
+126 [mysql/T2] SQL_START {"sql": "START TRANSACTION", "params": null}
+127 [mysql/T2] SQL_DONE {"result": 0, "duration_ms": 29.943}
+128 [mysql/T1] SQL_START {"sql": "SELECT counter_value,version FROM e3_occ_430ff425466341ba WHERE s_w_id=1 AND s_i_id=%s", "params": [1]}
+129 [mysql/T1] SQL_DONE {"result": [["0.00", 1]], "duration_ms": 10.961}
+130 [mysql/T2] SQL_START {"sql": "SELECT counter_value,version FROM e3_occ_430ff425466341ba WHERE s_w_id=1 AND s_i_id=%s", "params": [1]}
+131 [mysql/T2] SQL_DONE {"result": [["0.00", 1]], "duration_ms": 13.153}
+132 [mysql/occ_detect] BOTH_READ_BASELINE {"counter": "0.00", "version": 1}
+133 [mysql/T1] SQL_START {"sql": "UPDATE e3_occ_430ff425466341ba SET counter_value=%s,version=version+1 WHERE s_w_id=1 AND s_i_id=%s AND version=%s", "params": ["1.00", 1, 1]}
+134 [mysql/T1] SQL_DONE {"result": 1, "duration_ms": 8.378}
+135 [mysql/T1] SQL_START {"sql": "COMMIT", "params": null}
+136 [mysql/T1] SQL_DONE {"result": 0, "duration_ms": 16.631}
+137 [mysql/occ_detect] T1_COMMIT {}
+138 [mysql/T2] SQL_START {"sql": "UPDATE e3_occ_430ff425466341ba SET counter_value=%s,version=version+1 WHERE s_w_id=1 AND s_i_id=%s AND version=%s", "params": ["1.00", 1, 1]}
+139 [mysql/T2] SQL_DONE {"result": 0, "duration_ms": 7.781}
+140 [mysql/T2] SQL_START {"sql": "ROLLBACK", "params": null}
+141 [mysql/T2] SQL_DONE {"result": 0, "duration_ms": 7.204}
+142 [mysql/occ_detect] VERSION_CONFLICT {"affected_rows": 0, "stale_version": 1}
+143 [mysql/occ_detect] PASS {"actual": {"counter": "1.00", "version": 2}}
+144 [mysql/occ_retry/T1] SESSION {"connection_id": 152, "isolation": "READ-COMMITTED", "version": "8.4.13"}
+145 [mysql/T1] SQL_START {"sql": "START TRANSACTION", "params": null}
+146 [mysql/T1] SQL_DONE {"result": 0, "duration_ms": 10.786}
+147 [mysql/occ_retry/T2] SESSION {"connection_id": 153, "isolation": "READ-COMMITTED", "version": "8.4.13"}
+148 [mysql/T2] SQL_START {"sql": "START TRANSACTION", "params": null}
+149 [mysql/T2] SQL_DONE {"result": 0, "duration_ms": 10.228}
+150 [mysql/T1] SQL_START {"sql": "SELECT counter_value,version FROM e3_occ_430ff425466341ba WHERE s_w_id=1 AND s_i_id=%s", "params": [1]}
+151 [mysql/T1] SQL_DONE {"result": [["0.00", 1]], "duration_ms": 11.352}
+152 [mysql/T2] SQL_START {"sql": "SELECT counter_value,version FROM e3_occ_430ff425466341ba WHERE s_w_id=1 AND s_i_id=%s", "params": [1]}
+153 [mysql/T2] SQL_DONE {"result": [["0.00", 1]], "duration_ms": 6.825}
+154 [mysql/occ_retry] BOTH_READ_BASELINE {"counter": "0.00", "version": 1}
+155 [mysql/T1] SQL_START {"sql": "UPDATE e3_occ_430ff425466341ba SET counter_value=%s,version=version+1 WHERE s_w_id=1 AND s_i_id=%s AND version=%s", "params": ["1.00", 1, 1]}
+156 [mysql/T1] SQL_DONE {"result": 1, "duration_ms": 11.601}
+157 [mysql/T1] SQL_START {"sql": "COMMIT", "params": null}
+158 [mysql/T1] SQL_DONE {"result": 0, "duration_ms": 22.664}
+159 [mysql/occ_retry] T1_COMMIT {}
+160 [mysql/T2] SQL_START {"sql": "UPDATE e3_occ_430ff425466341ba SET counter_value=%s,version=version+1 WHERE s_w_id=1 AND s_i_id=%s AND version=%s", "params": ["1.00", 1, 1]}
+161 [mysql/T2] SQL_DONE {"result": 0, "duration_ms": 11.693}
+162 [mysql/T2] SQL_START {"sql": "ROLLBACK", "params": null}
+163 [mysql/T2] SQL_DONE {"result": 0, "duration_ms": 10.342}
+164 [mysql/occ_retry] VERSION_CONFLICT {"affected_rows": 0, "stale_version": 1}
+165 [mysql/T2] SQL_START {"sql": "START TRANSACTION", "params": null}
+166 [mysql/T2] SQL_DONE {"result": 0, "duration_ms": 9.603}
+167 [mysql/T2] SQL_START {"sql": "SELECT counter_value,version FROM e3_occ_430ff425466341ba WHERE s_w_id=1 AND s_i_id=%s", "params": [1]}
+168 [mysql/T2] SQL_DONE {"result": [["1.00", 2]], "duration_ms": 11.975}
+169 [mysql/occ_retry] RETRY_READ {"counter": "1.00", "version": 2}
+170 [mysql/T2] SQL_START {"sql": "UPDATE e3_occ_430ff425466341ba SET counter_value=%s,version=version+1 WHERE s_w_id=1 AND s_i_id=%s AND version=%s", "params": ["2.00", 1, 2]}
+171 [mysql/T2] SQL_DONE {"result": 1, "duration_ms": 12.723}
+172 [mysql/T2] SQL_START {"sql": "COMMIT", "params": null}
+173 [mysql/T2] SQL_DONE {"result": 0, "duration_ms": 19.928}
+174 [mysql/occ_retry] RETRY_COMMIT {}
+175 [mysql/occ_retry] PASS {"actual": {"counter": "2.00", "version": 3}}
+176 [mysql/distinct/1] TRIAL_START {"seconds": 0.4, "max_retries": 8}
+177 [mysql/OCC_CLIENT_0] SESSION {"connection_id": 154, "isolation": "READ-COMMITTED", "version": "8.4.13"}
+178 [mysql/distinct/1] PASS {"successful_operations": 8, "conflicts": 0, "retries": 0, "exhausted": 0}
+179 [mysql/distinct/4] TRIAL_START {"seconds": 0.4, "max_retries": 8}
+180 [mysql/OCC_CLIENT_0] SESSION {"connection_id": 155, "isolation": "READ-COMMITTED", "version": "8.4.13"}
+181 [mysql/OCC_CLIENT_3] SESSION {"connection_id": 158, "isolation": "READ-COMMITTED", "version": "8.4.13"}
+182 [mysql/OCC_CLIENT_1] SESSION {"connection_id": 157, "isolation": "READ-COMMITTED", "version": "8.4.13"}
+183 [mysql/OCC_CLIENT_2] SESSION {"connection_id": 156, "isolation": "READ-COMMITTED", "version": "8.4.13"}
+184 [mysql/distinct/4] PASS {"successful_operations": 50, "conflicts": 0, "retries": 0, "exhausted": 0}
+185 [mysql/hot1/1] TRIAL_START {"seconds": 0.4, "max_retries": 8}
+186 [mysql/OCC_CLIENT_0] SESSION {"connection_id": 159, "isolation": "READ-COMMITTED", "version": "8.4.13"}
+187 [mysql/hot1/1] PASS {"successful_operations": 13, "conflicts": 0, "retries": 0, "exhausted": 0}
+188 [mysql/hot1/4] TRIAL_START {"seconds": 0.4, "max_retries": 8}
+189 [mysql/OCC_CLIENT_0] SESSION {"connection_id": 160, "isolation": "READ-COMMITTED", "version": "8.4.13"}
+190 [mysql/OCC_CLIENT_1] SESSION {"connection_id": 161, "isolation": "READ-COMMITTED", "version": "8.4.13"}
+191 [mysql/OCC_CLIENT_2] SESSION {"connection_id": 162, "isolation": "READ-COMMITTED", "version": "8.4.13"}
+192 [mysql/OCC_CLIENT_3] SESSION {"connection_id": 163, "isolation": "READ-COMMITTED", "version": "8.4.13"}
+193 [mysql/hot1/4] PASS {"successful_operations": 16, "conflicts": 29, "retries": 29, "exhausted": 0}
+194 [mysql/FIXTURE] CLEANUP {"demo_table_dropped": true, "source_unchanged": true, "original_table_set_restored": true}

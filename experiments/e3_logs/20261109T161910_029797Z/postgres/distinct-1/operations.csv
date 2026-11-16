@@ -1,0 +1,2 @@
+client_id,operation_id,item_id,status,attempts,conflicts,retries,latency_ms
+0,0,1,ERROR,1,0,0,12.457600038032979

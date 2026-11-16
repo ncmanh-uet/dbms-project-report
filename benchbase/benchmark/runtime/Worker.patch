@@ -1,0 +1,79 @@
+--- upstream/Worker.java
++++ lab/Worker.java
+@@ -54,6 +54,10 @@
+   // Interval requests used by the monitor
+   private final AtomicInteger intervalRequests = new AtomicInteger(0);
+ 
++  // Lab instrumentation: only record requests within the native latency window.
++  private TransactionStatus labStatus = TransactionStatus.UNKNOWN;
++  private int labAttempts, labRetryEvents, labSqlCode;
++  private String labSqlState = "";
+   private final int id;
+   private final T benchmark;
+   protected Connection conn = null;
+@@ -318,6 +322,9 @@
+             }
+             if (preState == MEASURE && postPhase.getId() == prePhase.getId()) {
+               latencies.addLatency(transactionType.getId(), start, end, this.id, prePhase.getId());
++              com.oltpbenchmark.lab.RequestMetrics.record(this.id, transactionType.getId(),
++                  prePhase.getId(), start, end, labStatus.name(), labAttempts,
++                  labRetryEvents, labSqlState, labSqlCode);
+               intervalRequests.incrementAndGet();
+             }
+             if (prePhase.isLatencyRun()) {
+@@ -399,12 +406,16 @@
+    * @param transactionType TODO
+    */
+   protected final void doWork(DatabaseType databaseType, TransactionType transactionType) {
++    labStatus = TransactionStatus.UNKNOWN;
++    labAttempts = labRetryEvents = labSqlCode = 0;
++    labSqlState = "";
+ 
+     try {
+       int retryCount = 0;
+       int maxRetryCount = configuration.getMaxRetries();
+ 
+       while (retryCount < maxRetryCount && this.workloadState.getGlobalState() != State.DONE) {
++        labAttempts++;
+ 
+         TransactionStatus status = TransactionStatus.UNKNOWN;
+ 
+@@ -430,6 +441,9 @@
+             if (LOG.isDebugEnabled()) {
+               LOG.debug(String.format("%s failed to open a connection...", this));
+             }
++            labStatus = TransactionStatus.ERROR;
++            labSqlState = ex.getSQLState() == null ? "" : ex.getSQLState();
++            labSqlCode = ex.getErrorCode();
+             retryCount++;
+             continue;
+           }
+@@ -473,6 +487,8 @@
+           break;
+ 
+         } catch (SQLException ex) {
++          labSqlState = ex.getSQLState() == null ? "" : ex.getSQLState();
++          labSqlCode = ex.getErrorCode();
+           // check if we should attempt to ignore connection errors and reconnect
+           boolean isConnectionErrorException = SQLUtil.isConnectionErrorException(ex);
+ 
+@@ -623,6 +639,10 @@
+             LOG.warn("Connection error detected.");
+           }
+ 
++          labStatus = status;
++          if (status == TransactionStatus.RETRY || status == TransactionStatus.RETRY_DIFFERENT) {
++            labRetryEvents++;
++          }
+           switch (status) {
+             case UNKNOWN -> this.txnUnknown.put(transactionType);
+             case SUCCESS -> this.txnSuccess.put(transactionType);
+@@ -722,7 +742,7 @@
+     // POSTGRES: https://www.postgresql.org/docs/current/errcodes-appendix.html
+     // ------------------
+     // Postgres serialization_failure
+-    return errorCode == 0 && sqlState.equals("40001");
++    return errorCode == 0 && (sqlState.equals("40001") || sqlState.equals("40P01"));
+   }
+ 
+   /**

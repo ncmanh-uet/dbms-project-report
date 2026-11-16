@@ -74,6 +74,13 @@ của TPC-C. Số lượng khởi tạo có thể thay đổi sau khi chạy wor
 dữ liệu có cùng quy mô; seed giống nhau không bảo đảm mọi cột giống hệt,
 chẳng hạn các cột timestamp được tạo ở thời điểm khác nhau.
 
+## Benchmark hiệu năng — bước 16 trở đi
+
+Cấu hình ở `config/` và lệnh tạo/nạp phía trên là cấu hình khởi tạo. Không dùng
+chúng để chạy tải trên database demo `tpcc`. Runner benchmark riêng dùng
+`tpcc_bench`, baseline restore, warm-up, giới hạn CPU/RAM và bộ thu số liệu.
+Xem [benchmark/README.md](benchmark/README.md) và `benchmark/protocol.json`.
+
 ## Nguồn chính thức
 
 - https://github.com/cmu-db/benchbase

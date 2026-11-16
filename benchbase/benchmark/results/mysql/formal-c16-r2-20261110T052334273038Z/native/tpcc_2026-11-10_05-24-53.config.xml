@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<configuration>
+  <reconnectOnConnectionFailure>false</reconnectOnConnectionFailure>
+  <isolation>TRANSACTION_READ_COMMITTED</isolation>
+  <batchsize>128</batchsize>
+  <randomSeed>20261023</randomSeed>
+  <loaderThreads>1</loaderThreads>
+  <scalefactor>1</scalefactor>
+  <terminals>16</terminals>
+  <works>
+    <work>
+      <time>60</time>
+      <rate>unlimited</rate>
+      <weights>45,43,4,4,4</weights>
+      <warmup>15</warmup>
+    </work>
+  </works>
+  <transactiontypes>
+    <transactiontype>
+      <name>NewOrder</name>
+    </transactiontype>
+    <transactiontype>
+      <name>Payment</name>
+    </transactiontype>
+    <transactiontype>
+      <name>OrderStatus</name>
+    </transactiontype>
+    <transactiontype>
+      <name>Delivery</name>
+    </transactiontype>
+    <transactiontype>
+      <name>StockLevel</name>
+    </transactiontype>
+  </transactiontypes>
+  <sessionsetupfile>/lab-bench/mysql-session.sql</sessionsetupfile>
+  <retries>3</retries>
+</configuration>

@@ -1,0 +1,33 @@
+{
+  "validation": "PASS",
+  "elapsed_measure_seconds": 6.001108453,
+  "measured_requests": 2628,
+  "native_count_matches": true,
+  "status_counts": {
+    "SUCCESS": 2620,
+    "USER_ABORTED": 8
+  },
+  "last_sql_error_counts": {},
+  "successful_tps": 436.58601082109124,
+  "completed_requests_per_second": 437.9190978770335,
+  "latency_success_ms": {
+    "p50": 1.8338109999999999,
+    "p95": 5.283438149999998,
+    "p99": 8.301812119999997
+  },
+  "latency_all_completed_ms": {
+    "p50": 1.8357904999999999,
+    "p95": 5.279372,
+    "p99": 8.29715196
+  },
+  "requests_with_retry": 0,
+  "reexecutions_started": 0,
+  "retry_events": 0,
+  "failed_requests": 0,
+  "expected_user_aborts": 8,
+  "max_observed_sessions": 1,
+  "max_sampled_lock_waiters": 0,
+  "native_goodput_is_not_used": 590.7242016644154,
+  "retry_request_rate": 0.0,
+  "failure_rate": 0.0
+}

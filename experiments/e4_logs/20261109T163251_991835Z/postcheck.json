@@ -1,0 +1,44 @@
+{
+  "checked_at_utc": "2026-11-09T16:35:47.889935+00:00",
+  "status": "PASS",
+  "postgres": {
+    "opposite_deadlocks": 5,
+    "ordered_deadlocks": 0,
+    "stock_restored": true,
+    "current_s_ytd": {
+      "1": "0.00",
+      "2": "0.00"
+    },
+    "table_names": [
+      "customer",
+      "district",
+      "history",
+      "item",
+      "new_order",
+      "oorder",
+      "order_line",
+      "stock",
+      "warehouse"
+    ]
+  },
+  "mysql": {
+    "opposite_deadlocks": 5,
+    "ordered_deadlocks": 0,
+    "stock_restored": true,
+    "current_s_ytd": {
+      "1": "0.00",
+      "2": "0.00"
+    },
+    "table_names": [
+      "customer",
+      "district",
+      "history",
+      "item",
+      "new_order",
+      "oorder",
+      "order_line",
+      "stock",
+      "warehouse"
+    ]
+  }
+}

@@ -1,0 +1,2 @@
+dbms,scenario,clients,status,successful_operations,exhausted_operations,attempts,version_conflicts,retries_started,actual_seconds,successful_tps,p95_logical_ms,integrity_ok
+postgres,distinct,1,FAIL,0,0,1,0,0,0.01251049997517839,0.0,,True

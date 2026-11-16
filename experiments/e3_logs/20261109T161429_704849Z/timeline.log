@@ -1,0 +1,306 @@
+001 [postgres/FIXTURE] SESSION {"connection_id": 243, "isolation": "read committed", "version": "PostgreSQL 17.11 (Debian 17.11-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit"}
+002 [postgres/FIXTURE] CREATED {"table": "e3_occ_15e1f9a599b8487a", "rows": 16}
+003 [postgres/lost_update/T1] SESSION {"connection_id": 244, "isolation": "read committed", "version": "PostgreSQL 17.11 (Debian 17.11-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit"}
+004 [postgres/T1] SQL_START {"sql": "BEGIN", "params": null}
+005 [postgres/T1] SQL_DONE {"result": -1, "duration_ms": 4.065}
+006 [postgres/lost_update/T2] SESSION {"connection_id": 245, "isolation": "read committed", "version": "PostgreSQL 17.11 (Debian 17.11-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit"}
+007 [postgres/T2] SQL_START {"sql": "BEGIN", "params": null}
+008 [postgres/T2] SQL_DONE {"result": -1, "duration_ms": 5.775}
+009 [postgres/T1] SQL_START {"sql": "SELECT counter_value,version FROM e3_occ_15e1f9a599b8487a WHERE s_w_id=1 AND s_i_id=%s", "params": [1]}
+010 [postgres/T1] SQL_DONE {"result": [["0.00", 1]], "duration_ms": 6.72}
+011 [postgres/T2] SQL_START {"sql": "SELECT counter_value,version FROM e3_occ_15e1f9a599b8487a WHERE s_w_id=1 AND s_i_id=%s", "params": [1]}
+012 [postgres/T2] SQL_DONE {"result": [["0.00", 1]], "duration_ms": 11.259}
+013 [postgres/lost_update] BOTH_READ_BASELINE {"counter": "0.00", "version": 1}
+014 [postgres/T1] SQL_START {"sql": "UPDATE e3_occ_15e1f9a599b8487a SET counter_value=%s WHERE s_w_id=1 AND s_i_id=%s", "params": ["1.00", 1]}
+015 [postgres/T1] SQL_DONE {"result": 1, "duration_ms": 7.311}
+016 [postgres/T1] SQL_START {"sql": "COMMIT", "params": null}
+017 [postgres/T1] SQL_DONE {"result": -1, "duration_ms": 7.337}
+018 [postgres/lost_update] T1_COMMIT {}
+019 [postgres/T2] SQL_START {"sql": "UPDATE e3_occ_15e1f9a599b8487a SET counter_value=%s WHERE s_w_id=1 AND s_i_id=%s", "params": ["1.00", 1]}
+020 [postgres/T2] SQL_DONE {"result": 1, "duration_ms": 5.156}
+021 [postgres/T2] SQL_START {"sql": "COMMIT", "params": null}
+022 [postgres/T2] SQL_DONE {"result": -1, "duration_ms": 8.169}
+023 [postgres/lost_update] LOST_UPDATE_CONFIRMED {"observed": {"counter": "1.00", "version": 1}, "correct_counter": "2.00"}
+024 [postgres/lost_update] PASS {"actual": {"counter": "1.00", "version": 1}}
+025 [postgres/occ_detect/T1] SESSION {"connection_id": 246, "isolation": "read committed", "version": "PostgreSQL 17.11 (Debian 17.11-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit"}
+026 [postgres/T1] SQL_START {"sql": "BEGIN", "params": null}
+027 [postgres/T1] SQL_DONE {"result": -1, "duration_ms": 2.425}
+028 [postgres/occ_detect/T2] SESSION {"connection_id": 247, "isolation": "read committed", "version": "PostgreSQL 17.11 (Debian 17.11-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit"}
+029 [postgres/T2] SQL_START {"sql": "BEGIN", "params": null}
+030 [postgres/T2] SQL_DONE {"result": -1, "duration_ms": 3.693}
+031 [postgres/T1] SQL_START {"sql": "SELECT counter_value,version FROM e3_occ_15e1f9a599b8487a WHERE s_w_id=1 AND s_i_id=%s", "params": [1]}
+032 [postgres/T1] SQL_DONE {"result": [["0.00", 1]], "duration_ms": 6.691}
+033 [postgres/T2] SQL_START {"sql": "SELECT counter_value,version FROM e3_occ_15e1f9a599b8487a WHERE s_w_id=1 AND s_i_id=%s", "params": [1]}
+034 [postgres/T2] SQL_DONE {"result": [["0.00", 1]], "duration_ms": 10.863}
+035 [postgres/occ_detect] BOTH_READ_BASELINE {"counter": "0.00", "version": 1}
+036 [postgres/T1] SQL_START {"sql": "UPDATE e3_occ_15e1f9a599b8487a SET counter_value=%s,version=version+1 WHERE s_w_id=1 AND s_i_id=%s AND version=%s", "params": ["1.00", 1, 1]}
+037 [postgres/T1] SQL_DONE {"result": 1, "duration_ms": 17.011}
+038 [postgres/T1] SQL_START {"sql": "COMMIT", "params": null}
+039 [postgres/T1] SQL_DONE {"result": -1, "duration_ms": 11.47}
+040 [postgres/occ_detect] T1_COMMIT {}
+041 [postgres/T2] SQL_START {"sql": "UPDATE e3_occ_15e1f9a599b8487a SET counter_value=%s,version=version+1 WHERE s_w_id=1 AND s_i_id=%s AND version=%s", "params": ["1.00", 1, 1]}
+042 [postgres/T2] SQL_DONE {"result": 0, "duration_ms": 9.751}
+043 [postgres/T2] SQL_START {"sql": "ROLLBACK", "params": null}
+044 [postgres/T2] SQL_DONE {"result": -1, "duration_ms": 7.856}
+045 [postgres/occ_detect] VERSION_CONFLICT {"affected_rows": 0, "stale_version": 1}
+046 [postgres/occ_detect] PASS {"actual": {"counter": "1.00", "version": 2}}
+047 [postgres/occ_retry/T1] SESSION {"connection_id": 248, "isolation": "read committed", "version": "PostgreSQL 17.11 (Debian 17.11-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit"}
+048 [postgres/T1] SQL_START {"sql": "BEGIN", "params": null}
+049 [postgres/T1] SQL_DONE {"result": -1, "duration_ms": 2.206}
+050 [postgres/occ_retry/T2] SESSION {"connection_id": 249, "isolation": "read committed", "version": "PostgreSQL 17.11 (Debian 17.11-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit"}
+051 [postgres/T2] SQL_START {"sql": "BEGIN", "params": null}
+052 [postgres/T2] SQL_DONE {"result": -1, "duration_ms": 3.364}
+053 [postgres/T1] SQL_START {"sql": "SELECT counter_value,version FROM e3_occ_15e1f9a599b8487a WHERE s_w_id=1 AND s_i_id=%s", "params": [1]}
+054 [postgres/T1] SQL_DONE {"result": [["0.00", 1]], "duration_ms": 6.339}
+055 [postgres/T2] SQL_START {"sql": "SELECT counter_value,version FROM e3_occ_15e1f9a599b8487a WHERE s_w_id=1 AND s_i_id=%s", "params": [1]}
+056 [postgres/T2] SQL_DONE {"result": [["0.00", 1]], "duration_ms": 4.604}
+057 [postgres/occ_retry] BOTH_READ_BASELINE {"counter": "0.00", "version": 1}
+058 [postgres/T1] SQL_START {"sql": "UPDATE e3_occ_15e1f9a599b8487a SET counter_value=%s,version=version+1 WHERE s_w_id=1 AND s_i_id=%s AND version=%s", "params": ["1.00", 1, 1]}
+059 [postgres/T1] SQL_DONE {"result": 1, "duration_ms": 6.256}
+060 [postgres/T1] SQL_START {"sql": "COMMIT", "params": null}
+061 [postgres/T1] SQL_DONE {"result": -1, "duration_ms": 4.094}
+062 [postgres/occ_retry] T1_COMMIT {}
+063 [postgres/T2] SQL_START {"sql": "UPDATE e3_occ_15e1f9a599b8487a SET counter_value=%s,version=version+1 WHERE s_w_id=1 AND s_i_id=%s AND version=%s", "params": ["1.00", 1, 1]}
+064 [postgres/T2] SQL_DONE {"result": 0, "duration_ms": 4.237}
+065 [postgres/T2] SQL_START {"sql": "ROLLBACK", "params": null}
+066 [postgres/T2] SQL_DONE {"result": -1, "duration_ms": 3.039}
+067 [postgres/occ_retry] VERSION_CONFLICT {"affected_rows": 0, "stale_version": 1}
+068 [postgres/T2] SQL_START {"sql": "BEGIN", "params": null}
+069 [postgres/T2] SQL_DONE {"result": -1, "duration_ms": 1.602}
+070 [postgres/T2] SQL_START {"sql": "SELECT counter_value,version FROM e3_occ_15e1f9a599b8487a WHERE s_w_id=1 AND s_i_id=%s", "params": [1]}
+071 [postgres/T2] SQL_DONE {"result": [["1.00", 2]], "duration_ms": 3.759}
+072 [postgres/occ_retry] RETRY_READ {"counter": "1.00", "version": 2}
+073 [postgres/T2] SQL_START {"sql": "UPDATE e3_occ_15e1f9a599b8487a SET counter_value=%s,version=version+1 WHERE s_w_id=1 AND s_i_id=%s AND version=%s", "params": ["2.00", 1, 2]}
+074 [postgres/T2] SQL_DONE {"result": 1, "duration_ms": 3.566}
+075 [postgres/T2] SQL_START {"sql": "COMMIT", "params": null}
+076 [postgres/T2] SQL_DONE {"result": -1, "duration_ms": 5.974}
+077 [postgres/occ_retry] RETRY_COMMIT {}
+078 [postgres/occ_retry] PASS {"actual": {"counter": "2.00", "version": 3}}
+079 [postgres/distinct/1] TRIAL_START {"seconds": 10.0, "max_retries": 8}
+080 [postgres/OCC_CLIENT_0] SESSION {"connection_id": 250, "isolation": "read committed", "version": "PostgreSQL 17.11 (Debian 17.11-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit"}
+081 [postgres/distinct/1] PASS {"successful_operations": 948, "conflicts": 0, "retries": 0, "exhausted": 0}
+082 [postgres/distinct/4] TRIAL_START {"seconds": 10.0, "max_retries": 8}
+083 [postgres/OCC_CLIENT_0] SESSION {"connection_id": 251, "isolation": "read committed", "version": "PostgreSQL 17.11 (Debian 17.11-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit"}
+084 [postgres/OCC_CLIENT_2] SESSION {"connection_id": 253, "isolation": "read committed", "version": "PostgreSQL 17.11 (Debian 17.11-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit"}
+085 [postgres/OCC_CLIENT_1] SESSION {"connection_id": 252, "isolation": "read committed", "version": "PostgreSQL 17.11 (Debian 17.11-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit"}
+086 [postgres/OCC_CLIENT_3] SESSION {"connection_id": 254, "isolation": "read committed", "version": "PostgreSQL 17.11 (Debian 17.11-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit"}
+087 [postgres/distinct/4] PASS {"successful_operations": 2818, "conflicts": 0, "retries": 0, "exhausted": 0}
+088 [postgres/distinct/8] TRIAL_START {"seconds": 10.0, "max_retries": 8}
+089 [postgres/OCC_CLIENT_0] SESSION {"connection_id": 256, "isolation": "read committed", "version": "PostgreSQL 17.11 (Debian 17.11-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit"}
+090 [postgres/OCC_CLIENT_1] SESSION {"connection_id": 257, "isolation": "read committed", "version": "PostgreSQL 17.11 (Debian 17.11-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit"}
+091 [postgres/OCC_CLIENT_4] SESSION {"connection_id": 260, "isolation": "read committed", "version": "PostgreSQL 17.11 (Debian 17.11-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit"}
+092 [postgres/OCC_CLIENT_2] SESSION {"connection_id": 259, "isolation": "read committed", "version": "PostgreSQL 17.11 (Debian 17.11-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit"}
+093 [postgres/OCC_CLIENT_3] SESSION {"connection_id": 258, "isolation": "read committed", "version": "PostgreSQL 17.11 (Debian 17.11-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit"}
+094 [postgres/OCC_CLIENT_5] SESSION {"connection_id": 261, "isolation": "read committed", "version": "PostgreSQL 17.11 (Debian 17.11-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit"}
+095 [postgres/OCC_CLIENT_6] SESSION {"connection_id": 262, "isolation": "read committed", "version": "PostgreSQL 17.11 (Debian 17.11-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit"}
+096 [postgres/OCC_CLIENT_7] SESSION {"connection_id": 263, "isolation": "read committed", "version": "PostgreSQL 17.11 (Debian 17.11-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit"}
+097 [postgres/distinct/8] PASS {"successful_operations": 5159, "conflicts": 0, "retries": 0, "exhausted": 0}
+098 [postgres/distinct/16] TRIAL_START {"seconds": 10.0, "max_retries": 8}
+099 [postgres/OCC_CLIENT_1] SESSION {"connection_id": 265, "isolation": "read committed", "version": "PostgreSQL 17.11 (Debian 17.11-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit"}
+100 [postgres/OCC_CLIENT_4] SESSION {"connection_id": 268, "isolation": "read committed", "version": "PostgreSQL 17.11 (Debian 17.11-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit"}
+101 [postgres/OCC_CLIENT_3] SESSION {"connection_id": 267, "isolation": "read committed", "version": "PostgreSQL 17.11 (Debian 17.11-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit"}
+102 [postgres/OCC_CLIENT_2] SESSION {"connection_id": 266, "isolation": "read committed", "version": "PostgreSQL 17.11 (Debian 17.11-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit"}
+103 [postgres/OCC_CLIENT_0] SESSION {"connection_id": 264, "isolation": "read committed", "version": "PostgreSQL 17.11 (Debian 17.11-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit"}
+104 [postgres/OCC_CLIENT_5] SESSION {"connection_id": 269, "isolation": "read committed", "version": "PostgreSQL 17.11 (Debian 17.11-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit"}
+105 [postgres/OCC_CLIENT_6] SESSION {"connection_id": 270, "isolation": "read committed", "version": "PostgreSQL 17.11 (Debian 17.11-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit"}
+106 [postgres/OCC_CLIENT_7] SESSION {"connection_id": 271, "isolation": "read committed", "version": "PostgreSQL 17.11 (Debian 17.11-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit"}
+107 [postgres/OCC_CLIENT_9] SESSION {"connection_id": 272, "isolation": "read committed", "version": "PostgreSQL 17.11 (Debian 17.11-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit"}
+108 [postgres/OCC_CLIENT_8] SESSION {"connection_id": 273, "isolation": "read committed", "version": "PostgreSQL 17.11 (Debian 17.11-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit"}
+109 [postgres/OCC_CLIENT_11] SESSION {"connection_id": 275, "isolation": "read committed", "version": "PostgreSQL 17.11 (Debian 17.11-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit"}
+110 [postgres/OCC_CLIENT_10] SESSION {"connection_id": 274, "isolation": "read committed", "version": "PostgreSQL 17.11 (Debian 17.11-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit"}
+111 [postgres/OCC_CLIENT_12] SESSION {"connection_id": 276, "isolation": "read committed", "version": "PostgreSQL 17.11 (Debian 17.11-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit"}
+112 [postgres/OCC_CLIENT_15] SESSION {"connection_id": 279, "isolation": "read committed", "version": "PostgreSQL 17.11 (Debian 17.11-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit"}
+113 [postgres/OCC_CLIENT_14] SESSION {"connection_id": 278, "isolation": "read committed", "version": "PostgreSQL 17.11 (Debian 17.11-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit"}
+114 [postgres/OCC_CLIENT_13] SESSION {"connection_id": 277, "isolation": "read committed", "version": "PostgreSQL 17.11 (Debian 17.11-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit"}
+115 [postgres/distinct/16] PASS {"successful_operations": 6002, "conflicts": 0, "retries": 0, "exhausted": 0}
+116 [postgres/hot1/1] TRIAL_START {"seconds": 10.0, "max_retries": 8}
+117 [postgres/OCC_CLIENT_0] SESSION {"connection_id": 280, "isolation": "read committed", "version": "PostgreSQL 17.11 (Debian 17.11-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit"}
+118 [postgres/hot1/1] PASS {"successful_operations": 869, "conflicts": 0, "retries": 0, "exhausted": 0}
+119 [postgres/hot1/4] TRIAL_START {"seconds": 10.0, "max_retries": 8}
+120 [postgres/OCC_CLIENT_2] SESSION {"connection_id": 282, "isolation": "read committed", "version": "PostgreSQL 17.11 (Debian 17.11-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit"}
+121 [postgres/OCC_CLIENT_1] SESSION {"connection_id": 283, "isolation": "read committed", "version": "PostgreSQL 17.11 (Debian 17.11-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit"}
+122 [postgres/OCC_CLIENT_3] SESSION {"connection_id": 284, "isolation": "read committed", "version": "PostgreSQL 17.11 (Debian 17.11-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit"}
+123 [postgres/OCC_CLIENT_0] SESSION {"connection_id": 281, "isolation": "read committed", "version": "PostgreSQL 17.11 (Debian 17.11-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit"}
+124 [postgres/hot1/4] PASS {"successful_operations": 883, "conflicts": 970, "retries": 952, "exhausted": 18}
+125 [postgres/hot1/8] TRIAL_START {"seconds": 10.0, "max_retries": 8}
+126 [postgres/OCC_CLIENT_0] SESSION {"connection_id": 285, "isolation": "read committed", "version": "PostgreSQL 17.11 (Debian 17.11-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit"}
+127 [postgres/OCC_CLIENT_1] SESSION {"connection_id": 286, "isolation": "read committed", "version": "PostgreSQL 17.11 (Debian 17.11-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit"}
+128 [postgres/OCC_CLIENT_2] SESSION {"connection_id": 287, "isolation": "read committed", "version": "PostgreSQL 17.11 (Debian 17.11-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit"}
+129 [postgres/OCC_CLIENT_3] SESSION {"connection_id": 288, "isolation": "read committed", "version": "PostgreSQL 17.11 (Debian 17.11-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit"}
+130 [postgres/OCC_CLIENT_4] SESSION {"connection_id": 289, "isolation": "read committed", "version": "PostgreSQL 17.11 (Debian 17.11-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit"}
+131 [postgres/OCC_CLIENT_5] SESSION {"connection_id": 290, "isolation": "read committed", "version": "PostgreSQL 17.11 (Debian 17.11-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit"}
+132 [postgres/OCC_CLIENT_6] SESSION {"connection_id": 291, "isolation": "read committed", "version": "PostgreSQL 17.11 (Debian 17.11-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit"}
+133 [postgres/OCC_CLIENT_7] SESSION {"connection_id": 292, "isolation": "read committed", "version": "PostgreSQL 17.11 (Debian 17.11-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit"}
+134 [postgres/hot1/8] PASS {"successful_operations": 558, "conflicts": 1683, "retries": 1613, "exhausted": 70}
+135 [postgres/hot1/16] TRIAL_START {"seconds": 10.0, "max_retries": 8}
+136 [postgres/OCC_CLIENT_0] SESSION {"connection_id": 294, "isolation": "read committed", "version": "PostgreSQL 17.11 (Debian 17.11-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit"}
+137 [postgres/OCC_CLIENT_3] SESSION {"connection_id": 297, "isolation": "read committed", "version": "PostgreSQL 17.11 (Debian 17.11-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit"}
+138 [postgres/OCC_CLIENT_1] SESSION {"connection_id": 295, "isolation": "read committed", "version": "PostgreSQL 17.11 (Debian 17.11-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit"}
+139 [postgres/OCC_CLIENT_2] SESSION {"connection_id": 296, "isolation": "read committed", "version": "PostgreSQL 17.11 (Debian 17.11-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit"}
+140 [postgres/OCC_CLIENT_4] SESSION {"connection_id": 298, "isolation": "read committed", "version": "PostgreSQL 17.11 (Debian 17.11-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit"}
+141 [postgres/OCC_CLIENT_6] SESSION {"connection_id": 300, "isolation": "read committed", "version": "PostgreSQL 17.11 (Debian 17.11-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit"}
+142 [postgres/OCC_CLIENT_5] SESSION {"connection_id": 299, "isolation": "read committed", "version": "PostgreSQL 17.11 (Debian 17.11-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit"}
+143 [postgres/OCC_CLIENT_9] SESSION {"connection_id": 302, "isolation": "read committed", "version": "PostgreSQL 17.11 (Debian 17.11-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit"}
+144 [postgres/OCC_CLIENT_8] SESSION {"connection_id": 303, "isolation": "read committed", "version": "PostgreSQL 17.11 (Debian 17.11-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit"}
+145 [postgres/OCC_CLIENT_10] SESSION {"connection_id": 304, "isolation": "read committed", "version": "PostgreSQL 17.11 (Debian 17.11-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit"}
+146 [postgres/OCC_CLIENT_11] SESSION {"connection_id": 305, "isolation": "read committed", "version": "PostgreSQL 17.11 (Debian 17.11-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit"}
+147 [postgres/OCC_CLIENT_7] SESSION {"connection_id": 301, "isolation": "read committed", "version": "PostgreSQL 17.11 (Debian 17.11-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit"}
+148 [postgres/OCC_CLIENT_14] SESSION {"connection_id": 308, "isolation": "read committed", "version": "PostgreSQL 17.11 (Debian 17.11-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit"}
+149 [postgres/OCC_CLIENT_13] SESSION {"connection_id": 307, "isolation": "read committed", "version": "PostgreSQL 17.11 (Debian 17.11-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit"}
+150 [postgres/OCC_CLIENT_12] SESSION {"connection_id": 306, "isolation": "read committed", "version": "PostgreSQL 17.11 (Debian 17.11-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit"}
+151 [postgres/OCC_CLIENT_15] SESSION {"connection_id": 309, "isolation": "read committed", "version": "PostgreSQL 17.11 (Debian 17.11-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit"}
+152 [postgres/hot1/16] PASS {"successful_operations": 280, "conflicts": 2116, "retries": 1964, "exhausted": 152}
+153 [postgres/FIXTURE] CLEANUP {"demo_table_dropped": true, "source_unchanged": true, "original_table_set_restored": true}
+154 [mysql/FIXTURE] SESSION {"connection_id": 164, "isolation": "READ-COMMITTED", "version": "8.4.13"}
+155 [mysql/FIXTURE] CREATED {"table": "e3_occ_4c8e43c740784c58", "rows": 16}
+156 [mysql/lost_update/T1] SESSION {"connection_id": 165, "isolation": "READ-COMMITTED", "version": "8.4.13"}
+157 [mysql/T1] SQL_START {"sql": "START TRANSACTION", "params": null}
+158 [mysql/T1] SQL_DONE {"result": 0, "duration_ms": 4.206}
+159 [mysql/lost_update/T2] SESSION {"connection_id": 166, "isolation": "READ-COMMITTED", "version": "8.4.13"}
+160 [mysql/T2] SQL_START {"sql": "START TRANSACTION", "params": null}
+161 [mysql/T2] SQL_DONE {"result": 0, "duration_ms": 6.173}
+162 [mysql/T1] SQL_START {"sql": "SELECT counter_value,version FROM e3_occ_4c8e43c740784c58 WHERE s_w_id=1 AND s_i_id=%s", "params": [1]}
+163 [mysql/T1] SQL_DONE {"result": [["0.00", 1]], "duration_ms": 5.949}
+164 [mysql/T2] SQL_START {"sql": "SELECT counter_value,version FROM e3_occ_4c8e43c740784c58 WHERE s_w_id=1 AND s_i_id=%s", "params": [1]}
+165 [mysql/T2] SQL_DONE {"result": [["0.00", 1]], "duration_ms": 5.26}
+166 [mysql/lost_update] BOTH_READ_BASELINE {"counter": "0.00", "version": 1}
+167 [mysql/T1] SQL_START {"sql": "UPDATE e3_occ_4c8e43c740784c58 SET counter_value=%s WHERE s_w_id=1 AND s_i_id=%s", "params": ["1.00", 1]}
+168 [mysql/T1] SQL_DONE {"result": 1, "duration_ms": 6.638}
+169 [mysql/T1] SQL_START {"sql": "COMMIT", "params": null}
+170 [mysql/T1] SQL_DONE {"result": 0, "duration_ms": 23.697}
+171 [mysql/lost_update] T1_COMMIT {}
+172 [mysql/T2] SQL_START {"sql": "UPDATE e3_occ_4c8e43c740784c58 SET counter_value=%s WHERE s_w_id=1 AND s_i_id=%s", "params": ["1.00", 1]}
+173 [mysql/T2] SQL_DONE {"result": 0, "duration_ms": 4.089}
+174 [mysql/T2] SQL_START {"sql": "COMMIT", "params": null}
+175 [mysql/T2] SQL_DONE {"result": 0, "duration_ms": 2.468}
+176 [mysql/lost_update] LOST_UPDATE_CONFIRMED {"observed": {"counter": "1.00", "version": 1}, "correct_counter": "2.00"}
+177 [mysql/lost_update] PASS {"actual": {"counter": "1.00", "version": 1}}
+178 [mysql/occ_detect/T1] SESSION {"connection_id": 167, "isolation": "READ-COMMITTED", "version": "8.4.13"}
+179 [mysql/T1] SQL_START {"sql": "START TRANSACTION", "params": null}
+180 [mysql/T1] SQL_DONE {"result": 0, "duration_ms": 9.896}
+181 [mysql/occ_detect/T2] SESSION {"connection_id": 168, "isolation": "READ-COMMITTED", "version": "8.4.13"}
+182 [mysql/T2] SQL_START {"sql": "START TRANSACTION", "params": null}
+183 [mysql/T2] SQL_DONE {"result": 0, "duration_ms": 7.903}
+184 [mysql/T1] SQL_START {"sql": "SELECT counter_value,version FROM e3_occ_4c8e43c740784c58 WHERE s_w_id=1 AND s_i_id=%s", "params": [1]}
+185 [mysql/T1] SQL_DONE {"result": [["0.00", 1]], "duration_ms": 4.897}
+186 [mysql/T2] SQL_START {"sql": "SELECT counter_value,version FROM e3_occ_4c8e43c740784c58 WHERE s_w_id=1 AND s_i_id=%s", "params": [1]}
+187 [mysql/T2] SQL_DONE {"result": [["0.00", 1]], "duration_ms": 7.831}
+188 [mysql/occ_detect] BOTH_READ_BASELINE {"counter": "0.00", "version": 1}
+189 [mysql/T1] SQL_START {"sql": "UPDATE e3_occ_4c8e43c740784c58 SET counter_value=%s,version=version+1 WHERE s_w_id=1 AND s_i_id=%s AND version=%s", "params": ["1.00", 1, 1]}
+190 [mysql/T1] SQL_DONE {"result": 1, "duration_ms": 7.313}
+191 [mysql/T1] SQL_START {"sql": "COMMIT", "params": null}
+192 [mysql/T1] SQL_DONE {"result": 0, "duration_ms": 28.003}
+193 [mysql/occ_detect] T1_COMMIT {}
+194 [mysql/T2] SQL_START {"sql": "UPDATE e3_occ_4c8e43c740784c58 SET counter_value=%s,version=version+1 WHERE s_w_id=1 AND s_i_id=%s AND version=%s", "params": ["1.00", 1, 1]}
+195 [mysql/T2] SQL_DONE {"result": 0, "duration_ms": 5.779}
+196 [mysql/T2] SQL_START {"sql": "ROLLBACK", "params": null}
+197 [mysql/T2] SQL_DONE {"result": 0, "duration_ms": 8.106}
+198 [mysql/occ_detect] VERSION_CONFLICT {"affected_rows": 0, "stale_version": 1}
+199 [mysql/occ_detect] PASS {"actual": {"counter": "1.00", "version": 2}}
+200 [mysql/occ_retry/T1] SESSION {"connection_id": 169, "isolation": "READ-COMMITTED", "version": "8.4.13"}
+201 [mysql/T1] SQL_START {"sql": "START TRANSACTION", "params": null}
+202 [mysql/T1] SQL_DONE {"result": 0, "duration_ms": 3.886}
+203 [mysql/occ_retry/T2] SESSION {"connection_id": 170, "isolation": "READ-COMMITTED", "version": "8.4.13"}
+204 [mysql/T2] SQL_START {"sql": "START TRANSACTION", "params": null}
+205 [mysql/T2] SQL_DONE {"result": 0, "duration_ms": 8.332}
+206 [mysql/T1] SQL_START {"sql": "SELECT counter_value,version FROM e3_occ_4c8e43c740784c58 WHERE s_w_id=1 AND s_i_id=%s", "params": [1]}
+207 [mysql/T1] SQL_DONE {"result": [["0.00", 1]], "duration_ms": 9.718}
+208 [mysql/T2] SQL_START {"sql": "SELECT counter_value,version FROM e3_occ_4c8e43c740784c58 WHERE s_w_id=1 AND s_i_id=%s", "params": [1]}
+209 [mysql/T2] SQL_DONE {"result": [["0.00", 1]], "duration_ms": 10.44}
+210 [mysql/occ_retry] BOTH_READ_BASELINE {"counter": "0.00", "version": 1}
+211 [mysql/T1] SQL_START {"sql": "UPDATE e3_occ_4c8e43c740784c58 SET counter_value=%s,version=version+1 WHERE s_w_id=1 AND s_i_id=%s AND version=%s", "params": ["1.00", 1, 1]}
+212 [mysql/T1] SQL_DONE {"result": 1, "duration_ms": 6.735}
+213 [mysql/T1] SQL_START {"sql": "COMMIT", "params": null}
+214 [mysql/T1] SQL_DONE {"result": 0, "duration_ms": 16.881}
+215 [mysql/occ_retry] T1_COMMIT {}
+216 [mysql/T2] SQL_START {"sql": "UPDATE e3_occ_4c8e43c740784c58 SET counter_value=%s,version=version+1 WHERE s_w_id=1 AND s_i_id=%s AND version=%s", "params": ["1.00", 1, 1]}
+217 [mysql/T2] SQL_DONE {"result": 0, "duration_ms": 6.288}
+218 [mysql/T2] SQL_START {"sql": "ROLLBACK", "params": null}
+219 [mysql/T2] SQL_DONE {"result": 0, "duration_ms": 7.068}
+220 [mysql/occ_retry] VERSION_CONFLICT {"affected_rows": 0, "stale_version": 1}
+221 [mysql/T2] SQL_START {"sql": "START TRANSACTION", "params": null}
+222 [mysql/T2] SQL_DONE {"result": 0, "duration_ms": 8.971}
+223 [mysql/T2] SQL_START {"sql": "SELECT counter_value,version FROM e3_occ_4c8e43c740784c58 WHERE s_w_id=1 AND s_i_id=%s", "params": [1]}
+224 [mysql/T2] SQL_DONE {"result": [["1.00", 2]], "duration_ms": 6.137}
+225 [mysql/occ_retry] RETRY_READ {"counter": "1.00", "version": 2}
+226 [mysql/T2] SQL_START {"sql": "UPDATE e3_occ_4c8e43c740784c58 SET counter_value=%s,version=version+1 WHERE s_w_id=1 AND s_i_id=%s AND version=%s", "params": ["2.00", 1, 2]}
+227 [mysql/T2] SQL_DONE {"result": 1, "duration_ms": 6.523}
+228 [mysql/T2] SQL_START {"sql": "COMMIT", "params": null}
+229 [mysql/T2] SQL_DONE {"result": 0, "duration_ms": 6.74}
+230 [mysql/occ_retry] RETRY_COMMIT {}
+231 [mysql/occ_retry] PASS {"actual": {"counter": "2.00", "version": 3}}
+232 [mysql/distinct/1] TRIAL_START {"seconds": 10.0, "max_retries": 8}
+233 [mysql/OCC_CLIENT_0] SESSION {"connection_id": 171, "isolation": "READ-COMMITTED", "version": "8.4.13"}
+234 [mysql/distinct/1] PASS {"successful_operations": 414, "conflicts": 0, "retries": 0, "exhausted": 0}
+235 [mysql/distinct/4] TRIAL_START {"seconds": 10.0, "max_retries": 8}
+236 [mysql/OCC_CLIENT_3] SESSION {"connection_id": 175, "isolation": "READ-COMMITTED", "version": "8.4.13"}
+237 [mysql/OCC_CLIENT_2] SESSION {"connection_id": 174, "isolation": "READ-COMMITTED", "version": "8.4.13"}
+238 [mysql/OCC_CLIENT_1] SESSION {"connection_id": 172, "isolation": "READ-COMMITTED", "version": "8.4.13"}
+239 [mysql/OCC_CLIENT_0] SESSION {"connection_id": 173, "isolation": "READ-COMMITTED", "version": "8.4.13"}
+240 [mysql/distinct/4] PASS {"successful_operations": 898, "conflicts": 0, "retries": 0, "exhausted": 0}
+241 [mysql/distinct/8] TRIAL_START {"seconds": 10.0, "max_retries": 8}
+242 [mysql/OCC_CLIENT_1] SESSION {"connection_id": 176, "isolation": "READ-COMMITTED", "version": "8.4.13"}
+243 [mysql/OCC_CLIENT_0] SESSION {"connection_id": 178, "isolation": "READ-COMMITTED", "version": "8.4.13"}
+244 [mysql/OCC_CLIENT_3] SESSION {"connection_id": 177, "isolation": "READ-COMMITTED", "version": "8.4.13"}
+245 [mysql/OCC_CLIENT_5] SESSION {"connection_id": 181, "isolation": "READ-COMMITTED", "version": "8.4.13"}
+246 [mysql/OCC_CLIENT_2] SESSION {"connection_id": 179, "isolation": "READ-COMMITTED", "version": "8.4.13"}
+247 [mysql/OCC_CLIENT_4] SESSION {"connection_id": 180, "isolation": "READ-COMMITTED", "version": "8.4.13"}
+248 [mysql/OCC_CLIENT_6] SESSION {"connection_id": 182, "isolation": "READ-COMMITTED", "version": "8.4.13"}
+249 [mysql/OCC_CLIENT_7] SESSION {"connection_id": 183, "isolation": "READ-COMMITTED", "version": "8.4.13"}
+250 [mysql/distinct/8] PASS {"successful_operations": 2220, "conflicts": 0, "retries": 0, "exhausted": 0}
+251 [mysql/distinct/16] TRIAL_START {"seconds": 10.0, "max_retries": 8}
+252 [mysql/OCC_CLIENT_6] SESSION {"connection_id": 190, "isolation": "READ-COMMITTED", "version": "8.4.13"}
+253 [mysql/OCC_CLIENT_2] SESSION {"connection_id": 186, "isolation": "READ-COMMITTED", "version": "8.4.13"}
+254 [mysql/OCC_CLIENT_4] SESSION {"connection_id": 188, "isolation": "READ-COMMITTED", "version": "8.4.13"}
+255 [mysql/OCC_CLIENT_5] SESSION {"connection_id": 189, "isolation": "READ-COMMITTED", "version": "8.4.13"}
+256 [mysql/OCC_CLIENT_0] SESSION {"connection_id": 184, "isolation": "READ-COMMITTED", "version": "8.4.13"}
+257 [mysql/OCC_CLIENT_1] SESSION {"connection_id": 185, "isolation": "READ-COMMITTED", "version": "8.4.13"}
+258 [mysql/OCC_CLIENT_3] SESSION {"connection_id": 187, "isolation": "READ-COMMITTED", "version": "8.4.13"}
+259 [mysql/OCC_CLIENT_8] SESSION {"connection_id": 192, "isolation": "READ-COMMITTED", "version": "8.4.13"}
+260 [mysql/OCC_CLIENT_9] SESSION {"connection_id": 193, "isolation": "READ-COMMITTED", "version": "8.4.13"}
+261 [mysql/OCC_CLIENT_7] SESSION {"connection_id": 191, "isolation": "READ-COMMITTED", "version": "8.4.13"}
+262 [mysql/OCC_CLIENT_10] SESSION {"connection_id": 194, "isolation": "READ-COMMITTED", "version": "8.4.13"}
+263 [mysql/OCC_CLIENT_13] SESSION {"connection_id": 197, "isolation": "READ-COMMITTED", "version": "8.4.13"}
+264 [mysql/OCC_CLIENT_11] SESSION {"connection_id": 195, "isolation": "READ-COMMITTED", "version": "8.4.13"}
+265 [mysql/OCC_CLIENT_12] SESSION {"connection_id": 196, "isolation": "READ-COMMITTED", "version": "8.4.13"}
+266 [mysql/OCC_CLIENT_14] SESSION {"connection_id": 198, "isolation": "READ-COMMITTED", "version": "8.4.13"}
+267 [mysql/OCC_CLIENT_15] SESSION {"connection_id": 199, "isolation": "READ-COMMITTED", "version": "8.4.13"}
+268 [mysql/distinct/16] PASS {"successful_operations": 3775, "conflicts": 0, "retries": 0, "exhausted": 0}
+269 [mysql/hot1/1] TRIAL_START {"seconds": 10.0, "max_retries": 8}
+270 [mysql/OCC_CLIENT_0] SESSION {"connection_id": 200, "isolation": "READ-COMMITTED", "version": "8.4.13"}
+271 [mysql/hot1/1] PASS {"successful_operations": 416, "conflicts": 0, "retries": 0, "exhausted": 0}
+272 [mysql/hot1/4] TRIAL_START {"seconds": 10.0, "max_retries": 8}
+273 [mysql/OCC_CLIENT_3] SESSION {"connection_id": 203, "isolation": "READ-COMMITTED", "version": "8.4.13"}
+274 [mysql/OCC_CLIENT_1] SESSION {"connection_id": 202, "isolation": "READ-COMMITTED", "version": "8.4.13"}
+275 [mysql/OCC_CLIENT_2] SESSION {"connection_id": 204, "isolation": "READ-COMMITTED", "version": "8.4.13"}
+276 [mysql/OCC_CLIENT_0] SESSION {"connection_id": 201, "isolation": "READ-COMMITTED", "version": "8.4.13"}
+277 [mysql/hot1/4] PASS {"successful_operations": 359, "conflicts": 635, "retries": 622, "exhausted": 13}
+278 [mysql/hot1/8] TRIAL_START {"seconds": 10.0, "max_retries": 8}
+279 [mysql/OCC_CLIENT_0] SESSION {"connection_id": 205, "isolation": "READ-COMMITTED", "version": "8.4.13"}
+280 [mysql/OCC_CLIENT_2] SESSION {"connection_id": 206, "isolation": "READ-COMMITTED", "version": "8.4.13"}
+281 [mysql/OCC_CLIENT_4] SESSION {"connection_id": 208, "isolation": "READ-COMMITTED", "version": "8.4.13"}
+282 [mysql/OCC_CLIENT_1] SESSION {"connection_id": 207, "isolation": "READ-COMMITTED", "version": "8.4.13"}
+283 [mysql/OCC_CLIENT_6] SESSION {"connection_id": 211, "isolation": "READ-COMMITTED", "version": "8.4.13"}
+284 [mysql/OCC_CLIENT_3] SESSION {"connection_id": 209, "isolation": "READ-COMMITTED", "version": "8.4.13"}
+285 [mysql/OCC_CLIENT_5] SESSION {"connection_id": 210, "isolation": "READ-COMMITTED", "version": "8.4.13"}
+286 [mysql/OCC_CLIENT_7] SESSION {"connection_id": 212, "isolation": "READ-COMMITTED", "version": "8.4.13"}
+287 [mysql/hot1/8] PASS {"successful_operations": 283, "conflicts": 1129, "retries": 1080, "exhausted": 49}
+288 [mysql/hot1/16] TRIAL_START {"seconds": 10.0, "max_retries": 8}
+289 [mysql/OCC_CLIENT_1] SESSION {"connection_id": 214, "isolation": "READ-COMMITTED", "version": "8.4.13"}
+290 [mysql/OCC_CLIENT_0] SESSION {"connection_id": 213, "isolation": "READ-COMMITTED", "version": "8.4.13"}
+291 [mysql/OCC_CLIENT_2] SESSION {"connection_id": 215, "isolation": "READ-COMMITTED", "version": "8.4.13"}
+292 [mysql/OCC_CLIENT_4] SESSION {"connection_id": 217, "isolation": "READ-COMMITTED", "version": "8.4.13"}
+293 [mysql/OCC_CLIENT_5] SESSION {"connection_id": 218, "isolation": "READ-COMMITTED", "version": "8.4.13"}
+294 [mysql/OCC_CLIENT_3] SESSION {"connection_id": 216, "isolation": "READ-COMMITTED", "version": "8.4.13"}
+295 [mysql/OCC_CLIENT_6] SESSION {"connection_id": 219, "isolation": "READ-COMMITTED", "version": "8.4.13"}
+296 [mysql/OCC_CLIENT_7] SESSION {"connection_id": 220, "isolation": "READ-COMMITTED", "version": "8.4.13"}
+297 [mysql/OCC_CLIENT_8] SESSION {"connection_id": 221, "isolation": "READ-COMMITTED", "version": "8.4.13"}
+298 [mysql/OCC_CLIENT_11] SESSION {"connection_id": 224, "isolation": "READ-COMMITTED", "version": "8.4.13"}
+299 [mysql/OCC_CLIENT_9] SESSION {"connection_id": 222, "isolation": "READ-COMMITTED", "version": "8.4.13"}
+300 [mysql/OCC_CLIENT_14] SESSION {"connection_id": 227, "isolation": "READ-COMMITTED", "version": "8.4.13"}
+301 [mysql/OCC_CLIENT_10] SESSION {"connection_id": 223, "isolation": "READ-COMMITTED", "version": "8.4.13"}
+302 [mysql/OCC_CLIENT_12] SESSION {"connection_id": 225, "isolation": "READ-COMMITTED", "version": "8.4.13"}
+303 [mysql/OCC_CLIENT_15] SESSION {"connection_id": 228, "isolation": "READ-COMMITTED", "version": "8.4.13"}
+304 [mysql/OCC_CLIENT_13] SESSION {"connection_id": 226, "isolation": "READ-COMMITTED", "version": "8.4.13"}
+305 [mysql/hot1/16] PASS {"successful_operations": 171, "conflicts": 1743, "retries": 1622, "exhausted": 121}
+306 [mysql/FIXTURE] CLEANUP {"demo_table_dropped": true, "source_unchanged": true, "original_table_set_restored": true}

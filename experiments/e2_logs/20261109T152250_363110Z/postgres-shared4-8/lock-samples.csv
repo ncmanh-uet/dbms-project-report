@@ -1,0 +1,157 @@
+elapsed_ms,blocked_sessions,waiting_pids,blocking_pids,edges_json
+2.9811999993398786,0,,,[]
+66.80470000719652,1,120,115,"[{""waiting_pid"": 120, ""blocking_pid"": 115, ""state"": ""active"", ""wait_event_type"": ""Lock"", ""wait_event"": ""transactionid""}]"
+129.84330003382638,0,,,[]
+189.38719999277964,0,,,[]
+251.2286000419408,1,120,115,"[{""waiting_pid"": 120, ""blocking_pid"": 115, ""state"": ""active"", ""wait_event_type"": ""Lock"", ""wait_event"": ""transactionid""}]"
+314.78750001406297,0,,,[]
+373.6547000007704,1,116,114,"[{""waiting_pid"": 116, ""blocking_pid"": 114, ""state"": ""active"", ""wait_event_type"": ""Lock"", ""wait_event"": ""transactionid""}]"
+435.4557000333443,1,115,120,"[{""waiting_pid"": 115, ""blocking_pid"": 120, ""state"": ""active"", ""wait_event_type"": ""Lock"", ""wait_event"": ""transactionid""}]"
+497.0148000284098,1,116,115,"[{""waiting_pid"": 116, ""blocking_pid"": 115, ""state"": ""active"", ""wait_event_type"": ""Lock"", ""wait_event"": ""transactionid""}]"
+557.110299996566,1,116,115,"[{""waiting_pid"": 116, ""blocking_pid"": 115, ""state"": ""active"", ""wait_event_type"": ""Lock"", ""wait_event"": ""transactionid""}]"
+619.6399999898858,0,,,[]
+681.4023000188172,1,121,119,"[{""waiting_pid"": 121, ""blocking_pid"": 119, ""state"": ""active"", ""wait_event_type"": ""Lock"", ""wait_event"": ""transactionid""}]"
+742.4113000161014,1,116,115,"[{""waiting_pid"": 116, ""blocking_pid"": 115, ""state"": ""active"", ""wait_event_type"": ""Lock"", ""wait_event"": ""transactionid""}]"
+805.7649999973364,1,118,117,"[{""waiting_pid"": 118, ""blocking_pid"": 117, ""state"": ""active"", ""wait_event_type"": ""Lock"", ""wait_event"": ""transactionid""}]"
+868.3063000207767,1,114,120,"[{""waiting_pid"": 114, ""blocking_pid"": 120, ""state"": ""active"", ""wait_event_type"": ""Lock"", ""wait_event"": ""transactionid""}]"
+928.2505000010133,0,,,[]
+989.6775000379421,1,118,117,"[{""waiting_pid"": 118, ""blocking_pid"": 117, ""state"": ""active"", ""wait_event_type"": ""Lock"", ""wait_event"": ""transactionid""}]"
+1050.830300024245,1,117,118,"[{""waiting_pid"": 117, ""blocking_pid"": 118, ""state"": ""active"", ""wait_event_type"": ""Lock"", ""wait_event"": ""transactionid""}]"
+1113.7416000128724,0,,,[]
+1173.862099996768,1,116,121,"[{""waiting_pid"": 116, ""blocking_pid"": 121, ""state"": ""active"", ""wait_event_type"": ""Lock"", ""wait_event"": ""transactionid""}]"
+1235.0058000301942,1,116,121,"[{""waiting_pid"": 116, ""blocking_pid"": 121, ""state"": ""active"", ""wait_event_type"": ""Lock"", ""wait_event"": ""transactionid""}]"
+1298.8244000007398,0,,,[]
+1361.6367999929935,1,115,117,"[{""waiting_pid"": 115, ""blocking_pid"": 117, ""state"": ""active"", ""wait_event_type"": ""Lock"", ""wait_event"": ""transactionid""}]"
+1422.0160000259057,1,121,115,"[{""waiting_pid"": 121, ""blocking_pid"": 115, ""state"": ""active"", ""wait_event_type"": ""Lock"", ""wait_event"": ""transactionid""}]"
+1484.7083000349812,0,,,[]
+1545.3382999985479,1,117,119,"[{""waiting_pid"": 117, ""blocking_pid"": 119, ""state"": ""active"", ""wait_event_type"": ""Lock"", ""wait_event"": ""transactionid""}]"
+1608.4895000094548,0,,,[]
+1669.7097000433132,1,119,118,"[{""waiting_pid"": 119, ""blocking_pid"": 118, ""state"": ""active"", ""wait_event_type"": ""Lock"", ""wait_event"": ""transactionid""}]"
+1731.5377999912016,0,,,[]
+1792.5975000252947,1,121,115,"[{""waiting_pid"": 121, ""blocking_pid"": 115, ""state"": ""active"", ""wait_event_type"": ""Lock"", ""wait_event"": ""transactionid""}]"
+1853.4523000125773,1,121,115,"[{""waiting_pid"": 121, ""blocking_pid"": 115, ""state"": ""active"", ""wait_event_type"": ""Lock"", ""wait_event"": ""transactionid""}]"
+1915.2732000220567,1,119,118,"[{""waiting_pid"": 119, ""blocking_pid"": 118, ""state"": ""active"", ""wait_event_type"": ""Lock"", ""wait_event"": ""transactionid""}]"
+1977.6858999975957,0,,,[]
+2038.9750000322238,2,114;117,119;120,"[{""waiting_pid"": 114, ""blocking_pid"": 120, ""state"": ""active"", ""wait_event_type"": ""Lock"", ""wait_event"": ""transactionid""}, {""waiting_pid"": 117, ""blocking_pid"": 119, ""state"": ""active"", ""wait_event_type"": ""Lock"", ""wait_event"": ""transactionid""}]"
+2100.728599994909,1,117,119,"[{""waiting_pid"": 117, ""blocking_pid"": 119, ""state"": ""active"", ""wait_event_type"": ""Lock"", ""wait_event"": ""transactionid""}]"
+2161.8977000471205,1,120,121,"[{""waiting_pid"": 120, ""blocking_pid"": 121, ""state"": ""active"", ""wait_event_type"": ""Lock"", ""wait_event"": ""transactionid""}]"
+2223.205299989786,0,,,[]
+2286.6963000269607,3,115;119;121,117;118;120,"[{""waiting_pid"": 119, ""blocking_pid"": 118, ""state"": ""active"", ""wait_event_type"": ""Lock"", ""wait_event"": ""transactionid""}, {""waiting_pid"": 121, ""blocking_pid"": 120, ""state"": ""active"", ""wait_event_type"": ""Lock"", ""wait_event"": ""transactionid""}, {""waiting_pid"": 115, ""blocking_pid"": 117, ""state"": ""active"", ""wait_event_type"": ""Lock"", ""wait_event"": ""transactionid""}]"
+2347.6285000215285,3,116;119;121,114;118;120,"[{""waiting_pid"": 119, ""blocking_pid"": 118, ""state"": ""active"", ""wait_event_type"": ""Lock"", ""wait_event"": ""transactionid""}, {""waiting_pid"": 121, ""blocking_pid"": 120, ""state"": ""active"", ""wait_event_type"": ""Lock"", ""wait_event"": ""transactionid""}, {""waiting_pid"": 116, ""blocking_pid"": 114, ""state"": ""active"", ""wait_event_type"": ""Lock"", ""wait_event"": ""transactionid""}]"
+2407.766200019978,3,115;116;121,114;117;120,"[{""waiting_pid"": 121, ""blocking_pid"": 120, ""state"": ""active"", ""wait_event_type"": ""Lock"", ""wait_event"": ""transactionid""}, {""waiting_pid"": 116, ""blocking_pid"": 114, ""state"": ""active"", ""wait_event_type"": ""Lock"", ""wait_event"": ""transactionid""}, {""waiting_pid"": 115, ""blocking_pid"": 117, ""state"": ""active"", ""wait_event_type"": ""Lock"", ""wait_event"": ""transactionid""}]"
+2474.210700020194,1,117,119,"[{""waiting_pid"": 117, ""blocking_pid"": 119, ""state"": ""active"", ""wait_event_type"": ""Lock"", ""wait_event"": ""transactionid""}]"
+2532.1720000356436,3,115;118;119,114;116;117,"[{""waiting_pid"": 118, ""blocking_pid"": 114, ""state"": ""active"", ""wait_event_type"": ""Lock"", ""wait_event"": ""transactionid""}, {""waiting_pid"": 119, ""blocking_pid"": 116, ""state"": ""active"", ""wait_event_type"": ""Lock"", ""wait_event"": ""transactionid""}, {""waiting_pid"": 115, ""blocking_pid"": 117, ""state"": ""active"", ""wait_event_type"": ""Lock"", ""wait_event"": ""transactionid""}]"
+2607.205000007525,3,117;120;121,115;119;120,"[{""waiting_pid"": 117, ""blocking_pid"": 119, ""state"": ""active"", ""wait_event_type"": ""Lock"", ""wait_event"": ""transactionid""}, {""waiting_pid"": 120, ""blocking_pid"": 115, ""state"": ""active"", ""wait_event_type"": ""Lock"", ""wait_event"": ""transactionid""}, {""waiting_pid"": 121, ""blocking_pid"": 120, ""state"": ""active"", ""wait_event_type"": ""Lock"", ""wait_event"": ""tuple""}]"
+2673.209900036454,2,118;121,114,"[{""waiting_pid"": 118, ""blocking_pid"": 114, ""state"": ""active"", ""wait_event_type"": ""Lock"", ""wait_event"": ""transactionid""}, {""waiting_pid"": 121, ""blocking_pid"": 114, ""state"": ""active"", ""wait_event_type"": ""Lock"", ""wait_event"": ""transactionid""}]"
+2733.934100018814,4,114;117;119;121,115;116;119,"[{""waiting_pid"": 114, ""blocking_pid"": 115, ""state"": ""active"", ""wait_event_type"": ""Lock"", ""wait_event"": ""transactionid""}, {""waiting_pid"": 117, ""blocking_pid"": 119, ""state"": ""active"", ""wait_event_type"": ""Lock"", ""wait_event"": ""tuple""}, {""waiting_pid"": 119, ""blocking_pid"": 116, ""state"": ""active"", ""wait_event_type"": ""Lock"", ""wait_event"": ""transactionid""}, {""waiting_pid"": 121, ""blocking_pid"": 115, ""state"": ""active"", ""wait_event_type"": ""Lock"", ""wait_event"": ""transactionid""}]"
+2803.8666000356898,1,116,121,"[{""waiting_pid"": 116, ""blocking_pid"": 121, ""state"": ""active"", ""wait_event_type"": ""Lock"", ""wait_event"": ""transactionid""}]"
+3050.227400031872,0,,,[]
+3123.8694000057876,1,121,118,"[{""waiting_pid"": 121, ""blocking_pid"": 118, ""state"": ""active"", ""wait_event_type"": ""Lock"", ""wait_event"": ""transactionid""}]"
+3204.0086000342853,0,,,[]
+3259.7883000271395,0,,,[]
+3321.574800007511,0,,,[]
+3382.540600025095,1,119,116,"[{""waiting_pid"": 119, ""blocking_pid"": 116, ""state"": ""active"", ""wait_event_type"": ""Lock"", ""wait_event"": ""transactionid""}]"
+3444.7357000317425,0,,,[]
+3505.838999990374,1,117,115,"[{""waiting_pid"": 117, ""blocking_pid"": 115, ""state"": ""active"", ""wait_event_type"": ""Lock"", ""wait_event"": ""transactionid""}]"
+3569.3699000403285,1,121,114,"[{""waiting_pid"": 121, ""blocking_pid"": 114, ""state"": ""active"", ""wait_event_type"": ""Lock"", ""wait_event"": ""transactionid""}]"
+3629.933600022923,2,115;117,119;120,"[{""waiting_pid"": 117, ""blocking_pid"": 120, ""state"": ""active"", ""wait_event_type"": ""Lock"", ""wait_event"": ""transactionid""}, {""waiting_pid"": 115, ""blocking_pid"": 119, ""state"": ""active"", ""wait_event_type"": ""Lock"", ""wait_event"": ""transactionid""}]"
+3691.0379999899305,2,115;120,119,"[{""waiting_pid"": 120, ""blocking_pid"": 119, ""state"": ""active"", ""wait_event_type"": ""Lock"", ""wait_event"": ""transactionid""}, {""waiting_pid"": 115, ""blocking_pid"": 119, ""state"": ""active"", ""wait_event_type"": ""Lock"", ""wait_event"": ""transactionid""}]"
+3753.9964000461623,0,,,[]
+3815.3269000467844,1,119,116,"[{""waiting_pid"": 119, ""blocking_pid"": 116, ""state"": ""active"", ""wait_event_type"": ""Lock"", ""wait_event"": ""transactionid""}]"
+3876.82850001147,1,121,114,"[{""waiting_pid"": 121, ""blocking_pid"": 114, ""state"": ""active"", ""wait_event_type"": ""Lock"", ""wait_event"": ""transactionid""}]"
+3938.25280002784,1,116,118,"[{""waiting_pid"": 116, ""blocking_pid"": 118, ""state"": ""active"", ""wait_event_type"": ""Lock"", ""wait_event"": ""transactionid""}]"
+4000.24389999453,0,,,[]
+4061.652400007006,1,117,120,"[{""waiting_pid"": 117, ""blocking_pid"": 120, ""state"": ""active"", ""wait_event_type"": ""Lock"", ""wait_event"": ""transactionid""}]"
+4122.898500005249,0,,,[]
+4183.862600009888,1,121,114,"[{""waiting_pid"": 121, ""blocking_pid"": 114, ""state"": ""active"", ""wait_event_type"": ""Lock"", ""wait_event"": ""transactionid""}]"
+4246.224600006826,0,,,[]
+4306.418500025757,0,,,[]
+4369.558700011112,1,118,121,"[{""waiting_pid"": 118, ""blocking_pid"": 121, ""state"": ""active"", ""wait_event_type"": ""Lock"", ""wait_event"": ""transactionid""}]"
+4431.861800025217,1,114,117,"[{""waiting_pid"": 114, ""blocking_pid"": 117, ""state"": ""active"", ""wait_event_type"": ""Lock"", ""wait_event"": ""transactionid""}]"
+4492.419800022617,1,114,117,"[{""waiting_pid"": 114, ""blocking_pid"": 117, ""state"": ""active"", ""wait_event_type"": ""Lock"", ""wait_event"": ""transactionid""}]"
+4554.934700019658,0,,,[]
+4617.5012000021525,1,115,116,"[{""waiting_pid"": 115, ""blocking_pid"": 116, ""state"": ""active"", ""wait_event_type"": ""Lock"", ""wait_event"": ""transactionid""}]"
+4679.401000030339,0,,,[]
+4739.729600027204,1,119,118,"[{""waiting_pid"": 119, ""blocking_pid"": 118, ""state"": ""active"", ""wait_event_type"": ""Lock"", ""wait_event"": ""transactionid""}]"
+4803.306900023017,1,118,121,"[{""waiting_pid"": 118, ""blocking_pid"": 121, ""state"": ""active"", ""wait_event_type"": ""Lock"", ""wait_event"": ""transactionid""}]"
+4863.935900037177,0,,,[]
+4925.263400014956,2,114;119,116;117,"[{""waiting_pid"": 114, ""blocking_pid"": 117, ""state"": ""active"", ""wait_event_type"": ""Lock"", ""wait_event"": ""transactionid""}, {""waiting_pid"": 119, ""blocking_pid"": 116, ""state"": ""active"", ""wait_event_type"": ""Lock"", ""wait_event"": ""transactionid""}]"
+4984.977400046773,1,118,121,"[{""waiting_pid"": 118, ""blocking_pid"": 121, ""state"": ""active"", ""wait_event_type"": ""Lock"", ""wait_event"": ""transactionid""}]"
+5046.967500005849,0,,,[]
+5108.98580000503,0,,,[]
+5170.103500015102,0,,,[]
+5232.281300006434,0,,,[]
+5294.378000020515,3,114;117;119,115;117;120,"[{""waiting_pid"": 114, ""blocking_pid"": 117, ""state"": ""active"", ""wait_event_type"": ""Lock"", ""wait_event"": ""tuple""}, {""waiting_pid"": 117, ""blocking_pid"": 120, ""state"": ""active"", ""wait_event_type"": ""Lock"", ""wait_event"": ""transactionid""}, {""waiting_pid"": 119, ""blocking_pid"": 115, ""state"": ""active"", ""wait_event_type"": ""Lock"", ""wait_event"": ""transactionid""}]"
+5359.063900017645,3,114;116;118,117;118;121,"[{""waiting_pid"": 114, ""blocking_pid"": 117, ""state"": ""active"", ""wait_event_type"": ""Lock"", ""wait_event"": ""transactionid""}, {""waiting_pid"": 118, ""blocking_pid"": 121, ""state"": ""active"", ""wait_event_type"": ""Lock"", ""wait_event"": ""transactionid""}, {""waiting_pid"": 116, ""blocking_pid"": 118, ""state"": ""active"", ""wait_event_type"": ""Lock"", ""wait_event"": ""tuple""}]"
+5419.460200006142,4,115;117;118;119,116;120;121,"[{""waiting_pid"": 118, ""blocking_pid"": 121, ""state"": ""active"", ""wait_event_type"": ""Lock"", ""wait_event"": ""transactionid""}, {""waiting_pid"": 117, ""blocking_pid"": 120, ""state"": ""active"", ""wait_event_type"": ""Lock"", ""wait_event"": ""transactionid""}, {""waiting_pid"": 119, ""blocking_pid"": 116, ""state"": ""active"", ""wait_event_type"": ""Lock"", ""wait_event"": ""transactionid""}, {""waiting_pid"": 115, ""blocking_pid"": 116, ""state"": ""active"", ""wait_event_type"": ""Lock"", ""wait_event"": ""transactionid""}]"
+5482.996800041292,4,115;117;120;121,114;116;119,"[{""waiting_pid"": 117, ""blocking_pid"": 119, ""state"": ""active"", ""wait_event_type"": ""Lock"", ""wait_event"": ""transactionid""}, {""waiting_pid"": 120, ""blocking_pid"": 119, ""state"": ""active"", ""wait_event_type"": ""Lock"", ""wait_event"": ""transactionid""}, {""waiting_pid"": 121, ""blocking_pid"": 114, ""state"": ""active"", ""wait_event_type"": ""Lock"", ""wait_event"": ""transactionid""}, {""waiting_pid"": 115, ""blocking_pid"": 116, ""state"": ""active"", ""wait_event_type"": ""Lock"", ""wait_event"": ""transactionid""}]"
+5546.996699995361,4,115;117;118;121,114;116;120,"[{""waiting_pid"": 118, ""blocking_pid"": 114, ""state"": ""active"", ""wait_event_type"": ""Lock"", ""wait_event"": ""transactionid""}, {""waiting_pid"": 117, ""blocking_pid"": 120, ""state"": ""active"", ""wait_event_type"": ""Lock"", ""wait_event"": ""transactionid""}, {""waiting_pid"": 121, ""blocking_pid"": 114, ""state"": ""active"", ""wait_event_type"": ""Lock"", ""wait_event"": ""transactionid""}, {""waiting_pid"": 115, ""blocking_pid"": 116, ""state"": ""active"", ""wait_event_type"": ""Lock"", ""wait_event"": ""transactionid""}]"
+5621.194000006653,0,,,[]
+5809.7124000196345,0,,,[]
+5887.31210003607,1,115,116,"[{""waiting_pid"": 115, ""blocking_pid"": 116, ""state"": ""active"", ""wait_event_type"": ""Lock"", ""wait_event"": ""transactionid""}]"
+5962.551000004169,0,,,[]
+6044.476000010036,1,115,116,"[{""waiting_pid"": 115, ""blocking_pid"": 116, ""state"": ""active"", ""wait_event_type"": ""Lock"", ""wait_event"": ""transactionid""}]"
+6104.65320001822,1,114,117,"[{""waiting_pid"": 114, ""blocking_pid"": 117, ""state"": ""active"", ""wait_event_type"": ""Lock"", ""wait_event"": ""transactionid""}]"
+6165.711400040891,0,,,[]
+6226.342000009026,2,116;121,114;118,"[{""waiting_pid"": 121, ""blocking_pid"": 114, ""state"": ""active"", ""wait_event_type"": ""Lock"", ""wait_event"": ""transactionid""}, {""waiting_pid"": 116, ""blocking_pid"": 118, ""state"": ""active"", ""wait_event_type"": ""Lock"", ""wait_event"": ""transactionid""}]"
+6288.670300040394,0,,,[]
+6349.124300002586,0,,,[]
+6411.205200012773,0,,,[]
+6472.570000041742,0,,,[]
+6535.928099998273,0,,,[]
+6596.683400042821,1,116,118,"[{""waiting_pid"": 116, ""blocking_pid"": 118, ""state"": ""active"", ""wait_event_type"": ""Lock"", ""wait_event"": ""transactionid""}]"
+6657.413200009614,0,,,[]
+6719.663400028367,0,,,[]
+6781.283100019209,1,117,121,"[{""waiting_pid"": 117, ""blocking_pid"": 121, ""state"": ""active"", ""wait_event_type"": ""Lock"", ""wait_event"": ""transactionid""}]"
+6843.9500000094995,0,,,[]
+6906.111999996938,4,114;116;119;121,115;117;118;120,"[{""waiting_pid"": 114, ""blocking_pid"": 117, ""state"": ""active"", ""wait_event_type"": ""Lock"", ""wait_event"": ""transactionid""}, {""waiting_pid"": 119, ""blocking_pid"": 115, ""state"": ""active"", ""wait_event_type"": ""Lock"", ""wait_event"": ""transactionid""}, {""waiting_pid"": 121, ""blocking_pid"": 120, ""state"": ""active"", ""wait_event_type"": ""Lock"", ""wait_event"": ""transactionid""}, {""waiting_pid"": 116, ""blocking_pid"": 118, ""state"": ""active"", ""wait_event_type"": ""Lock"", ""wait_event"": ""transactionid""}]"
+6987.221900024451,1,121,120,"[{""waiting_pid"": 121, ""blocking_pid"": 120, ""state"": ""active"", ""wait_event_type"": ""Lock"", ""wait_event"": ""transactionid""}]"
+7044.706500018947,3,114;118;119,114;115;117,"[{""waiting_pid"": 114, ""blocking_pid"": 117, ""state"": ""active"", ""wait_event_type"": ""Lock"", ""wait_event"": ""transactionid""}, {""waiting_pid"": 118, ""blocking_pid"": 114, ""state"": ""active"", ""wait_event_type"": ""Lock"", ""wait_event"": ""tuple""}, {""waiting_pid"": 119, ""blocking_pid"": 115, ""state"": ""active"", ""wait_event_type"": ""Lock"", ""wait_event"": ""transactionid""}]"
+7106.487400014885,3,115;117;119,115;116;121,"[{""waiting_pid"": 117, ""blocking_pid"": 121, ""state"": ""active"", ""wait_event_type"": ""Lock"", ""wait_event"": ""transactionid""}, {""waiting_pid"": 119, ""blocking_pid"": 115, ""state"": ""active"", ""wait_event_type"": ""Lock"", ""wait_event"": ""tuple""}, {""waiting_pid"": 115, ""blocking_pid"": 116, ""state"": ""active"", ""wait_event_type"": ""Lock"", ""wait_event"": ""transactionid""}]"
+7166.777700011153,2,114;119,115;121,"[{""waiting_pid"": 114, ""blocking_pid"": 121, ""state"": ""active"", ""wait_event_type"": ""Lock"", ""wait_event"": ""transactionid""}, {""waiting_pid"": 119, ""blocking_pid"": 115, ""state"": ""active"", ""wait_event_type"": ""Lock"", ""wait_event"": ""transactionid""}]"
+7234.709000040311,2,115;121,116;117,"[{""waiting_pid"": 121, ""blocking_pid"": 117, ""state"": ""active"", ""wait_event_type"": ""Lock"", ""wait_event"": ""transactionid""}, {""waiting_pid"": 115, ""blocking_pid"": 116, ""state"": ""active"", ""wait_event_type"": ""Lock"", ""wait_event"": ""transactionid""}]"
+7289.938500034623,4,114;119;120;121,115;117;118,"[{""waiting_pid"": 114, ""blocking_pid"": 118, ""state"": ""active"", ""wait_event_type"": ""Lock"", ""wait_event"": ""transactionid""}, {""waiting_pid"": 119, ""blocking_pid"": 115, ""state"": ""active"", ""wait_event_type"": ""Lock"", ""wait_event"": ""transactionid""}, {""waiting_pid"": 120, ""blocking_pid"": 115, ""state"": ""active"", ""wait_event_type"": ""Lock"", ""wait_event"": ""transactionid""}, {""waiting_pid"": 121, ""blocking_pid"": 117, ""state"": ""active"", ""wait_event_type"": ""Lock"", ""wait_event"": ""transactionid""}]"
+7348.988700017799,3,114;118;119,115;121,"[{""waiting_pid"": 114, ""blocking_pid"": 121, ""state"": ""active"", ""wait_event_type"": ""Lock"", ""wait_event"": ""transactionid""}, {""waiting_pid"": 118, ""blocking_pid"": 121, ""state"": ""active"", ""wait_event_type"": ""Lock"", ""wait_event"": ""transactionid""}, {""waiting_pid"": 119, ""blocking_pid"": 115, ""state"": ""active"", ""wait_event_type"": ""Lock"", ""wait_event"": ""transactionid""}]"
+7409.270200005267,1,119,116,"[{""waiting_pid"": 119, ""blocking_pid"": 116, ""state"": ""active"", ""wait_event_type"": ""Lock"", ""wait_event"": ""transactionid""}]"
+7471.578800003044,1,118,121,"[{""waiting_pid"": 118, ""blocking_pid"": 121, ""state"": ""active"", ""wait_event_type"": ""Lock"", ""wait_event"": ""transactionid""}]"
+7537.379300047178,1,120,116,"[{""waiting_pid"": 120, ""blocking_pid"": 116, ""state"": ""active"", ""wait_event_type"": ""Lock"", ""wait_event"": ""transactionid""}]"
+7593.162300006952,1,120,116,"[{""waiting_pid"": 120, ""blocking_pid"": 116, ""state"": ""active"", ""wait_event_type"": ""Lock"", ""wait_event"": ""transactionid""}]"
+7653.397100046277,4,116;117;119;121,114;118;119;120,"[{""waiting_pid"": 117, ""blocking_pid"": 119, ""state"": ""active"", ""wait_event_type"": ""Lock"", ""wait_event"": ""tuple""}, {""waiting_pid"": 119, ""blocking_pid"": 120, ""state"": ""active"", ""wait_event_type"": ""Lock"", ""wait_event"": ""transactionid""}, {""waiting_pid"": 121, ""blocking_pid"": 118, ""state"": ""active"", ""wait_event_type"": ""Lock"", ""wait_event"": ""transactionid""}, {""waiting_pid"": 116, ""blocking_pid"": 114, ""state"": ""active"", ""wait_event_type"": ""Lock"", ""wait_event"": ""transactionid""}]"
+7713.726000045426,2,114;117,115;119,"[{""waiting_pid"": 114, ""blocking_pid"": 115, ""state"": ""active"", ""wait_event_type"": ""Lock"", ""wait_event"": ""transactionid""}, {""waiting_pid"": 117, ""blocking_pid"": 119, ""state"": ""active"", ""wait_event_type"": ""Lock"", ""wait_event"": ""transactionid""}]"
+7774.294200004078,2,114;119,120;121,"[{""waiting_pid"": 114, ""blocking_pid"": 121, ""state"": ""active"", ""wait_event_type"": ""Lock"", ""wait_event"": ""transactionid""}, {""waiting_pid"": 119, ""blocking_pid"": 120, ""state"": ""active"", ""wait_event_type"": ""Lock"", ""wait_event"": ""transactionid""}]"
+7833.718100038823,1,120,115,"[{""waiting_pid"": 120, ""blocking_pid"": 115, ""state"": ""active"", ""wait_event_type"": ""Lock"", ""wait_event"": ""transactionid""}]"
+7897.331200016197,1,117,119,"[{""waiting_pid"": 117, ""blocking_pid"": 119, ""state"": ""active"", ""wait_event_type"": ""Lock"", ""wait_event"": ""transactionid""}]"
+7958.649100037292,0,,,[]
+8019.824200018775,1,114,121,"[{""waiting_pid"": 114, ""blocking_pid"": 121, ""state"": ""active"", ""wait_event_type"": ""Lock"", ""wait_event"": ""transactionid""}]"
+8081.218000035733,0,,,[]
+8141.185600019526,1,114,121,"[{""waiting_pid"": 114, ""blocking_pid"": 121, ""state"": ""active"", ""wait_event_type"": ""Lock"", ""wait_event"": ""transactionid""}]"
+8201.350499992259,0,,,[]
+8264.452000032179,1,114,121,"[{""waiting_pid"": 114, ""blocking_pid"": 121, ""state"": ""active"", ""wait_event_type"": ""Lock"", ""wait_event"": ""transactionid""}]"
+8324.957000033464,1,115,120,"[{""waiting_pid"": 115, ""blocking_pid"": 120, ""state"": ""active"", ""wait_event_type"": ""Lock"", ""wait_event"": ""transactionid""}]"
+8386.519099993166,1,115,120,"[{""waiting_pid"": 115, ""blocking_pid"": 120, ""state"": ""active"", ""wait_event_type"": ""Lock"", ""wait_event"": ""transactionid""}]"
+8447.272300021723,1,121,114,"[{""waiting_pid"": 121, ""blocking_pid"": 114, ""state"": ""active"", ""wait_event_type"": ""Lock"", ""wait_event"": ""transactionid""}]"
+8508.822400006466,2,116;119,114;115,"[{""waiting_pid"": 119, ""blocking_pid"": 115, ""state"": ""active"", ""wait_event_type"": ""Lock"", ""wait_event"": ""transactionid""}, {""waiting_pid"": 116, ""blocking_pid"": 114, ""state"": ""active"", ""wait_event_type"": ""Lock"", ""wait_event"": ""transactionid""}]"
+8570.613000018056,1,114,118,"[{""waiting_pid"": 114, ""blocking_pid"": 118, ""state"": ""active"", ""wait_event_type"": ""Lock"", ""wait_event"": ""transactionid""}]"
+8633.891100005712,0,,,[]
+8693.845700006932,2,117;121,116;119,"[{""waiting_pid"": 117, ""blocking_pid"": 119, ""state"": ""active"", ""wait_event_type"": ""Lock"", ""wait_event"": ""transactionid""}, {""waiting_pid"": 121, ""blocking_pid"": 116, ""state"": ""active"", ""wait_event_type"": ""Lock"", ""wait_event"": ""transactionid""}]"
+8755.889600026421,1,119,115,"[{""waiting_pid"": 119, ""blocking_pid"": 115, ""state"": ""active"", ""wait_event_type"": ""Lock"", ""wait_event"": ""transactionid""}]"
+8817.08529999014,2,114;120,115;117,"[{""waiting_pid"": 114, ""blocking_pid"": 117, ""state"": ""active"", ""wait_event_type"": ""Lock"", ""wait_event"": ""transactionid""}, {""waiting_pid"": 120, ""blocking_pid"": 115, ""state"": ""active"", ""wait_event_type"": ""Lock"", ""wait_event"": ""transactionid""}]"
+8879.445300030056,2,116;119,114;120,"[{""waiting_pid"": 119, ""blocking_pid"": 120, ""state"": ""active"", ""wait_event_type"": ""Lock"", ""wait_event"": ""transactionid""}, {""waiting_pid"": 116, ""blocking_pid"": 114, ""state"": ""active"", ""wait_event_type"": ""Lock"", ""wait_event"": ""transactionid""}]"
+8940.79610001063,2,120;121,115;116,"[{""waiting_pid"": 120, ""blocking_pid"": 115, ""state"": ""active"", ""wait_event_type"": ""Lock"", ""wait_event"": ""transactionid""}, {""waiting_pid"": 121, ""blocking_pid"": 116, ""state"": ""active"", ""wait_event_type"": ""Lock"", ""wait_event"": ""transactionid""}]"
+9003.75840003835,1,114,117,"[{""waiting_pid"": 114, ""blocking_pid"": 117, ""state"": ""active"", ""wait_event_type"": ""Lock"", ""wait_event"": ""transactionid""}]"
+9063.472000008915,1,118,120,"[{""waiting_pid"": 118, ""blocking_pid"": 120, ""state"": ""active"", ""wait_event_type"": ""Lock"", ""wait_event"": ""transactionid""}]"
+9124.307800026145,1,114,119,"[{""waiting_pid"": 114, ""blocking_pid"": 119, ""state"": ""active"", ""wait_event_type"": ""Lock"", ""wait_event"": ""transactionid""}]"
+9186.13650003681,1,117,118,"[{""waiting_pid"": 117, ""blocking_pid"": 118, ""state"": ""active"", ""wait_event_type"": ""Lock"", ""wait_event"": ""transactionid""}]"
+9247.848800034262,1,119,117,"[{""waiting_pid"": 119, ""blocking_pid"": 117, ""state"": ""active"", ""wait_event_type"": ""Lock"", ""wait_event"": ""tuple""}]"
+9308.103999996092,1,118,115,"[{""waiting_pid"": 118, ""blocking_pid"": 115, ""state"": ""active"", ""wait_event_type"": ""Lock"", ""wait_event"": ""transactionid""}]"
+9369.417600042652,0,,,[]
+9431.422499998007,1,119,117,"[{""waiting_pid"": 119, ""blocking_pid"": 117, ""state"": ""active"", ""wait_event_type"": ""Lock"", ""wait_event"": ""transactionid""}]"
+9491.904800001066,0,,,[]
+9554.351099999622,3,115;116;121,114;119;120,"[{""waiting_pid"": 121, ""blocking_pid"": 119, ""state"": ""active"", ""wait_event_type"": ""Lock"", ""wait_event"": ""transactionid""}, {""waiting_pid"": 116, ""blocking_pid"": 114, ""state"": ""active"", ""wait_event_type"": ""Lock"", ""wait_event"": ""transactionid""}, {""waiting_pid"": 115, ""blocking_pid"": 120, ""state"": ""active"", ""wait_event_type"": ""Lock"", ""wait_event"": ""transactionid""}]"
+9616.412700037472,0,,,[]
+9678.528200020082,1,121,119,"[{""waiting_pid"": 121, ""blocking_pid"": 119, ""state"": ""active"", ""wait_event_type"": ""Lock"", ""wait_event"": ""transactionid""}]"
+9739.183500001673,1,118,115,"[{""waiting_pid"": 118, ""blocking_pid"": 115, ""state"": ""active"", ""wait_event_type"": ""Lock"", ""wait_event"": ""transactionid""}]"
+9800.519100041129,0,,,[]
+9861.277499992866,1,114,121,"[{""waiting_pid"": 114, ""blocking_pid"": 121, ""state"": ""active"", ""wait_event_type"": ""Lock"", ""wait_event"": ""transactionid""}]"
+9921.726500033401,1,116,114,"[{""waiting_pid"": 116, ""blocking_pid"": 114, ""state"": ""active"", ""wait_event_type"": ""Lock"", ""wait_event"": ""transactionid""}]"
+9983.462400035933,0,,,[]
