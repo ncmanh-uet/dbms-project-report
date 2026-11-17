@@ -1,0 +1,85 @@
+{
+  "kind": "short_trial",
+  "dbms": "postgres",
+  "scenario": "distinct",
+  "clients": 8,
+  "target_items": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8
+  ],
+  "requested_seconds": 10.0,
+  "status": "PASS",
+  "isolation": "READ COMMITTED",
+  "retries": 0,
+  "update_sql": "UPDATE stock SET s_ytd = s_ytd + 1 WHERE s_w_id = 1 AND s_i_id = %s",
+  "connection_ids": [
+    83,
+    82,
+    84,
+    85,
+    80,
+    81,
+    87,
+    86
+  ],
+  "data_check": {
+    "counter_check": true,
+    "restored": true,
+    "before": {
+      "1": "0.00",
+      "2": "0.00",
+      "3": "0.00",
+      "4": "0.00",
+      "5": "0.00",
+      "6": "0.00",
+      "7": "0.00",
+      "8": "0.00"
+    },
+    "after_transactions": {
+      "1": "1823.00",
+      "2": "1820.00",
+      "3": "1830.00",
+      "4": "1829.00",
+      "5": "1817.00",
+      "6": "1822.00",
+      "7": "1822.00",
+      "8": "1823.00"
+    },
+    "after_restore": {
+      "1": "0.00",
+      "2": "0.00",
+      "3": "0.00",
+      "4": "0.00",
+      "5": "0.00",
+      "6": "0.00",
+      "7": "0.00",
+      "8": "0.00"
+    },
+    "confirmed_commits": 14586
+  },
+  "successful_transactions": 14586,
+  "failed_attempts": 0,
+  "actual_seconds": 10.005106500000693,
+  "successful_tps": 1457.8555460653008,
+  "abort_rate": 0.0,
+  "success_latency_ms": {
+    "mean": 5.48220029455449,
+    "p50": 4.946699977153912,
+    "p95": 8.72215001436416,
+    "p99": 14.43027500354216
+  },
+  "lock_observation": {
+    "requested_poll_interval_ms": 50,
+    "samples": 163,
+    "samples_with_waits": 0,
+    "max_observed_blocked_sessions": 0
+  },
+  "fatal_errors": [],
+  "unknown_commit": false
+}
