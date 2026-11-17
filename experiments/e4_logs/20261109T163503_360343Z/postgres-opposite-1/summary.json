@@ -1,0 +1,79 @@
+{
+  "dbms": "postgres",
+  "mode": "opposite",
+  "round": 1,
+  "isolation": "READ COMMITTED",
+  "status": "FAIL",
+  "detector_settings": {
+    "deadlock_timeout_ms": 1000.0,
+    "session_lock_timeout_seconds": 5
+  },
+  "initial_transactions": [
+    {
+      "actor": "T1",
+      "request_order": [
+        1,
+        2
+      ],
+      "lock_order": [
+        1,
+        2
+      ],
+      "committed": false,
+      "deadlock": false,
+      "rollback_done": true,
+      "connection_id": 376,
+      "update_1_ms": 3.344,
+      "error": "canceling statement due to lock timeout\nCONTEXT:  while updating tuple (4531,15) in relation \"stock\"",
+      "error_kind": "lock_timeout",
+      "sqlstate": "55P03",
+      "errno": null,
+      "server_detail": null,
+      "execution_ms": 113.52610000176355
+    },
+    {
+      "actor": "T2",
+      "request_order": [
+        2,
+        1
+      ],
+      "lock_order": [
+        2,
+        1
+      ],
+      "committed": false,
+      "deadlock": false,
+      "rollback_done": true,
+      "connection_id": 377,
+      "update_1_ms": 3.824,
+      "error": "canceling statement due to lock timeout\nCONTEXT:  while updating tuple (4651,17) in relation \"stock\"",
+      "error_kind": "lock_timeout",
+      "sqlstate": "55P03",
+      "errno": null,
+      "server_detail": null,
+      "execution_ms": 113.05350001202896
+    }
+  ],
+  "initial_commits": 0,
+  "deadlocks": 0,
+  "lock_timeouts": 2,
+  "initial_pair_ms": 114.20819995692,
+  "error": "Expected exactly one DBMS deadlock victim and one committed survivor",
+  "data_check": {
+    "counter_check": true,
+    "restored": true,
+    "confirmed_transactions": 0,
+    "before": {
+      "1": "0.00",
+      "2": "0.00"
+    },
+    "after_transactions": {
+      "1": "0.00",
+      "2": "0.00"
+    },
+    "after_restore": {
+      "1": "0.00",
+      "2": "0.00"
+    }
+  }
+}

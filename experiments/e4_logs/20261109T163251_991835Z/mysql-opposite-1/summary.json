@@ -1,0 +1,93 @@
+{
+  "dbms": "mysql",
+  "mode": "opposite",
+  "round": 1,
+  "isolation": "READ COMMITTED",
+  "status": "PASS",
+  "detector_settings": {
+    "innodb_deadlock_detect": true,
+    "session_lock_timeout_seconds": 5
+  },
+  "initial_transactions": [
+    {
+      "actor": "T1",
+      "request_order": [
+        1,
+        2
+      ],
+      "lock_order": [
+        1,
+        2
+      ],
+      "committed": true,
+      "deadlock": false,
+      "rollback_done": false,
+      "connection_id": 239,
+      "update_1_ms": 4.374,
+      "update_2_ms": 4.625,
+      "execution_ms": 24.92500003427267
+    },
+    {
+      "actor": "T2",
+      "request_order": [
+        2,
+        1
+      ],
+      "lock_order": [
+        2,
+        1
+      ],
+      "committed": false,
+      "deadlock": true,
+      "rollback_done": true,
+      "connection_id": 240,
+      "update_1_ms": 4.024,
+      "error": "1213 (40001): Deadlock found when trying to get lock; try restarting transaction",
+      "error_kind": "deadlock",
+      "sqlstate": "40001",
+      "errno": 1213,
+      "server_detail": null,
+      "execution_ms": 20.15860000392422
+    }
+  ],
+  "initial_commits": 1,
+  "deadlocks": 1,
+  "lock_timeouts": 0,
+  "initial_pair_ms": 28.944999969098717,
+  "victim": "T2",
+  "after_detection": {
+    "1": "1.00",
+    "2": "1.00"
+  },
+  "rollback_verified": true,
+  "schedule_verified": true,
+  "retry": {
+    "actor": "T2",
+    "committed": true,
+    "connection_id": 241,
+    "execution_ms": 148.65899999858811
+  },
+  "after_completed_requests": {
+    "1": "2.00",
+    "2": "2.00"
+  },
+  "logical_successes": 2,
+  "retry_attempts": 1,
+  "data_check": {
+    "counter_check": true,
+    "restored": true,
+    "confirmed_transactions": 2,
+    "before": {
+      "1": "0.00",
+      "2": "0.00"
+    },
+    "after_transactions": {
+      "1": "2.00",
+      "2": "2.00"
+    },
+    "after_restore": {
+      "1": "0.00",
+      "2": "0.00"
+    }
+  }
+}
