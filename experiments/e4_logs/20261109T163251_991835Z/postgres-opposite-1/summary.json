@@ -1,0 +1,93 @@
+{
+  "dbms": "postgres",
+  "mode": "opposite",
+  "round": 1,
+  "isolation": "READ COMMITTED",
+  "status": "PASS",
+  "detector_settings": {
+    "deadlock_timeout_ms": 1000.0,
+    "session_lock_timeout_seconds": 5
+  },
+  "initial_transactions": [
+    {
+      "actor": "T1",
+      "request_order": [
+        1,
+        2
+      ],
+      "lock_order": [
+        1,
+        2
+      ],
+      "committed": false,
+      "deadlock": true,
+      "rollback_done": true,
+      "connection_id": 339,
+      "update_1_ms": 7.363,
+      "error": "deadlock detected\nDETAIL:  Process 339 waits for ShareLock on transaction 105481; blocked by process 340.\nProcess 340 waits for ShareLock on transaction 105482; blocked by process 339.\nHINT:  See server log for query details.\nCONTEXT:  while updating tuple (4531,24) in relation \"stock\"",
+      "error_kind": "deadlock",
+      "sqlstate": "40P01",
+      "errno": null,
+      "server_detail": "Process 339 waits for ShareLock on transaction 105481; blocked by process 340.\nProcess 340 waits for ShareLock on transaction 105482; blocked by process 339.",
+      "execution_ms": 1129.352000018116
+    },
+    {
+      "actor": "T2",
+      "request_order": [
+        2,
+        1
+      ],
+      "lock_order": [
+        2,
+        1
+      ],
+      "committed": true,
+      "deadlock": false,
+      "rollback_done": false,
+      "connection_id": 340,
+      "update_1_ms": 7.771,
+      "update_2_ms": 1109.16,
+      "execution_ms": 1135.0066000013612
+    }
+  ],
+  "initial_commits": 1,
+  "deadlocks": 1,
+  "lock_timeouts": 0,
+  "initial_pair_ms": 1137.700900027994,
+  "victim": "T1",
+  "after_detection": {
+    "1": "1.00",
+    "2": "1.00"
+  },
+  "rollback_verified": true,
+  "schedule_verified": true,
+  "retry": {
+    "actor": "T1",
+    "committed": true,
+    "connection_id": 341,
+    "execution_ms": 106.81339999428019
+  },
+  "after_completed_requests": {
+    "1": "2.00",
+    "2": "2.00"
+  },
+  "logical_successes": 2,
+  "retry_attempts": 1,
+  "data_check": {
+    "counter_check": true,
+    "restored": true,
+    "confirmed_transactions": 2,
+    "before": {
+      "1": "0.00",
+      "2": "0.00"
+    },
+    "after_transactions": {
+      "1": "2.00",
+      "2": "2.00"
+    },
+    "after_restore": {
+      "1": "0.00",
+      "2": "0.00"
+    }
+  }
+}

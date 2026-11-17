@@ -1,0 +1,77 @@
+{
+  "kind": "short_trial",
+  "dbms": "postgres",
+  "scenario": "shared4",
+  "clients": 16,
+  "target_items": [
+    1,
+    2,
+    3,
+    4
+  ],
+  "requested_seconds": 10.0,
+  "status": "PASS",
+  "isolation": "READ COMMITTED",
+  "retries": 0,
+  "update_sql": "UPDATE stock SET s_ytd = s_ytd + 1 WHERE s_w_id = 1 AND s_i_id = %s",
+  "connection_ids": [
+    123,
+    124,
+    127,
+    129,
+    130,
+    131,
+    132,
+    126,
+    134,
+    125,
+    133,
+    135,
+    137,
+    138,
+    128,
+    136
+  ],
+  "data_check": {
+    "counter_check": true,
+    "restored": true,
+    "before": {
+      "1": "0.00",
+      "2": "0.00",
+      "3": "0.00",
+      "4": "0.00"
+    },
+    "after_transactions": {
+      "1": "1778.00",
+      "2": "1779.00",
+      "3": "1781.00",
+      "4": "1779.00"
+    },
+    "after_restore": {
+      "1": "0.00",
+      "2": "0.00",
+      "3": "0.00",
+      "4": "0.00"
+    },
+    "confirmed_commits": 7117
+  },
+  "successful_transactions": 7117,
+  "failed_attempts": 0,
+  "actual_seconds": 10.020176800026093,
+  "successful_tps": 710.2669086618778,
+  "abort_rate": 0.0,
+  "success_latency_ms": {
+    "mean": 22.49385047094768,
+    "p50": 14.1983000212349,
+    "p95": 65.16106002964074,
+    "p99": 151.28387597855186
+  },
+  "lock_observation": {
+    "requested_poll_interval_ms": 50,
+    "samples": 159,
+    "samples_with_waits": 158,
+    "max_observed_blocked_sessions": 12
+  },
+  "fatal_errors": [],
+  "unknown_commit": false
+}

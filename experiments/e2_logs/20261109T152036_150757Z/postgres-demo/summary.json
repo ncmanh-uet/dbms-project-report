@@ -1,0 +1,46 @@
+{
+  "kind": "demo",
+  "dbms": "postgres",
+  "status": "PASS",
+  "t1_connection_id": 43,
+  "t2": {
+    "connection_id": 45,
+    "update_roundtrip_ms": 109.375
+  },
+  "lock_snapshots": [
+    [
+      {
+        "waiting_pid": 45,
+        "blocking_pid": 43,
+        "state": "active",
+        "wait_event_type": "Lock",
+        "wait_event": "transactionid"
+      }
+    ],
+    [
+      {
+        "waiting_pid": 45,
+        "blocking_pid": 43,
+        "state": "active",
+        "wait_event_type": "Lock",
+        "wait_event": "transactionid"
+      }
+    ]
+  ],
+  "observed_blocked_span_ms": 100.58150003897026,
+  "data_check": {
+    "counter_check": true,
+    "restored": true,
+    "before": {
+      "1": "0.00"
+    },
+    "after_transactions": {
+      "1": "2.00"
+    },
+    "after_restore": {
+      "1": "0.00"
+    },
+    "confirmed_commits": 2
+  },
+  "schedule_verified": true
+}

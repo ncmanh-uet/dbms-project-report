@@ -1,0 +1,32 @@
+001 [postgres/opposite/1] PAIR_START {}
+002 [postgres/CONTROLLER] SESSION {"connection_id": 375, "isolation": "read committed", "version": "PostgreSQL 17.11 (Debian 17.11-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit"}
+003 [postgres/opposite/1/T2] SESSION {"connection_id": 377, "isolation": "read committed", "version": "PostgreSQL 17.11 (Debian 17.11-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit"}
+004 [postgres/opposite/1/T1] SESSION {"connection_id": 376, "isolation": "read committed", "version": "PostgreSQL 17.11 (Debian 17.11-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit"}
+005 [postgres/T2] SQL_START {"sql": "BEGIN", "params": null}
+006 [postgres/T1] SQL_START {"sql": "BEGIN", "params": null}
+007 [postgres/T1] SQL_DONE {"result": -1, "duration_ms": 2.127}
+008 [postgres/T2] SQL_DONE {"result": -1, "duration_ms": 2.778}
+009 [postgres/T1] LOCK_ORDER {"case": "opposite/1", "request_order": [1, 2], "lock_order": [1, 2]}
+010 [postgres/T1] REQUEST_ROW {"case": "opposite/1", "item": 1, "position": 1}
+011 [postgres/T1] SQL_START {"sql": "UPDATE stock SET s_ytd = s_ytd + 1 WHERE s_w_id = 1 AND s_i_id = %s", "params": [1]}
+012 [postgres/T2] LOCK_ORDER {"case": "opposite/1", "request_order": [2, 1], "lock_order": [2, 1]}
+013 [postgres/T2] REQUEST_ROW {"case": "opposite/1", "item": 2, "position": 1}
+014 [postgres/T2] SQL_START {"sql": "UPDATE stock SET s_ytd = s_ytd + 1 WHERE s_w_id = 1 AND s_i_id = %s", "params": [2]}
+015 [postgres/T1] SQL_DONE {"result": 1, "duration_ms": 3.344}
+016 [postgres/T1] FIRST_ROW_LOCKED {"case": "opposite/1", "item": 1}
+017 [postgres/T2] SQL_DONE {"result": 1, "duration_ms": 3.824}
+018 [postgres/T2] FIRST_ROW_LOCKED {"case": "opposite/1", "item": 2}
+019 [postgres/T2] REQUEST_ROW {"case": "opposite/1", "item": 1, "position": 2}
+020 [postgres/T2] SQL_START {"sql": "UPDATE stock SET s_ytd = s_ytd + 1 WHERE s_w_id = 1 AND s_i_id = %s", "params": [1]}
+021 [postgres/T1] REQUEST_ROW {"case": "opposite/1", "item": 2, "position": 2}
+022 [postgres/T1] SQL_START {"sql": "UPDATE stock SET s_ytd = s_ytd + 1 WHERE s_w_id = 1 AND s_i_id = %s", "params": [2]}
+023 [postgres/T2] TRANSACTION_ERROR {"case": "opposite/1", "error": "canceling statement due to lock timeout\nCONTEXT:  while updating tuple (4651,17) in relation \"stock\"", "error_kind": "lock_timeout", "sqlstate": "55P03", "errno": null, "server_detail": null}
+024 [postgres/T2] SQL_START {"sql": "ROLLBACK", "params": null}
+025 [postgres/T1] TRANSACTION_ERROR {"case": "opposite/1", "error": "canceling statement due to lock timeout\nCONTEXT:  while updating tuple (4531,15) in relation \"stock\"", "error_kind": "lock_timeout", "sqlstate": "55P03", "errno": null, "server_detail": null}
+026 [postgres/T1] SQL_START {"sql": "ROLLBACK", "params": null}
+027 [postgres/T2] SQL_DONE {"result": -1, "duration_ms": 2.505}
+028 [postgres/T1] SQL_DONE {"result": -1, "duration_ms": 1.896}
+029 [postgres/opposite/1] VALIDATION_ERROR {"message": "Expected exactly one DBMS deadlock victim and one committed survivor"}
+030 [postgres/opposite/1] RESTORED {"confirmed_transactions": 0, "confirmed_row_increments": 0}
+031 [postgres/opposite/1] FAIL {"deadlocks": 0, "initial_commits": 0, "retry_attempts": 0, "restored": true}
+032 [RUN/MAIN] ERROR {"message": "postgres/opposite/1 failed validation"}

@@ -1,0 +1,2 @@
+dbms,mode,round,status,deadlocks,initial_commits,lock_timeouts,retries,logical_successes,initial_pair_ms,restored
+postgres,opposite,1,FAIL,0,0,2,0,0,114.20819995692,True

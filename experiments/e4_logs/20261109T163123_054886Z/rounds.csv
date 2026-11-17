@@ -1,0 +1,5 @@
+dbms,mode,round,status,deadlocks,initial_commits,lock_timeouts,retries,logical_successes,initial_pair_ms,restored
+postgres,opposite,1,PASS,1,1,0,1,2,1052.7559999609366,True
+postgres,ordered,1,PASS,0,2,0,0,2,28.56980002252385,True
+mysql,opposite,1,PASS,1,1,0,1,2,82.94459996977821,True
+mysql,ordered,1,PASS,0,2,0,0,2,125.88410003809258,True

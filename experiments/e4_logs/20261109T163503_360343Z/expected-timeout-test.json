@@ -1,0 +1,8 @@
+{
+  "test_status": "PASS",
+  "injected_condition": "worker lock_timeout 100ms below detector delay 1000ms",
+  "expected_run_status": "FAIL",
+  "deadlocks": 0,
+  "lock_timeouts": 2,
+  "restored": true
+}

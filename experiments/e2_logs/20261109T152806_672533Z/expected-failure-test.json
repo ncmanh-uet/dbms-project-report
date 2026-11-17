@@ -1,0 +1,7 @@
+{
+  "test_status": "PASS",
+  "injected_failure": "empty-message RuntimeError on third lock-observer query",
+  "run_status_expected": "FAIL",
+  "restored": true,
+  "confirmed_commits": 29
+}

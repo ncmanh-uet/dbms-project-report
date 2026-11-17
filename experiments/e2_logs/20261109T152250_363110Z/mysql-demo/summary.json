@@ -1,0 +1,52 @@
+{
+  "kind": "demo",
+  "dbms": "mysql",
+  "status": "PASS",
+  "t1_connection_id": 40,
+  "t2": {
+    "connection_id": 42,
+    "update_roundtrip_ms": 163.629
+  },
+  "lock_snapshots": [
+    [
+      {
+        "waiting_pid": 42,
+        "blocking_pid": 40,
+        "table": "stock",
+        "index": "PRIMARY",
+        "lock_type": "RECORD",
+        "lock_mode": "X,REC_NOT_GAP",
+        "lock_status": "WAITING",
+        "lock_data": "1, 1"
+      }
+    ],
+    [
+      {
+        "waiting_pid": 42,
+        "blocking_pid": 40,
+        "table": "stock",
+        "index": "PRIMARY",
+        "lock_type": "RECORD",
+        "lock_mode": "X,REC_NOT_GAP",
+        "lock_status": "WAITING",
+        "lock_data": "1, 1"
+      }
+    ]
+  ],
+  "observed_blocked_span_ms": 123.69139998918399,
+  "data_check": {
+    "counter_check": true,
+    "restored": true,
+    "before": {
+      "1": "0.00"
+    },
+    "after_transactions": {
+      "1": "2.00"
+    },
+    "after_restore": {
+      "1": "0.00"
+    },
+    "confirmed_commits": 2
+  },
+  "schedule_verified": true
+}
