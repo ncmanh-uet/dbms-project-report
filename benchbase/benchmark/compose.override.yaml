@@ -1,0 +1,36 @@
+# Paths are relative to the first Compose file (the repository root).
+services:
+  postgres:
+    cpus: 2.0
+    mem_limit: 2g
+    memswap_limit: 2g
+    command: ["postgres", "-c", "max_connections=200"]
+    volumes:
+      - ./benchbase/benchmark:/lab-bench
+  mysql:
+    cpus: 2.0
+    mem_limit: 2g
+    memswap_limit: 2g
+    command: ["mysqld", "--max-connections=200"]
+    volumes:
+      - ./benchbase/benchmark:/lab-bench
+  benchbase-postgres:
+    cpus: 4.0
+    mem_limit: 1g
+    memswap_limit: 1g
+    environment:
+      JAVA_TOOL_OPTIONS: -Xms128m -Xmx512m
+    volumes:
+      - ./benchbase/benchmark:/lab-bench:ro
+      - ./benchbase/benchmark/results/postgres:/benchbase/results
+      - ./benchbase/benchmark/runtime/benchbase-postgres-instrumented.jar:/benchbase/profiles/postgres/benchbase.jar:ro
+  benchbase-mysql:
+    cpus: 4.0
+    mem_limit: 1g
+    memswap_limit: 1g
+    environment:
+      JAVA_TOOL_OPTIONS: -Xms128m -Xmx512m
+    volumes:
+      - ./benchbase/benchmark:/lab-bench:ro
+      - ./benchbase/benchmark/results/mysql:/benchbase/results
+      - ./benchbase/benchmark/runtime/benchbase-mysql-instrumented.jar:/benchbase/profiles/mysql/benchbase.jar:ro

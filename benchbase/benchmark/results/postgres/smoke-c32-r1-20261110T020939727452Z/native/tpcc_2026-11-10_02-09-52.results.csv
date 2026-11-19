@@ -1,0 +1,8 @@
+Time (seconds),Throughput (requests/second),Average Latency (millisecond),Minimum Latency (millisecond),25th Percentile Latency (millisecond),Median Latency (millisecond),75th Percentile Latency (millisecond),90th Percentile Latency (millisecond),95th Percentile Latency (millisecond),99th Percentile Latency (millisecond),Maximum Latency (millisecond),tp (req/s) scaled
+0,520.000,59.804,0.008,6.734,11.783,65.074,187.281,274.414,462.306,986.363,0.017
+1,504.000,62.497,0.013,7.395,14.627,76.731,189.123,299.282,442.477,691.416,0.016
+2,560.000,57.730,0.007,6.109,10.924,74.938,194.417,244.969,453.706,748.036,0.017
+3,559.000,57.201,0.007,6.309,13.341,66.274,189.796,268.385,394.823,513.897,0.017
+4,493.000,68.391,0.016,7.176,12.564,73.851,215.177,306.358,539.003,1030.778,0.015
+5,476.000,66.651,0.013,7.898,13.756,84.742,195.413,305.231,499.332,778.614,0.015
+6,468.000,49.609,0.876,7.166,12.298,52.840,159.844,226.160,351.527,526.619,0.020

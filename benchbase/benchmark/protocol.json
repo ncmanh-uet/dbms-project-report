@@ -1,0 +1,22 @@
+{
+  "protocol_version": 1,
+  "database": "tpcc_bench",
+  "warehouses": 1,
+  "isolation": "TRANSACTION_READ_COMMITTED",
+  "weights": [45, 43, 4, 4, 4],
+  "transaction_types": ["NewOrder", "Payment", "OrderStatus", "Delivery", "StockLevel"],
+  "clients": [1, 4, 8, 16, 32, 64, 128],
+  "warmup_seconds": 15,
+  "measure_seconds": 60,
+  "repetitions": 3,
+  "rate": "unlimited",
+  "total_attempt_limit": 3,
+  "random_seed": 20261023,
+  "db_cpu_limit": 2,
+  "db_memory_gib": 2,
+  "generator_cpu_limit": 4,
+  "generator_memory_gib": 1,
+  "java_heap_mib": 512,
+  "minimum_free_disk_gib": 2,
+  "note": "Single-warehouse contention workload; no TPC-C compliance claim. Step 16 performs short smoke tests only. Every measured run has its own restore and in-process warmup."
+}

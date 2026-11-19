@@ -1,0 +1,2 @@
+worker,transaction_type,phase,start_ns,end_ns,status,attempts,retry_events,sqlstate,sqlcode
+32,2,1,1826176789002,1826553338100,SUCCESS,1,0,,0

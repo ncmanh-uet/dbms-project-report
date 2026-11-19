@@ -1,0 +1,92 @@
+{
+  "verified_utc": "2026-11-10T04:48:43.089466+00:00",
+  "status": "PASS",
+  "smoke_runs": [
+    {
+      "dbms": "postgres",
+      "clients": 1,
+      "sessions": 1,
+      "status": "PASS"
+    },
+    {
+      "dbms": "mysql",
+      "clients": 1,
+      "sessions": 1,
+      "status": "PASS"
+    },
+    {
+      "dbms": "postgres",
+      "clients": 32,
+      "sessions": 32,
+      "status": "PASS"
+    },
+    {
+      "dbms": "mysql",
+      "clients": 32,
+      "sessions": 32,
+      "status": "PASS"
+    },
+    {
+      "dbms": "postgres",
+      "clients": 64,
+      "sessions": 64,
+      "status": "PASS"
+    },
+    {
+      "dbms": "mysql",
+      "clients": 64,
+      "sessions": 64,
+      "status": "PASS"
+    },
+    {
+      "dbms": "postgres",
+      "clients": 128,
+      "sessions": 128,
+      "status": "PASS"
+    },
+    {
+      "dbms": "mysql",
+      "clients": 128,
+      "sessions": 128,
+      "status": "PASS"
+    }
+  ],
+  "databases": {
+    "postgres": {
+      "source_unchanged": true,
+      "benchmark_at_baseline": true,
+      "row_counts": {
+        "warehouse": 1,
+        "district": 10,
+        "customer": 30000,
+        "history": 30000,
+        "item": 100000,
+        "stock": 100000,
+        "oorder": 30000,
+        "new_order": 9000,
+        "order_line": 300040
+      }
+    },
+    "mysql": {
+      "source_unchanged": true,
+      "benchmark_at_baseline": true,
+      "row_counts": {
+        "warehouse": 1,
+        "district": 10,
+        "customer": 30000,
+        "history": 30000,
+        "item": 100000,
+        "stock": 100000,
+        "oorder": 30000,
+        "new_order": 9000,
+        "order_line": 300040
+      }
+    }
+  },
+  "temporary_metadata_permissions_revoked": true,
+  "formal_benchmark_started": false,
+  "limitations": [
+    "Short smoke tests do not establish sustained performance.",
+    "Baseline fingerprints and four invariants are not a full TPC-C audit."
+  ]
+}

@@ -1,0 +1,26 @@
+{
+ "Start timestamp (milliseconds)": 1794276372456,
+ "Current Timestamp (milliseconds)": 1794276382838,
+ "Elapsed Time (nanoseconds)": 6999984050,
+ "DBMS Type": "MYSQL",
+ "DBMS Version": "8.4.13",
+ "Benchmark Type": "tpcc",
+ "Final State": "EXIT",
+ "Measured Requests": 1098,
+ "isolation": "TRANSACTION_READ_COMMITTED",
+ "scalefactor": "1",
+ "terminals": "1",
+ "Latency Distribution": {
+  "95th Percentile Latency (microseconds)": 14792,
+  "Maximum Latency (microseconds)": 30486,
+  "Median Latency (microseconds)": 5508,
+  "Minimum Latency (microseconds)": 514,
+  "25th Percentile Latency (microseconds)": 3165,
+  "90th Percentile Latency (microseconds)": 11630,
+  "99th Percentile Latency (microseconds)": 21678,
+  "75th Percentile Latency (microseconds)": 8304,
+  "Average Latency (microseconds)": 6304
+ },
+ "Throughput (requests/second)": 156.85750026816132,
+ "Goodput (requests/second)": 203.00046255105394
+}

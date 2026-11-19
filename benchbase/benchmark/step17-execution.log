@@ -1,0 +1,170 @@
+postgres: baseline restored and verified
+postgres: formal, 1 clients, warmup=15s, measure=60s
+postgres: PASS; 27908 requests; 1 sessions observed
+mysql: baseline restored and verified
+mysql: formal, 1 clients, warmup=15s, measure=60s
+001 [mysql/ADMIN] TEMPORARY_OBSERVER_ACCESS {"tables": ["data_lock_waits", "data_locks", "threads"]}
+002 [mysql/ADMIN] OBSERVER_ACCESS_RESTORED {"tables": ["data_lock_waits", "data_locks", "threads"], "errors": []}
+mysql: PASS; 8471 requests; 1 sessions observed
+postgres: baseline restored and verified
+postgres: formal, 4 clients, warmup=15s, measure=60s
+postgres: PASS; 43051 requests; 4 sessions observed
+mysql: baseline restored and verified
+mysql: formal, 4 clients, warmup=15s, measure=60s
+001 [mysql/ADMIN] TEMPORARY_OBSERVER_ACCESS {"tables": ["data_lock_waits", "data_locks", "threads"]}
+002 [mysql/ADMIN] OBSERVER_ACCESS_RESTORED {"tables": ["data_lock_waits", "data_locks", "threads"], "errors": []}
+mysql: PASS; 14061 requests; 4 sessions observed
+postgres: baseline restored and verified
+postgres: formal, 8 clients, warmup=15s, measure=60s
+postgres: PASS; 37361 requests; 8 sessions observed
+mysql: baseline restored and verified
+mysql: formal, 8 clients, warmup=15s, measure=60s
+001 [mysql/ADMIN] TEMPORARY_OBSERVER_ACCESS {"tables": ["data_lock_waits", "data_locks", "threads"]}
+002 [mysql/ADMIN] OBSERVER_ACCESS_RESTORED {"tables": ["data_lock_waits", "data_locks", "threads"], "errors": []}
+mysql: PASS; 14226 requests; 8 sessions observed
+postgres: baseline restored and verified
+postgres: formal, 16 clients, warmup=15s, measure=60s
+postgres: PASS; 29722 requests; 16 sessions observed
+mysql: baseline restored and verified
+mysql: formal, 16 clients, warmup=15s, measure=60s
+001 [mysql/ADMIN] TEMPORARY_OBSERVER_ACCESS {"tables": ["data_lock_waits", "data_locks", "threads"]}
+002 [mysql/ADMIN] OBSERVER_ACCESS_RESTORED {"tables": ["data_lock_waits", "data_locks", "threads"], "errors": []}
+mysql: PASS; 13128 requests; 16 sessions observed
+postgres: baseline restored and verified
+postgres: formal, 32 clients, warmup=15s, measure=60s
+postgres: PASS; 23330 requests; 32 sessions observed
+mysql: baseline restored and verified
+mysql: formal, 32 clients, warmup=15s, measure=60s
+001 [mysql/ADMIN] TEMPORARY_OBSERVER_ACCESS {"tables": ["data_lock_waits", "data_locks", "threads"]}
+002 [mysql/ADMIN] OBSERVER_ACCESS_RESTORED {"tables": ["data_lock_waits", "data_locks", "threads"], "errors": []}
+mysql: PASS; 13771 requests; 32 sessions observed
+postgres: baseline restored and verified
+postgres: formal, 64 clients, warmup=15s, measure=60s
+postgres: PASS; 20486 requests; 64 sessions observed
+mysql: baseline restored and verified
+mysql: formal, 64 clients, warmup=15s, measure=60s
+001 [mysql/ADMIN] TEMPORARY_OBSERVER_ACCESS {"tables": ["data_lock_waits", "data_locks", "threads"]}
+002 [mysql/ADMIN] OBSERVER_ACCESS_RESTORED {"tables": ["data_lock_waits", "data_locks", "threads"], "errors": []}
+mysql: PASS; 13362 requests; 64 sessions observed
+postgres: baseline restored and verified
+postgres: formal, 128 clients, warmup=15s, measure=60s
+postgres: PASS; 12990 requests; 128 sessions observed
+mysql: baseline restored and verified
+mysql: formal, 128 clients, warmup=15s, measure=60s
+001 [mysql/ADMIN] TEMPORARY_OBSERVER_ACCESS {"tables": ["data_lock_waits", "data_locks", "threads"]}
+002 [mysql/ADMIN] OBSERVER_ACCESS_RESTORED {"tables": ["data_lock_waits", "data_locks", "threads"], "errors": []}
+mysql: PASS; 13958 requests; 128 sessions observed
+mysql: baseline restored and verified
+mysql: formal, 1 clients, warmup=15s, measure=60s
+001 [mysql/ADMIN] TEMPORARY_OBSERVER_ACCESS {"tables": ["data_lock_waits", "data_locks", "threads"]}
+002 [mysql/ADMIN] OBSERVER_ACCESS_RESTORED {"tables": ["data_lock_waits", "data_locks", "threads"], "errors": []}
+mysql: PASS; 8448 requests; 1 sessions observed
+postgres: baseline restored and verified
+postgres: formal, 1 clients, warmup=15s, measure=60s
+postgres: PASS; 25869 requests; 1 sessions observed
+mysql: baseline restored and verified
+mysql: formal, 4 clients, warmup=15s, measure=60s
+001 [mysql/ADMIN] TEMPORARY_OBSERVER_ACCESS {"tables": ["data_lock_waits", "data_locks", "threads"]}
+002 [mysql/ADMIN] OBSERVER_ACCESS_RESTORED {"tables": ["data_lock_waits", "data_locks", "threads"], "errors": []}
+mysql: PASS; 14812 requests; 4 sessions observed
+postgres: baseline restored and verified
+postgres: formal, 4 clients, warmup=15s, measure=60s
+postgres: PASS; 39712 requests; 4 sessions observed
+mysql: baseline restored and verified
+mysql: formal, 8 clients, warmup=15s, measure=60s
+001 [mysql/ADMIN] TEMPORARY_OBSERVER_ACCESS {"tables": ["data_lock_waits", "data_locks", "threads"]}
+002 [mysql/ADMIN] OBSERVER_ACCESS_RESTORED {"tables": ["data_lock_waits", "data_locks", "threads"], "errors": []}
+mysql: PASS; 15471 requests; 8 sessions observed
+postgres: baseline restored and verified
+postgres: formal, 8 clients, warmup=15s, measure=60s
+postgres: PASS; 37422 requests; 8 sessions observed
+mysql: baseline restored and verified
+mysql: formal, 16 clients, warmup=15s, measure=60s
+001 [mysql/ADMIN] TEMPORARY_OBSERVER_ACCESS {"tables": ["data_lock_waits", "data_locks", "threads"]}
+002 [mysql/ADMIN] OBSERVER_ACCESS_RESTORED {"tables": ["data_lock_waits", "data_locks", "threads"], "errors": []}
+mysql: PASS; 14422 requests; 16 sessions observed
+postgres: baseline restored and verified
+postgres: formal, 16 clients, warmup=15s, measure=60s
+postgres: PASS; 32912 requests; 16 sessions observed
+mysql: baseline restored and verified
+mysql: formal, 32 clients, warmup=15s, measure=60s
+001 [mysql/ADMIN] TEMPORARY_OBSERVER_ACCESS {"tables": ["data_lock_waits", "data_locks", "threads"]}
+002 [mysql/ADMIN] OBSERVER_ACCESS_RESTORED {"tables": ["data_lock_waits", "data_locks", "threads"], "errors": []}
+mysql: PASS; 14325 requests; 32 sessions observed
+postgres: baseline restored and verified
+postgres: formal, 32 clients, warmup=15s, measure=60s
+postgres: PASS; 27788 requests; 32 sessions observed
+mysql: baseline restored and verified
+mysql: formal, 64 clients, warmup=15s, measure=60s
+001 [mysql/ADMIN] TEMPORARY_OBSERVER_ACCESS {"tables": ["data_lock_waits", "data_locks", "threads"]}
+002 [mysql/ADMIN] OBSERVER_ACCESS_RESTORED {"tables": ["data_lock_waits", "data_locks", "threads"], "errors": []}
+mysql: PASS; 14147 requests; 64 sessions observed
+postgres: baseline restored and verified
+postgres: formal, 64 clients, warmup=15s, measure=60s
+postgres: PASS; 18503 requests; 64 sessions observed
+mysql: baseline restored and verified
+mysql: formal, 128 clients, warmup=15s, measure=60s
+001 [mysql/ADMIN] TEMPORARY_OBSERVER_ACCESS {"tables": ["data_lock_waits", "data_locks", "threads"]}
+002 [mysql/ADMIN] OBSERVER_ACCESS_RESTORED {"tables": ["data_lock_waits", "data_locks", "threads"], "errors": []}
+mysql: PASS; 11911 requests; 128 sessions observed
+postgres: baseline restored and verified
+postgres: formal, 128 clients, warmup=15s, measure=60s
+postgres: PASS; 14751 requests; 128 sessions observed
+postgres: baseline restored and verified
+postgres: formal, 1 clients, warmup=15s, measure=60s
+postgres: PASS; 24021 requests; 1 sessions observed
+mysql: baseline restored and verified
+mysql: formal, 1 clients, warmup=15s, measure=60s
+001 [mysql/ADMIN] TEMPORARY_OBSERVER_ACCESS {"tables": ["data_lock_waits", "data_locks", "threads"]}
+002 [mysql/ADMIN] OBSERVER_ACCESS_RESTORED {"tables": ["data_lock_waits", "data_locks", "threads"], "errors": []}
+mysql: PASS; 7885 requests; 1 sessions observed
+postgres: baseline restored and verified
+postgres: formal, 4 clients, warmup=15s, measure=60s
+postgres: PASS; 39633 requests; 4 sessions observed
+mysql: baseline restored and verified
+mysql: formal, 4 clients, warmup=15s, measure=60s
+001 [mysql/ADMIN] TEMPORARY_OBSERVER_ACCESS {"tables": ["data_lock_waits", "data_locks", "threads"]}
+002 [mysql/ADMIN] OBSERVER_ACCESS_RESTORED {"tables": ["data_lock_waits", "data_locks", "threads"], "errors": []}
+mysql: PASS; 14631 requests; 4 sessions observed
+postgres: baseline restored and verified
+postgres: formal, 8 clients, warmup=15s, measure=60s
+postgres: PASS; 39259 requests; 8 sessions observed
+mysql: baseline restored and verified
+mysql: formal, 8 clients, warmup=15s, measure=60s
+001 [mysql/ADMIN] TEMPORARY_OBSERVER_ACCESS {"tables": ["data_lock_waits", "data_locks", "threads"]}
+002 [mysql/ADMIN] OBSERVER_ACCESS_RESTORED {"tables": ["data_lock_waits", "data_locks", "threads"], "errors": []}
+mysql: PASS; 14552 requests; 8 sessions observed
+postgres: baseline restored and verified
+postgres: formal, 16 clients, warmup=15s, measure=60s
+postgres: PASS; 19416 requests; 16 sessions observed
+mysql: baseline restored and verified
+mysql: formal, 16 clients, warmup=15s, measure=60s
+001 [mysql/ADMIN] TEMPORARY_OBSERVER_ACCESS {"tables": ["data_lock_waits", "data_locks", "threads"]}
+002 [mysql/ADMIN] OBSERVER_ACCESS_RESTORED {"tables": ["data_lock_waits", "data_locks", "threads"], "errors": []}
+mysql: PASS; 8675 requests; 16 sessions observed
+postgres: baseline restored and verified
+postgres: formal, 32 clients, warmup=15s, measure=60s
+postgres: PASS; 28047 requests; 32 sessions observed
+mysql: baseline restored and verified
+mysql: formal, 32 clients, warmup=15s, measure=60s
+001 [mysql/ADMIN] TEMPORARY_OBSERVER_ACCESS {"tables": ["data_lock_waits", "data_locks", "threads"]}
+002 [mysql/ADMIN] OBSERVER_ACCESS_RESTORED {"tables": ["data_lock_waits", "data_locks", "threads"], "errors": []}
+mysql: PASS; 14236 requests; 32 sessions observed
+postgres: baseline restored and verified
+postgres: formal, 64 clients, warmup=15s, measure=60s
+postgres: PASS; 19527 requests; 64 sessions observed
+mysql: baseline restored and verified
+mysql: formal, 64 clients, warmup=15s, measure=60s
+001 [mysql/ADMIN] TEMPORARY_OBSERVER_ACCESS {"tables": ["data_lock_waits", "data_locks", "threads"]}
+002 [mysql/ADMIN] OBSERVER_ACCESS_RESTORED {"tables": ["data_lock_waits", "data_locks", "threads"], "errors": []}
+mysql: PASS; 12230 requests; 64 sessions observed
+postgres: baseline restored and verified
+postgres: formal, 128 clients, warmup=15s, measure=60s
+postgres: PASS; 15522 requests; 128 sessions observed
+mysql: baseline restored and verified
+mysql: formal, 128 clients, warmup=15s, measure=60s
+001 [mysql/ADMIN] TEMPORARY_OBSERVER_ACCESS {"tables": ["data_lock_waits", "data_locks", "threads"]}
+002 [mysql/ADMIN] OBSERVER_ACCESS_RESTORED {"tables": ["data_lock_waits", "data_locks", "threads"], "errors": []}
+mysql: PASS; 14542 requests; 128 sessions observed
+postgres: baseline restored and verified
+mysql: baseline restored and verified

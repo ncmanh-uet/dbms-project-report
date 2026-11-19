@@ -1,0 +1,19 @@
+{
+  "upstream_commit": "33c00473807ebd49304d114a6d769d2d2b2bbb34",
+  "source_url": "https://raw.githubusercontent.com/cmu-db/benchbase/33c00473807ebd49304d114a6d769d2d2b2bbb34/src/main/java/com/oltpbenchmark/api/Worker.java",
+  "source_sha256": "4463226c5cbf0fb544325b1dc8250fd4ebdcde7fe18d29e589a42272e880a61d",
+  "patched_source_sha256": "fc8c25af2125fa02cccf1e4c71fba4a5c8307f3e66177d2d8b3da037ea2d8bbf",
+  "patch_sha256": "fd0dd6dc64ce071f59de731042da383d90292f269758c9b2be8bce0c43e4e76e",
+  "helper_sha256": "310dfd5ce7ab7209f77f6f218558ca6597243e02cb4a99849a93cecc9c8855c8",
+  "profiles": {
+    "postgres": {
+      "original_jar_sha256": "8948beb84382a65311d6e297c6804d9690511fa2955e2bbae8c20b58a4904a12",
+      "instrumented_jar_sha256": "dd90aae8a27d01f2b74c1fc86c920044fda76716164ae37800533ecaa5acbb4c"
+    },
+    "mysql": {
+      "original_jar_sha256": "59e5bc51b76db32c236aabd1032732aa26ebbe5a2f78bed02906dee1f6fa59a1",
+      "instrumented_jar_sha256": "e6a0bfaa857a31d8ccdcb11d31d1bf9ccda50b1e87f68f414eb4d39af5ba5bc2"
+    }
+  },
+  "original_worker_class_sha256": "9a3726cd478bae0e5da5eb0c81cc737707839b682fbe78ffbe22e96f788883f2"
+}

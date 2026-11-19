@@ -1,0 +1,670 @@
+{
+  "verified_utc": "2026-11-10T06:07:04.298409+00:00",
+  "status": "PASS",
+  "expected_runs": 42,
+  "verified_runs": 42,
+  "totals": {
+    "measured_requests": 848494,
+    "successful_requests": 839700,
+    "benchmark_user_aborts": 8794,
+    "failed_requests": 0,
+    "requests_with_retry": 16,
+    "reexecutions_started": 16
+  },
+  "user_aborted_by_transaction": {
+    "1": 3849,
+    "4": 4945
+  },
+  "neworder_intentional_aborts": 3849,
+  "delivery_conflict_aborts": 4945,
+  "outcome_classification_note": "Legacy expected_user_aborts in per-run metrics contains all USER_ABORTED. Delivery USER_ABORTED is a concurrency conflict, not an intentionally invalid NewOrder. Raw files and original run metrics are preserved.",
+  "protocol_unchanged": true,
+  "all_request_counts_and_success_p95_rechecked": true,
+  "all_four_business_invariants_passed": true,
+  "databases": {
+    "postgres": {
+      "source_unchanged": true,
+      "benchmark_at_baseline": true
+    },
+    "mysql": {
+      "source_unchanged": true,
+      "benchmark_at_baseline": true
+    }
+  },
+  "temporary_mysql_metadata_permissions_revoked": true,
+  "cleanup": {
+    "errors": [],
+    "utc": "2026-11-10T06:01:29.671870+00:00"
+  },
+  "runs": [
+    {
+      "dbms": "postgres",
+      "clients": 1,
+      "repetition": 1,
+      "status": "PASS",
+      "measurement_seconds": 60.006458278,
+      "user_aborted_by_transaction": {
+        "1": 139
+      },
+      "delivery_conflict_aborts": 0,
+      "measurement_db_samples": 60,
+      "measurement_resource_samples": 60,
+      "directory": "results\\postgres\\formal-c1-r1-20261110T044924624101Z"
+    },
+    {
+      "dbms": "mysql",
+      "clients": 1,
+      "repetition": 1,
+      "status": "PASS",
+      "measurement_seconds": 60.000058164,
+      "user_aborted_by_transaction": {
+        "1": 39
+      },
+      "delivery_conflict_aborts": 0,
+      "measurement_db_samples": 59,
+      "measurement_resource_samples": 60,
+      "directory": "results\\mysql\\formal-c1-r1-20261110T045108973718Z"
+    },
+    {
+      "dbms": "postgres",
+      "clients": 4,
+      "repetition": 1,
+      "status": "PASS",
+      "measurement_seconds": 60.999340709,
+      "user_aborted_by_transaction": {
+        "4": 276,
+        "1": 209
+      },
+      "delivery_conflict_aborts": 276,
+      "measurement_db_samples": 60,
+      "measurement_resource_samples": 60,
+      "directory": "results\\postgres\\formal-c4-r1-20261110T045246145520Z"
+    },
+    {
+      "dbms": "mysql",
+      "clients": 4,
+      "repetition": 1,
+      "status": "PASS",
+      "measurement_seconds": 60.000009758,
+      "user_aborted_by_transaction": {
+        "4": 67,
+        "1": 66
+      },
+      "delivery_conflict_aborts": 67,
+      "measurement_db_samples": 59,
+      "measurement_resource_samples": 60,
+      "directory": "results\\mysql\\formal-c4-r1-20261110T045435874529Z"
+    },
+    {
+      "dbms": "postgres",
+      "clients": 8,
+      "repetition": 1,
+      "status": "PASS",
+      "measurement_seconds": 60.000000388,
+      "user_aborted_by_transaction": {
+        "4": 367,
+        "1": 148
+      },
+      "delivery_conflict_aborts": 367,
+      "measurement_db_samples": 59,
+      "measurement_resource_samples": 60,
+      "directory": "results\\postgres\\formal-c8-r1-20261110T045614742033Z"
+    },
+    {
+      "dbms": "mysql",
+      "clients": 8,
+      "repetition": 1,
+      "status": "PASS",
+      "measurement_seconds": 61.000092208,
+      "user_aborted_by_transaction": {
+        "4": 92,
+        "1": 69
+      },
+      "delivery_conflict_aborts": 92,
+      "measurement_db_samples": 61,
+      "measurement_resource_samples": 62,
+      "directory": "results\\mysql\\formal-c8-r1-20261110T045803272514Z"
+    },
+    {
+      "dbms": "postgres",
+      "clients": 16,
+      "repetition": 1,
+      "status": "PASS",
+      "measurement_seconds": 60.999846393,
+      "user_aborted_by_transaction": {
+        "1": 128,
+        "4": 206
+      },
+      "delivery_conflict_aborts": 206,
+      "measurement_db_samples": 60,
+      "measurement_resource_samples": 60,
+      "directory": "results\\postgres\\formal-c16-r1-20261110T045941581253Z"
+    },
+    {
+      "dbms": "mysql",
+      "clients": 16,
+      "repetition": 1,
+      "status": "PASS",
+      "measurement_seconds": 60.000008332,
+      "user_aborted_by_transaction": {
+        "1": 67,
+        "4": 76
+      },
+      "delivery_conflict_aborts": 76,
+      "measurement_db_samples": 59,
+      "measurement_resource_samples": 60,
+      "directory": "results\\mysql\\formal-c16-r1-20261110T050126926280Z"
+    },
+    {
+      "dbms": "postgres",
+      "clients": 32,
+      "repetition": 1,
+      "status": "PASS",
+      "measurement_seconds": 60.99993129,
+      "user_aborted_by_transaction": {
+        "1": 97,
+        "4": 111
+      },
+      "delivery_conflict_aborts": 111,
+      "measurement_db_samples": 60,
+      "measurement_resource_samples": 60,
+      "directory": "results\\postgres\\formal-c32-r1-20261110T050305390458Z"
+    },
+    {
+      "dbms": "mysql",
+      "clients": 32,
+      "repetition": 1,
+      "status": "PASS",
+      "measurement_seconds": 60.000080678,
+      "user_aborted_by_transaction": {
+        "1": 60,
+        "4": 78
+      },
+      "delivery_conflict_aborts": 78,
+      "measurement_db_samples": 59,
+      "measurement_resource_samples": 60,
+      "directory": "results\\mysql\\formal-c32-r1-20261110T050459514725Z"
+    },
+    {
+      "dbms": "postgres",
+      "clients": 64,
+      "repetition": 1,
+      "status": "PASS",
+      "measurement_seconds": 60.000099842,
+      "user_aborted_by_transaction": {
+        "1": 96,
+        "4": 120
+      },
+      "delivery_conflict_aborts": 120,
+      "measurement_db_samples": 59,
+      "measurement_resource_samples": 58,
+      "directory": "results\\postgres\\formal-c64-r1-20261110T050639189896Z"
+    },
+    {
+      "dbms": "mysql",
+      "clients": 64,
+      "repetition": 1,
+      "status": "PASS",
+      "measurement_seconds": 60.000049717,
+      "user_aborted_by_transaction": {
+        "4": 75,
+        "1": 58
+      },
+      "delivery_conflict_aborts": 75,
+      "measurement_db_samples": 60,
+      "measurement_resource_samples": 60,
+      "directory": "results\\mysql\\formal-c64-r1-20261110T050821303591Z"
+    },
+    {
+      "dbms": "postgres",
+      "clients": 128,
+      "repetition": 1,
+      "status": "PASS",
+      "measurement_seconds": 60.000062242,
+      "user_aborted_by_transaction": {
+        "1": 60,
+        "4": 76
+      },
+      "delivery_conflict_aborts": 76,
+      "measurement_db_samples": 59,
+      "measurement_resource_samples": 60,
+      "directory": "results\\postgres\\formal-c128-r1-20261110T051000637858Z"
+    },
+    {
+      "dbms": "mysql",
+      "clients": 128,
+      "repetition": 1,
+      "status": "PASS",
+      "measurement_seconds": 60.000228899,
+      "user_aborted_by_transaction": {
+        "1": 61,
+        "4": 64
+      },
+      "delivery_conflict_aborts": 64,
+      "measurement_db_samples": 60,
+      "measurement_resource_samples": 60,
+      "directory": "results\\mysql\\formal-c128-r1-20261110T051143573046Z"
+    },
+    {
+      "dbms": "mysql",
+      "clients": 1,
+      "repetition": 2,
+      "status": "PASS",
+      "measurement_seconds": 60.00003454,
+      "user_aborted_by_transaction": {
+        "1": 40
+      },
+      "delivery_conflict_aborts": 0,
+      "measurement_db_samples": 59,
+      "measurement_resource_samples": 60,
+      "directory": "results\\mysql\\formal-c1-r2-20261110T051324145802Z"
+    },
+    {
+      "dbms": "postgres",
+      "clients": 1,
+      "repetition": 2,
+      "status": "PASS",
+      "measurement_seconds": 60.000140031,
+      "user_aborted_by_transaction": {
+        "1": 108
+      },
+      "delivery_conflict_aborts": 0,
+      "measurement_db_samples": 60,
+      "measurement_resource_samples": 60,
+      "directory": "results\\postgres\\formal-c1-r2-20261110T051501433320Z"
+    },
+    {
+      "dbms": "mysql",
+      "clients": 4,
+      "repetition": 2,
+      "status": "PASS",
+      "measurement_seconds": 61.000012791,
+      "user_aborted_by_transaction": {
+        "1": 61,
+        "4": 79
+      },
+      "delivery_conflict_aborts": 79,
+      "measurement_db_samples": 60,
+      "measurement_resource_samples": 60,
+      "directory": "results\\mysql\\formal-c4-r2-20261110T051644054695Z"
+    },
+    {
+      "dbms": "postgres",
+      "clients": 4,
+      "repetition": 2,
+      "status": "PASS",
+      "measurement_seconds": 60.999943601,
+      "user_aborted_by_transaction": {
+        "1": 181,
+        "4": 291
+      },
+      "delivery_conflict_aborts": 291,
+      "measurement_db_samples": 60,
+      "measurement_resource_samples": 60,
+      "directory": "results\\postgres\\formal-c4-r2-20261110T051822901527Z"
+    },
+    {
+      "dbms": "mysql",
+      "clients": 8,
+      "repetition": 2,
+      "status": "PASS",
+      "measurement_seconds": 61.000146778,
+      "user_aborted_by_transaction": {
+        "4": 118,
+        "1": 64
+      },
+      "delivery_conflict_aborts": 118,
+      "measurement_db_samples": 60,
+      "measurement_resource_samples": 62,
+      "directory": "results\\mysql\\formal-c8-r2-20261110T052007687597Z"
+    },
+    {
+      "dbms": "postgres",
+      "clients": 8,
+      "repetition": 2,
+      "status": "PASS",
+      "measurement_seconds": 60.000285951,
+      "user_aborted_by_transaction": {
+        "4": 343,
+        "1": 164
+      },
+      "delivery_conflict_aborts": 343,
+      "measurement_db_samples": 59,
+      "measurement_resource_samples": 60,
+      "directory": "results\\postgres\\formal-c8-r2-20261110T052147754018Z"
+    },
+    {
+      "dbms": "mysql",
+      "clients": 16,
+      "repetition": 2,
+      "status": "PASS",
+      "measurement_seconds": 60.999972459,
+      "user_aborted_by_transaction": {
+        "1": 57,
+        "4": 85
+      },
+      "delivery_conflict_aborts": 85,
+      "measurement_db_samples": 60,
+      "measurement_resource_samples": 62,
+      "directory": "results\\mysql\\formal-c16-r2-20261110T052334273038Z"
+    },
+    {
+      "dbms": "postgres",
+      "clients": 16,
+      "repetition": 2,
+      "status": "PASS",
+      "measurement_seconds": 60.00004492,
+      "user_aborted_by_transaction": {
+        "1": 152,
+        "4": 230
+      },
+      "delivery_conflict_aborts": 230,
+      "measurement_db_samples": 60,
+      "measurement_resource_samples": 60,
+      "directory": "results\\postgres\\formal-c16-r2-20261110T052512419165Z"
+    },
+    {
+      "dbms": "mysql",
+      "clients": 32,
+      "repetition": 2,
+      "status": "PASS",
+      "measurement_seconds": 61.000240566,
+      "user_aborted_by_transaction": {
+        "1": 56,
+        "4": 71
+      },
+      "delivery_conflict_aborts": 71,
+      "measurement_db_samples": 60,
+      "measurement_resource_samples": 60,
+      "directory": "results\\mysql\\formal-c32-r2-20261110T052703975384Z"
+    },
+    {
+      "dbms": "postgres",
+      "clients": 32,
+      "repetition": 2,
+      "status": "PASS",
+      "measurement_seconds": 60.999982327,
+      "user_aborted_by_transaction": {
+        "1": 130,
+        "4": 182
+      },
+      "delivery_conflict_aborts": 182,
+      "measurement_db_samples": 61,
+      "measurement_resource_samples": 60,
+      "directory": "results\\postgres\\formal-c32-r2-20261110T052844039787Z"
+    },
+    {
+      "dbms": "mysql",
+      "clients": 64,
+      "repetition": 2,
+      "status": "PASS",
+      "measurement_seconds": 60.000044062,
+      "user_aborted_by_transaction": {
+        "1": 57,
+        "4": 74
+      },
+      "delivery_conflict_aborts": 74,
+      "measurement_db_samples": 60,
+      "measurement_resource_samples": 60,
+      "directory": "results\\mysql\\formal-c64-r2-20261110T053030989708Z"
+    },
+    {
+      "dbms": "postgres",
+      "clients": 64,
+      "repetition": 2,
+      "status": "PASS",
+      "measurement_seconds": 60.000016145,
+      "user_aborted_by_transaction": {
+        "4": 115,
+        "1": 73
+      },
+      "delivery_conflict_aborts": 115,
+      "measurement_db_samples": 60,
+      "measurement_resource_samples": 60,
+      "directory": "results\\postgres\\formal-c64-r2-20261110T053210235598Z"
+    },
+    {
+      "dbms": "mysql",
+      "clients": 128,
+      "repetition": 2,
+      "status": "PASS",
+      "measurement_seconds": 61.000075303,
+      "user_aborted_by_transaction": {
+        "1": 64,
+        "4": 74
+      },
+      "delivery_conflict_aborts": 74,
+      "measurement_db_samples": 61,
+      "measurement_resource_samples": 62,
+      "directory": "results\\mysql\\formal-c128-r2-20261110T053353608711Z"
+    },
+    {
+      "dbms": "postgres",
+      "clients": 128,
+      "repetition": 2,
+      "status": "PASS",
+      "measurement_seconds": 60.999977387,
+      "user_aborted_by_transaction": {
+        "1": 55,
+        "4": 89
+      },
+      "delivery_conflict_aborts": 89,
+      "measurement_db_samples": 61,
+      "measurement_resource_samples": 60,
+      "directory": "results\\postgres\\formal-c128-r2-20261110T053535269387Z"
+    },
+    {
+      "dbms": "postgres",
+      "clients": 1,
+      "repetition": 3,
+      "status": "PASS",
+      "measurement_seconds": 60.00002767,
+      "user_aborted_by_transaction": {
+        "1": 113
+      },
+      "delivery_conflict_aborts": 0,
+      "measurement_db_samples": 59,
+      "measurement_resource_samples": 60,
+      "directory": "results\\postgres\\formal-c1-r3-20261110T053715915295Z"
+    },
+    {
+      "dbms": "mysql",
+      "clients": 1,
+      "repetition": 3,
+      "status": "PASS",
+      "measurement_seconds": 60.000011019,
+      "user_aborted_by_transaction": {
+        "1": 29
+      },
+      "delivery_conflict_aborts": 0,
+      "measurement_db_samples": 59,
+      "measurement_resource_samples": 60,
+      "directory": "results\\mysql\\formal-c1-r3-20261110T053900599716Z"
+    },
+    {
+      "dbms": "postgres",
+      "clients": 4,
+      "repetition": 3,
+      "status": "PASS",
+      "measurement_seconds": 60.999995554,
+      "user_aborted_by_transaction": {
+        "4": 291,
+        "1": 194
+      },
+      "delivery_conflict_aborts": 291,
+      "measurement_db_samples": 61,
+      "measurement_resource_samples": 60,
+      "directory": "results\\postgres\\formal-c4-r3-20261110T054037123603Z"
+    },
+    {
+      "dbms": "mysql",
+      "clients": 4,
+      "repetition": 3,
+      "status": "PASS",
+      "measurement_seconds": 60.999967892,
+      "user_aborted_by_transaction": {
+        "4": 94,
+        "1": 72
+      },
+      "delivery_conflict_aborts": 94,
+      "measurement_db_samples": 60,
+      "measurement_resource_samples": 60,
+      "directory": "results\\mysql\\formal-c4-r3-20261110T054226491699Z"
+    },
+    {
+      "dbms": "postgres",
+      "clients": 8,
+      "repetition": 3,
+      "status": "PASS",
+      "measurement_seconds": 60.999869487,
+      "user_aborted_by_transaction": {
+        "4": 354,
+        "1": 184
+      },
+      "delivery_conflict_aborts": 354,
+      "measurement_db_samples": 60,
+      "measurement_resource_samples": 60,
+      "directory": "results\\postgres\\formal-c8-r3-20261110T054405643418Z"
+    },
+    {
+      "dbms": "mysql",
+      "clients": 8,
+      "repetition": 3,
+      "status": "PASS",
+      "measurement_seconds": 60.999978594,
+      "user_aborted_by_transaction": {
+        "4": 96,
+        "1": 82
+      },
+      "delivery_conflict_aborts": 96,
+      "measurement_db_samples": 60,
+      "measurement_resource_samples": 60,
+      "directory": "results\\mysql\\formal-c8-r3-20261110T054555276463Z"
+    },
+    {
+      "dbms": "postgres",
+      "clients": 16,
+      "repetition": 3,
+      "status": "PASS",
+      "measurement_seconds": 60.999905815,
+      "user_aborted_by_transaction": {
+        "1": 86,
+        "4": 138
+      },
+      "delivery_conflict_aborts": 138,
+      "measurement_db_samples": 61,
+      "measurement_resource_samples": 60,
+      "directory": "results\\postgres\\formal-c16-r3-20261110T054734583205Z"
+    },
+    {
+      "dbms": "mysql",
+      "clients": 16,
+      "repetition": 3,
+      "status": "PASS",
+      "measurement_seconds": 61.000132965,
+      "user_aborted_by_transaction": {
+        "1": 38,
+        "4": 52
+      },
+      "delivery_conflict_aborts": 52,
+      "measurement_db_samples": 61,
+      "measurement_resource_samples": 60,
+      "directory": "results\\mysql\\formal-c16-r3-20261110T054930077199Z"
+    },
+    {
+      "dbms": "postgres",
+      "clients": 32,
+      "repetition": 3,
+      "status": "PASS",
+      "measurement_seconds": 61.00002076,
+      "user_aborted_by_transaction": {
+        "1": 162,
+        "4": 157
+      },
+      "delivery_conflict_aborts": 157,
+      "measurement_db_samples": 61,
+      "measurement_resource_samples": 60,
+      "directory": "results\\postgres\\formal-c32-r3-20261110T055108496234Z"
+    },
+    {
+      "dbms": "mysql",
+      "clients": 32,
+      "repetition": 3,
+      "status": "PASS",
+      "measurement_seconds": 60.000925192,
+      "user_aborted_by_transaction": {
+        "1": 56,
+        "4": 84
+      },
+      "delivery_conflict_aborts": 84,
+      "measurement_db_samples": 59,
+      "measurement_resource_samples": 60,
+      "directory": "results\\mysql\\formal-c32-r3-20261110T055255562438Z"
+    },
+    {
+      "dbms": "postgres",
+      "clients": 64,
+      "repetition": 3,
+      "status": "PASS",
+      "measurement_seconds": 60.999817544,
+      "user_aborted_by_transaction": {
+        "1": 87,
+        "4": 103
+      },
+      "delivery_conflict_aborts": 103,
+      "measurement_db_samples": 61,
+      "measurement_resource_samples": 62,
+      "directory": "results\\postgres\\formal-c64-r3-20261110T055434523524Z"
+    },
+    {
+      "dbms": "mysql",
+      "clients": 64,
+      "repetition": 3,
+      "status": "PASS",
+      "measurement_seconds": 60.000068754,
+      "user_aborted_by_transaction": {
+        "1": 53,
+        "4": 68
+      },
+      "delivery_conflict_aborts": 68,
+      "measurement_db_samples": 60,
+      "measurement_resource_samples": 60,
+      "directory": "results\\mysql\\formal-c64-r3-20261110T055617077688Z"
+    },
+    {
+      "dbms": "postgres",
+      "clients": 128,
+      "repetition": 3,
+      "status": "PASS",
+      "measurement_seconds": 60.99989348,
+      "user_aborted_by_transaction": {
+        "1": 76,
+        "4": 75
+      },
+      "delivery_conflict_aborts": 75,
+      "measurement_db_samples": 61,
+      "measurement_resource_samples": 60,
+      "directory": "results\\postgres\\formal-c128-r3-20261110T055756849816Z"
+    },
+    {
+      "dbms": "mysql",
+      "clients": 128,
+      "repetition": 3,
+      "status": "PASS",
+      "measurement_seconds": 60.999953098,
+      "user_aborted_by_transaction": {
+        "1": 58,
+        "4": 74
+      },
+      "delivery_conflict_aborts": 74,
+      "measurement_db_samples": 60,
+      "measurement_resource_samples": 62,
+      "directory": "results\\mysql\\formal-c128-r3-20261110T055941845968Z"
+    }
+  ],
+  "notes": [
+    "Keep all three repetitions, including slower runs.",
+    "PASS verifies execution, evidence and selected invariants; it does not establish statistical significance or full TPC-C compliance.",
+    "Observed performance variation is retained for the later analysis."
+  ]
+}
