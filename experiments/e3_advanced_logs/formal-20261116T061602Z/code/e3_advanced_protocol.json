@@ -1,0 +1,22 @@
+{
+  "name": "E3-advanced",
+  "version": 1,
+  "engines": ["postgres", "mysql"],
+  "methods": ["pessimistic", "occ"],
+  "distributions": {"uniform100k": 100000, "shared100": 100, "hot1": 1},
+  "clients": [1, 8, 32, 128],
+  "repetitions": 1,
+  "warmup_seconds": 15,
+  "measure_seconds": 60,
+  "max_retries": 8,
+  "seed": 20261116,
+  "isolation": "READ COMMITTED",
+  "db_cpu_limit": 2,
+  "db_memory_gib": 2,
+  "generator_processes": 4,
+  "generator_location": "Windows host; no CPU/RAM quota; process-tree telemetry",
+  "fixture": "Full stock clone (100000 rows, source columns and indexes) plus BIGINT version DEFAULT 1; fresh copy before each trial",
+  "retry": "Version conflict or confirmed deadlock only; same row and increment; min(1ms * 2^k,20ms) * U(0.5,1.5); separate target/backoff RNGs",
+  "measurement": "Drain warmup, then measure; stop admissions at deadline and drain all admitted operations. TPS denominator max(admission seconds,last operation completion-start). Successful latency includes all retries and backoff. No pooling of p95 across repetitions.",
+  "total_formal_trials": 48
+}

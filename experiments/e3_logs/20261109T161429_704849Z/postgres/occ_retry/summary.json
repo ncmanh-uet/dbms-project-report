@@ -1,0 +1,19 @@
+{
+  "kind": "demo",
+  "dbms": "postgres",
+  "phase": "occ_retry",
+  "requested_operations": 2,
+  "status": "PASS",
+  "t1_connection_id": 248,
+  "t2_connection_id": 249,
+  "successful_operations": 2,
+  "version_conflicts": 1,
+  "retry_attempts": 1,
+  "actual": {
+    "counter": "2.00",
+    "version": 3
+  },
+  "integrity_ok": true,
+  "schedule_verified": true,
+  "fixture_reset": true
+}

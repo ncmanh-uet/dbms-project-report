@@ -1,0 +1,434 @@
+[
+  {
+    "dbms": "postgres",
+    "method": "pessimistic",
+    "distribution": "uniform100k",
+    "clients": 1,
+    "repetition": 1,
+    "warmup_seconds": 15,
+    "measure_seconds": 60
+  },
+  {
+    "dbms": "postgres",
+    "method": "occ",
+    "distribution": "uniform100k",
+    "clients": 1,
+    "repetition": 1,
+    "warmup_seconds": 15,
+    "measure_seconds": 60
+  },
+  {
+    "dbms": "postgres",
+    "method": "pessimistic",
+    "distribution": "uniform100k",
+    "clients": 8,
+    "repetition": 1,
+    "warmup_seconds": 15,
+    "measure_seconds": 60
+  },
+  {
+    "dbms": "postgres",
+    "method": "occ",
+    "distribution": "uniform100k",
+    "clients": 8,
+    "repetition": 1,
+    "warmup_seconds": 15,
+    "measure_seconds": 60
+  },
+  {
+    "dbms": "postgres",
+    "method": "pessimistic",
+    "distribution": "uniform100k",
+    "clients": 32,
+    "repetition": 1,
+    "warmup_seconds": 15,
+    "measure_seconds": 60
+  },
+  {
+    "dbms": "postgres",
+    "method": "occ",
+    "distribution": "uniform100k",
+    "clients": 32,
+    "repetition": 1,
+    "warmup_seconds": 15,
+    "measure_seconds": 60
+  },
+  {
+    "dbms": "postgres",
+    "method": "pessimistic",
+    "distribution": "uniform100k",
+    "clients": 128,
+    "repetition": 1,
+    "warmup_seconds": 15,
+    "measure_seconds": 60
+  },
+  {
+    "dbms": "postgres",
+    "method": "occ",
+    "distribution": "uniform100k",
+    "clients": 128,
+    "repetition": 1,
+    "warmup_seconds": 15,
+    "measure_seconds": 60
+  },
+  {
+    "dbms": "postgres",
+    "method": "pessimistic",
+    "distribution": "shared100",
+    "clients": 1,
+    "repetition": 1,
+    "warmup_seconds": 15,
+    "measure_seconds": 60
+  },
+  {
+    "dbms": "postgres",
+    "method": "occ",
+    "distribution": "shared100",
+    "clients": 1,
+    "repetition": 1,
+    "warmup_seconds": 15,
+    "measure_seconds": 60
+  },
+  {
+    "dbms": "postgres",
+    "method": "pessimistic",
+    "distribution": "shared100",
+    "clients": 8,
+    "repetition": 1,
+    "warmup_seconds": 15,
+    "measure_seconds": 60
+  },
+  {
+    "dbms": "postgres",
+    "method": "occ",
+    "distribution": "shared100",
+    "clients": 8,
+    "repetition": 1,
+    "warmup_seconds": 15,
+    "measure_seconds": 60
+  },
+  {
+    "dbms": "postgres",
+    "method": "pessimistic",
+    "distribution": "shared100",
+    "clients": 32,
+    "repetition": 1,
+    "warmup_seconds": 15,
+    "measure_seconds": 60
+  },
+  {
+    "dbms": "postgres",
+    "method": "occ",
+    "distribution": "shared100",
+    "clients": 32,
+    "repetition": 1,
+    "warmup_seconds": 15,
+    "measure_seconds": 60
+  },
+  {
+    "dbms": "postgres",
+    "method": "pessimistic",
+    "distribution": "shared100",
+    "clients": 128,
+    "repetition": 1,
+    "warmup_seconds": 15,
+    "measure_seconds": 60
+  },
+  {
+    "dbms": "postgres",
+    "method": "occ",
+    "distribution": "shared100",
+    "clients": 128,
+    "repetition": 1,
+    "warmup_seconds": 15,
+    "measure_seconds": 60
+  },
+  {
+    "dbms": "postgres",
+    "method": "pessimistic",
+    "distribution": "hot1",
+    "clients": 1,
+    "repetition": 1,
+    "warmup_seconds": 15,
+    "measure_seconds": 60
+  },
+  {
+    "dbms": "postgres",
+    "method": "occ",
+    "distribution": "hot1",
+    "clients": 1,
+    "repetition": 1,
+    "warmup_seconds": 15,
+    "measure_seconds": 60
+  },
+  {
+    "dbms": "postgres",
+    "method": "pessimistic",
+    "distribution": "hot1",
+    "clients": 8,
+    "repetition": 1,
+    "warmup_seconds": 15,
+    "measure_seconds": 60
+  },
+  {
+    "dbms": "postgres",
+    "method": "occ",
+    "distribution": "hot1",
+    "clients": 8,
+    "repetition": 1,
+    "warmup_seconds": 15,
+    "measure_seconds": 60
+  },
+  {
+    "dbms": "postgres",
+    "method": "pessimistic",
+    "distribution": "hot1",
+    "clients": 32,
+    "repetition": 1,
+    "warmup_seconds": 15,
+    "measure_seconds": 60
+  },
+  {
+    "dbms": "postgres",
+    "method": "occ",
+    "distribution": "hot1",
+    "clients": 32,
+    "repetition": 1,
+    "warmup_seconds": 15,
+    "measure_seconds": 60
+  },
+  {
+    "dbms": "postgres",
+    "method": "pessimistic",
+    "distribution": "hot1",
+    "clients": 128,
+    "repetition": 1,
+    "warmup_seconds": 15,
+    "measure_seconds": 60
+  },
+  {
+    "dbms": "postgres",
+    "method": "occ",
+    "distribution": "hot1",
+    "clients": 128,
+    "repetition": 1,
+    "warmup_seconds": 15,
+    "measure_seconds": 60
+  },
+  {
+    "dbms": "mysql",
+    "method": "pessimistic",
+    "distribution": "uniform100k",
+    "clients": 1,
+    "repetition": 1,
+    "warmup_seconds": 15,
+    "measure_seconds": 60
+  },
+  {
+    "dbms": "mysql",
+    "method": "occ",
+    "distribution": "uniform100k",
+    "clients": 1,
+    "repetition": 1,
+    "warmup_seconds": 15,
+    "measure_seconds": 60
+  },
+  {
+    "dbms": "mysql",
+    "method": "pessimistic",
+    "distribution": "uniform100k",
+    "clients": 8,
+    "repetition": 1,
+    "warmup_seconds": 15,
+    "measure_seconds": 60
+  },
+  {
+    "dbms": "mysql",
+    "method": "occ",
+    "distribution": "uniform100k",
+    "clients": 8,
+    "repetition": 1,
+    "warmup_seconds": 15,
+    "measure_seconds": 60
+  },
+  {
+    "dbms": "mysql",
+    "method": "pessimistic",
+    "distribution": "uniform100k",
+    "clients": 32,
+    "repetition": 1,
+    "warmup_seconds": 15,
+    "measure_seconds": 60
+  },
+  {
+    "dbms": "mysql",
+    "method": "occ",
+    "distribution": "uniform100k",
+    "clients": 32,
+    "repetition": 1,
+    "warmup_seconds": 15,
+    "measure_seconds": 60
+  },
+  {
+    "dbms": "mysql",
+    "method": "pessimistic",
+    "distribution": "uniform100k",
+    "clients": 128,
+    "repetition": 1,
+    "warmup_seconds": 15,
+    "measure_seconds": 60
+  },
+  {
+    "dbms": "mysql",
+    "method": "occ",
+    "distribution": "uniform100k",
+    "clients": 128,
+    "repetition": 1,
+    "warmup_seconds": 15,
+    "measure_seconds": 60
+  },
+  {
+    "dbms": "mysql",
+    "method": "pessimistic",
+    "distribution": "shared100",
+    "clients": 1,
+    "repetition": 1,
+    "warmup_seconds": 15,
+    "measure_seconds": 60
+  },
+  {
+    "dbms": "mysql",
+    "method": "occ",
+    "distribution": "shared100",
+    "clients": 1,
+    "repetition": 1,
+    "warmup_seconds": 15,
+    "measure_seconds": 60
+  },
+  {
+    "dbms": "mysql",
+    "method": "pessimistic",
+    "distribution": "shared100",
+    "clients": 8,
+    "repetition": 1,
+    "warmup_seconds": 15,
+    "measure_seconds": 60
+  },
+  {
+    "dbms": "mysql",
+    "method": "occ",
+    "distribution": "shared100",
+    "clients": 8,
+    "repetition": 1,
+    "warmup_seconds": 15,
+    "measure_seconds": 60
+  },
+  {
+    "dbms": "mysql",
+    "method": "pessimistic",
+    "distribution": "shared100",
+    "clients": 32,
+    "repetition": 1,
+    "warmup_seconds": 15,
+    "measure_seconds": 60
+  },
+  {
+    "dbms": "mysql",
+    "method": "occ",
+    "distribution": "shared100",
+    "clients": 32,
+    "repetition": 1,
+    "warmup_seconds": 15,
+    "measure_seconds": 60
+  },
+  {
+    "dbms": "mysql",
+    "method": "pessimistic",
+    "distribution": "shared100",
+    "clients": 128,
+    "repetition": 1,
+    "warmup_seconds": 15,
+    "measure_seconds": 60
+  },
+  {
+    "dbms": "mysql",
+    "method": "occ",
+    "distribution": "shared100",
+    "clients": 128,
+    "repetition": 1,
+    "warmup_seconds": 15,
+    "measure_seconds": 60
+  },
+  {
+    "dbms": "mysql",
+    "method": "pessimistic",
+    "distribution": "hot1",
+    "clients": 1,
+    "repetition": 1,
+    "warmup_seconds": 15,
+    "measure_seconds": 60
+  },
+  {
+    "dbms": "mysql",
+    "method": "occ",
+    "distribution": "hot1",
+    "clients": 1,
+    "repetition": 1,
+    "warmup_seconds": 15,
+    "measure_seconds": 60
+  },
+  {
+    "dbms": "mysql",
+    "method": "pessimistic",
+    "distribution": "hot1",
+    "clients": 8,
+    "repetition": 1,
+    "warmup_seconds": 15,
+    "measure_seconds": 60
+  },
+  {
+    "dbms": "mysql",
+    "method": "occ",
+    "distribution": "hot1",
+    "clients": 8,
+    "repetition": 1,
+    "warmup_seconds": 15,
+    "measure_seconds": 60
+  },
+  {
+    "dbms": "mysql",
+    "method": "pessimistic",
+    "distribution": "hot1",
+    "clients": 32,
+    "repetition": 1,
+    "warmup_seconds": 15,
+    "measure_seconds": 60
+  },
+  {
+    "dbms": "mysql",
+    "method": "occ",
+    "distribution": "hot1",
+    "clients": 32,
+    "repetition": 1,
+    "warmup_seconds": 15,
+    "measure_seconds": 60
+  },
+  {
+    "dbms": "mysql",
+    "method": "pessimistic",
+    "distribution": "hot1",
+    "clients": 128,
+    "repetition": 1,
+    "warmup_seconds": 15,
+    "measure_seconds": 60
+  },
+  {
+    "dbms": "mysql",
+    "method": "occ",
+    "distribution": "hot1",
+    "clients": 128,
+    "repetition": 1,
+    "warmup_seconds": 15,
+    "measure_seconds": 60
+  }
+]

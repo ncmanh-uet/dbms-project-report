@@ -1,0 +1,8 @@
+{
+  "test_status": "PASS",
+  "injected_error": "SQL referencing a nonexistent column in the owned demo table",
+  "expected_run_status": "FAIL",
+  "demo_table_dropped": true,
+  "source_unchanged": true,
+  "original_table_set_restored": true
+}
