@@ -1,0 +1,8 @@
+{
+  "platform": "win32",
+  "python": "3.14.3 (tags/v3.14.3:323c59a, Feb  3 2026, 16:04:56) [MSC v.1944 64 bit (AMD64)]",
+  "logical_cpus": 12,
+  "memory": 16837152768,
+  "generator_processes": 4,
+  "generator_has_no_quota": true
+}

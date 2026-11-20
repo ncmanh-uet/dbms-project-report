@@ -1,0 +1,21 @@
+{
+  "kind": "demo",
+  "dbms": "mysql",
+  "phase": "lost_update",
+  "requested_operations": 2,
+  "status": "PASS",
+  "t1_connection_id": 165,
+  "t2_connection_id": 166,
+  "t2_affected_rows": 0,
+  "successful_operations_reported": 2,
+  "confirmed_commits": 2,
+  "actual": {
+    "counter": "1.00",
+    "version": 1
+  },
+  "correct_counter": "2.00",
+  "lost_increments": 1,
+  "expected_anomaly_observed": true,
+  "schedule_verified": true,
+  "fixture_reset": true
+}

@@ -1,0 +1,17 @@
+{
+  "counts": {
+    "warehouse": 1,
+    "district": 10,
+    "customer": 30000,
+    "history": 30000,
+    "item": 100000,
+    "stock": 100000,
+    "oorder": 30000,
+    "new_order": 9000,
+    "order_line": 300040
+  },
+  "stock": {
+    "rows": 100000,
+    "sha256_ordered_values": "de438df14a6fb0befbe675cd0b6cd1490831adac0e00a21ae3f31d9b19f17e8a"
+  }
+}

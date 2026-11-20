@@ -1,0 +1,1872 @@
+{
+  "run_id": "20261109T161429_704849Z",
+  "preliminary": true,
+  "isolation": "READ COMMITTED",
+  "warmup_seconds": 0,
+  "repetitions": 1,
+  "results": [
+    {
+      "kind": "demo",
+      "dbms": "postgres",
+      "phase": "lost_update",
+      "requested_operations": 2,
+      "status": "PASS",
+      "t1_connection_id": 244,
+      "t2_connection_id": 245,
+      "t2_affected_rows": 1,
+      "successful_operations_reported": 2,
+      "confirmed_commits": 2,
+      "actual": {
+        "counter": "1.00",
+        "version": 1
+      },
+      "correct_counter": "2.00",
+      "lost_increments": 1,
+      "expected_anomaly_observed": true,
+      "schedule_verified": true,
+      "fixture_reset": true
+    },
+    {
+      "kind": "demo",
+      "dbms": "postgres",
+      "phase": "occ_detect",
+      "requested_operations": 2,
+      "status": "PASS",
+      "t1_connection_id": 246,
+      "t2_connection_id": 247,
+      "successful_operations": 1,
+      "version_conflicts": 1,
+      "retry_attempts": 0,
+      "actual": {
+        "counter": "1.00",
+        "version": 2
+      },
+      "integrity_ok": true,
+      "schedule_verified": true,
+      "fixture_reset": true
+    },
+    {
+      "kind": "demo",
+      "dbms": "postgres",
+      "phase": "occ_retry",
+      "requested_operations": 2,
+      "status": "PASS",
+      "t1_connection_id": 248,
+      "t2_connection_id": 249,
+      "successful_operations": 2,
+      "version_conflicts": 1,
+      "retry_attempts": 1,
+      "actual": {
+        "counter": "2.00",
+        "version": 3
+      },
+      "integrity_ok": true,
+      "schedule_verified": true,
+      "fixture_reset": true
+    },
+    {
+      "kind": "occ_trial",
+      "dbms": "postgres",
+      "scenario": "distinct",
+      "clients": 1,
+      "requested_seconds": 10.0,
+      "max_retries": 8,
+      "status": "PASS",
+      "connection_ids": [
+        250
+      ],
+      "final_rows": {
+        "1": {
+          "counter": "948.00",
+          "version": 949
+        },
+        "2": {
+          "counter": "0.00",
+          "version": 1
+        },
+        "3": {
+          "counter": "0.00",
+          "version": 1
+        },
+        "4": {
+          "counter": "0.00",
+          "version": 1
+        },
+        "5": {
+          "counter": "0.00",
+          "version": 1
+        },
+        "6": {
+          "counter": "0.00",
+          "version": 1
+        },
+        "7": {
+          "counter": "0.00",
+          "version": 1
+        },
+        "8": {
+          "counter": "0.00",
+          "version": 1
+        },
+        "9": {
+          "counter": "0.00",
+          "version": 1
+        },
+        "10": {
+          "counter": "0.00",
+          "version": 1
+        },
+        "11": {
+          "counter": "0.00",
+          "version": 1
+        },
+        "12": {
+          "counter": "0.00",
+          "version": 1
+        },
+        "13": {
+          "counter": "0.00",
+          "version": 1
+        },
+        "14": {
+          "counter": "0.00",
+          "version": 1
+        },
+        "15": {
+          "counter": "0.00",
+          "version": 1
+        },
+        "16": {
+          "counter": "0.00",
+          "version": 1
+        }
+      },
+      "integrity_ok": true,
+      "fixture_reset": true,
+      "logical_operations": 948,
+      "successful_operations": 948,
+      "exhausted_operations": 0,
+      "cancelled_operations": 0,
+      "attempts": 948,
+      "version_conflicts": 0,
+      "retries_started": 0,
+      "conflict_rate": 0.0,
+      "operations_with_retry": 0,
+      "retry_operation_rate": 0.0,
+      "retries_per_operation": 0.0,
+      "db_error_operations": 0,
+      "actual_seconds": 10.005663999996614,
+      "successful_tps": 94.74633567550548,
+      "success_latency_ms": {
+        "mean": 10.550698734226023,
+        "p50": 9.332949994131923,
+        "p95": 21.565399999963116,
+        "p99": 25.941873011179265
+      },
+      "fatal_errors": [],
+      "unknown_commit": false
+    },
+    {
+      "kind": "occ_trial",
+      "dbms": "postgres",
+      "scenario": "distinct",
+      "clients": 4,
+      "requested_seconds": 10.0,
+      "max_retries": 8,
+      "status": "PASS",
+      "connection_ids": [
+        251,
+        253,
+        252,
+        254
+      ],
+      "final_rows": {
+        "1": {
+          "counter": "705.00",
+          "version": 706
+        },
+        "2": {
+          "counter": "704.00",
+          "version": 705
+        },
+        "3": {
+          "counter": "703.00",
+          "version": 704
+        },
+        "4": {
+          "counter": "706.00",
+          "version": 707
+        },
+        "5": {
+          "counter": "0.00",
+          "version": 1
+        },
+        "6": {
+          "counter": "0.00",
+          "version": 1
+        },
+        "7": {
+          "counter": "0.00",
+          "version": 1
+        },
+        "8": {
+          "counter": "0.00",
+          "version": 1
+        },
+        "9": {
+          "counter": "0.00",
+          "version": 1
+        },
+        "10": {
+          "counter": "0.00",
+          "version": 1
+        },
+        "11": {
+          "counter": "0.00",
+          "version": 1
+        },
+        "12": {
+          "counter": "0.00",
+          "version": 1
+        },
+        "13": {
+          "counter": "0.00",
+          "version": 1
+        },
+        "14": {
+          "counter": "0.00",
+          "version": 1
+        },
+        "15": {
+          "counter": "0.00",
+          "version": 1
+        },
+        "16": {
+          "counter": "0.00",
+          "version": 1
+        }
+      },
+      "integrity_ok": true,
+      "fixture_reset": true,
+      "logical_operations": 2818,
+      "successful_operations": 2818,
+      "exhausted_operations": 0,
+      "cancelled_operations": 0,
+      "attempts": 2818,
+      "version_conflicts": 0,
+      "retries_started": 0,
+      "conflict_rate": 0.0,
+      "operations_with_retry": 0,
+      "retry_operation_rate": 0.0,
+      "retries_per_operation": 0.0,
+      "db_error_operations": 0,
+      "actual_seconds": 10.01843540003756,
+      "successful_tps": 281.2814464012449,
+      "success_latency_ms": {
+        "mean": 14.207480199098972,
+        "p50": 14.589350030291826,
+        "p95": 23.113959972397424,
+        "p99": 27.14416600356344
+      },
+      "fatal_errors": [],
+      "unknown_commit": false
+    },
+    {
+      "kind": "occ_trial",
+      "dbms": "postgres",
+      "scenario": "distinct",
+      "clients": 8,
+      "requested_seconds": 10.0,
+      "max_retries": 8,
+      "status": "PASS",
+      "connection_ids": [
+        256,
+        257,
+        260,
+        259,
+        258,
+        261,
+        262,
+        263
+      ],
+      "final_rows": {
+        "1": {
+          "counter": "640.00",
+          "version": 641
+        },
+        "2": {
+          "counter": "642.00",
+          "version": 643
+        },
+        "3": {
+          "counter": "647.00",
+          "version": 648
+        },
+        "4": {
+          "counter": "645.00",
+          "version": 646
+        },
+        "5": {
+          "counter": "643.00",
+          "version": 644
+        },
+        "6": {
+          "counter": "647.00",
+          "version": 648
+        },
+        "7": {
+          "counter": "646.00",
+          "version": 647
+        },
+        "8": {
+          "counter": "649.00",
+          "version": 650
+        },
+        "9": {
+          "counter": "0.00",
+          "version": 1
+        },
+        "10": {
+          "counter": "0.00",
+          "version": 1
+        },
+        "11": {
+          "counter": "0.00",
+          "version": 1
+        },
+        "12": {
+          "counter": "0.00",
+          "version": 1
+        },
+        "13": {
+          "counter": "0.00",
+          "version": 1
+        },
+        "14": {
+          "counter": "0.00",
+          "version": 1
+        },
+        "15": {
+          "counter": "0.00",
+          "version": 1
+        },
+        "16": {
+          "counter": "0.00",
+          "version": 1
+        }
+      },
+      "integrity_ok": true,
+      "fixture_reset": true,
+      "logical_operations": 5159,
+      "successful_operations": 5159,
+      "exhausted_operations": 0,
+      "cancelled_operations": 0,
+      "attempts": 5159,
+      "version_conflicts": 0,
+      "retries_started": 0,
+      "conflict_rate": 0.0,
+      "operations_with_retry": 0,
+      "retry_operation_rate": 0.0,
+      "retries_per_operation": 0.0,
+      "db_error_operations": 0,
+      "actual_seconds": 10.020105300005525,
+      "successful_tps": 514.8648487753073,
+      "success_latency_ms": {
+        "mean": 15.514984066549557,
+        "p50": 14.545599988196045,
+        "p95": 25.607879983726882,
+        "p99": 32.29668402695098
+      },
+      "fatal_errors": [],
+      "unknown_commit": false
+    },
+    {
+      "kind": "occ_trial",
+      "dbms": "postgres",
+      "scenario": "distinct",
+      "clients": 16,
+      "requested_seconds": 10.0,
+      "max_retries": 8,
+      "status": "PASS",
+      "connection_ids": [
+        265,
+        268,
+        267,
+        266,
+        264,
+        269,
+        270,
+        271,
+        272,
+        273,
+        275,
+        274,
+        276,
+        279,
+        278,
+        277
+      ],
+      "final_rows": {
+        "1": {
+          "counter": "380.00",
+          "version": 381
+        },
+        "2": {
+          "counter": "374.00",
+          "version": 375
+        },
+        "3": {
+          "counter": "374.00",
+          "version": 375
+        },
+        "4": {
+          "counter": "370.00",
+          "version": 371
+        },
+        "5": {
+          "counter": "371.00",
+          "version": 372
+        },
+        "6": {
+          "counter": "372.00",
+          "version": 373
+        },
+        "7": {
+          "counter": "368.00",
+          "version": 369
+        },
+        "8": {
+          "counter": "382.00",
+          "version": 383
+        },
+        "9": {
+          "counter": "372.00",
+          "version": 373
+        },
+        "10": {
+          "counter": "380.00",
+          "version": 381
+        },
+        "11": {
+          "counter": "375.00",
+          "version": 376
+        },
+        "12": {
+          "counter": "377.00",
+          "version": 378
+        },
+        "13": {
+          "counter": "379.00",
+          "version": 380
+        },
+        "14": {
+          "counter": "374.00",
+          "version": 375
+        },
+        "15": {
+          "counter": "382.00",
+          "version": 383
+        },
+        "16": {
+          "counter": "372.00",
+          "version": 373
+        }
+      },
+      "integrity_ok": true,
+      "fixture_reset": true,
+      "logical_operations": 6002,
+      "successful_operations": 6002,
+      "exhausted_operations": 0,
+      "cancelled_operations": 0,
+      "attempts": 6002,
+      "version_conflicts": 0,
+      "retries_started": 0,
+      "conflict_rate": 0.0,
+      "operations_with_retry": 0,
+      "retry_operation_rate": 0.0,
+      "retries_per_operation": 0.0,
+      "db_error_operations": 0,
+      "actual_seconds": 10.019739099952858,
+      "successful_tps": 599.0175931854592,
+      "success_latency_ms": {
+        "mean": 26.675653583041193,
+        "p50": 25.587449985323474,
+        "p95": 37.68159002647735,
+        "p99": 51.92488198401404
+      },
+      "fatal_errors": [],
+      "unknown_commit": false
+    },
+    {
+      "kind": "occ_trial",
+      "dbms": "postgres",
+      "scenario": "hot1",
+      "clients": 1,
+      "requested_seconds": 10.0,
+      "max_retries": 8,
+      "status": "PASS",
+      "connection_ids": [
+        280
+      ],
+      "final_rows": {
+        "1": {
+          "counter": "869.00",
+          "version": 870
+        },
+        "2": {
+          "counter": "0.00",
+          "version": 1
+        },
+        "3": {
+          "counter": "0.00",
+          "version": 1
+        },
+        "4": {
+          "counter": "0.00",
+          "version": 1
+        },
+        "5": {
+          "counter": "0.00",
+          "version": 1
+        },
+        "6": {
+          "counter": "0.00",
+          "version": 1
+        },
+        "7": {
+          "counter": "0.00",
+          "version": 1
+        },
+        "8": {
+          "counter": "0.00",
+          "version": 1
+        },
+        "9": {
+          "counter": "0.00",
+          "version": 1
+        },
+        "10": {
+          "counter": "0.00",
+          "version": 1
+        },
+        "11": {
+          "counter": "0.00",
+          "version": 1
+        },
+        "12": {
+          "counter": "0.00",
+          "version": 1
+        },
+        "13": {
+          "counter": "0.00",
+          "version": 1
+        },
+        "14": {
+          "counter": "0.00",
+          "version": 1
+        },
+        "15": {
+          "counter": "0.00",
+          "version": 1
+        },
+        "16": {
+          "counter": "0.00",
+          "version": 1
+        }
+      },
+      "integrity_ok": true,
+      "fixture_reset": true,
+      "logical_operations": 869,
+      "successful_operations": 869,
+      "exhausted_operations": 0,
+      "cancelled_operations": 0,
+      "attempts": 869,
+      "version_conflicts": 0,
+      "retries_started": 0,
+      "conflict_rate": 0.0,
+      "operations_with_retry": 0,
+      "retry_operation_rate": 0.0,
+      "retries_per_operation": 0.0,
+      "db_error_operations": 0,
+      "actual_seconds": 10.015165899996646,
+      "successful_tps": 86.7684079002916,
+      "success_latency_ms": {
+        "mean": 11.519716110539175,
+        "p50": 10.604999959468842,
+        "p95": 22.570120019372553,
+        "p99": 26.16151997353881
+      },
+      "fatal_errors": [],
+      "unknown_commit": false
+    },
+    {
+      "kind": "occ_trial",
+      "dbms": "postgres",
+      "scenario": "hot1",
+      "clients": 4,
+      "requested_seconds": 10.0,
+      "max_retries": 8,
+      "status": "PASS",
+      "connection_ids": [
+        282,
+        283,
+        284,
+        281
+      ],
+      "final_rows": {
+        "1": {
+          "counter": "883.00",
+          "version": 884
+        },
+        "2": {
+          "counter": "0.00",
+          "version": 1
+        },
+        "3": {
+          "counter": "0.00",
+          "version": 1
+        },
+        "4": {
+          "counter": "0.00",
+          "version": 1
+        },
+        "5": {
+          "counter": "0.00",
+          "version": 1
+        },
+        "6": {
+          "counter": "0.00",
+          "version": 1
+        },
+        "7": {
+          "counter": "0.00",
+          "version": 1
+        },
+        "8": {
+          "counter": "0.00",
+          "version": 1
+        },
+        "9": {
+          "counter": "0.00",
+          "version": 1
+        },
+        "10": {
+          "counter": "0.00",
+          "version": 1
+        },
+        "11": {
+          "counter": "0.00",
+          "version": 1
+        },
+        "12": {
+          "counter": "0.00",
+          "version": 1
+        },
+        "13": {
+          "counter": "0.00",
+          "version": 1
+        },
+        "14": {
+          "counter": "0.00",
+          "version": 1
+        },
+        "15": {
+          "counter": "0.00",
+          "version": 1
+        },
+        "16": {
+          "counter": "0.00",
+          "version": 1
+        }
+      },
+      "integrity_ok": true,
+      "fixture_reset": true,
+      "logical_operations": 901,
+      "successful_operations": 883,
+      "exhausted_operations": 18,
+      "cancelled_operations": 0,
+      "attempts": 1853,
+      "version_conflicts": 970,
+      "retries_started": 952,
+      "conflict_rate": 0.5234754452239612,
+      "operations_with_retry": 305,
+      "retry_operation_rate": 0.33851276359600446,
+      "retries_per_operation": 1.0566037735849056,
+      "db_error_operations": 0,
+      "actual_seconds": 10.065463099977933,
+      "successful_tps": 87.72572024052583,
+      "success_latency_ms": {
+        "mean": 39.553918913592156,
+        "p50": 13.579700025729835,
+        "p95": 168.35483999457207,
+        "p99": 271.1008560133627
+      },
+      "fatal_errors": [],
+      "unknown_commit": false
+    },
+    {
+      "kind": "occ_trial",
+      "dbms": "postgres",
+      "scenario": "hot1",
+      "clients": 8,
+      "requested_seconds": 10.0,
+      "max_retries": 8,
+      "status": "PASS",
+      "connection_ids": [
+        285,
+        286,
+        287,
+        288,
+        289,
+        290,
+        291,
+        292
+      ],
+      "final_rows": {
+        "1": {
+          "counter": "558.00",
+          "version": 559
+        },
+        "2": {
+          "counter": "0.00",
+          "version": 1
+        },
+        "3": {
+          "counter": "0.00",
+          "version": 1
+        },
+        "4": {
+          "counter": "0.00",
+          "version": 1
+        },
+        "5": {
+          "counter": "0.00",
+          "version": 1
+        },
+        "6": {
+          "counter": "0.00",
+          "version": 1
+        },
+        "7": {
+          "counter": "0.00",
+          "version": 1
+        },
+        "8": {
+          "counter": "0.00",
+          "version": 1
+        },
+        "9": {
+          "counter": "0.00",
+          "version": 1
+        },
+        "10": {
+          "counter": "0.00",
+          "version": 1
+        },
+        "11": {
+          "counter": "0.00",
+          "version": 1
+        },
+        "12": {
+          "counter": "0.00",
+          "version": 1
+        },
+        "13": {
+          "counter": "0.00",
+          "version": 1
+        },
+        "14": {
+          "counter": "0.00",
+          "version": 1
+        },
+        "15": {
+          "counter": "0.00",
+          "version": 1
+        },
+        "16": {
+          "counter": "0.00",
+          "version": 1
+        }
+      },
+      "integrity_ok": true,
+      "fixture_reset": true,
+      "logical_operations": 628,
+      "successful_operations": 558,
+      "exhausted_operations": 70,
+      "cancelled_operations": 0,
+      "attempts": 2241,
+      "version_conflicts": 1683,
+      "retries_started": 1613,
+      "conflict_rate": 0.751004016064257,
+      "operations_with_retry": 393,
+      "retry_operation_rate": 0.6257961783439491,
+      "retries_per_operation": 2.5684713375796178,
+      "db_error_operations": 0,
+      "actual_seconds": 10.13911490002647,
+      "successful_tps": 55.0343896387389,
+      "success_latency_ms": {
+        "mean": 95.44414677500714,
+        "p50": 60.296950017800555,
+        "p95": 318.3757800317834,
+        "p99": 413.3227789652296
+      },
+      "fatal_errors": [],
+      "unknown_commit": false
+    },
+    {
+      "kind": "occ_trial",
+      "dbms": "postgres",
+      "scenario": "hot1",
+      "clients": 16,
+      "requested_seconds": 10.0,
+      "max_retries": 8,
+      "status": "PASS",
+      "connection_ids": [
+        294,
+        297,
+        295,
+        296,
+        298,
+        300,
+        299,
+        302,
+        303,
+        304,
+        305,
+        301,
+        308,
+        307,
+        306,
+        309
+      ],
+      "final_rows": {
+        "1": {
+          "counter": "280.00",
+          "version": 281
+        },
+        "2": {
+          "counter": "0.00",
+          "version": 1
+        },
+        "3": {
+          "counter": "0.00",
+          "version": 1
+        },
+        "4": {
+          "counter": "0.00",
+          "version": 1
+        },
+        "5": {
+          "counter": "0.00",
+          "version": 1
+        },
+        "6": {
+          "counter": "0.00",
+          "version": 1
+        },
+        "7": {
+          "counter": "0.00",
+          "version": 1
+        },
+        "8": {
+          "counter": "0.00",
+          "version": 1
+        },
+        "9": {
+          "counter": "0.00",
+          "version": 1
+        },
+        "10": {
+          "counter": "0.00",
+          "version": 1
+        },
+        "11": {
+          "counter": "0.00",
+          "version": 1
+        },
+        "12": {
+          "counter": "0.00",
+          "version": 1
+        },
+        "13": {
+          "counter": "0.00",
+          "version": 1
+        },
+        "14": {
+          "counter": "0.00",
+          "version": 1
+        },
+        "15": {
+          "counter": "0.00",
+          "version": 1
+        },
+        "16": {
+          "counter": "0.00",
+          "version": 1
+        }
+      },
+      "integrity_ok": true,
+      "fixture_reset": true,
+      "logical_operations": 432,
+      "successful_operations": 280,
+      "exhausted_operations": 152,
+      "cancelled_operations": 0,
+      "attempts": 2396,
+      "version_conflicts": 2116,
+      "retries_started": 1964,
+      "conflict_rate": 0.8831385642737897,
+      "operations_with_retry": 346,
+      "retry_operation_rate": 0.8009259259259259,
+      "retries_per_operation": 4.546296296296297,
+      "db_error_operations": 0,
+      "actual_seconds": 10.194032099971082,
+      "successful_tps": 27.467051040656845,
+      "success_latency_ms": {
+        "mean": 225.80567535852813,
+        "p50": 168.18305000197142,
+        "p95": 615.8889349986566,
+        "p99": 720.2291589765806
+      },
+      "fatal_errors": [],
+      "unknown_commit": false
+    },
+    {
+      "kind": "demo",
+      "dbms": "mysql",
+      "phase": "lost_update",
+      "requested_operations": 2,
+      "status": "PASS",
+      "t1_connection_id": 165,
+      "t2_connection_id": 166,
+      "t2_affected_rows": 0,
+      "successful_operations_reported": 2,
+      "confirmed_commits": 2,
+      "actual": {
+        "counter": "1.00",
+        "version": 1
+      },
+      "correct_counter": "2.00",
+      "lost_increments": 1,
+      "expected_anomaly_observed": true,
+      "schedule_verified": true,
+      "fixture_reset": true
+    },
+    {
+      "kind": "demo",
+      "dbms": "mysql",
+      "phase": "occ_detect",
+      "requested_operations": 2,
+      "status": "PASS",
+      "t1_connection_id": 167,
+      "t2_connection_id": 168,
+      "successful_operations": 1,
+      "version_conflicts": 1,
+      "retry_attempts": 0,
+      "actual": {
+        "counter": "1.00",
+        "version": 2
+      },
+      "integrity_ok": true,
+      "schedule_verified": true,
+      "fixture_reset": true
+    },
+    {
+      "kind": "demo",
+      "dbms": "mysql",
+      "phase": "occ_retry",
+      "requested_operations": 2,
+      "status": "PASS",
+      "t1_connection_id": 169,
+      "t2_connection_id": 170,
+      "successful_operations": 2,
+      "version_conflicts": 1,
+      "retry_attempts": 1,
+      "actual": {
+        "counter": "2.00",
+        "version": 3
+      },
+      "integrity_ok": true,
+      "schedule_verified": true,
+      "fixture_reset": true
+    },
+    {
+      "kind": "occ_trial",
+      "dbms": "mysql",
+      "scenario": "distinct",
+      "clients": 1,
+      "requested_seconds": 10.0,
+      "max_retries": 8,
+      "status": "PASS",
+      "connection_ids": [
+        171
+      ],
+      "final_rows": {
+        "1": {
+          "counter": "414.00",
+          "version": 415
+        },
+        "2": {
+          "counter": "0.00",
+          "version": 1
+        },
+        "3": {
+          "counter": "0.00",
+          "version": 1
+        },
+        "4": {
+          "counter": "0.00",
+          "version": 1
+        },
+        "5": {
+          "counter": "0.00",
+          "version": 1
+        },
+        "6": {
+          "counter": "0.00",
+          "version": 1
+        },
+        "7": {
+          "counter": "0.00",
+          "version": 1
+        },
+        "8": {
+          "counter": "0.00",
+          "version": 1
+        },
+        "9": {
+          "counter": "0.00",
+          "version": 1
+        },
+        "10": {
+          "counter": "0.00",
+          "version": 1
+        },
+        "11": {
+          "counter": "0.00",
+          "version": 1
+        },
+        "12": {
+          "counter": "0.00",
+          "version": 1
+        },
+        "13": {
+          "counter": "0.00",
+          "version": 1
+        },
+        "14": {
+          "counter": "0.00",
+          "version": 1
+        },
+        "15": {
+          "counter": "0.00",
+          "version": 1
+        },
+        "16": {
+          "counter": "0.00",
+          "version": 1
+        }
+      },
+      "integrity_ok": true,
+      "fixture_reset": true,
+      "logical_operations": 414,
+      "successful_operations": 414,
+      "exhausted_operations": 0,
+      "cancelled_operations": 0,
+      "attempts": 414,
+      "version_conflicts": 0,
+      "retries_started": 0,
+      "conflict_rate": 0.0,
+      "operations_with_retry": 0,
+      "retry_operation_rate": 0.0,
+      "retries_per_operation": 0.0,
+      "db_error_operations": 0,
+      "actual_seconds": 10.001145599992014,
+      "successful_tps": 41.39525775930415,
+      "success_latency_ms": {
+        "mean": 24.151012319300982,
+        "p50": 22.84714998677373,
+        "p95": 44.321949998266064,
+        "p99": 58.88887299806812
+      },
+      "fatal_errors": [],
+      "unknown_commit": false
+    },
+    {
+      "kind": "occ_trial",
+      "dbms": "mysql",
+      "scenario": "distinct",
+      "clients": 4,
+      "requested_seconds": 10.0,
+      "max_retries": 8,
+      "status": "PASS",
+      "connection_ids": [
+        175,
+        174,
+        172,
+        173
+      ],
+      "final_rows": {
+        "1": {
+          "counter": "224.00",
+          "version": 225
+        },
+        "2": {
+          "counter": "224.00",
+          "version": 225
+        },
+        "3": {
+          "counter": "225.00",
+          "version": 226
+        },
+        "4": {
+          "counter": "225.00",
+          "version": 226
+        },
+        "5": {
+          "counter": "0.00",
+          "version": 1
+        },
+        "6": {
+          "counter": "0.00",
+          "version": 1
+        },
+        "7": {
+          "counter": "0.00",
+          "version": 1
+        },
+        "8": {
+          "counter": "0.00",
+          "version": 1
+        },
+        "9": {
+          "counter": "0.00",
+          "version": 1
+        },
+        "10": {
+          "counter": "0.00",
+          "version": 1
+        },
+        "11": {
+          "counter": "0.00",
+          "version": 1
+        },
+        "12": {
+          "counter": "0.00",
+          "version": 1
+        },
+        "13": {
+          "counter": "0.00",
+          "version": 1
+        },
+        "14": {
+          "counter": "0.00",
+          "version": 1
+        },
+        "15": {
+          "counter": "0.00",
+          "version": 1
+        },
+        "16": {
+          "counter": "0.00",
+          "version": 1
+        }
+      },
+      "integrity_ok": true,
+      "fixture_reset": true,
+      "logical_operations": 898,
+      "successful_operations": 898,
+      "exhausted_operations": 0,
+      "cancelled_operations": 0,
+      "attempts": 898,
+      "version_conflicts": 0,
+      "retries_started": 0,
+      "conflict_rate": 0.0,
+      "operations_with_retry": 0,
+      "retry_operation_rate": 0.0,
+      "retries_per_operation": 0.0,
+      "db_error_operations": 0,
+      "actual_seconds": 10.036837199993897,
+      "successful_tps": 89.4704160390831,
+      "success_latency_ms": {
+        "mean": 44.6487624727901,
+        "p50": 46.834950015181676,
+        "p95": 55.387480012723245,
+        "p99": 62.46492000354919
+      },
+      "fatal_errors": [],
+      "unknown_commit": false
+    },
+    {
+      "kind": "occ_trial",
+      "dbms": "mysql",
+      "scenario": "distinct",
+      "clients": 8,
+      "requested_seconds": 10.0,
+      "max_retries": 8,
+      "status": "PASS",
+      "connection_ids": [
+        176,
+        178,
+        177,
+        181,
+        179,
+        180,
+        182,
+        183
+      ],
+      "final_rows": {
+        "1": {
+          "counter": "280.00",
+          "version": 281
+        },
+        "2": {
+          "counter": "275.00",
+          "version": 276
+        },
+        "3": {
+          "counter": "279.00",
+          "version": 280
+        },
+        "4": {
+          "counter": "273.00",
+          "version": 274
+        },
+        "5": {
+          "counter": "278.00",
+          "version": 279
+        },
+        "6": {
+          "counter": "278.00",
+          "version": 279
+        },
+        "7": {
+          "counter": "276.00",
+          "version": 277
+        },
+        "8": {
+          "counter": "281.00",
+          "version": 282
+        },
+        "9": {
+          "counter": "0.00",
+          "version": 1
+        },
+        "10": {
+          "counter": "0.00",
+          "version": 1
+        },
+        "11": {
+          "counter": "0.00",
+          "version": 1
+        },
+        "12": {
+          "counter": "0.00",
+          "version": 1
+        },
+        "13": {
+          "counter": "0.00",
+          "version": 1
+        },
+        "14": {
+          "counter": "0.00",
+          "version": 1
+        },
+        "15": {
+          "counter": "0.00",
+          "version": 1
+        },
+        "16": {
+          "counter": "0.00",
+          "version": 1
+        }
+      },
+      "integrity_ok": true,
+      "fixture_reset": true,
+      "logical_operations": 2220,
+      "successful_operations": 2220,
+      "exhausted_operations": 0,
+      "cancelled_operations": 0,
+      "attempts": 2220,
+      "version_conflicts": 0,
+      "retries_started": 0,
+      "conflict_rate": 0.0,
+      "operations_with_retry": 0,
+      "retry_operation_rate": 0.0,
+      "retries_per_operation": 0.0,
+      "db_error_operations": 0,
+      "actual_seconds": 10.02814439998474,
+      "successful_tps": 221.37694786319375,
+      "success_latency_ms": {
+        "mean": 36.07321247743728,
+        "p50": 34.90734999650158,
+        "p95": 53.73726997058838,
+        "p99": 61.4385450381087
+      },
+      "fatal_errors": [],
+      "unknown_commit": false
+    },
+    {
+      "kind": "occ_trial",
+      "dbms": "mysql",
+      "scenario": "distinct",
+      "clients": 16,
+      "requested_seconds": 10.0,
+      "max_retries": 8,
+      "status": "PASS",
+      "connection_ids": [
+        190,
+        186,
+        188,
+        189,
+        184,
+        185,
+        187,
+        192,
+        193,
+        191,
+        194,
+        197,
+        195,
+        196,
+        198,
+        199
+      ],
+      "final_rows": {
+        "1": {
+          "counter": "237.00",
+          "version": 238
+        },
+        "2": {
+          "counter": "234.00",
+          "version": 235
+        },
+        "3": {
+          "counter": "238.00",
+          "version": 239
+        },
+        "4": {
+          "counter": "236.00",
+          "version": 237
+        },
+        "5": {
+          "counter": "235.00",
+          "version": 236
+        },
+        "6": {
+          "counter": "243.00",
+          "version": 244
+        },
+        "7": {
+          "counter": "233.00",
+          "version": 234
+        },
+        "8": {
+          "counter": "240.00",
+          "version": 241
+        },
+        "9": {
+          "counter": "237.00",
+          "version": 238
+        },
+        "10": {
+          "counter": "233.00",
+          "version": 234
+        },
+        "11": {
+          "counter": "235.00",
+          "version": 236
+        },
+        "12": {
+          "counter": "233.00",
+          "version": 234
+        },
+        "13": {
+          "counter": "236.00",
+          "version": 237
+        },
+        "14": {
+          "counter": "233.00",
+          "version": 234
+        },
+        "15": {
+          "counter": "235.00",
+          "version": 236
+        },
+        "16": {
+          "counter": "237.00",
+          "version": 238
+        }
+      },
+      "integrity_ok": true,
+      "fixture_reset": true,
+      "logical_operations": 3775,
+      "successful_operations": 3775,
+      "exhausted_operations": 0,
+      "cancelled_operations": 0,
+      "attempts": 3775,
+      "version_conflicts": 0,
+      "retries_started": 0,
+      "conflict_rate": 0.0,
+      "operations_with_retry": 0,
+      "retry_operation_rate": 0.0,
+      "retries_per_operation": 0.0,
+      "db_error_operations": 0,
+      "actual_seconds": 10.036650399968494,
+      "successful_tps": 376.12149966007087,
+      "success_latency_ms": {
+        "mean": 42.4892128478822,
+        "p50": 41.073200001847,
+        "p95": 59.10937002045101,
+        "p99": 69.60097199655134
+      },
+      "fatal_errors": [],
+      "unknown_commit": false
+    },
+    {
+      "kind": "occ_trial",
+      "dbms": "mysql",
+      "scenario": "hot1",
+      "clients": 1,
+      "requested_seconds": 10.0,
+      "max_retries": 8,
+      "status": "PASS",
+      "connection_ids": [
+        200
+      ],
+      "final_rows": {
+        "1": {
+          "counter": "416.00",
+          "version": 417
+        },
+        "2": {
+          "counter": "0.00",
+          "version": 1
+        },
+        "3": {
+          "counter": "0.00",
+          "version": 1
+        },
+        "4": {
+          "counter": "0.00",
+          "version": 1
+        },
+        "5": {
+          "counter": "0.00",
+          "version": 1
+        },
+        "6": {
+          "counter": "0.00",
+          "version": 1
+        },
+        "7": {
+          "counter": "0.00",
+          "version": 1
+        },
+        "8": {
+          "counter": "0.00",
+          "version": 1
+        },
+        "9": {
+          "counter": "0.00",
+          "version": 1
+        },
+        "10": {
+          "counter": "0.00",
+          "version": 1
+        },
+        "11": {
+          "counter": "0.00",
+          "version": 1
+        },
+        "12": {
+          "counter": "0.00",
+          "version": 1
+        },
+        "13": {
+          "counter": "0.00",
+          "version": 1
+        },
+        "14": {
+          "counter": "0.00",
+          "version": 1
+        },
+        "15": {
+          "counter": "0.00",
+          "version": 1
+        },
+        "16": {
+          "counter": "0.00",
+          "version": 1
+        }
+      },
+      "integrity_ok": true,
+      "fixture_reset": true,
+      "logical_operations": 416,
+      "successful_operations": 416,
+      "exhausted_operations": 0,
+      "cancelled_operations": 0,
+      "attempts": 416,
+      "version_conflicts": 0,
+      "retries_started": 0,
+      "conflict_rate": 0.0,
+      "operations_with_retry": 0,
+      "retry_operation_rate": 0.0,
+      "retries_per_operation": 0.0,
+      "db_error_operations": 0,
+      "actual_seconds": 10.003404199960642,
+      "successful_tps": 41.585843347371366,
+      "success_latency_ms": {
+        "mean": 24.040535577464304,
+        "p50": 22.94794999761507,
+        "p95": 42.837750021135435,
+        "p99": 48.67477999941914
+      },
+      "fatal_errors": [],
+      "unknown_commit": false
+    },
+    {
+      "kind": "occ_trial",
+      "dbms": "mysql",
+      "scenario": "hot1",
+      "clients": 4,
+      "requested_seconds": 10.0,
+      "max_retries": 8,
+      "status": "PASS",
+      "connection_ids": [
+        203,
+        202,
+        204,
+        201
+      ],
+      "final_rows": {
+        "1": {
+          "counter": "359.00",
+          "version": 360
+        },
+        "2": {
+          "counter": "0.00",
+          "version": 1
+        },
+        "3": {
+          "counter": "0.00",
+          "version": 1
+        },
+        "4": {
+          "counter": "0.00",
+          "version": 1
+        },
+        "5": {
+          "counter": "0.00",
+          "version": 1
+        },
+        "6": {
+          "counter": "0.00",
+          "version": 1
+        },
+        "7": {
+          "counter": "0.00",
+          "version": 1
+        },
+        "8": {
+          "counter": "0.00",
+          "version": 1
+        },
+        "9": {
+          "counter": "0.00",
+          "version": 1
+        },
+        "10": {
+          "counter": "0.00",
+          "version": 1
+        },
+        "11": {
+          "counter": "0.00",
+          "version": 1
+        },
+        "12": {
+          "counter": "0.00",
+          "version": 1
+        },
+        "13": {
+          "counter": "0.00",
+          "version": 1
+        },
+        "14": {
+          "counter": "0.00",
+          "version": 1
+        },
+        "15": {
+          "counter": "0.00",
+          "version": 1
+        },
+        "16": {
+          "counter": "0.00",
+          "version": 1
+        }
+      },
+      "integrity_ok": true,
+      "fixture_reset": true,
+      "logical_operations": 372,
+      "successful_operations": 359,
+      "exhausted_operations": 13,
+      "cancelled_operations": 0,
+      "attempts": 994,
+      "version_conflicts": 635,
+      "retries_started": 622,
+      "conflict_rate": 0.6388329979879276,
+      "operations_with_retry": 189,
+      "retry_operation_rate": 0.5080645161290323,
+      "retries_per_operation": 1.6720430107526882,
+      "db_error_operations": 0,
+      "actual_seconds": 10.074484700046014,
+      "successful_tps": 35.63457692266487,
+      "success_latency_ms": {
+        "mean": 95.71734818819299,
+        "p50": 50.60740001499653,
+        "p95": 321.64140996756026,
+        "p99": 441.5990499965848
+      },
+      "fatal_errors": [],
+      "unknown_commit": false
+    },
+    {
+      "kind": "occ_trial",
+      "dbms": "mysql",
+      "scenario": "hot1",
+      "clients": 8,
+      "requested_seconds": 10.0,
+      "max_retries": 8,
+      "status": "PASS",
+      "connection_ids": [
+        205,
+        206,
+        208,
+        207,
+        211,
+        209,
+        210,
+        212
+      ],
+      "final_rows": {
+        "1": {
+          "counter": "283.00",
+          "version": 284
+        },
+        "2": {
+          "counter": "0.00",
+          "version": 1
+        },
+        "3": {
+          "counter": "0.00",
+          "version": 1
+        },
+        "4": {
+          "counter": "0.00",
+          "version": 1
+        },
+        "5": {
+          "counter": "0.00",
+          "version": 1
+        },
+        "6": {
+          "counter": "0.00",
+          "version": 1
+        },
+        "7": {
+          "counter": "0.00",
+          "version": 1
+        },
+        "8": {
+          "counter": "0.00",
+          "version": 1
+        },
+        "9": {
+          "counter": "0.00",
+          "version": 1
+        },
+        "10": {
+          "counter": "0.00",
+          "version": 1
+        },
+        "11": {
+          "counter": "0.00",
+          "version": 1
+        },
+        "12": {
+          "counter": "0.00",
+          "version": 1
+        },
+        "13": {
+          "counter": "0.00",
+          "version": 1
+        },
+        "14": {
+          "counter": "0.00",
+          "version": 1
+        },
+        "15": {
+          "counter": "0.00",
+          "version": 1
+        },
+        "16": {
+          "counter": "0.00",
+          "version": 1
+        }
+      },
+      "integrity_ok": true,
+      "fixture_reset": true,
+      "logical_operations": 332,
+      "successful_operations": 283,
+      "exhausted_operations": 49,
+      "cancelled_operations": 0,
+      "attempts": 1412,
+      "version_conflicts": 1129,
+      "retries_started": 1080,
+      "conflict_rate": 0.7995750708215298,
+      "operations_with_retry": 272,
+      "retry_operation_rate": 0.8192771084337349,
+      "retries_per_operation": 3.253012048192771,
+      "db_error_operations": 0,
+      "actual_seconds": 10.304527200001758,
+      "successful_tps": 27.463656944876785,
+      "success_latency_ms": {
+        "mean": 189.30975017824798,
+        "p50": 154.15509999729693,
+        "p95": 508.2792799919833,
+        "p99": 596.9136999640614
+      },
+      "fatal_errors": [],
+      "unknown_commit": false
+    },
+    {
+      "kind": "occ_trial",
+      "dbms": "mysql",
+      "scenario": "hot1",
+      "clients": 16,
+      "requested_seconds": 10.0,
+      "max_retries": 8,
+      "status": "PASS",
+      "connection_ids": [
+        214,
+        213,
+        215,
+        217,
+        218,
+        216,
+        219,
+        220,
+        221,
+        224,
+        222,
+        227,
+        223,
+        225,
+        228,
+        226
+      ],
+      "final_rows": {
+        "1": {
+          "counter": "171.00",
+          "version": 172
+        },
+        "2": {
+          "counter": "0.00",
+          "version": 1
+        },
+        "3": {
+          "counter": "0.00",
+          "version": 1
+        },
+        "4": {
+          "counter": "0.00",
+          "version": 1
+        },
+        "5": {
+          "counter": "0.00",
+          "version": 1
+        },
+        "6": {
+          "counter": "0.00",
+          "version": 1
+        },
+        "7": {
+          "counter": "0.00",
+          "version": 1
+        },
+        "8": {
+          "counter": "0.00",
+          "version": 1
+        },
+        "9": {
+          "counter": "0.00",
+          "version": 1
+        },
+        "10": {
+          "counter": "0.00",
+          "version": 1
+        },
+        "11": {
+          "counter": "0.00",
+          "version": 1
+        },
+        "12": {
+          "counter": "0.00",
+          "version": 1
+        },
+        "13": {
+          "counter": "0.00",
+          "version": 1
+        },
+        "14": {
+          "counter": "0.00",
+          "version": 1
+        },
+        "15": {
+          "counter": "0.00",
+          "version": 1
+        },
+        "16": {
+          "counter": "0.00",
+          "version": 1
+        }
+      },
+      "integrity_ok": true,
+      "fixture_reset": true,
+      "logical_operations": 292,
+      "successful_operations": 171,
+      "exhausted_operations": 121,
+      "cancelled_operations": 0,
+      "attempts": 1914,
+      "version_conflicts": 1743,
+      "retries_started": 1622,
+      "conflict_rate": 0.9106583072100314,
+      "operations_with_retry": 277,
+      "retry_operation_rate": 0.9486301369863014,
+      "retries_per_operation": 5.554794520547945,
+      "db_error_operations": 0,
+      "actual_seconds": 10.4000508999452,
+      "successful_tps": 16.442227220339955,
+      "success_latency_ms": {
+        "mean": 398.6705058480324,
+        "p50": 353.67460001725703,
+        "p95": 768.0002500128467,
+        "p99": 815.0687199842653
+      },
+      "fatal_errors": [],
+      "unknown_commit": false
+    }
+  ],
+  "cleanup": {
+    "postgres": {
+      "demo_table_dropped": true,
+      "source_unchanged": true,
+      "original_table_set_restored": true
+    },
+    "mysql": {
+      "demo_table_dropped": true,
+      "source_unchanged": true,
+      "original_table_set_restored": true
+    }
+  },
+  "status": "PASS"
+}
