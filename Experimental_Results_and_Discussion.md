@@ -54,11 +54,15 @@ E6 cho tối đa **3 attempt tổng cộng**, gồm lần đầu; bản vá thê
 
 Trên cả hai DBMS, T1 cập nhật `warehouse.w_ytd` từ **300.000 lên 300.100** và giữ transaction chưa commit. T2 chạy plain SELECT bằng connection khác, đọc **300.000** và hoàn tất trước khi T1 bắt đầu commit. Sau khi T1 commit, T2 đọc lại trong cùng transaction READ COMMITTED và nhận **300.100**. Giá trị nguồn được khôi phục về 300.000; lịch thực thi và khôi phục đều PASS.
 
+Đợt bổ sung ngày 23/11/2026 kiểm chứng thêm PostgreSQL REPEATABLE READ theo mục 2.2.4: hai lần SELECT của T2 đều đọc **300.000**, nhưng transaction mới sau khi T2 kết thúc thấy **300.100** trước cleanup. PostgreSQL RC/RR và MySQL RC tạo thành ba case, đều có **0 abort, 0 retry**, kiểm chứng lịch và khôi phục đạt. MySQL tiếp tục là đối chứng ở RC; không bổ sung RR trên MySQL hay thử nghiệm SSI. [Summary mới](https://github.com/ncmanh-uet/dbms-project-report/blob/b757f71bd1ea3a542700f9807e5f3a5b34917589/experiments/e1_logs/20261123T075501_921679Z/summary.json), [timeline mới](https://github.com/ncmanh-uet/dbms-project-report/blob/b757f71bd1ea3a542700f9807e5f3a5b34917589/experiments/e1_logs/20261123T075501_921679Z/timeline.log).
+
 Kết quả cho thấy lần đọc đầu không đọc dữ liệu chưa commit và không phải đợi khóa cập nhật dòng của T1. Việc lần SELECT sau thấy giá trị mới phù hợp với snapshot theo từng câu đọc ở READ COMMITTED. Cơ chế này được mô tả trong [PostgreSQL Read Committed](https://www.postgresql.org/docs/17/transaction-iso.html#XACT-READ-COMMITTED) và [MySQL consistent nonlocking reads](https://dev.mysql.com/doc/refman/8.4/en/innodb-consistent-read.html). Kết luận giới hạn ở plain SELECT của lịch này; không suy rộng sang locking read hoặc DDL, và không lấy vài ms của demo để xếp hạng tốc độ hai hệ.
 
-### 2.2. E2 — Ghi cùng dòng tạo chờ khóa
+### 2.2. E2a — Ghi cùng dòng; E2b — khảo sát sơ bộ
 
 T1 và T2 cùng tăng `stock.s_ytd` của `(warehouse=1, item=1)`. Khi T1 chưa commit, metadata ghi nhận T2 chờ T1: PostgreSQL có quan hệ PID chặn/chờ và `wait_event_type=Lock`; MySQL có record lock ở PRIMARY với `lock_data=1, 1`. Sau khi T1 commit, T2 hoàn tất; counter tăng từ **0 lên 2**, rồi được khôi phục về 0.
+
+Mô tả trên áp dụng cho E2a ở **RC**, có **0 abort/retry** trên hai DBMS. Đợt bổ sung ngày 23/11/2026 kiểm chứng mục 2.2.5 trên PostgreSQL **RR**: observer xác nhận chờ qua hai mẫu cách nhau ít nhất 100 ms; sau khi T1 commit, UPDATE của T2 trả SQLSTATE **40001**, T2 ROLLBACK và counter được kiểm tra bằng **1**. Connection mới đặt RR, retry toàn transaction T2 và đạt **2**; có **1 aborted attempt, 1 retry**, hai yêu cầu logic hoàn tất, cleanup về 0. [Summary mới](https://github.com/ncmanh-uet/dbms-project-report/blob/b757f71bd1ea3a542700f9807e5f3a5b34917589/experiments/e2_logs/20261123T075518_917988Z/summary.json), [timeline mới](https://github.com/ncmanh-uet/dbms-project-report/blob/b757f71bd1ea3a542700f9807e5f3a5b34917589/experiments/e2_logs/20261123T075518_917988Z/timeline.log).
 
 Trong lượt sơ bộ 16 client, `distinct` ghi nhận tối đa **0** session chờ khóa mục tiêu, `shared4` tối đa **12**, `hot1` tối đa **15** trên cả hai hệ. Đây là max từ mẫu quan sát của lượt đó, không phải tổng số lần chờ. Các lượt sơ bộ không warm-up, chỉ một lần/cấu hình nên dùng để minh họa phân bố truy cập, không làm số liệu hiệu năng chính thức.
 
@@ -91,6 +95,10 @@ Các lượt OCC sơ bộ còn có **423 logical operation hết retry** trong t
 Với A/B là hai stock row, lịch `opposite` cho T1 lấy A rồi B, T2 lấy B rồi A. Trong lượt kiểm chứng đầy đủ, mỗi DBMS có **5/5 cặp** xuất hiện đúng một nạn nhân deadlock: PostgreSQL trả `40P01`; MySQL trả `1213` với SQLSTATE `40001`. Mỗi cặp có một survivor commit, counter A/B đều tăng **1**; retry toàn transaction nạn nhân sau đó làm cả hai tăng **2**. Khôi phục dữ liệu đều đạt.
 
 Với lịch `ordered`, cả hai lấy A rồi B. Mỗi DBMS có **5/5 cặp** đều hoàn tất hai COMMIT, **0 deadlock**, **0 retry**. Điều này kiểm chứng tác dụng của cùng thứ tự lấy khóa trong mô hình hai row đã thiết kế; không bảo đảm mọi workload phức tạp đều hết deadlock.
+
+Đợt chạy lại ngày 23/11/2026 giữ nguyên **RC**, hai lịch và năm lượt mỗi DBMS, đạt **20/20 cặp PASS**. Summary ghi trực tiếp isolation, abort, retry, mã lỗi và cleanup: opposite có **1 abort/1 retry mỗi cặp**, ordered có **0 abort/0 retry**. E4 đối chiếu lý thuyết khóa ở mục 2.1.3, không phải phép kiểm chứng snapshot hoặc SSI. [Summary mới](https://github.com/ncmanh-uet/dbms-project-report/blob/b757f71bd1ea3a542700f9807e5f3a5b34917589/experiments/e4_logs/20261123T075540_787330Z/summary.json), [timeline mới](https://github.com/ncmanh-uet/dbms-project-report/blob/b757f71bd1ea3a542700f9807e5f3a5b34917589/experiments/e4_logs/20261123T075540_787330Z/timeline.log).
+
+Các demo mới dùng quota 2 vCPU/2 GiB trên cả hai DBMS. So RC/RR giữ cùng dữ liệu, hai transaction và cấu hình **trong PostgreSQL**; đối chiếu PostgreSQL/MySQL tiếp tục ở **cùng RC**. [Xác minh độc lập](experiments/e124_verification/20261123/verification.json) đạt cho 26 case cơ chế và 12 lượt smoke E2b (1/4 client, 0,4 giây/lượt), xác nhận baseline, môi trường và bằng chứng E6 không đổi. Smoke chỉ kiểm tra hồi quy, không thay thế E2b cũ hoặc số đo hiệu năng E6. E6 hiện chỉ chạy RC, nên dữ liệu mới chưa định lượng tác động isolation lên TPS/p95.
 
 Chờ khóa đơn thuần là một cạnh chờ, còn deadlock cần một chu trình. DBMS có thể chọn nạn nhân và ứng dụng phải xử lý transaction bị hủy; không giả định T1 luôn là nạn nhân. Cơ sở giải thích: [PostgreSQL deadlocks](https://www.postgresql.org/docs/17/explicit-locking.html#LOCKING-DEADLOCKS) và [InnoDB deadlocks](https://dev.mysql.com/doc/refman/8.4/en/innodb-deadlocks.html). Không dùng thời gian detector của demo, trong đó PostgreSQL ghi nhận `deadlock_timeout=1s`, để xếp hạng tốc độ xử lý tải.
 
@@ -206,10 +214,10 @@ Khung thời lượng dưới đây dành cho toàn bài; có thể ghép với 
 
 ### A. Lượt cơ chế được trích dẫn
 
-- E1: [summary 20261024T034759_313380Z](experiments/e1_logs/20261024T034759_313380Z/summary.json), hai kết quả PASS và phục hồi dữ liệu. Lịch chi tiết nằm cùng thư mục.
-- E2: [summary 20261109T152250_363110Z](experiments/e2_logs/20261109T152250_363110Z/summary.json), hai demo và 24 lượt sơ bộ 10 giây, mỗi cấu hình một lần.
+- E1: [summary mới 20261123T075501_921679Z](experiments/e1_logs/20261123T075501_921679Z/summary.json), PostgreSQL RC/RR và MySQL RC, 3/3 PASS; giữ [log RC ban đầu](experiments/e1_logs/20261024T034759_313380Z/summary.json) để đối chiếu lịch sử.
+- E2a: [summary mới 20261123T075518_917988Z](experiments/e2_logs/20261123T075518_917988Z/summary.json), 3/3 PASS. E2b giữ [24 lượt sơ bộ 10 giây ban đầu](experiments/e2_logs/20261109T152250_363110Z/summary.json); [12 lượt smoke mới](experiments/e2_logs/20261123T075554_635086Z/summary.json) chỉ kiểm tra hồi quy.
 - E3: [summary 20261109T161429_704849Z](experiments/e3_logs/20261109T161429_704849Z/summary.json), sáu pha demo và 16 lượt sơ bộ 10 giây; hai file cleanup xác nhận xóa fixture, giữ nguồn và danh sách bảng ban đầu.
-- E4: [summary 20261109T163251_991835Z](experiments/e4_logs/20261109T163251_991835Z/summary.json), 20 cặp kiểm chứng, 5 cặp/mode/DBMS; xem thêm `rounds.csv` cùng thư mục.
+- E4: [summary mới 20261123T075540_787330Z](experiments/e4_logs/20261123T075540_787330Z/summary.json), 20/20 cặp PASS, giữ nguyên 5 cặp/mode/DBMS; xem thêm `rounds.csv` cùng thư mục. [Biên bản xác minh đợt bổ sung](experiments/e124_verification/20261123/verification.json) đối chiếu dữ liệu nguồn, môi trường, mã lỗi và số abort/retry.
 
 Đây là các lượt đủ cấu hình và có kiểm tra lịch/dữ liệu, không phải tuyên bố mọi lần chạy trong dự án đều PASS. Các log khác vẫn được giữ: E1 `20261024T034322_874237Z` lỗi kết nối; E2 `20261109T152806_672533Z` báo RuntimeError; E3 `20261109T161910_029797Z` báo cột `e3_deliberate_missing_column` không tồn tại; E4 `20261109T163503_360343Z` có hai lock timeout `55P03`, không đạt tiêu chí một deadlock victim/một survivor. Không dùng các lượt này làm số liệu TPS chính thức hay gọi timeout là deadlock.
 

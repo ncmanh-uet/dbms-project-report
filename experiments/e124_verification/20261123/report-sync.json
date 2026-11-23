@@ -1,0 +1,10 @@
+{
+  "document": "https://docs.google.com/document/d/1qu873boTkaXIyq2XH5YpH9RE6ZP5MrYuGtCrksuyqfU/edit",
+  "status": "PASS",
+  "theory_unchanged": true,
+  "theory_before_sha256": "661b1737f2c02afc511ed38f6460c0ceb377694c9fccb70ce1e35fd8e00f472a",
+  "theory_after_sha256": "661b1737f2c02afc511ed38f6460c0ceb377694c9fccb70ce1e35fd8e00f472a",
+  "new_commit_hyperlinks": 11,
+  "unique_new_commit_targets": 10,
+  "evidence_commit": "b757f71bd1ea3a542700f9807e5f3a5b34917589"
+}
