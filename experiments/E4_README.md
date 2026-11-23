@@ -99,10 +99,18 @@ Mỗi run tạo `experiments/e4_logs/<UTC run id>/`:
 - timeline.log/jsonl: BEGIN/UPDATE/COMMIT/ROLLBACK, thứ tự yêu cầu, connection
   IDs, SQLSTATE/errno và chi tiết deadlock nếu driver cung cấp.
 - summary.json: toàn bộ kết quả, nạn nhân, retry, các trạng thái dữ liệu.
+  Các trường tổng hợp `isolation_level`, `aborts`, `retries`, `error_codes`,
+  `cleanup_passed` được ghi trực tiếp cho mỗi cặp, bên cạnh các trường cũ.
+  `aborts` đếm attempt bị hủy, không đếm transaction cleanup; `retries` đếm
+  lần thực sự bắt đầu chạy lại. MySQL deadlock có errno 1213 và SQLSTATE
+  40001, khác với concurrent update của PostgreSQL ở E2a-RR.
 - rounds.csv: số deadlock, timeout, COMMIT, retry và kết quả khôi phục mỗi lượt.
 - Mỗi cặp còn có baseline.json và summary.json.
 
 Script dùng helper kết nối/log từ e1_mvcc.py và SQL/session từ e2_support.py.
+
+E4 đối chiếu lý thuyết khóa/deadlock ở mục 2.1.3, không được trình bày như
+một phép kiểm chứng snapshot hay SSI. Kịch bản và isolation giữ nguyên.
 
 ## Nguồn đối chiếu
 

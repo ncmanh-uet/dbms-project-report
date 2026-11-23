@@ -117,7 +117,9 @@ def retry_victim(dbms, victim, log, case):
 def run_pair(dbms, mode, round_number, log, directory):
     directory.mkdir()
     case = f"{mode}/{round_number}"
-    result = dict(dbms=dbms, mode=mode, round=round_number, isolation="READ COMMITTED", status="FAIL")
+    result = dict(dbms=dbms, mode=mode, round=round_number, isolation="READ COMMITTED",
+                  isolation_level="READ COMMITTED", status="FAIL", aborts=0,
+                  retries=0, error_codes=[], cleanup_passed=False)
     controller = None
     original = None
     ready, go, cancel = Queue(), Event(), Event()
@@ -234,6 +236,9 @@ def run_pair(dbms, mode, round_number, log, directory):
     deadlocks = sum(outcome["deadlock"] for outcome in outcomes)
     result.update(initial_commits=initial_commits, deadlocks=deadlocks,
                   lock_timeouts=sum(outcome.get("error_kind")=="lock_timeout" for outcome in outcomes))
+    result["aborts"] = sum(bool(outcome.get("error_kind")) for outcome in outcomes)
+    result["error_codes"] = [dict(sqlstate=outcome.get("sqlstate"), errno=outcome.get("errno"))
+                             for outcome in outcomes if outcome.get("error_kind")]
     if pair_started is not None:
         result["initial_pair_ms"] = (perf_counter() - pair_started) * 1000
     try:
@@ -257,6 +262,8 @@ def run_pair(dbms, mode, round_number, log, directory):
             result["schedule_verified"] = len(first)==2 and len(second)==2 and max(first) < min(second)
             if not result["schedule_verified"]:
                 raise RuntimeError("The opposite-order schedule was not established")
+            result["retries"] = 1
+            result["retry_attempts"] = 1
             retry = retry_victim(dbms, victim["actor"], log, case)
             result["retry"] = retry
             if not retry["committed"]:
@@ -280,6 +287,7 @@ def run_pair(dbms, mode, round_number, log, directory):
                 if original is not None:
                     confirmed = initial_commits + int(retry is not None and retry["committed"])
                     result["data_check"] = restore_pair(controller, dbms, original, confirmed, log, case)
+                    result["cleanup_passed"] = result["data_check"]["restored"]
             except BaseException as error:
                 result["cleanup_error"] = str(error) or type(error).__name__
                 result["status"] = "FAIL"
@@ -287,7 +295,9 @@ def run_pair(dbms, mode, round_number, log, directory):
                 controller.close()
         save_json(directory / "summary.json", result)
         log.record(dbms, case, result["status"], deadlocks=deadlocks, initial_commits=initial_commits,
-                   retry_attempts=result.get("retry_attempts",0), restored=result.get("data_check",{}).get("restored",False))
+                   retry_attempts=result.get("retry_attempts",0), restored=result.get("data_check",{}).get("restored",False),
+                   isolation_level=result["isolation_level"], aborts=result["aborts"],
+                   retries=result["retries"], error_codes=result["error_codes"], cleanup_passed=result["cleanup_passed"])
     return result
 
 

@@ -1,0 +1,103 @@
+{
+  "dbms": "postgres",
+  "mode": "opposite",
+  "round": 3,
+  "isolation": "READ COMMITTED",
+  "isolation_level": "READ COMMITTED",
+  "status": "PASS",
+  "aborts": 1,
+  "retries": 1,
+  "error_codes": [
+    {
+      "sqlstate": "40P01",
+      "errno": null
+    }
+  ],
+  "cleanup_passed": true,
+  "detector_settings": {
+    "deadlock_timeout_ms": 1000.0,
+    "session_lock_timeout_seconds": 5
+  },
+  "initial_transactions": [
+    {
+      "actor": "T1",
+      "request_order": [
+        1,
+        2
+      ],
+      "lock_order": [
+        1,
+        2
+      ],
+      "committed": true,
+      "deadlock": false,
+      "rollback_done": false,
+      "connection_id": 57,
+      "update_1_ms": 3.948,
+      "update_2_ms": 996.529,
+      "execution_ms": 1005.5613000295125
+    },
+    {
+      "actor": "T2",
+      "request_order": [
+        2,
+        1
+      ],
+      "lock_order": [
+        2,
+        1
+      ],
+      "committed": false,
+      "deadlock": true,
+      "rollback_done": true,
+      "connection_id": 58,
+      "update_1_ms": 4.175,
+      "error": "deadlock detected\nDETAIL:  Process 58 waits for ShareLock on transaction 64451; blocked by process 57.\nProcess 57 waits for ShareLock on transaction 64450; blocked by process 58.\nHINT:  See server log for query details.\nCONTEXT:  while updating tuple (4490,10) in relation \"stock\"",
+      "error_kind": "deadlock",
+      "sqlstate": "40P01",
+      "errno": null,
+      "server_detail": "Process 58 waits for ShareLock on transaction 64451; blocked by process 57.\nProcess 57 waits for ShareLock on transaction 64450; blocked by process 58.",
+      "execution_ms": 1004.4038000050932
+    }
+  ],
+  "initial_commits": 1,
+  "deadlocks": 1,
+  "lock_timeouts": 0,
+  "initial_pair_ms": 1006.4871999784373,
+  "victim": "T2",
+  "after_detection": {
+    "1": "1.00",
+    "2": "1.00"
+  },
+  "rollback_verified": true,
+  "schedule_verified": true,
+  "retry_attempts": 1,
+  "retry": {
+    "actor": "T2",
+    "committed": true,
+    "connection_id": 59,
+    "execution_ms": 37.50400000717491
+  },
+  "after_completed_requests": {
+    "1": "2.00",
+    "2": "2.00"
+  },
+  "logical_successes": 2,
+  "data_check": {
+    "counter_check": true,
+    "restored": true,
+    "confirmed_transactions": 2,
+    "before": {
+      "1": "0.00",
+      "2": "0.00"
+    },
+    "after_transactions": {
+      "1": "2.00",
+      "2": "2.00"
+    },
+    "after_restore": {
+      "1": "0.00",
+      "2": "0.00"
+    }
+  }
+}

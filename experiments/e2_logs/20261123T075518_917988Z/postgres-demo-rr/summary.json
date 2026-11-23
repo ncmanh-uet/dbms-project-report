@@ -1,0 +1,66 @@
+{
+  "kind": "demo",
+  "experiment": "E2a",
+  "dbms": "postgres",
+  "status": "PASS",
+  "isolation": "REPEATABLE READ",
+  "isolation_level": "REPEATABLE READ",
+  "aborts": 1,
+  "retries": 1,
+  "error_codes": [
+    {
+      "sqlstate": "40001",
+      "errno": null
+    }
+  ],
+  "cleanup_passed": true,
+  "lock_wait_observed": true,
+  "initial_value": "0.00",
+  "t1_connection_id": 44,
+  "t2": {
+    "connection_id": 46,
+    "committed": false,
+    "rollback_done": true,
+    "sqlstate": "40001",
+    "errno": null
+  },
+  "lock_snapshots": [
+    [
+      {
+        "waiting_pid": 46,
+        "blocking_pid": 44,
+        "state": "active",
+        "wait_event_type": "Lock",
+        "wait_event": "transactionid"
+      }
+    ],
+    [
+      {
+        "waiting_pid": 46,
+        "blocking_pid": 44,
+        "state": "active",
+        "wait_event_type": "Lock",
+        "wait_event": "transactionid"
+      }
+    ]
+  ],
+  "observed_blocked_span_ms": 127.7735999901779,
+  "after_initial_value": "1.00",
+  "retry_connection_id": 47,
+  "final_value": "2.00",
+  "data_check": {
+    "counter_check": true,
+    "restored": true,
+    "before": {
+      "1": "0.00"
+    },
+    "after_transactions": {
+      "1": "2.00"
+    },
+    "after_restore": {
+      "1": "0.00"
+    },
+    "confirmed_commits": 2
+  },
+  "schedule_verified": true
+}

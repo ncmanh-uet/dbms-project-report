@@ -1,0 +1,82 @@
+{
+  "dbms": "postgres",
+  "mode": "ordered",
+  "round": 4,
+  "isolation": "READ COMMITTED",
+  "isolation_level": "READ COMMITTED",
+  "status": "PASS",
+  "aborts": 0,
+  "retries": 0,
+  "error_codes": [],
+  "cleanup_passed": true,
+  "detector_settings": {
+    "deadlock_timeout_ms": 1000.0,
+    "session_lock_timeout_seconds": 5
+  },
+  "initial_transactions": [
+    {
+      "actor": "T1",
+      "request_order": [
+        1,
+        2
+      ],
+      "lock_order": [
+        1,
+        2
+      ],
+      "committed": true,
+      "deadlock": false,
+      "rollback_done": false,
+      "connection_id": 78,
+      "update_1_ms": 2.329,
+      "update_2_ms": 1.134,
+      "execution_ms": 7.293800008483231
+    },
+    {
+      "actor": "T2",
+      "request_order": [
+        2,
+        1
+      ],
+      "lock_order": [
+        1,
+        2
+      ],
+      "committed": true,
+      "deadlock": false,
+      "rollback_done": false,
+      "connection_id": 79,
+      "update_1_ms": 5.501,
+      "update_2_ms": 1.576,
+      "execution_ms": 13.692000007722527
+    }
+  ],
+  "initial_commits": 2,
+  "deadlocks": 0,
+  "lock_timeouts": 0,
+  "initial_pair_ms": 14.673599973320961,
+  "schedule_verified": true,
+  "after_completed_requests": {
+    "1": "2.00",
+    "2": "2.00"
+  },
+  "logical_successes": 2,
+  "retry_attempts": 0,
+  "data_check": {
+    "counter_check": true,
+    "restored": true,
+    "confirmed_transactions": 2,
+    "before": {
+      "1": "0.00",
+      "2": "0.00"
+    },
+    "after_transactions": {
+      "1": "2.00",
+      "2": "2.00"
+    },
+    "after_restore": {
+      "1": "0.00",
+      "2": "0.00"
+    }
+  }
+}

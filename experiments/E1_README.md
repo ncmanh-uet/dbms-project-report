@@ -6,7 +6,8 @@ Thí nghiệm tiếp theo: [E2 — Hot-row contention](E2_README.md).
 
 Kiểm tra một plain SELECT có đọc được phiên bản đã commit khi transaction
 khác đang giữ UPDATE chưa commit trên cùng bản ghi. Thí nghiệm dùng
-`warehouse.w_ytd`, với `w_id = 1`, ở READ COMMITTED trên cả hai DBMS.
+`warehouse.w_ytd`, với `w_id = 1`. PostgreSQL có hai case READ COMMITTED
+(RC) và REPEATABLE READ (RR), đối chiếu mục 2.2.4; MySQL giữ RC làm đối chứng.
 
 ## Chạy trong Terminal VS Code
 
@@ -21,6 +22,12 @@ Khi hai database đã sẵn sàng nhận kết nối:
 
 ```powershell
 .\.venv\Scripts\python.exe .\experiments\e1_mvcc.py
+
+# Đợt lấy bằng chứng: PostgreSQL RC/RR và MySQL RC
+.\.venv\Scripts\python.exe -B .\experiments\e1_mvcc.py --isolation both
+
+# Chỉ kiểm chứng snapshot cố định của PostgreSQL
+.\.venv\Scripts\python.exe -B .\experiments\e1_mvcc.py --db postgres --isolation rr
 ```
 
 Chạy riêng từng hệ:
@@ -35,15 +42,16 @@ workload và các thao tác sửa bản ghi này từ Workbench/công cụ khác
 
 ## Lịch thực thi
 
-1. T1 mở connection, đặt READ COMMITTED, bắt đầu transaction.
+1. T1 mở connection, đặt isolation của case, bắt đầu transaction.
 2. T1 đọc và khóa warehouse 1 bằng SELECT FOR UPDATE, lấy giá trị ban đầu B.
 3. T1 tăng w_ytd thêm 100 và giữ transaction chưa commit.
-4. T2 mở connection độc lập, đặt READ COMMITTED, bắt đầu transaction chỉ đọc.
+4. T2 mở connection độc lập, đặt cùng isolation, bắt đầu transaction chỉ đọc.
 5. T2 chạy plain SELECT, kiểm tra nhận B và phát tín hiệu đã đọc xong.
 6. T1 chỉ COMMIT sau khi nhận tín hiệu đọc thành công từ T2.
 7. T2 nhận tín hiệu T1 COMMIT thành công, đọc lại trong cùng transaction,
-   kiểm tra nhận B + 100, rồi COMMIT và đóng connection.
-8. T1 dùng transaction dọn dẹp riêng, khóa lại bản ghi, khôi phục B bằng
+   kiểm tra nhận B + 100 ở RC hoặc B ở RR, rồi COMMIT và đóng connection.
+8. Sau khi T2 kết thúc, một transaction mới kiểm tra DB chứa B + 100.
+9. T1 dùng transaction dọn dẹp riêng, khóa lại bản ghi, khôi phục B bằng
    UPDATE có điều kiện, COMMIT và đọc lại để kiểm chứng.
 
 Python dùng Event để đồng bộ, không dùng sleep để quyết định thứ tự.
@@ -64,10 +72,18 @@ Mỗi lần chạy tạo thư mục riêng `experiments/e1_logs/<UTC run id>/` g
 - `timeline.jsonl`: cùng sự kiện, kèm UTC timestamp, số thứ tự và elapsed_ms.
 - `summary.json`: connection IDs, isolation, B, hai giá trị T2 đọc được,
   thời gian hai SELECT, kiểm tra thứ tự và giá trị sau khôi phục.
+  Các trường bổ sung gồm `isolation_level`, `t2_read_1`, `t2_read_2`,
+  `final_db_value` (trước cleanup), `aborts`, `retries`, `cleanup_passed`.
+  `restored_value` là giá trị sau khôi phục. Mỗi case thành công có 0 abort,
+  0 retry; cleanup không được tính là abort của workload.
 
 Lịch phải có thứ tự:
 UPDATE_UNCOMMITTED → READ_BEFORE_COMMIT → COMMIT_START → COMMIT_DONE
-→ READ_AFTER_COMMIT → RESTORED.
+→ READ_AFTER_COMMIT → FINAL_VALUE_VERIFIED → RESTORED.
+
+`--isolation` mặc định `rc` để giữ cách chạy cũ. `both` chạy PostgreSQL RC/RR
+và MySQL RC; `rr` yêu cầu `--db postgres`. Mỗi case kiểm chứng trên đoạn
+timeline riêng. Kết quả RR không được gọi là kiểm chứng SSI hoặc serializability.
 
 Tín hiệu quan trọng là SELECT đầu tiên hoàn tất trước khi T1 bắt đầu COMMIT.
 Độ trễ một lần SELECT chỉ là số đo minh họa của demo, không dùng để kết luận

@@ -1,0 +1,83 @@
+{
+  "run_id": "20261123T075501_921679Z",
+  "results": [
+    {
+      "dbms": "postgres",
+      "isolation": "READ COMMITTED",
+      "isolation_level": "READ COMMITTED",
+      "warehouse_id": 1,
+      "aborts": 0,
+      "retries": 0,
+      "error_codes": [],
+      "cleanup_passed": true,
+      "writer_connection_id": 36,
+      "baseline": "300000.00",
+      "reader": {
+        "connection_id": 37,
+        "before": "300000.00",
+        "after": "300100.00",
+        "before_select_ms": 2.51,
+        "after_select_ms": 1.651
+      },
+      "t2_read_1": "300000.00",
+      "t2_read_2": "300100.00",
+      "final_db_value": "300100.00",
+      "status": "PASS",
+      "restored_value": "300000.00",
+      "restored": true,
+      "schedule_verified": true
+    },
+    {
+      "dbms": "postgres",
+      "isolation": "REPEATABLE READ",
+      "isolation_level": "REPEATABLE READ",
+      "warehouse_id": 1,
+      "aborts": 0,
+      "retries": 0,
+      "error_codes": [],
+      "cleanup_passed": true,
+      "writer_connection_id": 38,
+      "baseline": "300000.00",
+      "reader": {
+        "connection_id": 39,
+        "before": "300000.00",
+        "after": "300000.00",
+        "before_select_ms": 2.444,
+        "after_select_ms": 1.792
+      },
+      "t2_read_1": "300000.00",
+      "t2_read_2": "300000.00",
+      "final_db_value": "300100.00",
+      "status": "PASS",
+      "restored_value": "300000.00",
+      "restored": true,
+      "schedule_verified": true
+    },
+    {
+      "dbms": "mysql",
+      "isolation": "READ COMMITTED",
+      "isolation_level": "READ COMMITTED",
+      "warehouse_id": 1,
+      "aborts": 0,
+      "retries": 0,
+      "error_codes": [],
+      "cleanup_passed": true,
+      "writer_connection_id": 9,
+      "baseline": "300000.00",
+      "reader": {
+        "connection_id": 10,
+        "before": "300000.00",
+        "after": "300100.00",
+        "before_select_ms": 2.702,
+        "after_select_ms": 4.065
+      },
+      "t2_read_1": "300000.00",
+      "t2_read_2": "300100.00",
+      "final_db_value": "300100.00",
+      "status": "PASS",
+      "restored_value": "300000.00",
+      "restored": true,
+      "schedule_verified": true
+    }
+  ]
+}

@@ -18,19 +18,22 @@ from statistics import fmean
 from threading import Event
 from time import perf_counter
 
-from e1_mvcc import ROOT, Timeline, connect, statement
+from e1_mvcc import ROOT, Timeline, connect, isolation_cases, statement
 from e2_support import (UPDATE_SQL, baseline, begin, call, mysql_observer_access,
-                        percentile, restore, save_json, session, waits)
+                        percentile, restore, save_json, session, values, waits)
 
 
-def demo(dbms, log, directory):
+def demo(dbms, log, directory, isolation="READ COMMITTED"):
     directory.mkdir()
-    result = {"kind": "demo", "dbms": dbms, "status": "FAIL"}
+    result = dict(kind="demo", experiment="E2a", dbms=dbms, status="FAIL",
+                  isolation=isolation, isolation_level=isolation, aborts=0, retries=0,
+                  error_codes=[], cleanup_passed=False, lock_wait_observed=False)
+    expect_serialization = dbms == "postgres" and isolation == "REPEATABLE READ"
     writer = observer = None
     original = None
     cancelled = Event()
     ready = Queue()
-    state = {"committed": False}
+    state = {"committed": False, "retry_committed": False}
     pool = ThreadPoolExecutor(max_workers=1)
     future = None
     t1_committed = False
@@ -44,7 +47,7 @@ def demo(dbms, log, directory):
         announced = False
         try:
             connection = connect(dbms)
-            pid = session(connection, dbms, log, "DEMO_T2")
+            pid = session(connection, dbms, log, "DEMO_T2", isolation)
             ready.put(pid)
             announced = True
             sql(connection, "DEMO_T2", "BEGIN" if dbms == "postgres" else "START TRANSACTION")
@@ -55,7 +58,17 @@ def demo(dbms, log, directory):
             sql(connection, "DEMO_T2", "COMMIT")
             state["committed"] = True
             log.record(dbms, "DEMO_T2", "T2_COMMIT_DONE")
-            return {"connection_id": pid, "update_roundtrip_ms": latency}
+            return {"connection_id": pid, "update_roundtrip_ms": latency, "committed": True}
+        except Exception as error:
+            code = dict(sqlstate=getattr(error, "sqlstate", None), errno=getattr(error, "errno", None))
+            result["error_codes"].append(code)
+            result["aborts"] += int((code["sqlstate"] or "").startswith("40"))
+            if not (expect_serialization and code["sqlstate"] == "40001"):
+                raise
+            log.record(dbms, "DEMO_T2", "T2_SERIALIZATION_FAILURE", message=str(error), **code)
+            sql(connection, "DEMO_T2", "ROLLBACK")
+            log.record(dbms, "DEMO_T2", "T2_ROLLBACK_DONE")
+            return dict(connection_id=pid, committed=False, rollback_done=True, **code)
         finally:
             if not announced:
                 ready.put(None)
@@ -68,9 +81,10 @@ def demo(dbms, log, directory):
     try:
         writer = connect(dbms)
         observer = connect(dbms)
-        t1_pid = session(writer, dbms, log, "DEMO_T1")
+        t1_pid = session(writer, dbms, log, "DEMO_T1", isolation)
         session(observer, dbms, log, "OBSERVER")
         original = baseline(writer, dbms, [1], directory)
+        result["initial_value"] = str(original[1])
         sql(writer, "DEMO_T1", "BEGIN" if dbms == "postgres" else "START TRANSACTION")
         if sql(writer, "DEMO_T1", UPDATE_SQL, (1,))[0] != 1:
             raise RuntimeError("T1 did not update exactly one stock row")
@@ -106,6 +120,7 @@ def demo(dbms, log, directory):
             cancelled.wait(0.02)
         if second_seen is None or future.done():
             raise RuntimeError("Could not confirm T2 blocked by T1")
+        result["lock_wait_observed"] = True
         log.record(dbms, "DEMO_T1", "T1_COMMIT_START")
         sql(writer, "DEMO_T1", "COMMIT")
         t1_committed = True
@@ -113,6 +128,37 @@ def demo(dbms, log, directory):
         result.update(t1_connection_id=t1_pid, t2=future.result(timeout=10),
                       lock_snapshots=snapshots,
                       observed_blocked_span_ms=(second_seen - first_seen) * 1000)
+        after_initial = values(observer, [1])[1]
+        result["after_initial_value"] = str(after_initial)
+        expected_initial = original[1] + (1 if expect_serialization else 2)
+        if after_initial != expected_initial:
+            raise RuntimeError("Initial pair left an unexpected counter value")
+        log.record(dbms, "VERIFY", "INITIAL_VALUE_VERIFIED", value=after_initial)
+        if expect_serialization:
+            if result["aborts"] != 1 or result["t2"]["committed"] or not result["t2"].get("rollback_done"):
+                raise RuntimeError("Expected one rolled-back concurrent-update attempt")
+            retry_connection = connect(dbms)
+            try:
+                pid = session(retry_connection, dbms, log, "RETRY_T2", isolation)
+                result["retries"] += 1
+                result["retry_connection_id"] = pid
+                log.record(dbms, "RETRY_T2", "RETRY_BEGIN", isolation_level=isolation)
+                sql(retry_connection, "RETRY_T2", "BEGIN")
+                if sql(retry_connection, "RETRY_T2", UPDATE_SQL, (1,))[0] != 1:
+                    raise RuntimeError("Retry did not update exactly one stock row")
+                sql(retry_connection, "RETRY_T2", "COMMIT")
+                state["retry_committed"] = True
+                log.record(dbms, "RETRY_T2", "RETRY_COMMIT_DONE")
+            finally:
+                try:
+                    retry_connection.rollback()
+                finally:
+                    retry_connection.close()
+        final = values(observer, [1])[1]
+        result["final_value"] = str(final)
+        if final != original[1] + 2:
+            raise RuntimeError("Completed requests did not increment the counter twice")
+        log.record(dbms, "VERIFY", "FINAL_VALUE_VERIFIED", value=final)
         result["status"] = "PASS"
     except BaseException as error:
         cancelled.set()
@@ -135,8 +181,9 @@ def demo(dbms, log, directory):
         if writer is not None:
             try:
                 if original is not None:
-                    commits = Counter({1: int(t1_committed) + int(state["committed"])})
+                    commits = Counter({1: int(t1_committed) + int(state["committed"]) + int(state["retry_committed"])})
                     result["data_check"] = restore(writer, dbms, original, commits, log, "DEMO_CLEANUP")
+                    result["cleanup_passed"] = result["data_check"]["restored"]
                     if result["status"] == "PASS" and commits[1] != 2:
                         raise RuntimeError("Demo did not commit exactly two updates")
             except BaseException as error:
@@ -148,15 +195,19 @@ def demo(dbms, log, directory):
             observer.close()
 
     stages = {event["action"]: event["sequence"] for event in log.events[start_sequence:]}
-    ordered = ["T1_UPDATE_UNCOMMITTED", "BLOCKING_OBSERVED", "BLOCKING_CONFIRMED",
-               "T1_COMMIT_START", "T2_UPDATE_DONE", "T2_COMMIT_DONE", "RESTORED"]
+    ordered = ["T1_UPDATE_UNCOMMITTED", "BLOCKING_OBSERVED", "BLOCKING_CONFIRMED", "T1_COMMIT_START"]
+    ordered += (["T2_SERIALIZATION_FAILURE", "T2_ROLLBACK_DONE", "INITIAL_VALUE_VERIFIED",
+                 "RETRY_BEGIN", "RETRY_COMMIT_DONE"] if expect_serialization else
+                ["T2_UPDATE_DONE", "T2_COMMIT_DONE", "INITIAL_VALUE_VERIFIED"])
+    ordered += ["FINAL_VALUE_VERIFIED", "RESTORED"]
     # COMMIT acknowledgment can race with T2's completion; do not assert ACK order.
     result["schedule_verified"] = all(key in stages for key in ordered) and all(
         stages[a] < stages[b] for a, b in zip(ordered, ordered[1:]))
     if not result["schedule_verified"]:
         result["status"] = "FAIL"
     save_json(directory / "summary.json", result)
-    log.record(dbms, "DEMO", result["status"], evidence=str(directory))
+    log.record(dbms, "DEMO", result["status"], evidence=str(directory), isolation_level=isolation,
+               aborts=result["aborts"], retries=result["retries"], cleanup_passed=result["cleanup_passed"])
     return result
 
 
@@ -336,9 +387,15 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--db", choices=("postgres", "mysql", "both"), default="both")
     parser.add_argument("--mode", choices=("demo", "load", "all"), default="all")
+    parser.add_argument("--demo-isolation", choices=("rc", "rr", "both"), default="rc",
+                        help="E2a PostgreSQL RC/RR; MySQL and E2b stay at RC")
     parser.add_argument("--clients", type=int, nargs="+", default=[1, 4, 8, 16])
     parser.add_argument("--seconds", type=float, default=10)
     args = parser.parse_args()
+    if args.demo_isolation == "rr" and args.db != "postgres":
+        parser.error("Use --db postgres for --demo-isolation rr")
+    if args.mode == "load" and args.demo_isolation != "rc":
+        parser.error("--demo-isolation applies only to demo/all, not E2b load")
     if not 0.1 <= args.seconds <= 60 or any(not 1 <= n <= 16 for n in args.clients):
         parser.error("Use 0.1-60 seconds and 1-16 clients for these preliminary trials")
     run_id = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%S_%fZ")
@@ -352,10 +409,12 @@ def main():
             access = mysql_observer_access(log, directory) if dbms == "mysql" else nullcontext()
             with access:
                 if args.mode in ("demo", "all"):
-                    result = demo(dbms, log, directory / f"{dbms}-demo")
-                    report["results"].append(result)
-                    if result["status"] != "PASS":
-                        raise RuntimeError(f"{dbms} blocking demo failed")
+                    for isolation in isolation_cases(dbms, args.demo_isolation):
+                        suffix = "rc" if isolation == "READ COMMITTED" else "rr"
+                        result = demo(dbms, log, directory / f"{dbms}-demo-{suffix}", isolation)
+                        report["results"].append(result)
+                        if result["status"] != "PASS":
+                            raise RuntimeError(f"{dbms}/{suffix} blocking demo failed")
                 if args.mode in ("load", "all"):
                     for scenario in ("distinct", "shared4", "hot1"):
                         for clients in args.clients:

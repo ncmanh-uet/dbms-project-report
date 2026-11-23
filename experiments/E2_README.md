@@ -1,4 +1,4 @@
-# E2 — Hot-row contention trên bảng stock
+# E2 — E2a kiểm chứng xung đột ghi; E2b khảo sát sơ bộ
 
 ## Phạm vi bước 12
 
@@ -37,6 +37,9 @@ Các lựa chọn:
 # Chỉ xem demo chờ khóa, trên cả hai hệ
 .\.venv\Scripts\python.exe .\experiments\e2_contention.py --mode demo
 
+# E2a: PostgreSQL RC/RR và MySQL RC, đối chiếu lý thuyết mục 2.2.5
+.\.venv\Scripts\python.exe -B .\experiments\e2_contention.py --mode demo --demo-isolation both
+
 # Chỉ chạy các lượt sơ bộ
 .\.venv\Scripts\python.exe .\experiments\e2_contention.py --mode load
 
@@ -48,7 +51,7 @@ Các lựa chọn:
 .\.venv\Scripts\python.exe .\experiments\e2_contention.py --clients 1 4 --seconds 0.4
 ```
 
-## Demo T1/T2
+## E2a — Demo T1/T2
 
 1. Lưu giá trị s_ytd ban đầu B của stock (1,1).
 2. T1 tăng bộ đếm một đơn vị và giữ transaction chưa commit.
@@ -56,7 +59,10 @@ Các lựa chọn:
 4. Connection quan sát lấy metadata xác nhận T2 chờ T1. Hai mẫu phải cách
    nhau ít nhất 100 ms và T2 chưa hoàn tất.
 5. Chỉ sau khi xác nhận chờ khóa, T1 mới bắt đầu COMMIT.
-6. T2 hoàn tất UPDATE rồi COMMIT. Bộ đếm phải bằng B + 2.
+6. Ở RC, T2 hoàn tất UPDATE rồi COMMIT, bộ đếm bằng B + 2.
+   Ở PostgreSQL RR, UPDATE của T2 trả SQLSTATE `40001`; T2 ROLLBACK,
+   bộ đếm được kiểm tra bằng B + 1. Sau đó connection mới đặt RR, mở
+   transaction mới và chạy lại toàn bộ UPDATE/COMMIT của T2, đạt B + 2.
 7. Kiểm tra và khôi phục B, sau khi cả hai transaction đã kết thúc.
 
 PostgreSQL quan sát pg_stat_activity và pg_blocking_pids. MySQL quan sát
@@ -68,7 +74,18 @@ chặn. Nó là bằng chứng về một phần khoảng chờ, không phải b
 toàn bộ lock-wait time. Thời gian UPDATE trong demo bao gồm thời gian giữ
 khóa có chủ đích này; không dùng nó để so tốc độ hai DBMS.
 
-## Các lượt nhiều client
+`--demo-isolation` mặc định `rc`; `both` bổ sung PostgreSQL RR nhưng giữ
+MySQL RC làm đối chứng. `rr` yêu cầu `--db postgres`. Lỗi `40001` ở case
+PostgreSQL RR là kết quả dự kiến, không phải lỗi điều phối. Case chỉ PASS
+khi có đúng 1 aborted attempt, 1 retry, 2 COMMIT được xác nhận và cleanup đạt.
+RC phải có 0 abort/retry. Retry giữ cùng thao tác, row đích và isolation.
+
+Summary E2a lưu `isolation_level`, `lock_wait_observed`, `aborts`, `retries`,
+`error_codes` (tách `sqlstate`/`errno`), `initial_value`, `after_initial_value`,
+`final_value` (trước cleanup), `cleanup_passed`. Các trường `data_check` và
+`schedule_verified` được giữ lại. Thư mục case có tên `<dbms>-demo-rc/rr`.
+
+## E2b — Các lượt nhiều client
 
 - `distinct`: mỗi client cập nhật một item riêng (1 đến số client), không
   cùng tranh chấp một stock row với client khác trong lượt này.
@@ -78,7 +95,7 @@ khóa có chủ đích này; không dùng nó để so tốc độ hai DBMS.
 Một client không tạo tranh chấp giữa các client; shared4 với một client
 chỉ thay đổi working set. Nhãn phân bố không bảo đảm có wait trong mọi mẫu.
 
-Tất cả connection dùng READ COMMITTED. Mỗi client đợi transaction kết thúc
+Tất cả connection E2b dùng READ COMMITTED. Mỗi client đợi transaction kết thúc
 rồi mới gửi transaction kế tiếp. Phần chạy nhiều client không thêm thời gian
 giữ khóa hay think time có chủ đích, và không retry transaction bị lỗi.
 
@@ -96,6 +113,9 @@ thực tế còn phụ thuộc thời gian query và lập lịch. Các trườn
 số phiên bị chặn quan sát được, không phải tổng số lock waits hoặc thời gian
 chờ chính xác. Một mẫu 0 không chứng minh chưa từng có wait giữa hai mẫu.
 Sampler cũng tạo overhead trong các lượt sơ bộ này.
+
+`--demo-isolation` không thay đổi E2b. Dùng `--mode load` với giá trị khác
+`rc` sẽ bị từ chối để tránh hiểu nhầm rằng tải sơ bộ có thêm nhánh RR.
 
 ## Tính đúng đắn và dọn dẹp
 

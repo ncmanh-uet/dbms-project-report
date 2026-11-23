@@ -1,0 +1,82 @@
+{
+  "dbms": "mysql",
+  "mode": "ordered",
+  "round": 4,
+  "isolation": "READ COMMITTED",
+  "isolation_level": "READ COMMITTED",
+  "status": "PASS",
+  "aborts": 0,
+  "retries": 0,
+  "error_codes": [],
+  "cleanup_passed": true,
+  "detector_settings": {
+    "innodb_deadlock_detect": true,
+    "session_lock_timeout_seconds": 5
+  },
+  "initial_transactions": [
+    {
+      "actor": "T1",
+      "request_order": [
+        1,
+        2
+      ],
+      "lock_order": [
+        1,
+        2
+      ],
+      "committed": true,
+      "deadlock": false,
+      "rollback_done": false,
+      "connection_id": 49,
+      "update_1_ms": 12.043,
+      "update_2_ms": 3.355,
+      "execution_ms": 22.770099982153624
+    },
+    {
+      "actor": "T2",
+      "request_order": [
+        2,
+        1
+      ],
+      "lock_order": [
+        1,
+        2
+      ],
+      "committed": true,
+      "deadlock": false,
+      "rollback_done": false,
+      "connection_id": 50,
+      "update_1_ms": 3.146,
+      "update_2_ms": 3.739,
+      "execution_ms": 13.895400043111295
+    }
+  ],
+  "initial_commits": 2,
+  "deadlocks": 0,
+  "lock_timeouts": 0,
+  "initial_pair_ms": 25.002799986395985,
+  "schedule_verified": true,
+  "after_completed_requests": {
+    "1": "2.00",
+    "2": "2.00"
+  },
+  "logical_successes": 2,
+  "retry_attempts": 0,
+  "data_check": {
+    "counter_check": true,
+    "restored": true,
+    "confirmed_transactions": 2,
+    "before": {
+      "1": "0.00",
+      "2": "0.00"
+    },
+    "after_transactions": {
+      "1": "2.00",
+      "2": "2.00"
+    },
+    "after_restore": {
+      "1": "0.00",
+      "2": "0.00"
+    }
+  }
+}

@@ -8,7 +8,7 @@ import re
 import subprocess
 from time import perf_counter
 
-from e1_mvcc import ROOT, connect
+from e1_mvcc import ROOT, ISOLATIONS, connect
 
 
 UPDATE_SQL = "UPDATE stock SET s_ytd = s_ytd + 1 WHERE s_w_id = 1 AND s_i_id = %s"
@@ -30,19 +30,21 @@ def begin(connection, dbms):
     return call(connection, "BEGIN" if dbms == "postgres" else "START TRANSACTION")
 
 
-def session(connection, dbms, log, actor):
+def session(connection, dbms, log, actor, isolation="READ COMMITTED"):
+    if isolation not in ISOLATIONS.values():
+        raise ValueError(f"Unsupported isolation: {isolation}")
     if dbms == "postgres":
-        call(connection, "SET SESSION CHARACTERISTICS AS TRANSACTION ISOLATION LEVEL READ COMMITTED")
+        call(connection, f"SET SESSION CHARACTERISTICS AS TRANSACTION ISOLATION LEVEL {isolation}")
         call(connection, "SET statement_timeout = '8s'")
         call(connection, "SET lock_timeout = '5s'")
         row = call(connection, "SELECT pg_backend_pid(), current_setting('transaction_isolation'), version()")[0][0]
     else:
-        call(connection, "SET SESSION TRANSACTION ISOLATION LEVEL READ COMMITTED")
+        call(connection, f"SET SESSION TRANSACTION ISOLATION LEVEL {isolation}")
         call(connection, "SET SESSION innodb_lock_wait_timeout = 5")
         call(connection, "SET SESSION lock_wait_timeout = 5")
         call(connection, "SET SESSION max_execution_time = 5000")
         row = call(connection, "SELECT CONNECTION_ID(), @@session.transaction_isolation, VERSION()")[0][0]
-    if row[1].lower().replace("-", " ") != "read committed":
+    if row[1].lower().replace("-", " ") != isolation.lower():
         raise RuntimeError(f"Unexpected isolation: {row[1]}")
     log.record(dbms, actor, "SESSION", connection_id=row[0], isolation=row[1], version=row[2])
     return row[0]

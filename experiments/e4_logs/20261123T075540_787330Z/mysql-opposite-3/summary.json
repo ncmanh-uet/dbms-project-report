@@ -1,0 +1,103 @@
+{
+  "dbms": "mysql",
+  "mode": "opposite",
+  "round": 3,
+  "isolation": "READ COMMITTED",
+  "isolation_level": "READ COMMITTED",
+  "status": "PASS",
+  "aborts": 1,
+  "retries": 1,
+  "error_codes": [
+    {
+      "sqlstate": "40001",
+      "errno": 1213
+    }
+  ],
+  "cleanup_passed": true,
+  "detector_settings": {
+    "innodb_deadlock_detect": true,
+    "session_lock_timeout_seconds": 5
+  },
+  "initial_transactions": [
+    {
+      "actor": "T1",
+      "request_order": [
+        1,
+        2
+      ],
+      "lock_order": [
+        1,
+        2
+      ],
+      "committed": true,
+      "deadlock": false,
+      "rollback_done": false,
+      "connection_id": 28,
+      "update_1_ms": 13.282,
+      "update_2_ms": 13.242,
+      "execution_ms": 39.35869998531416
+    },
+    {
+      "actor": "T2",
+      "request_order": [
+        2,
+        1
+      ],
+      "lock_order": [
+        2,
+        1
+      ],
+      "committed": false,
+      "deadlock": true,
+      "rollback_done": true,
+      "connection_id": 29,
+      "update_1_ms": 13.515,
+      "error": "1213 (40001): Deadlock found when trying to get lock; try restarting transaction",
+      "error_kind": "deadlock",
+      "sqlstate": "40001",
+      "errno": 1213,
+      "server_detail": null,
+      "execution_ms": 38.53800002252683
+    }
+  ],
+  "initial_commits": 1,
+  "deadlocks": 1,
+  "lock_timeouts": 0,
+  "initial_pair_ms": 42.3403000459075,
+  "victim": "T2",
+  "after_detection": {
+    "1": "1.00",
+    "2": "1.00"
+  },
+  "rollback_verified": true,
+  "schedule_verified": true,
+  "retry_attempts": 1,
+  "retry": {
+    "actor": "T2",
+    "committed": true,
+    "connection_id": 30,
+    "execution_ms": 265.2966000023298
+  },
+  "after_completed_requests": {
+    "1": "2.00",
+    "2": "2.00"
+  },
+  "logical_successes": 2,
+  "data_check": {
+    "counter_check": true,
+    "restored": true,
+    "confirmed_transactions": 2,
+    "before": {
+      "1": "0.00",
+      "2": "0.00"
+    },
+    "after_transactions": {
+      "1": "2.00",
+      "2": "2.00"
+    },
+    "after_restore": {
+      "1": "0.00",
+      "2": "0.00"
+    }
+  }
+}

@@ -1,0 +1,88 @@
+001 [postgres/DEMO_T1] SESSION {"connection_id": 41, "isolation": "read committed", "version": "PostgreSQL 17.11 (Debian 17.11-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit"}
+002 [postgres/OBSERVER] SESSION {"connection_id": 42, "isolation": "read committed", "version": "PostgreSQL 17.11 (Debian 17.11-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit"}
+003 [postgres/DEMO_T1] SQL_START {"sql": "BEGIN", "params": null}
+004 [postgres/DEMO_T1] SQL_DONE {"result": -1, "duration_ms": 3.549}
+005 [postgres/DEMO_T1] SQL_START {"sql": "UPDATE stock SET s_ytd = s_ytd + 1 WHERE s_w_id = 1 AND s_i_id = %s", "params": [1]}
+006 [postgres/DEMO_T1] SQL_DONE {"result": 1, "duration_ms": 5.389}
+007 [postgres/DEMO_T1] T1_UPDATE_UNCOMMITTED {"baseline": "0.00"}
+008 [postgres/DEMO_T2] SESSION {"connection_id": 43, "isolation": "read committed", "version": "PostgreSQL 17.11 (Debian 17.11-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit"}
+009 [postgres/DEMO_T2] SQL_START {"sql": "BEGIN", "params": null}
+010 [postgres/DEMO_T2] SQL_DONE {"result": -1, "duration_ms": 3.974}
+011 [postgres/DEMO_T2] SQL_START {"sql": "UPDATE stock SET s_ytd = s_ytd + 1 WHERE s_w_id = 1 AND s_i_id = %s", "params": [1]}
+012 [postgres/OBSERVER] BLOCKING_OBSERVED {"edges": [{"waiting_pid": 43, "blocking_pid": 41, "state": "active", "wait_event_type": "Lock", "wait_event": "transactionid"}]}
+013 [postgres/OBSERVER] BLOCKING_CONFIRMED {"edges": [{"waiting_pid": 43, "blocking_pid": 41, "state": "active", "wait_event_type": "Lock", "wait_event": "transactionid"}]}
+014 [postgres/DEMO_T1] T1_COMMIT_START {}
+015 [postgres/DEMO_T1] SQL_START {"sql": "COMMIT", "params": null}
+016 [postgres/DEMO_T1] SQL_DONE {"result": -1, "duration_ms": 6.491}
+017 [postgres/DEMO_T1] T1_COMMIT_DONE {}
+018 [postgres/DEMO_T2] SQL_DONE {"result": 1, "duration_ms": 144.262}
+019 [postgres/DEMO_T2] T2_UPDATE_DONE {"update_roundtrip_ms": 144.262}
+020 [postgres/DEMO_T2] SQL_START {"sql": "COMMIT", "params": null}
+021 [postgres/DEMO_T2] SQL_DONE {"result": -1, "duration_ms": 5.38}
+022 [postgres/DEMO_T2] T2_COMMIT_DONE {}
+023 [postgres/VERIFY] INITIAL_VALUE_VERIFIED {"value": "2.00"}
+024 [postgres/VERIFY] FINAL_VALUE_VERIFIED {"value": "2.00"}
+025 [postgres/DEMO_CLEANUP] RESTORED {"confirmed_commits": 2, "rows": 1}
+026 [postgres/DEMO] PASS {"evidence": "D:\\.MyData\\DBMS\\dbms-project-report\\experiments\\e2_logs\\20261123T075518_917988Z\\postgres-demo-rc", "isolation_level": "READ COMMITTED", "aborts": 0, "retries": 0, "cleanup_passed": true}
+027 [postgres/DEMO_T1] SESSION {"connection_id": 44, "isolation": "repeatable read", "version": "PostgreSQL 17.11 (Debian 17.11-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit"}
+028 [postgres/OBSERVER] SESSION {"connection_id": 45, "isolation": "read committed", "version": "PostgreSQL 17.11 (Debian 17.11-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit"}
+029 [postgres/DEMO_T1] SQL_START {"sql": "BEGIN", "params": null}
+030 [postgres/DEMO_T1] SQL_DONE {"result": -1, "duration_ms": 4.276}
+031 [postgres/DEMO_T1] SQL_START {"sql": "UPDATE stock SET s_ytd = s_ytd + 1 WHERE s_w_id = 1 AND s_i_id = %s", "params": [1]}
+032 [postgres/DEMO_T1] SQL_DONE {"result": 1, "duration_ms": 5.383}
+033 [postgres/DEMO_T1] T1_UPDATE_UNCOMMITTED {"baseline": "0.00"}
+034 [postgres/DEMO_T2] SESSION {"connection_id": 46, "isolation": "repeatable read", "version": "PostgreSQL 17.11 (Debian 17.11-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit"}
+035 [postgres/DEMO_T2] SQL_START {"sql": "BEGIN", "params": null}
+036 [postgres/DEMO_T2] SQL_DONE {"result": -1, "duration_ms": 2.202}
+037 [postgres/DEMO_T2] SQL_START {"sql": "UPDATE stock SET s_ytd = s_ytd + 1 WHERE s_w_id = 1 AND s_i_id = %s", "params": [1]}
+038 [postgres/OBSERVER] BLOCKING_OBSERVED {"edges": [{"waiting_pid": 46, "blocking_pid": 44, "state": "active", "wait_event_type": "Lock", "wait_event": "transactionid"}]}
+039 [postgres/OBSERVER] BLOCKING_CONFIRMED {"edges": [{"waiting_pid": 46, "blocking_pid": 44, "state": "active", "wait_event_type": "Lock", "wait_event": "transactionid"}]}
+040 [postgres/DEMO_T1] T1_COMMIT_START {}
+041 [postgres/DEMO_T1] SQL_START {"sql": "COMMIT", "params": null}
+042 [postgres/DEMO_T1] SQL_DONE {"result": -1, "duration_ms": 2.918}
+043 [postgres/DEMO_T1] T1_COMMIT_DONE {}
+044 [postgres/DEMO_T2] T2_SERIALIZATION_FAILURE {"message": "could not serialize access due to concurrent update", "sqlstate": "40001", "errno": null}
+045 [postgres/DEMO_T2] SQL_START {"sql": "ROLLBACK", "params": null}
+046 [postgres/DEMO_T2] SQL_DONE {"result": -1, "duration_ms": 1.534}
+047 [postgres/DEMO_T2] T2_ROLLBACK_DONE {}
+048 [postgres/VERIFY] INITIAL_VALUE_VERIFIED {"value": "1.00"}
+049 [postgres/RETRY_T2] SESSION {"connection_id": 47, "isolation": "repeatable read", "version": "PostgreSQL 17.11 (Debian 17.11-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit"}
+050 [postgres/RETRY_T2] RETRY_BEGIN {"isolation_level": "REPEATABLE READ"}
+051 [postgres/RETRY_T2] SQL_START {"sql": "BEGIN", "params": null}
+052 [postgres/RETRY_T2] SQL_DONE {"result": -1, "duration_ms": 1.344}
+053 [postgres/RETRY_T2] SQL_START {"sql": "UPDATE stock SET s_ytd = s_ytd + 1 WHERE s_w_id = 1 AND s_i_id = %s", "params": [1]}
+054 [postgres/RETRY_T2] SQL_DONE {"result": 1, "duration_ms": 9.046}
+055 [postgres/RETRY_T2] SQL_START {"sql": "COMMIT", "params": null}
+056 [postgres/RETRY_T2] SQL_DONE {"result": -1, "duration_ms": 3.93}
+057 [postgres/RETRY_T2] RETRY_COMMIT_DONE {}
+058 [postgres/VERIFY] FINAL_VALUE_VERIFIED {"value": "2.00"}
+059 [postgres/DEMO_CLEANUP] RESTORED {"confirmed_commits": 2, "rows": 1}
+060 [postgres/DEMO] PASS {"evidence": "D:\\.MyData\\DBMS\\dbms-project-report\\experiments\\e2_logs\\20261123T075518_917988Z\\postgres-demo-rr", "isolation_level": "REPEATABLE READ", "aborts": 1, "retries": 1, "cleanup_passed": true}
+061 [mysql/ADMIN] TEMPORARY_OBSERVER_ACCESS {"tables": ["data_lock_waits", "data_locks", "threads"]}
+062 [mysql/DEMO_T1] SESSION {"connection_id": 13, "isolation": "READ-COMMITTED", "version": "8.4.13"}
+063 [mysql/OBSERVER] SESSION {"connection_id": 14, "isolation": "READ-COMMITTED", "version": "8.4.13"}
+064 [mysql/DEMO_T1] SQL_START {"sql": "START TRANSACTION", "params": null}
+065 [mysql/DEMO_T1] SQL_DONE {"result": 0, "duration_ms": 4.927}
+066 [mysql/DEMO_T1] SQL_START {"sql": "UPDATE stock SET s_ytd = s_ytd + 1 WHERE s_w_id = 1 AND s_i_id = %s", "params": [1]}
+067 [mysql/DEMO_T1] SQL_DONE {"result": 1, "duration_ms": 5.151}
+068 [mysql/DEMO_T1] T1_UPDATE_UNCOMMITTED {"baseline": "0.00"}
+069 [mysql/DEMO_T2] SESSION {"connection_id": 15, "isolation": "READ-COMMITTED", "version": "8.4.13"}
+070 [mysql/DEMO_T2] SQL_START {"sql": "START TRANSACTION", "params": null}
+071 [mysql/DEMO_T2] SQL_DONE {"result": 0, "duration_ms": 4.425}
+072 [mysql/DEMO_T2] SQL_START {"sql": "UPDATE stock SET s_ytd = s_ytd + 1 WHERE s_w_id = 1 AND s_i_id = %s", "params": [1]}
+073 [mysql/OBSERVER] BLOCKING_OBSERVED {"edges": [{"waiting_pid": 15, "blocking_pid": 13, "table": "stock", "index": "PRIMARY", "lock_type": "RECORD", "lock_mode": "X,REC_NOT_GAP", "lock_status": "WAITING", "lock_data": "1, 1"}]}
+074 [mysql/OBSERVER] BLOCKING_CONFIRMED {"edges": [{"waiting_pid": 15, "blocking_pid": 13, "table": "stock", "index": "PRIMARY", "lock_type": "RECORD", "lock_mode": "X,REC_NOT_GAP", "lock_status": "WAITING", "lock_data": "1, 1"}]}
+075 [mysql/DEMO_T1] T1_COMMIT_START {}
+076 [mysql/DEMO_T1] SQL_START {"sql": "COMMIT", "params": null}
+077 [mysql/DEMO_T1] SQL_DONE {"result": 0, "duration_ms": 11.203}
+078 [mysql/DEMO_T1] T1_COMMIT_DONE {}
+079 [mysql/DEMO_T2] SQL_DONE {"result": 1, "duration_ms": 166.263}
+080 [mysql/DEMO_T2] T2_UPDATE_DONE {"update_roundtrip_ms": 166.263}
+081 [mysql/DEMO_T2] SQL_START {"sql": "COMMIT", "params": null}
+082 [mysql/DEMO_T2] SQL_DONE {"result": 0, "duration_ms": 25.636}
+083 [mysql/DEMO_T2] T2_COMMIT_DONE {}
+084 [mysql/VERIFY] INITIAL_VALUE_VERIFIED {"value": "2.00"}
+085 [mysql/VERIFY] FINAL_VALUE_VERIFIED {"value": "2.00"}
+086 [mysql/DEMO_CLEANUP] RESTORED {"confirmed_commits": 2, "rows": 1}
+087 [mysql/DEMO] PASS {"evidence": "D:\\.MyData\\DBMS\\dbms-project-report\\experiments\\e2_logs\\20261123T075518_917988Z\\mysql-demo-rc", "isolation_level": "READ COMMITTED", "aborts": 0, "retries": 0, "cleanup_passed": true}
+088 [mysql/ADMIN] OBSERVER_ACCESS_RESTORED {"tables": ["data_lock_waits", "data_locks", "threads"], "errors": []}

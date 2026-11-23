@@ -22,6 +22,16 @@ ROOT = Path(__file__).resolve().parents[1]
 WAIT_SECONDS = 15
 WAREHOUSE_ID = 1
 DELTA = Decimal("100.00")
+ISOLATIONS = {"rc": "READ COMMITTED", "rr": "REPEATABLE READ"}
+
+
+def isolation_cases(dbms, choice):
+    """The RR extension verifies PostgreSQL theory; MySQL remains the RC control."""
+    if dbms == "mysql":
+        if choice == "rr":
+            raise ValueError("RR cases are limited to PostgreSQL; use --db postgres")
+        return ["READ COMMITTED"]
+    return list(ISOLATIONS.values()) if choice == "both" else [ISOLATIONS[choice]]
 
 
 class Timeline:
@@ -84,30 +94,36 @@ def statement(connection, timeline, dbms, actor, sql, params=None):
     return result, elapsed
 
 
-def setup(connection, timeline, dbms, actor):
+def setup(connection, timeline, dbms, actor, isolation="READ COMMITTED"):
+    if isolation not in ISOLATIONS.values():
+        raise ValueError(f"Unsupported isolation: {isolation}")
     def sql(text):
         return statement(connection, timeline, dbms, actor, text)[0]
 
     if dbms == "postgres":
-        sql("SET SESSION CHARACTERISTICS AS TRANSACTION ISOLATION LEVEL READ COMMITTED")
+        sql(f"SET SESSION CHARACTERISTICS AS TRANSACTION ISOLATION LEVEL {isolation}")
         sql("SET statement_timeout = '5s'")
         sql("SET lock_timeout = '5s'")
         row = sql("SELECT pg_backend_pid(), current_setting('transaction_isolation'), version()")[0]
     else:
-        sql("SET SESSION TRANSACTION ISOLATION LEVEL READ COMMITTED")
+        sql(f"SET SESSION TRANSACTION ISOLATION LEVEL {isolation}")
         sql("SET SESSION max_execution_time = 5000")
         sql("SET SESSION innodb_lock_wait_timeout = 5")
         sql("SET SESSION lock_wait_timeout = 5")
         row = sql("SELECT CONNECTION_ID(), @@session.transaction_isolation, VERSION()")[0]
-    if row[1].lower().replace("-", " ") != "read committed":
+    if row[1].lower().replace("-", " ") != isolation.lower():
         raise RuntimeError(f"Unexpected isolation level: {row[1]}")
     timeline.record(dbms, actor, "SESSION", connection_id=row[0], isolation=row[1], version=row[2])
     return row[0]
 
 
-def run_one(dbms, timeline):
+def run_one(dbms, timeline, isolation="READ COMMITTED"):
     first_read_done, committed, failed = Event(), Event(), Event()
-    report = {"dbms": dbms, "isolation": "READ COMMITTED", "warehouse_id": WAREHOUSE_ID}
+    start_sequence = len(timeline.events)
+    report = dict(dbms=dbms, isolation=isolation, isolation_level=isolation,
+                  warehouse_id=WAREHOUSE_ID, aborts=0, retries=0,
+                  error_codes=[], cleanup_passed=False)
+    timeline.record(dbms, "CASE", "CASE_START", isolation_level=isolation)
     writer = None
     baseline = None
     updated = False
@@ -121,7 +137,7 @@ def run_one(dbms, timeline):
         connection = None
         try:
             connection = connect(dbms)
-            connection_id = setup(connection, timeline, dbms, "T2")
+            connection_id = setup(connection, timeline, dbms, "T2", isolation)
             begin = "BEGIN READ ONLY" if dbms == "postgres" else "START TRANSACTION READ ONLY"
             sql(connection, "T2", begin)
             rows, before_ms = sql(connection, "T2", "SELECT w_ytd FROM warehouse WHERE w_id = %s", (WAREHOUSE_ID,))
@@ -135,14 +151,19 @@ def run_one(dbms, timeline):
                 raise RuntimeError("T2 did not receive a successful T1 commit")
             rows, after_ms = sql(connection, "T2", "SELECT w_ytd FROM warehouse WHERE w_id = %s", (WAREHOUSE_ID,))
             after = Decimal(str(rows[0][0]))
-            if after != baseline + DELTA:
-                raise RuntimeError(f"T2 read {after} after commit; expected {baseline + DELTA}")
+            expected = baseline + DELTA if isolation == "READ COMMITTED" else baseline
+            if after != expected:
+                raise RuntimeError(f"T2 read {after} after commit; expected {expected}")
             timeline.record(dbms, "T2", "READ_AFTER_COMMIT", value=after)
             sql(connection, "T2", "COMMIT")
             return dict(connection_id=connection_id, before=str(before), after=str(after),
                         before_select_ms=before_ms, after_select_ms=after_ms)
         except Exception as error:
             failed.set()
+            code = getattr(error, "sqlstate", None)
+            if code:
+                report["error_codes"].append(dict(actor="T2", sqlstate=code, errno=getattr(error, "errno", None)))
+                report["aborts"] += int(code.startswith("40"))
             timeline.record(dbms, "T2", "ERROR", message=str(error),
                             sqlstate=getattr(error, "sqlstate", None))
             raise
@@ -156,7 +177,7 @@ def run_one(dbms, timeline):
 
     try:
         writer = connect(dbms)
-        report["writer_connection_id"] = setup(writer, timeline, dbms, "T1")
+        report["writer_connection_id"] = setup(writer, timeline, dbms, "T1", isolation)
         sql(writer, "T1", "BEGIN" if dbms == "postgres" else "START TRANSACTION")
         rows, _ = sql(writer, "T1", "SELECT w_ytd FROM warehouse WHERE w_id = %s FOR UPDATE", (WAREHOUSE_ID,))
         if len(rows) != 1:
@@ -183,8 +204,21 @@ def run_one(dbms, timeline):
         report["reader"] = reader_future.result(timeout=WAIT_SECONDS)
         if report["writer_connection_id"] == report["reader"]["connection_id"]:
             raise RuntimeError("T1 and T2 must use distinct sessions")
+        # T1 and T2 have ended: this explicit transaction gets a fresh snapshot.
+        sql(writer, "VERIFY", "BEGIN" if dbms == "postgres" else "START TRANSACTION")
+        rows, _ = sql(writer, "VERIFY", "SELECT w_ytd FROM warehouse WHERE w_id = %s", (WAREHOUSE_ID,))
+        report.update(t2_read_1=report["reader"]["before"], t2_read_2=report["reader"]["after"],
+                      final_db_value=str(rows[0][0]))
+        if Decimal(str(rows[0][0])) != baseline + DELTA:
+            raise RuntimeError("Fresh transaction did not see the committed warehouse value")
+        sql(writer, "VERIFY", "COMMIT")
+        timeline.record(dbms, "VERIFY", "FINAL_VALUE_VERIFIED", value=rows[0][0])
         report["status"] = "PASS"
     except Exception as error:
+        code = getattr(error, "sqlstate", None)
+        if code and not failed.is_set():
+            report["error_codes"].append(dict(actor="T1", sqlstate=code, errno=getattr(error, "errno", None)))
+            report["aborts"] += int(code.startswith("40"))
         failed.set()
         report["status"] = "FAIL"
         report["error"] = str(error)
@@ -215,6 +249,7 @@ def run_one(dbms, timeline):
                     rows, _ = sql(writer, "CLEANUP", "SELECT w_ytd FROM warehouse WHERE w_id = %s", (WAREHOUSE_ID,))
                     report["restored_value"] = str(rows[0][0])
                     report["restored"] = Decimal(str(rows[0][0])) == baseline
+                    report["cleanup_passed"] = report["restored"]
                     if not report["restored"]:
                         raise RuntimeError("Final value differs from the original baseline")
                     timeline.record(dbms, "CLEANUP", "RESTORED", value=rows[0][0])
@@ -228,9 +263,9 @@ def run_one(dbms, timeline):
                 finally:
                     writer.close()
 
-    events = [event for event in timeline.events if event["dbms"] == dbms]
+    events = timeline.events[start_sequence:]
     stages = {event["action"]: event["sequence"] for event in events}
-    required = ["UPDATE_UNCOMMITTED", "READ_BEFORE_COMMIT", "COMMIT_START", "COMMIT_DONE", "READ_AFTER_COMMIT", "RESTORED"]
+    required = ["UPDATE_UNCOMMITTED", "READ_BEFORE_COMMIT", "COMMIT_START", "COMMIT_DONE", "READ_AFTER_COMMIT", "FINAL_VALUE_VERIFIED", "RESTORED"]
     report["schedule_verified"] = all(name in stages for name in required) and all(
         stages[left] < stages[right] for left, right in zip(required, required[1:])
     )
@@ -243,7 +278,11 @@ def run_one(dbms, timeline):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--db", choices=("postgres", "mysql", "both"), default="both")
+    parser.add_argument("--isolation", choices=("rc", "rr", "both"), default="rc",
+                        help="PostgreSQL RC/RR; MySQL remains an RC control")
     args = parser.parse_args()
+    if args.isolation == "rr" and args.db != "postgres":
+        parser.error("Use --db postgres for --isolation rr; both keeps the MySQL RC control")
     run_id = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%S_%fZ")
     directory = ROOT / "experiments" / "e1_logs" / run_id
     directory.mkdir(parents=True)
@@ -251,10 +290,12 @@ def main():
     reports = []
     try:
         for dbms in (("postgres", "mysql") if args.db == "both" else (args.db,)):
-            report = run_one(dbms, timeline)
-            reports.append(report)
-            # Stop after a failed run; inspect its evidence before proceeding.
-            if report["status"] != "PASS":
+            for isolation in isolation_cases(dbms, args.isolation):
+                report = run_one(dbms, timeline, isolation)
+                reports.append(report)
+                if report["status"] != "PASS":
+                    break
+            if reports[-1]["status"] != "PASS":
                 break
     finally:
         (directory / "summary.json").write_text(
