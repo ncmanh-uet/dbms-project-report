@@ -1,0 +1,80 @@
+INFO: Using environment variable BENCHBASE_PROFILE=postgres with args: -b tpcc -c /lab-bench/results/postgres/formal-isolation-rr-c16-r2-20261125T060159103934Z/workload.xml --create=false --load=false --execute=true -d /benchbase/results/formal-isolation-rr-c16-r2-20261125T060159103934Z/native -s 1
+Picked up JAVA_TOOL_OPTIONS: -Xms128m -Xmx512m -Dlab.metrics.dir=/benchbase/results/formal-isolation-rr-c16-r2-20261125T060159103934Z/requests
+[INFO ] 2026-11-25 06:02:01,625 [main]  com.oltpbenchmark.DBWorkload main - ======================================================================
+
+Benchmark:                       TPCC {com.oltpbenchmark.benchmarks.tpcc.TPCCBenchmark}
+Configuration:                   /lab-bench/results/postgres/formal-isolation-rr-c16-r2-20261125T060159103934Z/workload.xml
+Type:                            POSTGRES
+Driver:                          org.postgresql.Driver
+URL:                             jdbc:postgresql://postgres:5432/tpcc_bench?sslmode=disable&ApplicationName=tpcc_benchmark&reWriteBatchedInserts=true&options=-c%20lock_timeout%3D5000%20-c%20statement_timeout%3D15000&socketTimeout=20
+Isolation:                       TRANSACTION_REPEATABLE_READ
+Batch Size:                      128
+DDL Path:                        null
+Loader Threads:                  1
+Session Setup File:              null
+Scale Factor:                    1.0
+Terminals:                       16
+New Connection Per Txn:          false
+Reconnect on Connection Failure: false
+
+[INFO ] 2026-11-25 06:02:01,627 [main]  com.oltpbenchmark.DBWorkload main - ======================================================================
+[INFO ] 2026-11-25 06:02:02,179 [main]  com.oltpbenchmark.DBWorkload runWorkload - Creating 16 virtual terminals...
+E6 verified isolation worker=0 jdbc=4
+E6 verified isolation worker=1 jdbc=4
+E6 verified isolation worker=2 jdbc=4
+E6 verified isolation worker=3 jdbc=4
+E6 verified isolation worker=4 jdbc=4
+E6 verified isolation worker=5 jdbc=4
+E6 verified isolation worker=6 jdbc=4
+E6 verified isolation worker=7 jdbc=4
+E6 verified isolation worker=8 jdbc=4
+E6 verified isolation worker=9 jdbc=4
+E6 verified isolation worker=10 jdbc=4
+E6 verified isolation worker=11 jdbc=4
+E6 verified isolation worker=12 jdbc=4
+E6 verified isolation worker=13 jdbc=4
+E6 verified isolation worker=14 jdbc=4
+E6 verified isolation worker=15 jdbc=4
+[INFO ] 2026-11-25 06:02:02,503 [main]  com.oltpbenchmark.DBWorkload runWorkload - Launching the TPCC Benchmark with 1 Phase...
+[INFO ] 2026-11-25 06:02:02,568 [main]  com.oltpbenchmark.ThreadBench runRateLimitedMultiPhase - [0;1mPHASE START[0;0m :: [Workload=TPCC] [Serial=false] [Time=60] [WarmupTime=15] [Rate=unlimited] [Arrival=REGULAR] [Ratios=[45.0, 43.0, 4.0, 4.0, 4.0]] [ActiveWorkers=16]
+[INFO ] 2026-11-25 06:02:17,569 [main]  com.oltpbenchmark.ThreadBench runRateLimitedMultiPhase - [0;1mMEASURE[0;0m :: Warmup complete, starting measurements.
+[INFO ] 2026-11-25 06:03:17,725 [main]  com.oltpbenchmark.ThreadBench runRateLimitedMultiPhase - [0;1mTERMINATE[0;0m :: Waiting for all terminals to finish ..
+[INFO ] 2026-11-25 06:03:17,774 [Thread-16]  com.oltpbenchmark.ThreadBench run - Starting WatchDogThread
+[INFO ] 2026-11-25 06:03:17,796 [main]  com.oltpbenchmark.DBWorkload runWorkload - ======================================================================
+[INFO ] 2026-11-25 06:03:17,796 [main]  com.oltpbenchmark.DBWorkload runWorkload - Rate limited reqs/s: Results(state=EXIT, nanoSeconds=60000009202, measuredRequests=24695) = 411.58327021017914 requests/sec (throughput), 370.0166099184526 requests/sec (goodput)
+[INFO ] 2026-11-25 06:03:17,832 [main]  com.oltpbenchmark.DBWorkload writeOutputs - Output Raw data into file: tpcc_2026-11-25_06-03-17.raw.csv
+[INFO ] 2026-11-25 06:03:23,929 [main]  com.oltpbenchmark.DBWorkload writeOutputs - Output samples into file: tpcc_2026-11-25_06-03-17.samples.csv
+[INFO ] 2026-11-25 06:03:24,290 [main]  com.oltpbenchmark.DBWorkload writeOutputs - Output summary data into file: tpcc_2026-11-25_06-03-17.summary.json
+[INFO ] 2026-11-25 06:03:24,309 [main]  com.oltpbenchmark.DBWorkload writeOutputs - Output DBMS parameters into file: tpcc_2026-11-25_06-03-17.params.json
+[INFO ] 2026-11-25 06:03:24,323 [main]  com.oltpbenchmark.DBWorkload writeOutputs - Output DBMS metrics into file: tpcc_2026-11-25_06-03-17.metrics.json
+[INFO ] 2026-11-25 06:03:24,337 [main]  com.oltpbenchmark.DBWorkload writeOutputs - Output benchmark config into file: tpcc_2026-11-25_06-03-17.config.xml
+[INFO ] 2026-11-25 06:03:24,383 [main]  com.oltpbenchmark.DBWorkload writeOutputs - Output results into file: tpcc_2026-11-25_06-03-17.results.csv with window size 1
+[INFO ] 2026-11-25 06:03:26,559 [main]  com.oltpbenchmark.DBWorkload writeHistograms - ======================================================================
+[INFO ] 2026-11-25 06:03:26,560 [main]  com.oltpbenchmark.DBWorkload writeHistograms - Workload Histograms:
+
+[0;1mCompleted Transactions:[0;0m
+com.oltpbenchmark.benchmarks.tpcc.procedures.NewOrder/01                         [13975] ********************************************************************************
+com.oltpbenchmark.benchmarks.tpcc.procedures.Payment/02                          [ 4458] *************************
+com.oltpbenchmark.benchmarks.tpcc.procedures.OrderStatus/03                      [ 1233] *******
+com.oltpbenchmark.benchmarks.tpcc.procedures.Delivery/04                         [ 1207] ******
+com.oltpbenchmark.benchmarks.tpcc.procedures.StockLevel/05                       [ 1328] *******
+
+[0;1mAborted Transactions:[0;0m
+com.oltpbenchmark.benchmarks.tpcc.procedures.NewOrder/01                         [ 109] ********************************************************************************
+
+[0;1mRejected Transactions (Server Retry):[0;0m
+com.oltpbenchmark.benchmarks.tpcc.procedures.NewOrder/01                         [ 5876] **************
+com.oltpbenchmark.benchmarks.tpcc.procedures.Payment/02                          [31661] ********************************************************************************
+com.oltpbenchmark.benchmarks.tpcc.procedures.Delivery/04                         [ 1000] **
+
+[0;1mRejected Transactions (Retry Different):[0;0m
+<EMPTY>
+
+[0;1mUnexpected SQL Errors:[0;0m
+<EMPTY>
+
+[0;1mUnknown Status Transactions:[0;0m
+<EMPTY>
+
+
+[INFO ] 2026-11-25 06:03:26,560 [main]  com.oltpbenchmark.DBWorkload writeHistograms - ======================================================================

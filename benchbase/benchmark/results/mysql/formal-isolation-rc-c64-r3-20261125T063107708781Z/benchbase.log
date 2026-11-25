@@ -1,0 +1,127 @@
+INFO: Using environment variable BENCHBASE_PROFILE=mysql with args: -b tpcc -c /lab-bench/results/mysql/formal-isolation-rc-c64-r3-20261125T063107708781Z/workload.xml --create=false --load=false --execute=true -d /benchbase/results/formal-isolation-rc-c64-r3-20261125T063107708781Z/native -s 1
+Picked up JAVA_TOOL_OPTIONS: -Xms128m -Xmx512m -Dlab.metrics.dir=/benchbase/results/formal-isolation-rc-c64-r3-20261125T063107708781Z/requests
+[INFO ] 2026-11-25 06:31:14,010 [main]  com.oltpbenchmark.DBWorkload main - ======================================================================
+
+Benchmark:                       TPCC {com.oltpbenchmark.benchmarks.tpcc.TPCCBenchmark}
+Configuration:                   /lab-bench/results/mysql/formal-isolation-rc-c64-r3-20261125T063107708781Z/workload.xml
+Type:                            MYSQL
+Driver:                          com.mysql.cj.jdbc.Driver
+URL:                             jdbc:mysql://mysql:3306/tpcc_bench?rewriteBatchedStatements=true&allowPublicKeyRetrieval=true&sslMode=DISABLED&socketTimeout=20000
+Isolation:                       TRANSACTION_READ_COMMITTED
+Batch Size:                      128
+DDL Path:                        null
+Loader Threads:                  1
+Session Setup File:              /lab-bench/mysql-session.sql
+Scale Factor:                    1.0
+Terminals:                       64
+New Connection Per Txn:          false
+Reconnect on Connection Failure: false
+
+[INFO ] 2026-11-25 06:31:14,011 [main]  com.oltpbenchmark.DBWorkload main - ======================================================================
+[INFO ] 2026-11-25 06:31:14,594 [main]  com.oltpbenchmark.DBWorkload runWorkload - Creating 64 virtual terminals...
+E6 verified isolation worker=0 jdbc=2
+E6 verified isolation worker=1 jdbc=2
+E6 verified isolation worker=2 jdbc=2
+E6 verified isolation worker=3 jdbc=2
+E6 verified isolation worker=4 jdbc=2
+E6 verified isolation worker=5 jdbc=2
+E6 verified isolation worker=6 jdbc=2
+E6 verified isolation worker=7 jdbc=2
+E6 verified isolation worker=8 jdbc=2
+E6 verified isolation worker=9 jdbc=2
+E6 verified isolation worker=10 jdbc=2
+E6 verified isolation worker=11 jdbc=2
+E6 verified isolation worker=12 jdbc=2
+E6 verified isolation worker=13 jdbc=2
+E6 verified isolation worker=14 jdbc=2
+E6 verified isolation worker=15 jdbc=2
+E6 verified isolation worker=16 jdbc=2
+E6 verified isolation worker=17 jdbc=2
+E6 verified isolation worker=18 jdbc=2
+E6 verified isolation worker=19 jdbc=2
+E6 verified isolation worker=20 jdbc=2
+E6 verified isolation worker=21 jdbc=2
+E6 verified isolation worker=22 jdbc=2
+E6 verified isolation worker=23 jdbc=2
+E6 verified isolation worker=24 jdbc=2
+E6 verified isolation worker=25 jdbc=2
+E6 verified isolation worker=26 jdbc=2
+E6 verified isolation worker=27 jdbc=2
+E6 verified isolation worker=28 jdbc=2
+E6 verified isolation worker=29 jdbc=2
+E6 verified isolation worker=30 jdbc=2
+E6 verified isolation worker=31 jdbc=2
+E6 verified isolation worker=32 jdbc=2
+E6 verified isolation worker=33 jdbc=2
+E6 verified isolation worker=34 jdbc=2
+E6 verified isolation worker=35 jdbc=2
+E6 verified isolation worker=36 jdbc=2
+E6 verified isolation worker=37 jdbc=2
+E6 verified isolation worker=38 jdbc=2
+E6 verified isolation worker=39 jdbc=2
+E6 verified isolation worker=40 jdbc=2
+E6 verified isolation worker=41 jdbc=2
+E6 verified isolation worker=42 jdbc=2
+E6 verified isolation worker=43 jdbc=2
+E6 verified isolation worker=44 jdbc=2
+E6 verified isolation worker=45 jdbc=2
+E6 verified isolation worker=46 jdbc=2
+E6 verified isolation worker=47 jdbc=2
+E6 verified isolation worker=48 jdbc=2
+E6 verified isolation worker=49 jdbc=2
+E6 verified isolation worker=50 jdbc=2
+E6 verified isolation worker=51 jdbc=2
+E6 verified isolation worker=52 jdbc=2
+E6 verified isolation worker=53 jdbc=2
+E6 verified isolation worker=54 jdbc=2
+E6 verified isolation worker=55 jdbc=2
+E6 verified isolation worker=56 jdbc=2
+E6 verified isolation worker=57 jdbc=2
+E6 verified isolation worker=58 jdbc=2
+E6 verified isolation worker=59 jdbc=2
+E6 verified isolation worker=60 jdbc=2
+E6 verified isolation worker=61 jdbc=2
+E6 verified isolation worker=62 jdbc=2
+E6 verified isolation worker=63 jdbc=2
+[INFO ] 2026-11-25 06:31:15,678 [main]  com.oltpbenchmark.DBWorkload runWorkload - Launching the TPCC Benchmark with 1 Phase...
+[INFO ] 2026-11-25 06:31:16,114 [main]  com.oltpbenchmark.ThreadBench runRateLimitedMultiPhase - [0;1mPHASE START[0;0m :: [Workload=TPCC] [Serial=false] [Time=60] [WarmupTime=15] [Rate=unlimited] [Arrival=REGULAR] [Ratios=[45.0, 43.0, 4.0, 4.0, 4.0]] [ActiveWorkers=64]
+[INFO ] 2026-11-25 06:31:31,212 [main]  com.oltpbenchmark.ThreadBench runRateLimitedMultiPhase - [0;1mMEASURE[0;0m :: Warmup complete, starting measurements.
+[INFO ] 2026-11-25 06:32:32,323 [main]  com.oltpbenchmark.ThreadBench runRateLimitedMultiPhase - [0;1mTERMINATE[0;0m :: Waiting for all terminals to finish ..
+[INFO ] 2026-11-25 06:32:32,613 [Thread-64]  com.oltpbenchmark.ThreadBench run - Starting WatchDogThread
+[INFO ] 2026-11-25 06:32:32,628 [main]  com.oltpbenchmark.DBWorkload runWorkload - ======================================================================
+[INFO ] 2026-11-25 06:32:32,628 [main]  com.oltpbenchmark.DBWorkload runWorkload - Rate limited reqs/s: Results(state=EXIT, nanoSeconds=60999850684, measuredRequests=4736) = 77.63953430860171 requests/sec (throughput), 101.11500160799312 requests/sec (goodput)
+[INFO ] 2026-11-25 06:32:32,665 [main]  com.oltpbenchmark.DBWorkload writeOutputs - Output Raw data into file: tpcc_2026-11-25_06-32-32.raw.csv
+[INFO ] 2026-11-25 06:32:36,987 [main]  com.oltpbenchmark.DBWorkload writeOutputs - Output samples into file: tpcc_2026-11-25_06-32-32.samples.csv
+[INFO ] 2026-11-25 06:32:38,222 [main]  com.oltpbenchmark.DBWorkload writeOutputs - Output summary data into file: tpcc_2026-11-25_06-32-32.summary.json
+[INFO ] 2026-11-25 06:32:38,271 [main]  com.oltpbenchmark.DBWorkload writeOutputs - Output DBMS parameters into file: tpcc_2026-11-25_06-32-32.params.json
+[INFO ] 2026-11-25 06:32:38,346 [main]  com.oltpbenchmark.DBWorkload writeOutputs - Output DBMS metrics into file: tpcc_2026-11-25_06-32-32.metrics.json
+[INFO ] 2026-11-25 06:32:38,387 [main]  com.oltpbenchmark.DBWorkload writeOutputs - Output benchmark config into file: tpcc_2026-11-25_06-32-32.config.xml
+[INFO ] 2026-11-25 06:32:38,491 [main]  com.oltpbenchmark.DBWorkload writeOutputs - Output results into file: tpcc_2026-11-25_06-32-32.results.csv with window size 1
+[INFO ] 2026-11-25 06:32:46,655 [main]  com.oltpbenchmark.DBWorkload writeHistograms - ======================================================================
+[INFO ] 2026-11-25 06:32:46,656 [main]  com.oltpbenchmark.DBWorkload writeHistograms - Workload Histograms:
+
+[0;1mCompleted Transactions:[0;0m
+com.oltpbenchmark.benchmarks.tpcc.procedures.NewOrder/01                         [2799] ********************************************************************************
+com.oltpbenchmark.benchmarks.tpcc.procedures.Payment/02                          [2677] ****************************************************************************
+com.oltpbenchmark.benchmarks.tpcc.procedures.OrderStatus/03                      [ 230] ******
+com.oltpbenchmark.benchmarks.tpcc.procedures.Delivery/04                         [ 194] *****
+com.oltpbenchmark.benchmarks.tpcc.procedures.StockLevel/05                       [ 268] *******
+
+[0;1mAborted Transactions:[0;0m
+com.oltpbenchmark.benchmarks.tpcc.procedures.NewOrder/01                         [  28] *******************************************
+com.oltpbenchmark.benchmarks.tpcc.procedures.Delivery/04                         [  52] ********************************************************************************
+
+[0;1mRejected Transactions (Server Retry):[0;0m
+<EMPTY>
+
+[0;1mRejected Transactions (Retry Different):[0;0m
+<EMPTY>
+
+[0;1mUnexpected SQL Errors:[0;0m
+<EMPTY>
+
+[0;1mUnknown Status Transactions:[0;0m
+<EMPTY>
+
+
+[INFO ] 2026-11-25 06:32:46,656 [main]  com.oltpbenchmark.DBWorkload writeHistograms - ======================================================================

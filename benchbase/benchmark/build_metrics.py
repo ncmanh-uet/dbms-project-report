@@ -37,6 +37,7 @@ def replace_once(text, before, after):
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--jdk", default=r"C:\Program Files\Java\jdk-24")
+    parser.add_argument("--verify-isolation", action="store_true")
     args = parser.parse_args()
     RUNTIME.mkdir(exist_ok=True)
     (RUNTIME / "lib").mkdir(exist_ok=True)
@@ -55,9 +56,10 @@ def main():
     vendor.parent.mkdir(parents=True, exist_ok=True)
     if not vendor.exists():
         urllib.request.urlretrieve(SOURCE, vendor)
-    if digest(vendor) != "4463226c5cbf0fb544325b1dc8250fd4ebdcde7fe18d29e589a42272e880a61d":
-        raise RuntimeError("Upstream Worker source hash differs from the reviewed source")
     original = vendor.read_text(encoding="utf-8")
+    source_sha256 = hashlib.sha256(original.encode("utf-8")).hexdigest()
+    if source_sha256 != "4463226c5cbf0fb544325b1dc8250fd4ebdcde7fe18d29e589a42272e880a61d":
+        raise RuntimeError("Upstream Worker source hash differs from the reviewed source")
     patched = replace_once(original, "  private final int id;", """  // Lab instrumentation: only record requests within the native latency window.
   private TransactionStatus labStatus = TransactionStatus.UNKNOWN;
   private int labAttempts, labRetryEvents, labSqlCode;
@@ -95,24 +97,35 @@ def main():
 """ + anchor)
     patched = replace_once(patched, '    return errorCode == 0 && sqlState.equals("40001");',
                            '    return errorCode == 0 && (sqlState.equals("40001") || sqlState.equals("40P01"));')
-    source = RUNTIME / "src/com/oltpbenchmark/api/Worker.java"
+    output_dir = RUNTIME / "isolation" if args.verify_isolation else RUNTIME
+    if args.verify_isolation:
+        anchor = "this.conn.setTransactionIsolation(this.configuration.getIsolationMode());"
+        assert patched.count(anchor) == 2
+        patched = patched.replace(anchor, anchor + """
+            int observedIsolation = this.conn.getTransactionIsolation();
+            if (observedIsolation != this.configuration.getIsolationMode()) {
+              throw new SQLException("Unexpected JDBC transaction isolation: " + observedIsolation);
+            }
+            this.conn.rollback();
+            System.out.printf("E6 verified isolation worker=%d jdbc=%d%n", this.id, observedIsolation);""")
+    source = output_dir / "src/com/oltpbenchmark/api/Worker.java"
     source.parent.mkdir(parents=True, exist_ok=True)
     source.write_text(patched, encoding="utf-8", newline="\n")
-    (RUNTIME / "Worker.patch").write_text("".join(difflib.unified_diff(
+    (output_dir / "Worker.patch").write_text("".join(difflib.unified_diff(
         original.splitlines(True), patched.splitlines(True), "upstream/Worker.java", "lab/Worker.java")), encoding="utf-8")
-    classes = RUNTIME / "classes"
+    classes = output_dir / "classes"
     classes.mkdir(exist_ok=True)
     helper = HERE / "java/com/oltpbenchmark/lab/RequestMetrics.java"
     subprocess.run([str(Path(args.jdk) / "bin/javac.exe"), "--release", "23", "-cp",
                     str(RUNTIME / "benchbase-postgres.jar") + ";" + str(RUNTIME / "lib/*"),
                     "-d", str(classes), str(source), str(helper)], check=True)
-    manifest = {"upstream_commit": COMMIT, "source_url": SOURCE, "source_sha256": digest(vendor),
-                "patched_source_sha256": digest(source), "patch_sha256": digest(RUNTIME / "Worker.patch"),
+    manifest = {"upstream_commit": COMMIT, "source_url": SOURCE, "source_sha256": source_sha256,
+                "patched_source_sha256": digest(source), "patch_sha256": digest(output_dir / "Worker.patch"),
                 "helper_sha256": digest(helper), "profiles": {}}
     original_workers = []
     for profile in ("postgres", "mysql"):
         src = RUNTIME / f"benchbase-{profile}.jar"
-        target = RUNTIME / f"benchbase-{profile}-instrumented.jar"
+        target = output_dir / f"benchbase-{profile}-instrumented.jar"
         additions = {p.relative_to(classes).as_posix(): p for p in classes.rglob("*.class")}
         with zipfile.ZipFile(src) as archive, zipfile.ZipFile(target, "w", zipfile.ZIP_DEFLATED) as output:
             original_workers.append(hashlib.sha256(archive.read("com/oltpbenchmark/api/Worker.class")).hexdigest())
@@ -125,7 +138,7 @@ def main():
     if len(set(original_workers)) != 1:
         raise RuntimeError("Profile Worker classes differ; a shared patch is unsafe")
     manifest["original_worker_class_sha256"] = original_workers[0]
-    (RUNTIME / "instrumentation.json").write_text(json.dumps(manifest, indent=2) + "\n", encoding="utf-8")
+    (output_dir / "instrumentation.json").write_text(json.dumps(manifest, indent=2) + "\n", encoding="utf-8")
     print(json.dumps(manifest, indent=2))
 
 

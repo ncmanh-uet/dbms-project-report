@@ -67,6 +67,30 @@ Smoke test: mặc định 1, 32, 64, 128 client mỗi DBMS, warm-up 3s, đo 6s, 
 
 Lệnh `run` không phải một phần đã thực hiện trong bước 16. Warm-up phải lặp lại bên trong từng lượt đo; warm-up hôm nay không thay thế warm-up ở bước 17.
 
+## E6 bổ sung theo mức cô lập
+
+Đợt RC/RR đo 36 lượt với 2 DBMS × 2 mức cô lập × 3 mức client (4, 16, 64) × 3 lần lặp. So sánh ghép cặp RC/RR theo từng DBMS, mức client và lần lặp. Đảo thứ tự RC/RR giữa các cặp kế tiếp theo mức tải và lần lặp. Mỗi lượt dùng cùng baseline, mix, thời gian đo, giới hạn tài nguyên và ngân sách thử lại của bước 17.
+
+Chế độ `--compare-isolation` thêm `compose.isolation.yaml`. Override tắt binary log của MySQL bằng `--skip-log-bin` cho cả RC và RR. Runner kiểm tra `@@GLOBAL.log_bin` trước từng lượt MySQL. InnoDB vẫn ghi redo log theo cấu hình ghi bền hiện có. BenchBase kiểm tra mức cô lập JDBC khi mở kết nối và rollback giao dịch kiểm tra trước khi sinh tải. Mỗi lượt lưu bằng chứng theo worker trong `benchbase.log`.
+
+Override cũng ghim PostgreSQL 17.12. Lần chạy thử ma trận chính thức trên 17.11 dừng khi RR ở 64 client gặp lỗi nội bộ MultiXact (`XX000`). Nhóm lưu nguyên lượt lỗi và chạy lại ma trận với 17.12 cho cả RC và RR. Bản sửa được ghi trong [ghi chú PostgreSQL 17.12](https://www.postgresql.org/docs/17/release-17-12.html).
+
+```powershell
+.\.venv\Scripts\python.exe .\benchbase\benchmark\build_metrics.py --verify-isolation
+.\.venv\Scripts\python.exe .\benchbase\benchmark\run_benchmark.py smoke --compare-isolation
+.\.venv\Scripts\python.exe .\benchbase\benchmark\run_benchmark.py run --compare-isolation
+```
+
+Mỗi đợt tạo `isolation/smoke-*` hoặc `isolation/formal-*` chứa cấu hình quan sát, danh sách lượt và kiểm tra phục hồi baseline. Dữ liệu thô nằm trong `results/<dbms>/<kind>-isolation-*`; thư mục mỗi lượt được ghi trong báo cáo JSON của đợt. Các đầu ra bước 17 dùng cho khảo sát mức tải ở RC trong cấu hình cũ. Các số đo của đợt RC/RR được kiểm chứng và tổng hợp độc lập:
+
+```powershell
+$campaign = Get-ChildItem .\benchbase\benchmark\isolation -Directory -Filter 'formal-*' | Sort-Object Name -Descending | Select-Object -First 1
+.\.venv\Scripts\python.exe .\benchbase\benchmark\analyze_isolation.py $campaign.FullName
+.\.venv\Scripts\python.exe .\benchbase\benchmark\plot_isolation.py $campaign.FullName .\report_assets\e6_isolation
+```
+
+`summary.csv` ghi trung bình, min và max của ba lượt. `paired.csv` ghi chênh lệch RR so với RC của từng cặp. Tỷ lệ thử lại dùng tổng yêu cầu đo làm mẫu số. Tỷ lệ Delivery bị hủy dùng số yêu cầu Delivery. Các cột mã SQL đếm yêu cầu theo mã lỗi SQL cuối đã lưu, kể cả yêu cầu thành công sau khi thử lại.
+
 Runner tự ghép `compose.yaml` và `compose.override.yaml`. Chạy riêng Compose gốc có thể bỏ giới hạn benchmark trong lần recreate sau; runner luôn áp dụng lại override. Bản BenchBase gốc vẫn dùng khi không có override.
 
 Khi chuyển máy/clone repo mới, runtime binary và baseline được gitignore. Bật Docker, cài JDK 24 và dependency Python hiện có, rồi build instrumentation trước `setup`:

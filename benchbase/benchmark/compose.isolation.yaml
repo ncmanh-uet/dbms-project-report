@@ -1,0 +1,12 @@
+services:
+  postgres:
+    # PostgreSQL 17.12 fixes the MultiXact error observed on 17.11 under RR.
+    image: postgres@sha256:87c8b42f423b45d5247e6aa8fdb2e7762fec164c68a50fe3eb07e7bfcaf4dbcf
+  mysql:
+    command: ["mysqld", "--max-connections=200", "--skip-log-bin"]
+  benchbase-postgres:
+    volumes:
+      - ./benchbase/benchmark/runtime/isolation/benchbase-postgres-instrumented.jar:/benchbase/profiles/postgres/benchbase.jar:ro
+  benchbase-mysql:
+    volumes:
+      - ./benchbase/benchmark/runtime/isolation/benchbase-mysql-instrumented.jar:/benchbase/profiles/mysql/benchbase.jar:ro

@@ -1,0 +1,14 @@
+{
+  "account": "labuser@%",
+  "temporarily_added_select": [
+    "data_lock_waits",
+    "data_locks",
+    "threads"
+  ],
+  "revoked": [
+    "data_lock_waits",
+    "data_locks",
+    "threads"
+  ],
+  "cleanup_errors": []
+}

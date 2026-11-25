@@ -1,0 +1,67 @@
+INFO: Using environment variable BENCHBASE_PROFILE=mysql with args: -b tpcc -c /lab-bench/results/mysql/formal-isolation-rr-c4-r3-20261125T061640920116Z/workload.xml --create=false --load=false --execute=true -d /benchbase/results/formal-isolation-rr-c4-r3-20261125T061640920116Z/native -s 1
+Picked up JAVA_TOOL_OPTIONS: -Xms128m -Xmx512m -Dlab.metrics.dir=/benchbase/results/formal-isolation-rr-c4-r3-20261125T061640920116Z/requests
+[INFO ] 2026-11-25 06:16:45,084 [main]  com.oltpbenchmark.DBWorkload main - ======================================================================
+
+Benchmark:                       TPCC {com.oltpbenchmark.benchmarks.tpcc.TPCCBenchmark}
+Configuration:                   /lab-bench/results/mysql/formal-isolation-rr-c4-r3-20261125T061640920116Z/workload.xml
+Type:                            MYSQL
+Driver:                          com.mysql.cj.jdbc.Driver
+URL:                             jdbc:mysql://mysql:3306/tpcc_bench?rewriteBatchedStatements=true&allowPublicKeyRetrieval=true&sslMode=DISABLED&socketTimeout=20000
+Isolation:                       TRANSACTION_REPEATABLE_READ
+Batch Size:                      128
+DDL Path:                        null
+Loader Threads:                  1
+Session Setup File:              /lab-bench/mysql-session.sql
+Scale Factor:                    1.0
+Terminals:                       4
+New Connection Per Txn:          false
+Reconnect on Connection Failure: false
+
+[INFO ] 2026-11-25 06:16:45,086 [main]  com.oltpbenchmark.DBWorkload main - ======================================================================
+[INFO ] 2026-11-25 06:16:45,955 [main]  com.oltpbenchmark.DBWorkload runWorkload - Creating 4 virtual terminals...
+E6 verified isolation worker=0 jdbc=4
+E6 verified isolation worker=1 jdbc=4
+E6 verified isolation worker=2 jdbc=4
+E6 verified isolation worker=3 jdbc=4
+[INFO ] 2026-11-25 06:16:46,048 [main]  com.oltpbenchmark.DBWorkload runWorkload - Launching the TPCC Benchmark with 1 Phase...
+[INFO ] 2026-11-25 06:16:46,066 [main]  com.oltpbenchmark.ThreadBench runRateLimitedMultiPhase - [0;1mPHASE START[0;0m :: [Workload=TPCC] [Serial=false] [Time=60] [WarmupTime=15] [Rate=unlimited] [Arrival=REGULAR] [Ratios=[45.0, 43.0, 4.0, 4.0, 4.0]] [ActiveWorkers=4]
+[INFO ] 2026-11-25 06:17:01,234 [main]  com.oltpbenchmark.ThreadBench runRateLimitedMultiPhase - [0;1mMEASURE[0;0m :: Warmup complete, starting measurements.
+[INFO ] 2026-11-25 06:18:02,382 [main]  com.oltpbenchmark.ThreadBench runRateLimitedMultiPhase - [0;1mTERMINATE[0;0m :: Waiting for all terminals to finish ..
+[INFO ] 2026-11-25 06:18:02,421 [Thread-4]  com.oltpbenchmark.ThreadBench run - Starting WatchDogThread
+[INFO ] 2026-11-25 06:18:02,453 [main]  com.oltpbenchmark.DBWorkload runWorkload - ======================================================================
+[INFO ] 2026-11-25 06:18:02,454 [main]  com.oltpbenchmark.DBWorkload runWorkload - Rate limited reqs/s: Results(state=EXIT, nanoSeconds=60999958908, measuredRequests=6432) = 105.4426939811669 requests/sec (throughput), 130.49189118316053 requests/sec (goodput)
+[INFO ] 2026-11-25 06:18:02,536 [main]  com.oltpbenchmark.DBWorkload writeOutputs - Output Raw data into file: tpcc_2026-11-25_06-18-02.raw.csv
+[INFO ] 2026-11-25 06:18:07,796 [main]  com.oltpbenchmark.DBWorkload writeOutputs - Output samples into file: tpcc_2026-11-25_06-18-02.samples.csv
+[INFO ] 2026-11-25 06:18:08,660 [main]  com.oltpbenchmark.DBWorkload writeOutputs - Output summary data into file: tpcc_2026-11-25_06-18-02.summary.json
+[INFO ] 2026-11-25 06:18:08,695 [main]  com.oltpbenchmark.DBWorkload writeOutputs - Output DBMS parameters into file: tpcc_2026-11-25_06-18-02.params.json
+[INFO ] 2026-11-25 06:18:08,746 [main]  com.oltpbenchmark.DBWorkload writeOutputs - Output DBMS metrics into file: tpcc_2026-11-25_06-18-02.metrics.json
+[INFO ] 2026-11-25 06:18:08,779 [main]  com.oltpbenchmark.DBWorkload writeOutputs - Output benchmark config into file: tpcc_2026-11-25_06-18-02.config.xml
+[INFO ] 2026-11-25 06:18:08,891 [main]  com.oltpbenchmark.DBWorkload writeOutputs - Output results into file: tpcc_2026-11-25_06-18-02.results.csv with window size 1
+[INFO ] 2026-11-25 06:18:17,210 [main]  com.oltpbenchmark.DBWorkload writeHistograms - ======================================================================
+[INFO ] 2026-11-25 06:18:17,210 [main]  com.oltpbenchmark.DBWorkload writeHistograms - Workload Histograms:
+
+[0;1mCompleted Transactions:[0;0m
+com.oltpbenchmark.benchmarks.tpcc.procedures.NewOrder/01                         [3577] ********************************************************************************
+com.oltpbenchmark.benchmarks.tpcc.procedures.Payment/02                          [3472] *****************************************************************************
+com.oltpbenchmark.benchmarks.tpcc.procedures.OrderStatus/03                      [ 333] *******
+com.oltpbenchmark.benchmarks.tpcc.procedures.Delivery/04                         [ 258] *****
+com.oltpbenchmark.benchmarks.tpcc.procedures.StockLevel/05                       [ 320] *******
+
+[0;1mAborted Transactions:[0;0m
+com.oltpbenchmark.benchmarks.tpcc.procedures.NewOrder/01                         [  32] ******************************************
+com.oltpbenchmark.benchmarks.tpcc.procedures.Delivery/04                         [  60] ********************************************************************************
+
+[0;1mRejected Transactions (Server Retry):[0;0m
+<EMPTY>
+
+[0;1mRejected Transactions (Retry Different):[0;0m
+<EMPTY>
+
+[0;1mUnexpected SQL Errors:[0;0m
+<EMPTY>
+
+[0;1mUnknown Status Transactions:[0;0m
+<EMPTY>
+
+
+[INFO ] 2026-11-25 06:18:17,210 [main]  com.oltpbenchmark.DBWorkload writeHistograms - ======================================================================

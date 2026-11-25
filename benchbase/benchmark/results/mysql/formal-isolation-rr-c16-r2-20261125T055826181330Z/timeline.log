@@ -1,0 +1,2 @@
+001 [mysql/ADMIN] TEMPORARY_OBSERVER_ACCESS {"tables": ["data_lock_waits", "data_locks", "threads"]}
+002 [mysql/ADMIN] OBSERVER_ACCESS_RESTORED {"tables": ["data_lock_waits", "data_locks", "threads"], "errors": []}

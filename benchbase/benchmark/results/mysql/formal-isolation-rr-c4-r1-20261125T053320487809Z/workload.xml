@@ -1,0 +1,42 @@
+<?xml version='1.0' encoding='utf-8'?>
+<parameters>
+  <type>MYSQL</type>
+  <driver>com.mysql.cj.jdbc.Driver</driver>
+  <url>jdbc:mysql://mysql:3306/tpcc_bench?rewriteBatchedStatements=true&amp;allowPublicKeyRetrieval=true&amp;sslMode=DISABLED&amp;socketTimeout=20000</url>
+  <username>labuser</username>
+  <password>lab_password</password>
+  <reconnectOnConnectionFailure>false</reconnectOnConnectionFailure>
+  <isolation>TRANSACTION_REPEATABLE_READ</isolation>
+  <batchsize>128</batchsize>
+  <randomSeed>20261023</randomSeed>
+  <loaderThreads>1</loaderThreads>
+  <scalefactor>1</scalefactor>
+  <terminals>4</terminals>
+  <works>
+    <work>
+      <time>60</time>
+      <rate>unlimited</rate>
+      <weights>45,43,4,4,4</weights>
+      <warmup>15</warmup>
+    </work>
+  </works>
+  <transactiontypes>
+    <transactiontype>
+      <name>NewOrder</name>
+    </transactiontype>
+    <transactiontype>
+      <name>Payment</name>
+    </transactiontype>
+    <transactiontype>
+      <name>OrderStatus</name>
+    </transactiontype>
+    <transactiontype>
+      <name>Delivery</name>
+    </transactiontype>
+    <transactiontype>
+      <name>StockLevel</name>
+    </transactiontype>
+  </transactiontypes>
+  <sessionsetupfile>/lab-bench/mysql-session.sql</sessionsetupfile>
+  <retries>3</retries>
+</parameters>
