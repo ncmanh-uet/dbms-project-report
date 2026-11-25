@@ -77,12 +77,12 @@ def verify(args, current):
         require(env["memory_bytes"] == env["memory_swap_bytes"] == 2 * 1024**3,
                 f"{db}: memory/swap quota is not 2 GiB")
     expected = {("postgres", "READ COMMITTED"), ("postgres", "REPEATABLE READ"),
-                ("mysql", "READ COMMITTED")}
+                ("mysql", "READ COMMITTED"), ("mysql", "REPEATABLE READ")}
     all_rows = {}
     for experiment in ("e1", "e2"):
         payload = read(getattr(args, experiment))
         rows = payload["results"]
-        require(len(rows) == 3 and {(r["dbms"], r["isolation_level"]) for r in rows} == expected,
+        require(len(rows) == 4 and {(r["dbms"], r["isolation_level"]) for r in rows} == expected,
                 f"{experiment}: incomplete or duplicate case matrix")
         for row in rows:
             require(row["status"] == "PASS" and row["schedule_verified"] and row["cleanup_passed"],
@@ -96,14 +96,15 @@ def verify(args, current):
                 require(Decimal(row["restored_value"]) == baseline, "E1: source was not restored")
                 require(row["aborts"] == row["retries"] == 0 and not row["error_codes"], "E1: unexpected abort/retry")
             else:
+                serialization = rr and row["dbms"] == "postgres"
                 baseline = Decimal(row["initial_value"])
                 require(row["lock_wait_observed"] and row["observed_blocked_span_ms"] >= 100,
                         "E2a: lock wait was not confirmed")
-                require(Decimal(row["after_initial_value"]) == baseline + (1 if rr else 2), "E2a: rollback state is wrong")
+                require(Decimal(row["after_initial_value"]) == baseline + (1 if serialization else 2), "E2a: rollback state is wrong")
                 require(Decimal(row["final_value"]) == baseline + 2, "E2a: final counter is wrong")
-                require(row["aborts"] == row["retries"] == int(rr), "E2a: abort/retry counts are wrong")
+                require(row["aborts"] == row["retries"] == int(serialization), "E2a: abort/retry counts are wrong")
                 require(row["data_check"]["confirmed_commits"] == 2, "E2a: COMMIT count is wrong")
-                require(row["error_codes"] == ([{"sqlstate": "40001", "errno": None}] if rr else []),
+                require(row["error_codes"] == ([{"sqlstate": "40001", "errno": None}] if serialization else []),
                         "E2a: unexpected SQL error")
         all_rows[experiment] = len(rows)
     rows = read(args.e4)["results"]

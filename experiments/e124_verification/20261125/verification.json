@@ -1,0 +1,23 @@
+{
+  "status": "PASS",
+  "checked_cases": {
+    "e1": 4,
+    "e2": 4,
+    "e4": 20
+  },
+  "source_unchanged": true,
+  "environment_unchanged": true,
+  "e6_evidence_unchanged": true,
+  "selected_summaries": {
+    "e1": "experiments/e1_logs/20261125T030706_536131Z/summary.json",
+    "e2": "experiments/e2_logs/20261125T030708_295092Z/summary.json",
+    "e4": "experiments/e4_logs/20261123T075540_787330Z/summary.json"
+  },
+  "source_sha256": {
+    "e1_mvcc.py": "45712ce379101f0d63870953ac516cea35fed8c3bcf3fa7fec82e4908dd5229f",
+    "e2_contention.py": "0f3b64d7336abc1054098473bdc25a0f1c11efac071c34a941888d55a63c8d69",
+    "e2_support.py": "88969a5ce3585e1ef71d4f884f1aebb6f336b723ede7279f1bb113b49293d464",
+    "e4_deadlock.py": "060c595539896bb549b2323b0f7ba41755944989259081001994e8d7fb06cfda",
+    "verify_e124.py": "8c5301ab295c169531bf9e60d93b9f355091fe737eb05e202611d9fb0c1f79a0"
+  }
+}

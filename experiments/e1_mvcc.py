@@ -26,11 +26,7 @@ ISOLATIONS = {"rc": "READ COMMITTED", "rr": "REPEATABLE READ"}
 
 
 def isolation_cases(dbms, choice):
-    """The RR extension verifies PostgreSQL theory; MySQL remains the RC control."""
-    if dbms == "mysql":
-        if choice == "rr":
-            raise ValueError("RR cases are limited to PostgreSQL; use --db postgres")
-        return ["READ COMMITTED"]
+    """Select explicit session isolation levels for either supported DBMS."""
     return list(ISOLATIONS.values()) if choice == "both" else [ISOLATIONS[choice]]
 
 
@@ -279,10 +275,8 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--db", choices=("postgres", "mysql", "both"), default="both")
     parser.add_argument("--isolation", choices=("rc", "rr", "both"), default="rc",
-                        help="PostgreSQL RC/RR; MySQL remains an RC control")
+                        help="RC/RR for PostgreSQL and MySQL")
     args = parser.parse_args()
-    if args.isolation == "rr" and args.db != "postgres":
-        parser.error("Use --db postgres for --isolation rr; both keeps the MySQL RC control")
     run_id = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%S_%fZ")
     directory = ROOT / "experiments" / "e1_logs" / run_id
     directory.mkdir(parents=True)

@@ -6,8 +6,8 @@ Thí nghiệm tiếp theo: [E2 — Hot-row contention](E2_README.md).
 
 Kiểm tra một plain SELECT có đọc được phiên bản đã commit khi transaction
 khác đang giữ UPDATE chưa commit trên cùng bản ghi. Thí nghiệm dùng
-`warehouse.w_ytd`, với `w_id = 1`. PostgreSQL có hai case READ COMMITTED
-(RC) và REPEATABLE READ (RR), đối chiếu mục 2.2.4; MySQL giữ RC làm đối chứng.
+`warehouse.w_ytd`, với `w_id = 1`. Cả PostgreSQL và MySQL chạy READ COMMITTED (RC) và REPEATABLE READ (RR),
+đối chiếu cơ chế snapshot ở mục 2.2.3.
 
 ## Chạy trong Terminal VS Code
 
@@ -23,7 +23,7 @@ Khi hai database đã sẵn sàng nhận kết nối:
 ```powershell
 .\.venv\Scripts\python.exe .\experiments\e1_mvcc.py
 
-# Đợt lấy bằng chứng: PostgreSQL RC/RR và MySQL RC
+# Đợt lấy bằng chứng: PostgreSQL/MySQL đều chạy RC/RR
 .\.venv\Scripts\python.exe -B .\experiments\e1_mvcc.py --isolation both
 
 # Chỉ kiểm chứng snapshot cố định của PostgreSQL
@@ -81,8 +81,7 @@ Lịch phải có thứ tự:
 UPDATE_UNCOMMITTED → READ_BEFORE_COMMIT → COMMIT_START → COMMIT_DONE
 → READ_AFTER_COMMIT → FINAL_VALUE_VERIFIED → RESTORED.
 
-`--isolation` mặc định `rc` để giữ cách chạy cũ. `both` chạy PostgreSQL RC/RR
-và MySQL RC; `rr` yêu cầu `--db postgres`. Mỗi case kiểm chứng trên đoạn
+`--isolation` mặc định `rc` để giữ cách chạy cũ. `both` chạy RC/RR trên cả hai DBMS; `rr` chạy riêng RR trên DBMS được chọn. Mỗi case kiểm chứng trên đoạn
 timeline riêng. Kết quả RR không được gọi là kiểm chứng SSI hoặc serializability.
 
 Tín hiệu quan trọng là SELECT đầu tiên hoàn tất trước khi T1 bắt đầu COMMIT.

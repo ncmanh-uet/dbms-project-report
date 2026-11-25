@@ -1,0 +1,261 @@
+{
+  "run_id": "20261125T030708_295092Z",
+  "preliminary": true,
+  "warmup_seconds": 0,
+  "repetitions": 1,
+  "results": [
+    {
+      "kind": "demo",
+      "experiment": "E2a",
+      "dbms": "postgres",
+      "status": "PASS",
+      "isolation": "READ COMMITTED",
+      "isolation_level": "READ COMMITTED",
+      "aborts": 0,
+      "retries": 0,
+      "error_codes": [],
+      "cleanup_passed": true,
+      "lock_wait_observed": true,
+      "initial_value": "0.00",
+      "t1_connection_id": 43,
+      "t2": {
+        "connection_id": 45,
+        "update_roundtrip_ms": 144.96,
+        "committed": true
+      },
+      "lock_snapshots": [
+        [
+          {
+            "waiting_pid": 45,
+            "blocking_pid": 43,
+            "state": "active",
+            "wait_event_type": "Lock",
+            "wait_event": "transactionid"
+          }
+        ],
+        [
+          {
+            "waiting_pid": 45,
+            "blocking_pid": 43,
+            "state": "active",
+            "wait_event_type": "Lock",
+            "wait_event": "transactionid"
+          }
+        ]
+      ],
+      "observed_blocked_span_ms": 121.62239995086566,
+      "after_initial_value": "2.00",
+      "final_value": "2.00",
+      "data_check": {
+        "counter_check": true,
+        "restored": true,
+        "before": {
+          "1": "0.00"
+        },
+        "after_transactions": {
+          "1": "2.00"
+        },
+        "after_restore": {
+          "1": "0.00"
+        },
+        "confirmed_commits": 2
+      },
+      "schedule_verified": true
+    },
+    {
+      "kind": "demo",
+      "experiment": "E2a",
+      "dbms": "postgres",
+      "status": "PASS",
+      "isolation": "REPEATABLE READ",
+      "isolation_level": "REPEATABLE READ",
+      "aborts": 1,
+      "retries": 1,
+      "error_codes": [
+        {
+          "sqlstate": "40001",
+          "errno": null
+        }
+      ],
+      "cleanup_passed": true,
+      "lock_wait_observed": true,
+      "initial_value": "0.00",
+      "t1_connection_id": 46,
+      "t2": {
+        "connection_id": 48,
+        "committed": false,
+        "rollback_done": true,
+        "sqlstate": "40001",
+        "errno": null
+      },
+      "lock_snapshots": [
+        [
+          {
+            "waiting_pid": 48,
+            "blocking_pid": 46,
+            "state": "active",
+            "wait_event_type": "Lock",
+            "wait_event": "transactionid"
+          }
+        ],
+        [
+          {
+            "waiting_pid": 48,
+            "blocking_pid": 46,
+            "state": "active",
+            "wait_event_type": "Lock",
+            "wait_event": "transactionid"
+          }
+        ]
+      ],
+      "observed_blocked_span_ms": 118.82380000315607,
+      "after_initial_value": "1.00",
+      "retry_connection_id": 49,
+      "final_value": "2.00",
+      "data_check": {
+        "counter_check": true,
+        "restored": true,
+        "before": {
+          "1": "0.00"
+        },
+        "after_transactions": {
+          "1": "2.00"
+        },
+        "after_restore": {
+          "1": "0.00"
+        },
+        "confirmed_commits": 2
+      },
+      "schedule_verified": true
+    },
+    {
+      "kind": "demo",
+      "experiment": "E2a",
+      "dbms": "mysql",
+      "status": "PASS",
+      "isolation": "READ COMMITTED",
+      "isolation_level": "READ COMMITTED",
+      "aborts": 0,
+      "retries": 0,
+      "error_codes": [],
+      "cleanup_passed": true,
+      "lock_wait_observed": true,
+      "initial_value": "0.00",
+      "t1_connection_id": 16,
+      "t2": {
+        "connection_id": 18,
+        "update_roundtrip_ms": 567.073,
+        "committed": true
+      },
+      "lock_snapshots": [
+        [
+          {
+            "waiting_pid": 18,
+            "blocking_pid": 16,
+            "table": "stock",
+            "index": "PRIMARY",
+            "lock_type": "RECORD",
+            "lock_mode": "X,REC_NOT_GAP",
+            "lock_status": "WAITING",
+            "lock_data": "1, 1"
+          }
+        ],
+        [
+          {
+            "waiting_pid": 18,
+            "blocking_pid": 16,
+            "table": "stock",
+            "index": "PRIMARY",
+            "lock_type": "RECORD",
+            "lock_mode": "X,REC_NOT_GAP",
+            "lock_status": "WAITING",
+            "lock_data": "1, 1"
+          }
+        ]
+      ],
+      "observed_blocked_span_ms": 350.0163999851793,
+      "after_initial_value": "2.00",
+      "final_value": "2.00",
+      "data_check": {
+        "counter_check": true,
+        "restored": true,
+        "before": {
+          "1": "0.00"
+        },
+        "after_transactions": {
+          "1": "2.00"
+        },
+        "after_restore": {
+          "1": "0.00"
+        },
+        "confirmed_commits": 2
+      },
+      "schedule_verified": true
+    },
+    {
+      "kind": "demo",
+      "experiment": "E2a",
+      "dbms": "mysql",
+      "status": "PASS",
+      "isolation": "REPEATABLE READ",
+      "isolation_level": "REPEATABLE READ",
+      "aborts": 0,
+      "retries": 0,
+      "error_codes": [],
+      "cleanup_passed": true,
+      "lock_wait_observed": true,
+      "initial_value": "0.00",
+      "t1_connection_id": 19,
+      "t2": {
+        "connection_id": 21,
+        "update_roundtrip_ms": 173.167,
+        "committed": true
+      },
+      "lock_snapshots": [
+        [
+          {
+            "waiting_pid": 21,
+            "blocking_pid": 19,
+            "table": "stock",
+            "index": "PRIMARY",
+            "lock_type": "RECORD",
+            "lock_mode": "X,REC_NOT_GAP",
+            "lock_status": "WAITING",
+            "lock_data": "1, 1"
+          }
+        ],
+        [
+          {
+            "waiting_pid": 21,
+            "blocking_pid": 19,
+            "table": "stock",
+            "index": "PRIMARY",
+            "lock_type": "RECORD",
+            "lock_mode": "X,REC_NOT_GAP",
+            "lock_status": "WAITING",
+            "lock_data": "1, 1"
+          }
+        ]
+      ],
+      "observed_blocked_span_ms": 125.32869999995455,
+      "after_initial_value": "2.00",
+      "final_value": "2.00",
+      "data_check": {
+        "counter_check": true,
+        "restored": true,
+        "before": {
+          "1": "0.00"
+        },
+        "after_transactions": {
+          "1": "2.00"
+        },
+        "after_restore": {
+          "1": "0.00"
+        },
+        "confirmed_commits": 2
+      },
+      "schedule_verified": true
+    }
+  ],
+  "status": "PASS"
+}

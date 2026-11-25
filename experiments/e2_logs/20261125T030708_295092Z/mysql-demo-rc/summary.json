@@ -1,0 +1,64 @@
+{
+  "kind": "demo",
+  "experiment": "E2a",
+  "dbms": "mysql",
+  "status": "PASS",
+  "isolation": "READ COMMITTED",
+  "isolation_level": "READ COMMITTED",
+  "aborts": 0,
+  "retries": 0,
+  "error_codes": [],
+  "cleanup_passed": true,
+  "lock_wait_observed": true,
+  "initial_value": "0.00",
+  "t1_connection_id": 16,
+  "t2": {
+    "connection_id": 18,
+    "update_roundtrip_ms": 567.073,
+    "committed": true
+  },
+  "lock_snapshots": [
+    [
+      {
+        "waiting_pid": 18,
+        "blocking_pid": 16,
+        "table": "stock",
+        "index": "PRIMARY",
+        "lock_type": "RECORD",
+        "lock_mode": "X,REC_NOT_GAP",
+        "lock_status": "WAITING",
+        "lock_data": "1, 1"
+      }
+    ],
+    [
+      {
+        "waiting_pid": 18,
+        "blocking_pid": 16,
+        "table": "stock",
+        "index": "PRIMARY",
+        "lock_type": "RECORD",
+        "lock_mode": "X,REC_NOT_GAP",
+        "lock_status": "WAITING",
+        "lock_data": "1, 1"
+      }
+    ]
+  ],
+  "observed_blocked_span_ms": 350.0163999851793,
+  "after_initial_value": "2.00",
+  "final_value": "2.00",
+  "data_check": {
+    "counter_check": true,
+    "restored": true,
+    "before": {
+      "1": "0.00"
+    },
+    "after_transactions": {
+      "1": "2.00"
+    },
+    "after_restore": {
+      "1": "0.00"
+    },
+    "confirmed_commits": 2
+  },
+  "schedule_verified": true
+}

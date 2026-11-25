@@ -1,0 +1,58 @@
+{
+  "kind": "demo",
+  "experiment": "E2a",
+  "dbms": "postgres",
+  "status": "PASS",
+  "isolation": "READ COMMITTED",
+  "isolation_level": "READ COMMITTED",
+  "aborts": 0,
+  "retries": 0,
+  "error_codes": [],
+  "cleanup_passed": true,
+  "lock_wait_observed": true,
+  "initial_value": "0.00",
+  "t1_connection_id": 43,
+  "t2": {
+    "connection_id": 45,
+    "update_roundtrip_ms": 144.96,
+    "committed": true
+  },
+  "lock_snapshots": [
+    [
+      {
+        "waiting_pid": 45,
+        "blocking_pid": 43,
+        "state": "active",
+        "wait_event_type": "Lock",
+        "wait_event": "transactionid"
+      }
+    ],
+    [
+      {
+        "waiting_pid": 45,
+        "blocking_pid": 43,
+        "state": "active",
+        "wait_event_type": "Lock",
+        "wait_event": "transactionid"
+      }
+    ]
+  ],
+  "observed_blocked_span_ms": 121.62239995086566,
+  "after_initial_value": "2.00",
+  "final_value": "2.00",
+  "data_check": {
+    "counter_check": true,
+    "restored": true,
+    "before": {
+      "1": "0.00"
+    },
+    "after_transactions": {
+      "1": "2.00"
+    },
+    "after_restore": {
+      "1": "0.00"
+    },
+    "confirmed_commits": 2
+  },
+  "schedule_verified": true
+}

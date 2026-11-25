@@ -388,12 +388,10 @@ def main():
     parser.add_argument("--db", choices=("postgres", "mysql", "both"), default="both")
     parser.add_argument("--mode", choices=("demo", "load", "all"), default="all")
     parser.add_argument("--demo-isolation", choices=("rc", "rr", "both"), default="rc",
-                        help="E2a PostgreSQL RC/RR; MySQL and E2b stay at RC")
+                        help="E2a RC/RR for both DBMS; E2b stays at RC")
     parser.add_argument("--clients", type=int, nargs="+", default=[1, 4, 8, 16])
     parser.add_argument("--seconds", type=float, default=10)
     args = parser.parse_args()
-    if args.demo_isolation == "rr" and args.db != "postgres":
-        parser.error("Use --db postgres for --demo-isolation rr")
     if args.mode == "load" and args.demo_isolation != "rc":
         parser.error("--demo-isolation applies only to demo/all, not E2b load")
     if not 0.1 <= args.seconds <= 60 or any(not 1 <= n <= 16 for n in args.clients):

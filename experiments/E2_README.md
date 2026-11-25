@@ -37,7 +37,7 @@ Các lựa chọn:
 # Chỉ xem demo chờ khóa, trên cả hai hệ
 .\.venv\Scripts\python.exe .\experiments\e2_contention.py --mode demo
 
-# E2a: PostgreSQL RC/RR và MySQL RC, đối chiếu lý thuyết mục 2.2.5
+# E2a: PostgreSQL/MySQL đều chạy RC/RR, đối chiếu lý thuyết mục 2.2.4
 .\.venv\Scripts\python.exe -B .\experiments\e2_contention.py --mode demo --demo-isolation both
 
 # Chỉ chạy các lượt sơ bộ
@@ -59,7 +59,7 @@ Các lựa chọn:
 4. Connection quan sát lấy metadata xác nhận T2 chờ T1. Hai mẫu phải cách
    nhau ít nhất 100 ms và T2 chưa hoàn tất.
 5. Chỉ sau khi xác nhận chờ khóa, T1 mới bắt đầu COMMIT.
-6. Ở RC, T2 hoàn tất UPDATE rồi COMMIT, bộ đếm bằng B + 2.
+6. Ở RC trên hai hệ và RR trên MySQL, T2 hoàn tất UPDATE rồi COMMIT, bộ đếm bằng B + 2.
    Ở PostgreSQL RR, UPDATE của T2 trả SQLSTATE `40001`; T2 ROLLBACK,
    bộ đếm được kiểm tra bằng B + 1. Sau đó connection mới đặt RR, mở
    transaction mới và chạy lại toàn bộ UPDATE/COMMIT của T2, đạt B + 2.
@@ -74,11 +74,10 @@ chặn. Nó là bằng chứng về một phần khoảng chờ, không phải b
 toàn bộ lock-wait time. Thời gian UPDATE trong demo bao gồm thời gian giữ
 khóa có chủ đích này; không dùng nó để so tốc độ hai DBMS.
 
-`--demo-isolation` mặc định `rc`; `both` bổ sung PostgreSQL RR nhưng giữ
-MySQL RC làm đối chứng. `rr` yêu cầu `--db postgres`. Lỗi `40001` ở case
+`--demo-isolation` mặc định `rc`; `both` chạy RC/RR trên cả hai DBMS; `rr` chạy riêng RR trên DBMS được chọn. Lỗi `40001` ở case
 PostgreSQL RR là kết quả dự kiến, không phải lỗi điều phối. Case chỉ PASS
 khi có đúng 1 aborted attempt, 1 retry, 2 COMMIT được xác nhận và cleanup đạt.
-RC phải có 0 abort/retry. Retry giữ cùng thao tác, row đích và isolation.
+RC trên cả hai hệ và MySQL RR phải có 0 abort/retry. Retry giữ cùng thao tác, row đích và isolation.
 
 Summary E2a lưu `isolation_level`, `lock_wait_observed`, `aborts`, `retries`,
 `error_codes` (tách `sqlstate`/`errno`), `initial_value`, `after_initial_value`,
@@ -158,3 +157,11 @@ e2_support.py; giữ các file này cùng thư mục experiments.
   https://dev.mysql.com/doc/refman/8.4/en/performance-schema-data-lock-waits-table.html
 - MySQL lock metadata:
   https://dev.mysql.com/doc/refman/8.4/en/performance-schema-data-locks-table.html
+
+## Tổng hợp lại bằng chứng E2b đã lưu
+
+```powershell
+.\.venv\Scripts\python.exe -B experiments/summarize_e2b.py --source experiments/e2_logs/20261109T152250_363110Z --output experiments/e124_verification/20261125/e2b-summary.json
+```
+
+Lệnh chỉ đọc log: đối chiếu CSV giao dịch, COMMIT theo từng item, giá trị cuối và khôi phục của đủ 24 lượt. Các lượt này có 0 failed attempt, 0 abort, 0 retry; không suy diễn rằng mọi lỗi SQL đều là abort.
