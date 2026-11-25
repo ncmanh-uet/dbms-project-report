@@ -1,0 +1,67 @@
+{
+  "occ_theory": true,
+  "e6_and_e3advanced_pg": true,
+  "e6_and_e3advanced_mysql": true,
+  "e3_prose_unchanged": true,
+  "github_links_verified": 14,
+  "unique_github_targets": 13,
+  "status": "PASS",
+  "links": [
+    {
+      "revision": "3cb827cd950aefc09a3c779bd7afa315877b875e",
+      "path": "experiments/e1_mvcc.py"
+    },
+    {
+      "revision": "3cb827cd950aefc09a3c779bd7afa315877b875e",
+      "path": "experiments/e2_contention.py"
+    },
+    {
+      "revision": "b757f71bd1ea3a542700f9807e5f3a5b34917589",
+      "path": "experiments/e4_deadlock.py"
+    },
+    {
+      "revision": "3cb827cd950aefc09a3c779bd7afa315877b875e",
+      "path": "experiments/e1_logs/20261125T030706_536131Z/summary.json"
+    },
+    {
+      "revision": "3cb827cd950aefc09a3c779bd7afa315877b875e",
+      "path": "experiments/e1_logs/20261125T030706_536131Z/timeline.log"
+    },
+    {
+      "revision": "3cb827cd950aefc09a3c779bd7afa315877b875e",
+      "path": "experiments/e2_logs/20261125T030708_295092Z/summary.json"
+    },
+    {
+      "revision": "3cb827cd950aefc09a3c779bd7afa315877b875e",
+      "path": "experiments/e2_logs/20261125T030708_295092Z/timeline.log"
+    },
+    {
+      "revision": "3cb827cd950aefc09a3c779bd7afa315877b875e",
+      "path": "experiments/e4_logs/20261123T075540_787330Z/summary.json"
+    },
+    {
+      "revision": "3cb827cd950aefc09a3c779bd7afa315877b875e",
+      "path": "experiments/e4_logs/20261123T075540_787330Z/timeline.log"
+    },
+    {
+      "revision": "3cb827cd950aefc09a3c779bd7afa315877b875e",
+      "path": "experiments/e124_verification/20261125/verification.json"
+    },
+    {
+      "revision": "3cb827cd950aefc09a3c779bd7afa315877b875e",
+      "path": "experiments/e1_logs/20261125T030706_536131Z/summary.json"
+    },
+    {
+      "revision": "b757f71bd1ea3a542700f9807e5f3a5b34917589",
+      "path": "experiments/e2_logs/20261109T152250_363110Z/trials.csv"
+    },
+    {
+      "revision": "3cb827cd950aefc09a3c779bd7afa315877b875e",
+      "path": "experiments/e124_verification/20261125/e2b-summary.json"
+    },
+    {
+      "revision": "3cb827cd950aefc09a3c779bd7afa315877b875e",
+      "path": "experiments/e2_logs/20261109T152250_363110Z/trials.csv"
+    }
+  ]
+}

@@ -54,7 +54,7 @@ Cách tổ chức này tách dữ liệu nguồn khỏi quá trình sinh tải, 
 
 ### 3.1.2. Đánh giá tính đúng đắn của cơ chế với dữ liệu nhỏ
 
-Nhóm thử nghiệm này kiểm tra trạng thái dữ liệu và quan hệ giữa các giao dịch trên một dòng warehouse hoặc một đến hai dòng stock. E1 và E2a được thực hiện ở READ COMMITTED (RC) và REPEATABLE READ (RR) trên PostgreSQL; MySQL/InnoDB giữ RC làm đối chứng. E4 sử dụng RC trên cả hai hệ. Các kết nối độc lập được điều phối để kiểm tra trạng thái trước và sau COMMIT/ROLLBACK, số lần giao dịch bị hủy (abort), số lần thử lại (retry) và trạng thái dữ liệu sau khôi phục. E1 đối chiếu mục 2.2.1–2.2.4; E2a đối chiếu mục 2.2.5; E4 đối chiếu lý thuyết khóa/deadlock ở mục 2.1.3.
+Nhóm thử nghiệm này kiểm tra trạng thái dữ liệu và quan hệ giữa các giao dịch trên một dòng warehouse hoặc một đến hai dòng stock. E1 và E2a chạy READ COMMITTED (RC) và REPEATABLE READ (RR) trên cả PostgreSQL và MySQL InnoDB; E4 sử dụng RC trên cả hai hệ. Các kết nối độc lập được điều phối để kiểm tra giá trị đọc, trạng thái trước và sau COMMIT/ROLLBACK, số giao dịch bị hủy (abort), số lần thử lại (retry) và khôi phục dữ liệu. E1 đối chiếu cơ chế snapshot ở mục 2.2.3; E2a đối chiếu xung đột ghi ở mục 2.2.4; E4 đối chiếu lý thuyết khóa/deadlock ở mục 2.1.3.
 
 #### 3.1.2.1. Kịch bản kiểm thử với dữ liệu nhỏ
 
@@ -62,19 +62,19 @@ Nhóm thử nghiệm này kiểm tra trạng thái dữ liệu và quan hệ gi�
 
 | Mã | Mục tiêu | Lịch giao dịch chính | Tiêu chí quan sát |
 |---|---|---|---|
-| E1 | Kiểm chứng snapshot ở RC/RR trên PostgreSQL; MySQL RC đối chứng | T1 tăng warehouse.w_ytd thêm 100 và giữ chưa commit; T2 SELECT trước và sau commit trong cùng transaction | Lần đọc đầu nhận B trước commit; lần hai nhận B + 100 ở RC, B ở RR; transaction mới thấy B + 100; khôi phục B |
-| E2a | Kiểm chứng chờ khóa và concurrent update ở RC/RR trên PostgreSQL; MySQL RC đối chứng | Hai UPDATE tăng cùng counter; observer xác nhận chờ ít nhất 100 ms trước khi T1 commit | RC: 0 abort/retry, đạt B + 2; PostgreSQL RR: 40001, rollback về B + 1, retry toàn transaction đạt B + 2 |
+| E1 | Kiểm chứng đọc đa phiên bản | T1 UPDATE warehouse và giữ chưa commit; T2 SELECT trước và sau khi T1 commit | Cả hai DBMS chạy RC/RR. Lần đầu đọc B; lần hai RC đọc B \+ 100, RR đọc B; giao dịch mới thấy B \+ 100\. |
+| E2a | Đối chiếu xung đột ghi ở RC/RR trên cả hai DBMS | Hai UPDATE tăng cùng bộ đếm; xác nhận T2 chờ ít nhất 100 ms trước COMMIT của T1 | RC trên hai hệ và MySQL RR: 0 abort/retry, cuối B + 2; PostgreSQL RR: 1 abort 40001, sau rollback B + 1, sau 1 retry B + 2 |
 | E2b | Khảo sát sơ bộ contention ở RC | distinct/shared4/hot1 với 1/4/8/16 client theo thiết kế cũ | Chỉ mô tả mẫu chờ khóa; không xem là benchmark chính thức |
 | E3 | Tái hiện lost update và đánh giá OCC | Hai transaction cùng đọc counter; lần lượt thử ghi thường, ghi có version và ghi có version kèm retry | Phân biệt cập nhật bị mất, xung đột được phát hiện và yêu cầu hoàn tất sau retry |
 | E4 | Kiểm chứng deadlock và thứ tự lấy khóa | Hai transaction cập nhật hai dòng A/B theo thứ tự ngược nhau hoặc cùng thứ tự | Phân biệt deadlock với chờ thông thường; kiểm tra rollback, retry và giá trị cuối |
 
-Trong [**E1**](https://github.com/ncmanh-uet/dbms-project-report/blob/b757f71bd1ea3a542700f9807e5f3a5b34917589/experiments/e1_mvcc.py), hai giao dịch T1 và T2 thao tác trên warehouse.w\_ytd với w\_id \= 1\. T1 khóa dòng bằng SELECT … FOR UPDATE, tăng giá trị từ 300.000 lên 300.100 và chưa COMMIT. T2 thực hiện SELECT thông thường; sau khi lần đọc này hoàn tất, T1 mới COMMIT. T2 sau đó đọc lại trong cùng giao dịch. Kịch bản được thực hiện ở RC và RR trên PostgreSQL, ở RC trên MySQL; mỗi trường hợp sử dụng hai kết nối độc lập cùng mức cô lập.
+Trong [**E1**](https://github.com/ncmanh-uet/dbms-project-report/blob/3cb827cd950aefc09a3c779bd7afa315877b875e/experiments/e1_mvcc.py), hai giao dịch T1 và T2 thao tác trên warehouse.w\_ytd với w\_id \= 1\. T1 khóa dòng bằng SELECT … FOR UPDATE, tăng giá trị từ 300.000 lên 300.100 và chưa COMMIT. T2 thực hiện SELECT thông thường; sau khi lần đọc này hoàn tất, T1 mới COMMIT. T2 sau đó đọc lại trong cùng giao dịch. Cùng lịch được chạy ở RC và RR trên cả hai DBMS; các kết nối T1/T2 trong mỗi trường hợp dùng cùng mức cô lập.
 
-Lần đọc đầu của T2 phải trả về 300.000. Sau COMMIT của T1, lần đọc thứ hai phải trả về 300.100 ở RC và 300.000 ở PostgreSQL RR. Khi T2 kết thúc, một giao dịch mới kiểm tra giá trị đã lưu là 300.100; dữ liệu sau đó được khôi phục về 300.000. Lịch giao dịch, dữ liệu và cấu hình được giữ cố định khi thay đổi mức cô lập trên PostgreSQL.
+Lần đọc đầu của T2 phải trả về 300.000. Sau COMMIT của T1, lần đọc thứ hai phải trả về 300.100 ở RC và 300.000 ở RR trên cả hai DBMS. Khi T2 kết thúc, một giao dịch mới kiểm tra giá trị đã lưu là 300.100; dữ liệu sau đó được khôi phục về 300.000. Dữ liệu, lịch giao dịch và cấu hình được giữ cố định khi thay mức cô lập trên từng DBMS.
 
-Trong [**E2a**](https://github.com/ncmanh-uet/dbms-project-report/blob/b757f71bd1ea3a542700f9807e5f3a5b34917589/experiments/e2_contention.py), T1 và T2 cùng thực hiện UPDATE stock SET s\_ytd \= s\_ytd \+ 1 trên bản ghi có s\_w\_id \= 1 và s\_i\_id \= 1, với giá trị ban đầu B \= 0\. T1 cập nhật trước và chưa COMMIT; T2 thực hiện cùng câu lệnh nên phải chờ. Một kết nối quan sát xác nhận T2 bị T1 chặn qua hai mẫu trạng thái khóa cách nhau ít nhất 100 ms, sau đó mới cho T1 COMMIT. Kịch bản sử dụng RC/RR trên PostgreSQL và RC trên MySQL.
+Trong [**E2a**](https://github.com/ncmanh-uet/dbms-project-report/blob/3cb827cd950aefc09a3c779bd7afa315877b875e/experiments/e2_contention.py), T1 và T2 cùng thực hiện UPDATE stock SET s\_ytd \= s\_ytd \+ 1 trên bản ghi có s\_w\_id \= 1 và s\_i\_id \= 1, với giá trị ban đầu B \= 0\. T1 cập nhật trước và chưa COMMIT; T2 thực hiện cùng câu lệnh nên phải chờ. Một kết nối quan sát xác nhận T2 bị T1 chặn qua hai mẫu trạng thái khóa cách nhau ít nhất 100 ms, sau đó mới cho T1 COMMIT. Kịch bản chạy RC và RR trên cả hai DBMS.
 
-Ở RC, T2 tiếp tục cập nhật sau khi T1 COMMIT; giá trị cuối phải bằng B \+ 2, với 0 abort và 0 retry. Ở PostgreSQL RR, T2 nhận SQLSTATE 40001 và ROLLBACK; giá trị lúc này phải bằng B \+ 1\. T2 được thực hiện lại toàn bộ trong một giao dịch RR mới để đạt B \+ 2, tương ứng 1 abort và 1 retry. Sau kiểm tra, dữ liệu được khôi phục về B. Thời gian thực hiện câu UPDATE bao gồm khoảng giữ khóa có chủ đích, nên không dùng để so sánh tốc độ hai DBMS.
+Ở RC trên cả hai DBMS và RR trên MySQL, T2 tiếp tục cập nhật sau COMMIT của T1; bộ đếm đạt B \+ 2, với 0 abort và 0 retry. Ở PostgreSQL RR, T2 nhận SQLSTATE 40001 và ROLLBACK; bộ đếm lúc này bằng B \+ 1\. Thử lại toàn bộ T2 trong giao dịch RR mới đưa bộ đếm lên B \+ 2, tương ứng 1 abort và 1 retry. Sau kiểm tra, dữ liệu được khôi phục về B. Thời gian UPDATE gồm khoảng giữ khóa có chủ đích, nên không dùng để so sánh tốc độ hai DBMS.
 
 Trong **E3**, chương trình sao chép 16 dòng stock vào bảng hỗ trợ có tên riêng cho lượt chạy, bổ sung `counter_value` và `version`. Bảng này được chia sẻ giữa các connection và không làm thay đổi cấu trúc bảng stock nguồn. Mỗi pha demo được đặt lại về counter ban đầu 0 và version 1:
 
@@ -99,26 +99,25 @@ Với lịch ordered, cả hai giao dịch đều cập nhật A rồi B. Tiêu 
 
 #### 3.1.2.2. Kết quả phân tích trạng thái và tính nhất quán trên ba cơ chế
 
-**Bảng 3.4. Kết quả quan sát trên PostgreSQL.**
+**Bảng 3.4. Đối chiếu E1, E2a, E4 trên PostgreSQL/MySQL và kết quả E3 trên PostgreSQL.**
 
-| Kịch bản | Trạng thái hoặc kết quả ghi nhận | Ý nghĩa |
-|---|---|---|
-| E1 — RC | T2 đọc 300.000 rồi 300.100; DB trước khôi phục 300.100; 0 abort, 0 retry | Snapshot theo câu lệnh; lần đọc đầu hoàn tất trước khi T1 bắt đầu commit |
-| E1 — RR | T2 đọc 300.000 cả hai lần; transaction mới thấy DB 300.100; 0 abort, 0 retry | Snapshot đọc cố định trong transaction, không phải cập nhật bị mất |
-| E2a — RC | Observer xác nhận chờ khóa; counter 0 → 2; 0 abort, 0 retry | Cập nhật nối tiếp sau khi writer trước commit |
-| E2a — RR | 1 abort `40001`; counter 0 → 1 sau rollback, → 2 sau 1 retry toàn transaction RR | Xung đột cập nhật ở RR làm hủy T2; thử lại với snapshot mới hoàn tất yêu cầu |
-| E3 — ghi thường | Hai COMMIT nhưng counter cuối bằng 1 | Tái hiện lost update của chuỗi đọc–tính–ghi ở ứng dụng |
-| E3 — kiểm tra version | Counter = 1, version = 2; phát hiện một conflict | Lần ghi dựa trên dữ liệu cũ bị từ chối |
-| E3 — version và retry | Counter = 2, version = 3 | Hai yêu cầu logic hoàn tất sau khi đọc lại và tính lại |
-| E4 — thứ tự ngược, RC | 5/5 cặp, mỗi cặp 1 abort `40P01`, A/B từ 0 lên 1 sau rollback | DBMS phá chu trình chờ bằng cách hủy một transaction |
-| E4 — sau retry nạn nhân, RC | Mỗi cặp 1 retry; A/B từ 1 lên 2, sau khôi phục về 0 | Retry toàn transaction hoàn tất phần công việc bị hủy |
-| E4 — cùng thứ tự | 5/5 cặp có hai COMMIT; không deadlock, không retry | Thống nhất thứ tự lấy khóa loại bỏ chu trình trong lịch A/B đã thiết kế |
+| Kịch bản / isolation | PostgreSQL | MySQL InnoDB |
+| ----- | ----- | ----- |
+| E1 — RC | T2: 300.000 → 300.100; 0 abort, 0 retry. | T2: 300.000 → 300.100; 0 abort, 0 retry. |
+| E1 — RR | T2: 300.000 → 300.000; 0 abort, 0 retry. | T2: 300.000 → 300.000; 0 abort, 0 retry. |
+| E2a — RC | Bộ đếm 0 → 2; 0 abort, 0 retry. | Bộ đếm 0 → 2; 0 abort, 0 retry. |
+| E2a — RR | 1 abort 40001; sau ROLLBACK: 1; sau 1 retry: 2\. | Bộ đếm 0 → 2 sau hai COMMIT; 0 abort, 0 retry. |
+| E4 — ngược thứ tự, RC | 5/5 cặp: 1 abort 40P01 và 1 retry/cặp. A/B: 0 → 1 sau rollback → 2 sau retry. | 5/5 cặp: 1 abort 1213/40001 và 1 retry/cặp. A/B: 0 → 1 sau rollback → 2 sau retry. |
+| E4 — cùng thứ tự, RC | 5/5 cặp: A/B từ 0 lên 2; 0 abort, 0 retry. | 5/5 cặp: A/B từ 0 lên 2; 0 abort, 0 retry. |
+| E3 — ghi thường | Hai COMMIT nhưng counter cuối bằng 1; Tái hiện lost update của chuỗi đọc–tính–ghi ở ứng dụng | — |
+| E3 — kiểm tra version | Counter \= 1, version \= 2; phát hiện một conflict; Lần ghi dựa trên dữ liệu cũ bị từ chối | — |
+| E3 — version và retry | Counter \= 2, version \= 3; Hai yêu cầu logic hoàn tất sau khi đọc lại và tính lại | — |
 
-Nguồn kết quả: [E1](https://github.com/ncmanh-uet/dbms-project-report/blob/b757f71bd1ea3a542700f9807e5f3a5b34917589/experiments/e1_logs/20261123T075501_921679Z/summary.json) ([lịch thực thi](https://github.com/ncmanh-uet/dbms-project-report/blob/b757f71bd1ea3a542700f9807e5f3a5b34917589/experiments/e1_logs/20261123T075501_921679Z/timeline.log)); [E2a](https://github.com/ncmanh-uet/dbms-project-report/blob/b757f71bd1ea3a542700f9807e5f3a5b34917589/experiments/e2_logs/20261123T075518_917988Z/summary.json) ([lịch thực thi](https://github.com/ncmanh-uet/dbms-project-report/blob/b757f71bd1ea3a542700f9807e5f3a5b34917589/experiments/e2_logs/20261123T075518_917988Z/timeline.log)); [E4](https://github.com/ncmanh-uet/dbms-project-report/blob/b757f71bd1ea3a542700f9807e5f3a5b34917589/experiments/e4_logs/20261123T075540_787330Z/summary.json) ([lịch thực thi](https://github.com/ncmanh-uet/dbms-project-report/blob/b757f71bd1ea3a542700f9807e5f3a5b34917589/experiments/e4_logs/20261123T075540_787330Z/timeline.log)); [biên bản kiểm chứng dữ liệu](https://github.com/ncmanh-uet/dbms-project-report/blob/b757f71bd1ea3a542700f9807e5f3a5b34917589/experiments/e124_verification/20261123/verification.json).
+Nguồn kết quả: [E1](https://github.com/ncmanh-uet/dbms-project-report/blob/3cb827cd950aefc09a3c779bd7afa315877b875e/experiments/e1_logs/20261125T030706_536131Z/summary.json) ([lịch thực thi](https://github.com/ncmanh-uet/dbms-project-report/blob/3cb827cd950aefc09a3c779bd7afa315877b875e/experiments/e1_logs/20261125T030706_536131Z/timeline.log)); [E2a](https://github.com/ncmanh-uet/dbms-project-report/blob/3cb827cd950aefc09a3c779bd7afa315877b875e/experiments/e2_logs/20261125T030708_295092Z/summary.json) ([lịch thực thi](https://github.com/ncmanh-uet/dbms-project-report/blob/3cb827cd950aefc09a3c779bd7afa315877b875e/experiments/e2_logs/20261125T030708_295092Z/timeline.log)); [E4](https://github.com/ncmanh-uet/dbms-project-report/blob/3cb827cd950aefc09a3c779bd7afa315877b875e/experiments/e4_logs/20261123T075540_787330Z/summary.json) ([lịch thực thi](https://github.com/ncmanh-uet/dbms-project-report/blob/3cb827cd950aefc09a3c779bd7afa315877b875e/experiments/e4_logs/20261123T075540_787330Z/timeline.log)); [kiểm chứng dữ liệu](https://github.com/ncmanh-uet/dbms-project-report/blob/3cb827cd950aefc09a3c779bd7afa315877b875e/experiments/e124_verification/20261125/verification.json). Dữ liệu E1 được khôi phục về 300.000; E2a/E4 về 0\. Trong E1, giao dịch mới sau T2 đều đọc 300.100. Mã MySQL deadlock được ghi theo errno/SQLSTATE.
 
-Kết quả E1 phù hợp với cơ chế snapshot ở mục 2.2.4: RC lấy snapshot theo từng câu lệnh, còn PostgreSQL RR duy trì snapshot đọc trong cùng giao dịch. Vì vậy, T2 ở RR vẫn đọc 300.000 sau COMMIT của T1, trong khi một giao dịch mới đọc được 300.100. Cả ba trường hợp đều không phát sinh abort hoặc retry.
+Kết quả E1 phù hợp với cơ chế snapshot ở mục 2.2.3: RC lấy snapshot theo từng câu SELECT, còn RR giữ snapshot đọc trong cùng giao dịch trên cả hai DBMS. T2 ở RR vẫn đọc 300.000 sau COMMIT của T1, trong khi giao dịch mới đọc được 300.100. Cả bốn trường hợp có 0 abort, 0 retry và khôi phục dữ liệu thành công.
 
-E2a thể hiện sự phối hợp giữa MVCC và khóa khi ghi cùng dòng, như trình bày ở mục 2.2.5. Ở RC, hai phép tăng được thực hiện nối tiếp. Ở PostgreSQL RR, T2 bị hủy do dòng đích đã thay đổi sau snapshot; ROLLBACK rồi thử lại toàn bộ giao dịch với snapshot mới đưa bộ đếm từ 1 lên 2\. Giá trị cuối tương ứng hai yêu cầu đã hoàn tất. Ngược lại, E3 cho thấy khóa của từng UPDATE không tự khắc phục việc ứng dụng sử dụng giá trị đã đọc cũ: nếu cả hai bên cùng tính 1 rồi ghi lại 1, hai COMMIT vẫn có thể chỉ tạo một lần tăng thực tế.
+E2a làm rõ khác biệt giữa hai hệ ở cùng mức RR. PostgreSQL hủy T2 khi dòng đích đã thay đổi sau snapshot; thử lại toàn bộ giao dịch với snapshot mới đưa bộ đếm từ 1 lên 2\. MySQL InnoDB thực hiện UPDATE theo trạng thái hiện hành (current read), nên T2 chờ rồi cập nhật nối tiếp và đạt 2 ngay sau hai COMMIT, không cần retry trong lịch này. Khác biệt này không có nghĩa MySQL RR không thể phát sinh lỗi 40001: E4 ghi nhận SQLSTATE này khi deadlock. Ngược lại, E3 cho thấy khóa của từng UPDATE không tự khắc phục việc ứng dụng sử dụng giá trị đã đọc cũ: nếu cả hai bên cùng tính 1 rồi ghi lại 1, hai COMMIT vẫn có thể chỉ tạo một lần tăng thực tế.
 
 OCC giải quyết trường hợp E3 bằng cách kiểm tra xem phiên bản đã đọc còn hợp lệ tại thời điểm ghi hay không. Khi không khớp version, ứng dụng phải rollback và quyết định retry hoặc trả thất bại. Retry đúng phải đọc lại và tính lại trong transaction mới; gửi lại nguyên giá trị/version cũ không giải quyết được xung đột. UPDATE có điều kiện vẫn sử dụng cơ chế MVCC và khóa bên dưới của DBMS.
 
@@ -134,7 +133,18 @@ OCC giải quyết trường hợp E3 bằng cách kiểm tra xem phiên bản �
 
 [**E2b**](https://github.com/ncmanh-uet/dbms-project-report/blob/b757f71bd1ea3a542700f9807e5f3a5b34917589/experiments/e2_logs/20261109T152250_363110Z/trials.csv) khảo sát chờ khóa ở RC với 1, 4, 8 và 16 client trên ba phân bố: mỗi client cập nhật một dòng riêng (distinct), cùng truy cập bốn dòng (shared4), hoặc cùng cập nhật một dòng (hot1). Mỗi cấu hình chạy một lượt 10 giây, không warm-up.
 
-Trong E2 với 16 client, số phiên chờ khóa mục tiêu lớn nhất quan sát được ở các phân bố distinct, shared4 và hot1 lần lượt là [0, 12 và 15 trên cả PostgreSQL và MySQL](https://github.com/ncmanh-uet/dbms-project-report/blob/b757f71bd1ea3a542700f9807e5f3a5b34917589/experiments/e2_logs/20261109T152250_363110Z/trials.csv). Đây là các giá trị cực đại trong mẫu quan sát, không phải tổng số sự kiện chờ khóa. Các lượt sơ bộ minh họa ảnh hưởng của mức độ chia sẻ bản ghi, không dùng để so sánh hiệu năng chính thức.
+E2b đã đối chiếu đủ 24 lượt với CSV giao dịch và COMMIT theo từng dòng: tất cả bộ đếm cuối bằng giá trị ban đầu cộng số COMMIT, 0 failed attempt, 0 abort, 0 retry; khôi phục dữ liệu đều đạt. Số liệu 16 client được tổng hợp dưới đây; tổng bộ đếm là tổng s\_ytd trên các dòng đích trước khôi phục, có giá trị ban đầu bằng 0\.
+
+| DBMS | Phân bố | COMMIT \= tổng bộ đếm cuối | Chờ cực đại |
+| ----- | ----- | ----- | ----- |
+| PostgreSQL | distinct | 14328 \= 14328 | 0 |
+| PostgreSQL | shared4 | 7117 \= 7117 | 12 |
+| PostgreSQL | hot1 | 2383 \= 2383 | 15 |
+| MySQL | distinct | 4348 \= 4348 | 0 |
+| MySQL | shared4 | 2904 \= 2904 | 12 |
+| MySQL | hot1 | 812 \= 812 | 15 |
+
+Nguồn: [kiểm chứng 24 lượt E2b](https://github.com/ncmanh-uet/dbms-project-report/blob/3cb827cd950aefc09a3c779bd7afa315877b875e/experiments/e124_verification/20261125/e2b-summary.json); [số liệu gốc](https://github.com/ncmanh-uet/dbms-project-report/blob/3cb827cd950aefc09a3c779bd7afa315877b875e/experiments/e2_logs/20261109T152250_363110Z/trials.csv). Sau mỗi lượt, từng dòng được khôi phục về 0\. Failed attempt là lần thực thi không thành công, không mặc nhiên đồng nghĩa với abort do xung đột. Số chờ là cực đại trong các mẫu, không phải tổng sự kiện chờ. Mỗi cấu hình chỉ chạy một lượt 10 giây, không warm-up.
 
 Trong E3, tổng các cấu hình nhiều client truy cập hot row trên hai DBMS có 423 yêu cầu logic hết ngân sách retry, dù mỗi yêu cầu được phép tối đa tám lần thử lại sau lần đầu. Counter và version vẫn khớp số yêu cầu thực sự thành công. Do đó, dữ liệu cuối nhất quán theo các yêu cầu đã chấp nhận không đồng nghĩa mọi yêu cầu đầu vào đều hoàn tất. Các lượt sơ bộ chỉ chạy một lần mỗi cấu hình, không warm-up; chúng được dùng để minh họa cơ chế, không dùng làm phép so sánh TPS chính thức.
 
@@ -281,7 +291,7 @@ MySQL 8.4.13 với InnoDB được lựa chọn vì dự án đã có môi trư�
 
 Cụm từ “hệ quản trị cơ sở dữ liệu truyền thống” trong chương được hiểu là hệ quản trị quan hệ đối chứng. PostgreSQL cũng là một hệ quản trị cơ sở dữ liệu quan hệ; InnoDB cũng sử dụng cơ chế đa phiên bản và khóa. Do đó, phép đo này không đại diện cho so sánh “PostgreSQL có MVCC” với “MySQL chỉ dùng khóa”, mà là so sánh hai hiện thực DBMS khi cùng xử lý workload giao dịch có tranh chấp.
 
-Ở mức RC, MySQL và PostgreSQL cho cùng kết quả logic: [E1 đọc 300.000 trước COMMIT rồi 300.100 sau COMMIT](https://github.com/ncmanh-uet/dbms-project-report/blob/b757f71bd1ea3a542700f9807e5f3a5b34917589/experiments/e1_logs/20261123T075501_921679Z/summary.json); [E2a tăng bộ đếm từ 0 lên 2](https://github.com/ncmanh-uet/dbms-project-report/blob/b757f71bd1ea3a542700f9807e5f3a5b34917589/experiments/e2_logs/20261123T075518_917988Z/summary.json), đều có 0 abort và 0 retry. [E3 phát hiện lost update và khắc phục bằng version/retry](https://github.com/ncmanh-uet/dbms-project-report/tree/main/experiments/e3_logs/20261109T161429_704849Z/mysql). Trong [E4](https://github.com/ncmanh-uet/dbms-project-report/blob/b757f71bd1ea3a542700f9807e5f3a5b34917589/experiments/e4_logs/20261123T075540_787330Z/rounds.csv), cả hai hệ đều có 5/5 cặp deadlock khi lấy khóa ngược thứ tự, mỗi cặp có 1 abort và 1 retry; 5/5 cặp cùng thứ tự hoàn tất với 0 abort và 0 retry. [Mã lỗi deadlock](https://github.com/ncmanh-uet/dbms-project-report/blob/b757f71bd1ea3a542700f9807e5f3a5b34917589/experiments/e4_logs/20261123T075540_787330Z/summary.json) là 40P01 trên PostgreSQL và 1213 với SQLSTATE 40001 trên MySQL. So sánh RC/RR của E1 và E2a được thực hiện riêng trên PostgreSQL với cùng dữ liệu, lịch giao dịch và cấu hình.
+Bảng 3.4 đối chiếu trực tiếp E1, E2a và E4 trên hai DBMS. E1 cho cùng kết quả đọc ở từng mức RC/RR. E2a khác nhau ở RR: PostgreSQL có 1 abort 40001 và 1 retry, còn MySQL cập nhật nối tiếp với 0 abort/retry. E4 ở RC ghi nhận cùng kết quả rollback và retry; mã deadlock là 40P01 trên PostgreSQL, 1213 với SQLSTATE 40001 trên MySQL. Mỗi kết luận giới hạn trong lịch giao dịch đã kiểm chứng.
 
 ### 3.2.2. Thiết lập thực nghiệm đối chứng
 
@@ -404,7 +414,7 @@ Các nguồn dưới đây cho phép truy vết nội dung chương và đối c
 
 - [Tài liệu kết quả và thảo luận đã có](Experimental_Results_and_Discussion.md): tổng hợp kết quả E1–E4/E6, diễn giải và giới hạn.
 - [Giao thức E6](benchbase/benchmark/protocol.json) và [README benchmark](benchbase/benchmark/README.md): cấu hình, quy trình và định nghĩa metrics.
-- Kết quả E1, E2a và E4: [E1](experiments/e1_logs/20261123T075501_921679Z/summary.json), [E2a](experiments/e2_logs/20261123T075518_917988Z/summary.json), [E4](experiments/e4_logs/20261123T075540_787330Z/summary.json), [xác minh độc lập](experiments/e124_verification/20261123/verification.json). [E2b](experiments/e2_logs/20261109T152250_363110Z/summary.json) và [E3](experiments/e3_logs/20261109T161429_704849Z/summary.json).
+- Kết quả E1, E2a và E4: [E1](experiments/e1_logs/20261125T030706_536131Z/summary.json), [E2a](experiments/e2_logs/20261125T030708_295092Z/summary.json), [E4](experiments/e4_logs/20261123T075540_787330Z/summary.json), [xác minh độc lập](experiments/e124_verification/20261125/verification.json). [E2b](experiments/e2_logs/20261109T152250_363110Z/summary.json) và [E3](experiments/e3_logs/20261109T161429_704849Z/summary.json).
 - [Báo cáo 42 lượt chính thức](benchbase/benchmark/formal-report.json) và [biên bản kiểm tra](benchbase/benchmark/step17-verification.json): thực thi, phân loại outcomes và invariant.
 - [Số liệu từng lượt](benchbase/benchmark/analysis/trials.csv), [số liệu tổng hợp](benchbase/benchmark/analysis/summary.csv) và [biên bản xác minh phân tích](benchbase/benchmark/analysis/analysis-validation.json): nguồn bảng, hình và định nghĩa thống kê.
 
