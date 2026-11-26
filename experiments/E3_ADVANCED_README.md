@@ -41,11 +41,15 @@ Chạy trong PowerShell tại thư mục gốc dự án, Docker Desktop đã s�
 .\.venv\Scripts\python.exe experiments/e3_advanced.py plan
 .\.venv\Scripts\python.exe -u experiments/e3_advanced.py smoke
 .\.venv\Scripts\python.exe -u experiments/e3_advanced.py formal
+# Với PostgreSQL 17.12 và binlog MySQL tắt như E6:
+.\.venv\Scripts\python.exe -u experiments/e3_advanced.py formal --e6-config
 # Tiếp tục cùng đợt nếu bị gián đoạn sau khi đã kiểm tra cleanup:
 .\.venv\Scripts\python.exe -u experiments/e3_advanced.py formal --resume experiments/e3_advanced_logs/formal-<UTC>
 # Chỉ phân tích đợt formal hoàn chỉnh, không chạy SQL:
 .\.venv\Scripts\python.exe experiments/analyze_e3_advanced.py experiments/e3_advanced_logs/formal-<UTC>
 ```
+
+Khi tiếp tục một đợt đã tạo với `--e6-config`, truyền lại cờ này cùng `--resume`. Cờ chỉ chọn cấu hình máy chủ như E6. Phép đo vẫn dùng bộ sinh tải Python và cập nhật bộ đếm theo giao thức E3-advanced.
 
 Phụ thuộc thêm: `psutil` (telemetry host); numpy/matplotlib và hai driver đã có trong venv. Protocol: `e3_advanced_protocol.json`. Smoke gồm 12 lượt ngắn, phủ hai phương án, cả hai DBMS, phân bố rộng một client và hot row 8/128 client; không nhập số liệu smoke vào kết quả formal.
 

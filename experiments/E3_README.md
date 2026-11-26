@@ -22,6 +22,9 @@ Các lựa chọn khác:
 # Chỉ phần nhiều client
 .\.venv\Scripts\python.exe .\experiments\e3_occ.py --mode load
 
+# Chạy lại lịch ghi không kiểm tra version ở REPEATABLE READ trên cả hai hệ
+.\.venv\Scripts\python.exe .\experiments\e3_occ.py --mode lost-update-rr
+
 # Chạy riêng một DBMS
 .\.venv\Scripts\python.exe .\experiments\e3_occ.py --db postgres --mode demo
 .\.venv\Scripts\python.exe .\experiments\e3_occ.py --db mysql --mode demo

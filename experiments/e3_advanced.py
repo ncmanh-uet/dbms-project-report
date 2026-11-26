@@ -425,15 +425,22 @@ def main():
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument("mode",choices=["smoke","formal","plan"])
     parser.add_argument("--resume",type=Path)
+    parser.add_argument("--e6-config", action="store_true",
+                        help="Use the E6 DBMS images and persistence settings")
     args=parser.parse_args()
     if args.mode=="plan":
         print(json.dumps(PROTOCOL,indent=2)); return
+    if args.e6_config:
+        COMPOSE.extend(["-f", str(ROOT / "benchbase/benchmark/compose.isolation.yaml")])
     run=args.resume or HERE/"e3_advanced_logs"/(args.mode+"-"+datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ"))
     run.mkdir(parents=True,exist_ok=True)
     manifest=run/"report.json"
     report=json.loads(manifest.read_text()) if manifest.exists() else {"mode":args.mode,"protocol":PROTOCOL,"results":[],"status":"RUNNING"}
     if report["mode"]!=args.mode or report["protocol"]!=PROTOCOL:
         raise RuntimeError("Resume protocol mismatch")
+    if report.get("e6_config", False) != args.e6_config and manifest.exists():
+        raise RuntimeError("Resume DBMS configuration mismatch")
+    report["e6_config"] = args.e6_config
     source_sha=hashlib.sha256(Path(__file__).read_bytes()).hexdigest()
     if report.get("runner_sha256",source_sha)!=source_sha:
         raise RuntimeError("Runner changed; start a new formal run")
@@ -487,6 +494,11 @@ def main():
             if hc["NanoCpus"]!=2000000000 or hc["Memory"]!=2*1024**3 or hc["MemorySwap"]!=2*1024**3:
                 raise RuntimeError("DB resource limits differ from protocol")
             with closing(connect(db)) as c:
+                if args.e6_config:
+                    if db == "postgres" and call(c, "SHOW server_version_num")[0][0][0] != "170012":
+                        raise RuntimeError("E6 configuration requires PostgreSQL 17.12")
+                    if db == "mysql" and call(c, "SELECT @@GLOBAL.log_bin")[0][0][0] != 0:
+                        raise RuntimeError("E6 configuration requires MySQL binlog disabled")
                 observed=fingerprint(c)
                 if (run/f"source-before-{db}.json").exists():
                     if json.loads((run/f"source-before-{db}.json").read_text())!=observed: raise RuntimeError("Source changed since original run")

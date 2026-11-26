@@ -499,6 +499,8 @@ def main():
     parser.add_argument("--warmup", type=int)
     parser.add_argument("--seconds", type=int)
     parser.add_argument("--repetitions", type=int)
+    parser.add_argument("--first-repetition", type=int, default=1,
+                        help="Repetition number of the first run; preserves the scheduled order")
     parser.add_argument("--compare-isolation", action="store_true",
                         help="Pair RC and RR with MySQL binlog disabled, saving separate results")
     args = parser.parse_args()
@@ -518,7 +520,7 @@ def main():
     warmup = args.warmup if args.warmup is not None else (3 if smoke else PROTOCOL["warmup_seconds"])
     seconds = args.seconds if args.seconds is not None else (6 if smoke else PROTOCOL["measure_seconds"])
     repetitions = args.repetitions if args.repetitions is not None else (1 if smoke else PROTOCOL["repetitions"])
-    if any(c < 1 or c > 128 for c in clients) or warmup < 1 or seconds < 1 or repetitions < 1:
+    if any(c < 1 or c > 128 for c in clients) or min(warmup, seconds, repetitions, args.first_repetition) < 1:
         parser.error("Require 1..128 clients and positive warmup, seconds, repetitions")
     reports = []
     kind = "smoke" if smoke else "formal"
@@ -539,7 +541,7 @@ def main():
                 ownership(dbms)
             save(campaign / "environment.json", environment(runtime))
         # Alternate engine order per repetition; never run two loads simultaneously.
-        for repetition in range(1, repetitions+1):
+        for repetition in range(args.first_repetition, args.first_repetition + repetitions):
             for index, count in enumerate(clients):
                 for dbms in selected if repetition % 2 else tuple(reversed(selected)):
                     if args.compare_isolation:

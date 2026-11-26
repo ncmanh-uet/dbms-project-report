@@ -81,6 +81,8 @@ Override cũng ghim PostgreSQL 17.12. Lần chạy thử ma trận chính thức
 .\.venv\Scripts\python.exe .\benchbase\benchmark\run_benchmark.py run --compare-isolation
 ```
 
+Để chạy lại riêng lượt 3, dùng `run_benchmark.py run --compare-isolation --first-repetition 3 --repetitions 1`. Lệnh này giữ thứ tự DBMS và RC/RR của lượt 3 và ghi dữ liệu vào một đợt riêng. Sau khi kiểm tra cả hai đợt hoàn tất, dùng `analyze_isolation.py <đợt-gốc> --replace-third-from <đợt-chạy-lại>`. Thư mục chạy lại nhận bảng tổng hợp của 36 lượt, gồm lượt 1–2 từ đợt gốc và lượt 3 mới. Tệp đầu vào của đợt gốc được giữ để đối chiếu.
+
 Mỗi đợt tạo `isolation/smoke-*` hoặc `isolation/formal-*` chứa cấu hình quan sát, danh sách lượt và kiểm tra phục hồi baseline. Dữ liệu thô nằm trong `results/<dbms>/<kind>-isolation-*`; thư mục mỗi lượt được ghi trong báo cáo JSON của đợt. Các đầu ra bước 17 dùng cho khảo sát mức tải ở RC trong cấu hình cũ. Các số đo của đợt RC/RR được kiểm chứng và tổng hợp độc lập:
 
 ```powershell

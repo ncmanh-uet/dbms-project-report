@@ -17,7 +17,8 @@ from analyze_results import (
 MODES = {"TRANSACTION_READ_COMMITTED": ("RC", "2"),
          "TRANSACTION_REPEATABLE_READ": ("RR", "4")}
 METRICS = ("successful_tps", "p95_ms", "retry_pct", "delivery_abort_pct",
-           "mean_waiting_session_pct", "db_cpu_quota_pct_mean", "generator_cpu_quota_pct_mean")
+           "mean_waiting_session_pct", "db_cpu_quota_pct_mean", "generator_cpu_quota_pct_mean",
+           "completion_pct", "exhausted_retry_pct")
 COUNTS = ("requests", "successes", "with_retry", "delivery_aborts", "neworder_rollbacks",
           "exhausted_retry", "terminal_errors", "pg_40001", "pg_40P01", "mysql_1213", "mysql_1205",
           "pg_55P03", "pg_57014")
@@ -74,6 +75,8 @@ def audit_run(inputs, entry, environment):
     return {"dbms": db, "clients": clients, "repetition": repetition, "isolation": mode,
             "directory": entry["directory"], "elapsed_seconds": elapsed, "requests": requests,
             "successes": statuses["SUCCESS"], "successful_tps": tps, "p95_ms": p95,
+            "completion_pct": percent(statuses["SUCCESS"], requests),
+            "exhausted_retry_pct": percent(statuses["RETRY"], requests),
             "with_retry": data["retry_requests"], "retry_pct": percent(data["retry_requests"], requests),
             "delivery_requests": data["types"][4], "delivery_aborts": data["aborted"][4],
             "delivery_abort_pct": percent(data["aborted"][4], data["types"][4]),
@@ -102,34 +105,52 @@ def summarize(index):
                 pair = {"dbms": db, "clients": clients, "repetition": repetition}
                 for metric in ("successful_tps", "p95_ms"):
                     pair[f"{metric}_rr_minus_rc_pct"] = 100 * (rr[metric] / rc[metric] - 1)
-                for metric in ("retry_pct", "delivery_abort_pct", "mean_waiting_session_pct", "db_cpu_quota_pct_mean"):
+                for metric in ("retry_pct", "delivery_abort_pct", "mean_waiting_session_pct", "db_cpu_quota_pct_mean",
+                               "completion_pct", "exhausted_retry_pct"):
                     pair[f"{metric}_rr_minus_rc_pp"] = rr[metric] - rc[metric]
                 pairs.append(pair)
     return summary, pairs
 
 
-def main():
-    parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("campaign", type=Path, help="Campaign directory containing formal-report.json")
-    args = parser.parse_args()
-    campaign = args.campaign.resolve()
-    inputs = Inputs()
+def read_campaign(inputs, campaign):
     report = inputs.json(campaign / "formal-report.json")
     environment = inputs.json(campaign / "environment.json")
     cleanup = inputs.json(campaign / "last-cleanup.json")
     require(report["complete"] and not cleanup["errors"], "Campaign incomplete or cleanup failed")
-    trials = [audit_run(inputs, entry, environment) for entry in report["runs"]]
+    return report["runs"], environment
+
+
+def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("campaign", type=Path, help="Campaign directory containing formal-report.json")
+    parser.add_argument("--replace-third-from", type=Path,
+                        help="Use a separately recorded rerun of repetition 3")
+    args = parser.parse_args()
+    campaign = args.campaign.resolve()
+    inputs = Inputs()
+    runs, environment = read_campaign(inputs, campaign)
+    output = campaign
+    if args.replace_third_from:
+        rerun = args.replace_third_from.resolve()
+        replacement, rerun_environment = read_campaign(inputs, rerun)
+        require(all(r["repetition"] == 3 for r in replacement), "Expected repetition 3 only")
+        for db in DBMS:
+            require(rerun_environment["services"][db] == environment["services"][db],
+                    f"{db} DBMS configuration differs from original E6 campaign")
+        runs = [r for r in runs if r["repetition"] != 3] + replacement
+        output = rerun
+    trials = [audit_run(inputs, entry, environment) for entry in runs]
     index = {(r["dbms"], r["clients"], r["isolation"], r["repetition"]): r for r in trials}
     expected = {(db, clients, mode, repetition) for db in DBMS for clients in (4, 16, 64)
                 for mode in ("RC", "RR") for repetition in range(1, 4)}
     require(len(trials) == len(index) and index.keys() == expected, "Missing or duplicate trial")
     inputs.verify_unchanged()
     summary, pairs = summarize(index)
-    save_csv(campaign / "trials.csv", trials)
-    save_csv(campaign / "summary.csv", summary)
-    save_csv(campaign / "paired.csv", pairs)
-    save_json(campaign / "verification.json", {"status": "PASS", "trials": len(trials), "pairs": len(pairs),
-                                              "inputs": inputs.files})
+    save_csv(output / "trials.csv", trials)
+    save_csv(output / "summary.csv", summary)
+    save_csv(output / "paired.csv", pairs)
+    save_json(output / "verification.json", {"status": "PASS", "trials": len(trials), "pairs": len(pairs),
+                                            "inputs": inputs.files})
     print(f"Verified {len(trials)} trials and {len(pairs)} within-engine RC/RR pairs")
 
 

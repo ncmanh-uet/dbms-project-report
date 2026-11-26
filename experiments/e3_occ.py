@@ -119,11 +119,11 @@ def sql_cas(table):
     return f"UPDATE {table} SET counter_value=%s,version=version+1 WHERE s_w_id=1 AND s_i_id=%s AND version=%s"
 
 
-def demo(fixture, phase, log, directory):
+def demo(fixture, phase, log, directory, *, isolation="READ COMMITTED"):
     directory.mkdir()
     fixture.reset()
     dbms, table = fixture.dbms, fixture.table
-    result = dict(kind="demo", dbms=dbms, phase=phase, requested_operations=2, status="FAIL")
+    result = dict(kind="demo", dbms=dbms, phase=phase, isolation=isolation, requested_operations=2, status="FAIL")
     connections = []
     completed = False
     first_sequence = len(log.events)
@@ -135,7 +135,7 @@ def demo(fixture, phase, log, directory):
         for actor in ("T1", "T2"):
             connection = connect(dbms)
             connections.append(connection)
-            pid = session(connection, dbms, log, f"{phase}/{actor}")
+            pid = session(connection, dbms, log, f"{phase}/{actor}", isolation=isolation)
             result[f"{actor.lower()}_connection_id"] = pid
             sql(connection, actor, "BEGIN" if dbms == "postgres" else "START TRANSACTION")
         t1, t2 = connections
@@ -153,13 +153,26 @@ def demo(fixture, phase, log, directory):
             sql(t1, "T1", unsafe_sql, (old1 + 1, 1))
             sql(t1, "T1", "COMMIT")
             log.record(dbms, phase, "T1_COMMIT")
-            result["t2_affected_rows"] = sql(t2, "T2", unsafe_sql, (old2 + 1, 1))
-            sql(t2, "T2", "COMMIT")
+            reject_stale_write = dbms == "postgres" and isolation == "REPEATABLE READ"
+            try:
+                result["t2_affected_rows"] = sql(t2, "T2", unsafe_sql, (old2 + 1, 1))
+            except Exception as error:
+                if not reject_stale_write or getattr(error, "sqlstate", None) != "40001":
+                    raise
+                result["t2_sqlstate"] = error.sqlstate
+                sql(t2, "T2", "ROLLBACK")
+                log.record(dbms, phase, "STALE_WRITE_REJECTED", sqlstate=error.sqlstate)
+            else:
+                if reject_stale_write:
+                    raise RuntimeError("PostgreSQL RR accepted a stale-snapshot write")
+                sql(t2, "T2", "COMMIT")
             observed = fixture.check(Counter({1: 1}), versions=False)
-            log.record(dbms, phase, "LOST_UPDATE_CONFIRMED", observed=observed["1"], correct_counter=old1 + 2)
-            result.update(successful_operations_reported=2, confirmed_commits=2,
+            if not reject_stale_write:
+                log.record(dbms, phase, "LOST_UPDATE_CONFIRMED", observed=observed["1"], correct_counter=old1 + 2)
+            commits = 1 if reject_stale_write else 2
+            result.update(successful_operations_reported=commits, confirmed_commits=commits,
                           actual=observed["1"], correct_counter=str(old1 + 2),
-                          lost_increments=1, expected_anomaly_observed=True)
+                          lost_increments=commits - 1, expected_anomaly_observed=not reject_stale_write)
         else:
             if sql(t1, "T1", sql_cas(table), (old1 + 1, 1, version1)) != 1:
                 raise RuntimeError("T1 CAS did not succeed")
@@ -187,7 +200,11 @@ def demo(fixture, phase, log, directory):
             result.update(successful_operations=successes, version_conflicts=1,
                           retry_attempts=retries, actual=observed["1"], integrity_ok=True)
         stages = {event["action"]: event["sequence"] for event in log.events[first_sequence:]}
-        required = ["BOTH_READ_BASELINE", "T1_COMMIT"] + (["LOST_UPDATE_CONFIRMED"] if phase == "lost_update" else ["VERSION_CONFLICT"])
+        required = ["BOTH_READ_BASELINE", "T1_COMMIT"]
+        if phase == "lost_update":
+            required.append("STALE_WRITE_REJECTED" if reject_stale_write else "LOST_UPDATE_CONFIRMED")
+        else:
+            required.append("VERSION_CONFLICT")
         if phase == "occ_retry":
             required += ["RETRY_READ", "RETRY_COMMIT"]
         result["schedule_verified"] = all(key in stages for key in required) and all(
@@ -398,7 +415,7 @@ def trial(fixture, scenario, clients, seconds, max_retries, log, directory):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--db", choices=("postgres", "mysql", "both"), default="both")
-    parser.add_argument("--mode", choices=("demo", "load", "all"), default="all")
+    parser.add_argument("--mode", choices=("demo", "load", "all", "lost-update-rr"), default="all")
     parser.add_argument("--clients", type=int, nargs="+", default=[1, 4, 8, 16])
     parser.add_argument("--seconds", type=float, default=10)
     parser.add_argument("--max-retries", type=int, default=8)
@@ -409,7 +426,8 @@ def main():
     directory = ROOT / "experiments" / "e3_logs" / run_id
     directory.mkdir(parents=True)
     log = Timeline(directory)
-    report = dict(run_id=run_id, preliminary=True, isolation="READ COMMITTED",
+    isolation = "REPEATABLE READ" if args.mode == "lost-update-rr" else "READ COMMITTED"
+    report = dict(run_id=run_id, preliminary=True, isolation=isolation,
                   warmup_seconds=0, repetitions=1, results=[], cleanup={}, status="FAIL")
     try:
         for dbms in (("postgres", "mysql") if args.db == "both" else (args.db,)):
@@ -418,9 +436,10 @@ def main():
             fixture = Fixture(dbms, log, db_directory)
             try:
                 fixture.open()
-                if args.mode in ("demo", "all"):
-                    for phase in ("lost_update", "occ_detect", "occ_retry"):
-                        result = demo(fixture, phase, log, db_directory / phase)
+                if args.mode in ("demo", "all", "lost-update-rr"):
+                    phases = ("lost_update",) if args.mode == "lost-update-rr" else ("lost_update", "occ_detect", "occ_retry")
+                    for phase in phases:
+                        result = demo(fixture, phase, log, db_directory / phase, isolation=isolation)
                         report["results"].append(result)
                         if result["status"] != "PASS":
                             raise RuntimeError(f"{dbms}/{phase} did not match the expected behavior")

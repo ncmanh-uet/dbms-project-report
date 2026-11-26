@@ -56,9 +56,16 @@ def build(run):
                     r = ix[(db, dist, method, c)]
                     data.append([c, LABEL[method], number(r, "successful_tps_mean"), number(r, "p95_ms_mean"), number(r, "completion_pct_mean", 2), number(r, "retry_pct_mean", 2), number(r, "exhausted_pct_mean", 2)])
             lines.append(table(["Client", "Phương pháp", "TPS", "p95 (ms)", "Hoàn tất (%)", "Retry (%)", "Hết retry (%)"], data))
-    lines += ["## 4. Đối chiếu và diễn giải", "",
-              "Ở `uniform100k`, tỷ lệ retry OCC dưới 0,1% tại mọi mức client của cả hai DBMS; TPS OCC và khóa bi quan gần nhau hơn so với hai phân bố còn lại. Khi chỉ còn 100 dòng chia sẻ, xung đột OCC tăng theo số client: tại 128 client, retry là 37,93% trên PostgreSQL và 38,98% trên MySQL. TPS OCC ở điểm này lần lượt bằng khoảng 48% và 65% TPS khóa bi quan.", "",
-              "Với `hot1`, tất cả client tranh cùng một dòng. Ở 128 client, kết quả cụ thể:", ""]
+    lines += ["## 4. Đối chiếu và diễn giải", ""]
+    for db in protocol["engines"]:
+        wide = max(float(ix[db, "uniform100k", "occ", c]["retry_pct_mean"]) for c in protocol["clients"])
+        occ = ix[db, "shared100", "occ", 128]
+        locked = ix[db, "shared100", "pessimistic", 128]
+        tps_ratio = 100 * float(occ["successful_tps_mean"]) / float(locked["successful_tps_mean"])
+        lines += [f"Trên {db}, tỷ lệ thử lại OCC tối đa là {wide:.2f}% ở `uniform100k`. "
+                  f"Ở `shared100` với 128 client, tỷ lệ này là {number(occ, 'retry_pct_mean', 2)}% "
+                  f"và TPS OCC bằng {tps_ratio:.1f}% TPS khóa bi quan.", ""]
+    lines += ["Với `hot1`, tất cả client tranh cùng một dòng. Kết quả ở 128 client được trình bày dưới đây.", ""]
     hot = []
     for db in protocol["engines"]:
         p = ix[(db, "hot1", "pessimistic", 128)]

@@ -94,7 +94,7 @@ def main():
     parser.add_argument("output", type=Path)
     args = parser.parse_args()
     args.output.mkdir(parents=True, exist_ok=True)
-    plt.rcParams.update({"font.family": "DejaVu Sans", "font.size": 8.8, "text.color": "#202C35",
+    plt.rcParams.update({"font.family": "DejaVu Sans", "font.size": 10, "text.color": "#202C35",
                         "axes.labelcolor": "#202C35", "xtick.color": "#46535D", "ytick.color": "#46535D"})
     historical(read_csv(HERE / "analysis/summary.csv"), args.output)
     runs = read_csv(args.campaign / "summary.csv")
