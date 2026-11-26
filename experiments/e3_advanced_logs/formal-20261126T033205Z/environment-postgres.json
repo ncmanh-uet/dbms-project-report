@@ -1,0 +1,46 @@
+{
+  "image": "sha256:87c8b42f423b45d5247e6aa8fdb2e7762fec164c68a50fe3eb07e7bfcaf4dbcf",
+  "resources": {
+    "NanoCpus": 2000000000,
+    "Memory": 2147483648,
+    "MemorySwap": 2147483648
+  },
+  "version": [
+    [
+      "PostgreSQL 17.12 (Debian 17.12-1.pgdg13+1) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit"
+    ]
+  ],
+  "driver": "psycopg",
+  "settings": [
+    [
+      "fsync",
+      "on",
+      null
+    ],
+    [
+      "full_page_writes",
+      "on",
+      null
+    ],
+    [
+      "max_connections",
+      "200",
+      null
+    ],
+    [
+      "shared_buffers",
+      "16384",
+      "8kB"
+    ],
+    [
+      "synchronous_commit",
+      "on",
+      null
+    ],
+    [
+      "work_mem",
+      "4096",
+      "kB"
+    ]
+  ]
+}

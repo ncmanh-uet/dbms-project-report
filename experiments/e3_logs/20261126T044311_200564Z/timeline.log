@@ -1,0 +1,49 @@
+001 [postgres/FIXTURE] SESSION {"connection_id": 38, "isolation": "read committed", "version": "PostgreSQL 17.12 (Debian 17.12-1.pgdg13+1) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit"}
+002 [postgres/FIXTURE] CREATED {"table": "e3_occ_4fd33cfe7c4a4c4a", "rows": 16}
+003 [postgres/lost_update/T1] SESSION {"connection_id": 39, "isolation": "repeatable read", "version": "PostgreSQL 17.12 (Debian 17.12-1.pgdg13+1) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit"}
+004 [postgres/T1] SQL_START {"sql": "BEGIN", "params": null}
+005 [postgres/T1] SQL_DONE {"result": -1, "duration_ms": 2.349}
+006 [postgres/lost_update/T2] SESSION {"connection_id": 40, "isolation": "repeatable read", "version": "PostgreSQL 17.12 (Debian 17.12-1.pgdg13+1) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit"}
+007 [postgres/T2] SQL_START {"sql": "BEGIN", "params": null}
+008 [postgres/T2] SQL_DONE {"result": -1, "duration_ms": 2.437}
+009 [postgres/T1] SQL_START {"sql": "SELECT counter_value,version FROM e3_occ_4fd33cfe7c4a4c4a WHERE s_w_id=1 AND s_i_id=%s", "params": [1]}
+010 [postgres/T1] SQL_DONE {"result": [["0.00", 1]], "duration_ms": 3.17}
+011 [postgres/T2] SQL_START {"sql": "SELECT counter_value,version FROM e3_occ_4fd33cfe7c4a4c4a WHERE s_w_id=1 AND s_i_id=%s", "params": [1]}
+012 [postgres/T2] SQL_DONE {"result": [["0.00", 1]], "duration_ms": 3.691}
+013 [postgres/lost_update] BOTH_READ_BASELINE {"counter": "0.00", "version": 1}
+014 [postgres/T1] SQL_START {"sql": "UPDATE e3_occ_4fd33cfe7c4a4c4a SET counter_value=%s WHERE s_w_id=1 AND s_i_id=%s", "params": ["1.00", 1]}
+015 [postgres/T1] SQL_DONE {"result": 1, "duration_ms": 3.252}
+016 [postgres/T1] SQL_START {"sql": "COMMIT", "params": null}
+017 [postgres/T1] SQL_DONE {"result": -1, "duration_ms": 4.139}
+018 [postgres/lost_update] T1_COMMIT {}
+019 [postgres/T2] SQL_START {"sql": "UPDATE e3_occ_4fd33cfe7c4a4c4a SET counter_value=%s WHERE s_w_id=1 AND s_i_id=%s", "params": ["1.00", 1]}
+020 [postgres/T2] SQL_START {"sql": "ROLLBACK", "params": null}
+021 [postgres/T2] SQL_DONE {"result": -1, "duration_ms": 2.208}
+022 [postgres/lost_update] STALE_WRITE_REJECTED {"sqlstate": "40001"}
+023 [postgres/lost_update] PASS {"actual": {"counter": "1.00", "version": 1}}
+024 [postgres/FIXTURE] CLEANUP {"demo_table_dropped": true, "source_unchanged": true, "original_table_set_restored": true}
+025 [mysql/FIXTURE] SESSION {"connection_id": 1193, "isolation": "READ-COMMITTED", "version": "8.4.13"}
+026 [mysql/FIXTURE] CREATED {"table": "e3_occ_0c7239f0169b435f", "rows": 16}
+027 [mysql/lost_update/T1] SESSION {"connection_id": 1194, "isolation": "REPEATABLE-READ", "version": "8.4.13"}
+028 [mysql/T1] SQL_START {"sql": "START TRANSACTION", "params": null}
+029 [mysql/T1] SQL_DONE {"result": 0, "duration_ms": 6.598}
+030 [mysql/lost_update/T2] SESSION {"connection_id": 1195, "isolation": "REPEATABLE-READ", "version": "8.4.13"}
+031 [mysql/T2] SQL_START {"sql": "START TRANSACTION", "params": null}
+032 [mysql/T2] SQL_DONE {"result": 0, "duration_ms": 3.931}
+033 [mysql/T1] SQL_START {"sql": "SELECT counter_value,version FROM e3_occ_0c7239f0169b435f WHERE s_w_id=1 AND s_i_id=%s", "params": [1]}
+034 [mysql/T1] SQL_DONE {"result": [["0.00", 1]], "duration_ms": 6.57}
+035 [mysql/T2] SQL_START {"sql": "SELECT counter_value,version FROM e3_occ_0c7239f0169b435f WHERE s_w_id=1 AND s_i_id=%s", "params": [1]}
+036 [mysql/T2] SQL_DONE {"result": [["0.00", 1]], "duration_ms": 4.788}
+037 [mysql/lost_update] BOTH_READ_BASELINE {"counter": "0.00", "version": 1}
+038 [mysql/T1] SQL_START {"sql": "UPDATE e3_occ_0c7239f0169b435f SET counter_value=%s WHERE s_w_id=1 AND s_i_id=%s", "params": ["1.00", 1]}
+039 [mysql/T1] SQL_DONE {"result": 1, "duration_ms": 5.015}
+040 [mysql/T1] SQL_START {"sql": "COMMIT", "params": null}
+041 [mysql/T1] SQL_DONE {"result": 0, "duration_ms": 15.299}
+042 [mysql/lost_update] T1_COMMIT {}
+043 [mysql/T2] SQL_START {"sql": "UPDATE e3_occ_0c7239f0169b435f SET counter_value=%s WHERE s_w_id=1 AND s_i_id=%s", "params": ["1.00", 1]}
+044 [mysql/T2] SQL_DONE {"result": 0, "duration_ms": 5.935}
+045 [mysql/T2] SQL_START {"sql": "COMMIT", "params": null}
+046 [mysql/T2] SQL_DONE {"result": 0, "duration_ms": 22.669}
+047 [mysql/lost_update] LOST_UPDATE_CONFIRMED {"observed": {"counter": "1.00", "version": 1}, "correct_counter": "2.00"}
+048 [mysql/lost_update] PASS {"actual": {"counter": "1.00", "version": 1}}
+049 [mysql/FIXTURE] CLEANUP {"demo_table_dropped": true, "source_unchanged": true, "original_table_set_restored": true}

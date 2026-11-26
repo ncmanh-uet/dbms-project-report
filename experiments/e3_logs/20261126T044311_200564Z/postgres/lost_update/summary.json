@@ -1,0 +1,22 @@
+{
+  "kind": "demo",
+  "dbms": "postgres",
+  "phase": "lost_update",
+  "isolation": "REPEATABLE READ",
+  "requested_operations": 2,
+  "status": "PASS",
+  "t1_connection_id": 39,
+  "t2_connection_id": 40,
+  "t2_sqlstate": "40001",
+  "successful_operations_reported": 1,
+  "confirmed_commits": 1,
+  "actual": {
+    "counter": "1.00",
+    "version": 1
+  },
+  "correct_counter": "2.00",
+  "lost_increments": 0,
+  "expected_anomaly_observed": false,
+  "schedule_verified": true,
+  "fixture_reset": true
+}
