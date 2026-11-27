@@ -1,0 +1,8 @@
+{
+  "psql": "             version             \n---------------------------------\n 17.12 (Debian 17.12-1.pgdg13+1)\n(1 row)\n\nCREATE TABLE\nINSERT 0 2\nBEGIN\nUPDATE 1\nROLLBACK\n sau_rollback \n--------------\n         1000\n(1 row)\n\nBEGIN\nUPDATE 1\nCOMMIT\n sau_commit \n------------\n       1050\n(1 row)\n\nCREATE INDEX\n         QUERY PLAN         \n----------------------------\n Seq Scan on demo_tai_khoan\n   Filter: (so_du = 1050)\n(2 rows)\n\nDELETE 1\n id | so_du \n----+-------\n  1 |  1050\n(1 row)\n\n",
+  "restored_row": "1|1050",
+  "mysql_version": "8.4.13",
+  "mysql_database": "tpcc",
+  "backup_database": "demo_backup_64818de7ab34",
+  "restore_database": "demo_restore_64818de7ab34"
+}
