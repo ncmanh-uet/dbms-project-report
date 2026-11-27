@@ -93,7 +93,7 @@ $campaign = Get-ChildItem .\benchbase\benchmark\isolation -Directory -Filter 'fo
 .\.venv\Scripts\python.exe .\benchbase\benchmark\plot_isolation.py $campaign.FullName .\report_assets\e6_isolation
 ```
 
-`summary.csv` ghi trung bình, min và max của ba lượt. `paired.csv` ghi chênh lệch RR so với RC của từng cặp. Tỷ lệ thử lại dùng tổng yêu cầu đo làm mẫu số. Tỷ lệ Delivery bị hủy dùng số yêu cầu Delivery. Các cột mã SQL đếm yêu cầu theo mã lỗi SQL cuối đã lưu, kể cả yêu cầu thành công sau khi thử lại.
+`transaction-mix.csv` đếm yêu cầu và yêu cầu SUCCESS theo loại giao dịch, cộng ba lượt của mỗi DBMS, mức cô lập và số client. Tạo lại bằng `summarize_transaction_mix.py isolation/formal-20261126T030922514842Z/request-logs.zip <đầu ra>.csv`; kết quả trùng từng byte với tệp trong đợt. `summary.csv` ghi trung bình, min và max của ba lượt. `paired.csv` ghi chênh lệch RR so với RC của từng cặp. Tỷ lệ thử lại dùng tổng yêu cầu đo làm mẫu số. Tỷ lệ Delivery bị hủy dùng số yêu cầu Delivery. Các cột mã SQL đếm yêu cầu theo mã lỗi SQL cuối đã lưu, kể cả yêu cầu thành công sau khi thử lại.
 
 Runner tự ghép `compose.yaml` và `compose.override.yaml`. Chạy riêng Compose gốc có thể bỏ giới hạn benchmark trong lần recreate sau; runner luôn áp dụng lại override. Bản BenchBase gốc vẫn dùng khi không có override.
 
