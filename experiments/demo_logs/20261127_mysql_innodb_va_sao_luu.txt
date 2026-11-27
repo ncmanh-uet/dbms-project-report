@@ -1,0 +1,39 @@
+### MySQL: phien ban va tham so (tpcc)
++---------+------+-----------------+-----------------+-----------------+---------+
+| version | db   | isolation       | flush_at_commit | buffer_pool_mib | log_bin |
++---------+------+-----------------+-----------------+-----------------+---------+
+| 8.4.13  | tpcc | REPEATABLE-READ |               1 |    128.00000000 |       0 |
++---------+------+-----------------+-----------------+-----------------+---------+
++--------------+
+| sau_rollback |
++--------------+
+|         1000 |
++--------------+
++------------+
+| sau_commit |
++------------+
+|       1050 |
++------------+
++----+-------------+----------------+------------+------+---------------+------+---------+------+------+----------+-------------+
+| id | select_type | table          | partitions | type | possible_keys | key  | key_len | ref  | rows | filtered | Extra       |
++----+-------------+----------------+------------+------+---------------+------+---------+------+------+----------+-------------+
+|  1 | SIMPLE      | demo_tai_khoan | NULL       | ALL  | NULL          | NULL | NULL    | NULL |    2 |    50.00 | Using where |
++----+-------------+----------------+------------+------+---------------+------+---------+------+------+----------+-------------+
++----+-------+
+| id | so_du |
++----+-------+
+|  1 |  1050 |
++----+-------+
+
+### PostgreSQL: sao luu pg_dump -Fc va phuc hoi pg_restore
+NOTICE:  database "demo_nguon" does not exist, skipping
+NOTICE:  database "demo_dich" does not exist, skipping
+$ pg_dump -U labuser -Fc -f /tmp/demo.dump demo_nguon
+1752 bytes
+$ pg_restore -U labuser --exit-on-error -d demo_dich /tmp/demo.dump
+pg_restore exit=0
+ id | so_du 
+----+-------
+  1 |  1050
+(1 row)
+
