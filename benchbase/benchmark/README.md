@@ -73,6 +73,8 @@ Lệnh `run` không phải một phần đã thực hiện trong bước 16. War
 
 Chế độ `--compare-isolation` thêm `compose.isolation.yaml`. Override tắt binary log của MySQL bằng `--skip-log-bin` cho cả RC và RR. Runner kiểm tra `@@GLOBAL.log_bin` trước từng lượt MySQL. InnoDB vẫn ghi redo log theo cấu hình ghi bền hiện có. BenchBase kiểm tra mức cô lập JDBC khi mở kết nối và rollback giao dịch kiểm tra trước khi sinh tải. Mỗi lượt lưu bằng chứng theo worker trong `benchbase.log`.
 
+Bản vá dùng cho E6 nằm ở [instrumentation/Worker.patch](isolation/formal-20261126T030922514842Z/instrumentation/Worker.patch), kèm [instrumentation.json](isolation/formal-20261126T030922514842Z/instrumentation/instrumentation.json) là siêu dữ liệu ghi lúc chạy (trùng khối `instrumentation` trong `environment.json` của đợt). Tệp `runtime/Worker.patch` là bản của đợt RC, không có phần kiểm tra mức cô lập JDBC. Build lại bằng `build_metrics.py --verify-isolation` cho đúng `patch_sha256` và `helper_sha256`; hash của jar build lại không trùng bản đã chạy (bản dựng lại dùng JDK 25.0.2 và đóng gói ở thời điểm khác), nên `instrumented_jar_sha256` trong `instrumentation.json` là hash của jar đã chạy.
+
 Override cũng ghim PostgreSQL 17.12. Lần chạy thử ma trận chính thức trên 17.11 dừng khi RR ở 64 client gặp lỗi nội bộ MultiXact (`XX000`). Nhóm lưu nguyên lượt lỗi và chạy lại ma trận với 17.12 cho cả RC và RR. Bản sửa được ghi trong [ghi chú PostgreSQL 17.12](https://www.postgresql.org/docs/17/release-17-12.html).
 
 ```powershell

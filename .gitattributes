@@ -3,3 +3,5 @@ benchbase/benchmark/results/**/formal-isolation-*/** -text
 benchbase/benchmark/isolation/formal-20261125T052730347909Z/environment.json -text
 benchbase/benchmark/isolation/formal-20261125T052730347909Z/formal-report.json -text
 benchbase/benchmark/isolation/formal-20261125T052730347909Z/last-cleanup.json -text
+
+benchbase/benchmark/isolation/formal-20261126T030922514842Z/instrumentation/* -text
