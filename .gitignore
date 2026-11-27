@@ -2,3 +2,5 @@
 /benchbase/benchmark/runtime/isolation/
 __pycache__/
 *.pyc
+/MVCC_Cong_viec_ly_thuyet.md
+/MVCC_Cong_viec_thuc_nghiem_Chuong_3.md
